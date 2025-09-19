@@ -1,12 +1,198 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "D:\\BackEnd\\Chuan_Tuan_Bach\\QLBanLeKho\\QLBanLeKho\\",
-  "Documents": [],
+  "WorkspaceRootPath": "C:\\Users\\ADMIN\\OneDrive\\Desktop\\QuanLyKho\\QLBanLeKho\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{7ABCB83C-E535-46F2-A29B-C792309B4CF2}|CoreApi\\CoreApi.csproj|c:\\users\\admin\\onedrive\\desktop\\quanlykho\\qlbanlekho\\coreapi\\controllers\\sanphamcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7ABCB83C-E535-46F2-A29B-C792309B4CF2}|CoreApi\\CoreApi.csproj|solutionrelative:coreapi\\controllers\\sanphamcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{05014BAA-3857-46C6-A873-C13DD08C1492}|Model\\Model.csproj|c:\\users\\admin\\onedrive\\desktop\\quanlykho\\qlbanlekho\\model\\responsemodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{05014BAA-3857-46C6-A873-C13DD08C1492}|Model\\Model.csproj|solutionrelative:model\\responsemodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{05014BAA-3857-46C6-A873-C13DD08C1492}|Model\\Model.csproj|c:\\users\\admin\\onedrive\\desktop\\quanlykho\\qlbanlekho\\model\\sanphammodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{05014BAA-3857-46C6-A873-C13DD08C1492}|Model\\Model.csproj|solutionrelative:model\\sanphammodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{868024DA-637A-4266-860F-9C089C749415}|BLL\\BLL.csproj|c:\\users\\admin\\onedrive\\desktop\\quanlykho\\qlbanlekho\\bll\\interfaces\\idsanphambll.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{868024DA-637A-4266-860F-9C089C749415}|BLL\\BLL.csproj|solutionrelative:bll\\interfaces\\idsanphambll.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{868024DA-637A-4266-860F-9C089C749415}|BLL\\BLL.csproj|c:\\users\\admin\\onedrive\\desktop\\quanlykho\\qlbanlekho\\bll\\sanphambusiness.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{868024DA-637A-4266-860F-9C089C749415}|BLL\\BLL.csproj|solutionrelative:bll\\sanphambusiness.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{868024DA-637A-4266-860F-9C089C749415}|BLL\\BLL.csproj|c:\\users\\admin\\onedrive\\desktop\\quanlykho\\qlbanlekho\\bll\\bll.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{868024DA-637A-4266-860F-9C089C749415}|BLL\\BLL.csproj|solutionrelative:bll\\bll.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7ABCB83C-E535-46F2-A29B-C792309B4CF2}|CoreApi\\CoreApi.csproj|c:\\users\\admin\\onedrive\\desktop\\quanlykho\\qlbanlekho\\coreapi\\coreapi.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{7ABCB83C-E535-46F2-A29B-C792309B4CF2}|CoreApi\\CoreApi.csproj|solutionrelative:coreapi\\coreapi.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{284ADB5D-F6CE-4C43-910B-4EAA3558942B}|UserApi\\UserApi.csproj|c:\\users\\admin\\onedrive\\desktop\\quanlykho\\qlbanlekho\\userapi\\userapi.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{284ADB5D-F6CE-4C43-910B-4EAA3558942B}|UserApi\\UserApi.csproj|solutionrelative:userapi\\userapi.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{67AFBC2A-27F8-4CB8-9294-B2CAA4EA55E9}|DAL\\DAL.csproj|c:\\users\\admin\\onedrive\\desktop\\quanlykho\\qlbanlekho\\dal\\sanphamrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{67AFBC2A-27F8-4CB8-9294-B2CAA4EA55E9}|DAL\\DAL.csproj|solutionrelative:dal\\sanphamrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{67AFBC2A-27F8-4CB8-9294-B2CAA4EA55E9}|DAL\\DAL.csproj|c:\\users\\admin\\onedrive\\desktop\\quanlykho\\qlbanlekho\\dal\\interfaces\\idsanpham.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{67AFBC2A-27F8-4CB8-9294-B2CAA4EA55E9}|DAL\\DAL.csproj|solutionrelative:dal\\interfaces\\idsanpham.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
-      "DocumentGroups": []
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "SanPhamController.cs",
+              "DocumentMoniker": "C:\\Users\\ADMIN\\OneDrive\\Desktop\\QuanLyKho\\QLBanLeKho\\CoreApi\\Controllers\\SanPhamController.cs",
+              "RelativeDocumentMoniker": "CoreApi\\Controllers\\SanPhamController.cs",
+              "ToolTip": "C:\\Users\\ADMIN\\OneDrive\\Desktop\\QuanLyKho\\QLBanLeKho\\CoreApi\\Controllers\\SanPhamController.cs*",
+              "RelativeToolTip": "CoreApi\\Controllers\\SanPhamController.cs*",
+              "ViewState": "AgIAAD4AAAAAAAAAAAAswFoAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-19T07:53:10.394Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "SanPhamModel.cs",
+              "DocumentMoniker": "C:\\Users\\ADMIN\\OneDrive\\Desktop\\QuanLyKho\\QLBanLeKho\\Model\\SanPhamModel.cs",
+              "RelativeDocumentMoniker": "Model\\SanPhamModel.cs",
+              "ToolTip": "C:\\Users\\ADMIN\\OneDrive\\Desktop\\QuanLyKho\\QLBanLeKho\\Model\\SanPhamModel.cs",
+              "RelativeToolTip": "Model\\SanPhamModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAuwAwAAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-19T02:01:51.372Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "IDSanPhamBLL.cs",
+              "DocumentMoniker": "C:\\Users\\ADMIN\\OneDrive\\Desktop\\QuanLyKho\\QLBanLeKho\\BLL\\Interfaces\\IDSanPhamBLL.cs",
+              "RelativeDocumentMoniker": "BLL\\Interfaces\\IDSanPhamBLL.cs",
+              "ToolTip": "C:\\Users\\ADMIN\\OneDrive\\Desktop\\QuanLyKho\\QLBanLeKho\\BLL\\Interfaces\\IDSanPhamBLL.cs*",
+              "RelativeToolTip": "BLL\\Interfaces\\IDSanPhamBLL.cs*",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-19T03:28:23.172Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ResponseModel.cs",
+              "DocumentMoniker": "C:\\Users\\ADMIN\\OneDrive\\Desktop\\QuanLyKho\\QLBanLeKho\\Model\\ResponseModel.cs",
+              "RelativeDocumentMoniker": "Model\\ResponseModel.cs",
+              "ToolTip": "C:\\Users\\ADMIN\\OneDrive\\Desktop\\QuanLyKho\\QLBanLeKho\\Model\\ResponseModel.cs*",
+              "RelativeToolTip": "Model\\ResponseModel.cs*",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-19T08:06:41.506Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "CoreApi",
+              "DocumentMoniker": "C:\\Users\\ADMIN\\OneDrive\\Desktop\\QuanLyKho\\QLBanLeKho\\CoreApi\\CoreApi.csproj",
+              "RelativeDocumentMoniker": "CoreApi\\CoreApi.csproj",
+              "ToolTip": "C:\\Users\\ADMIN\\OneDrive\\Desktop\\QuanLyKho\\QLBanLeKho\\CoreApi\\CoreApi.csproj*",
+              "RelativeToolTip": "CoreApi\\CoreApi.csproj*",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-09-19T07:35:33.55Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "BLL",
+              "DocumentMoniker": "C:\\Users\\ADMIN\\OneDrive\\Desktop\\QuanLyKho\\QLBanLeKho\\BLL\\BLL.csproj",
+              "RelativeDocumentMoniker": "BLL\\BLL.csproj",
+              "ToolTip": "C:\\Users\\ADMIN\\OneDrive\\Desktop\\QuanLyKho\\QLBanLeKho\\BLL\\BLL.csproj",
+              "RelativeToolTip": "BLL\\BLL.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-09-19T07:35:47.51Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "UserApi",
+              "DocumentMoniker": "C:\\Users\\ADMIN\\OneDrive\\Desktop\\QuanLyKho\\QLBanLeKho\\UserApi\\UserApi.csproj",
+              "RelativeDocumentMoniker": "UserApi\\UserApi.csproj",
+              "ToolTip": "C:\\Users\\ADMIN\\OneDrive\\Desktop\\QuanLyKho\\QLBanLeKho\\UserApi\\UserApi.csproj*",
+              "RelativeToolTip": "UserApi\\UserApi.csproj*",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-09-19T04:20:43.486Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "SanPhamRepository.cs",
+              "DocumentMoniker": "C:\\Users\\ADMIN\\OneDrive\\Desktop\\QuanLyKho\\QLBanLeKho\\DAL\\SanPhamRepository.cs",
+              "RelativeDocumentMoniker": "DAL\\SanPhamRepository.cs",
+              "ToolTip": "C:\\Users\\ADMIN\\OneDrive\\Desktop\\QuanLyKho\\QLBanLeKho\\DAL\\SanPhamRepository.cs",
+              "RelativeToolTip": "DAL\\SanPhamRepository.cs",
+              "ViewState": "AgIAAB4AAAAAAAAAAAAYwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-19T04:19:12.575Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "IDSanPham.cs",
+              "DocumentMoniker": "C:\\Users\\ADMIN\\OneDrive\\Desktop\\QuanLyKho\\QLBanLeKho\\DAL\\Interfaces\\IDSanPham.cs",
+              "RelativeDocumentMoniker": "DAL\\Interfaces\\IDSanPham.cs",
+              "ToolTip": "C:\\Users\\ADMIN\\OneDrive\\Desktop\\QuanLyKho\\QLBanLeKho\\DAL\\Interfaces\\IDSanPham.cs",
+              "RelativeToolTip": "DAL\\Interfaces\\IDSanPham.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-19T04:18:58.168Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "SanPhamBusiness.cs",
+              "DocumentMoniker": "C:\\Users\\ADMIN\\OneDrive\\Desktop\\QuanLyKho\\QLBanLeKho\\BLL\\SanPhamBusiness.cs",
+              "RelativeDocumentMoniker": "BLL\\SanPhamBusiness.cs",
+              "ToolTip": "C:\\Users\\ADMIN\\OneDrive\\Desktop\\QuanLyKho\\QLBanLeKho\\BLL\\SanPhamBusiness.cs",
+              "RelativeToolTip": "BLL\\SanPhamBusiness.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-19T03:15:38.483Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
