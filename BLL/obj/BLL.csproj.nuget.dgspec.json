@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\BackEnd\\Chuan_Tuan_Bach\\QLBanLeKho\\QLBanLeKho\\BLL\\BLL.csproj": {}
+    "D:\\!LKho\\QLBanLeKho\\BLL\\BLL.csproj": {}
   },
   "projects": {
-    "D:\\BackEnd\\Chuan_Tuan_Bach\\QLBanLeKho\\QLBanLeKho\\BLL\\BLL.csproj": {
+    "D:\\!LKho\\QLBanLeKho\\BLL\\BLL.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\BackEnd\\Chuan_Tuan_Bach\\QLBanLeKho\\QLBanLeKho\\BLL\\BLL.csproj",
+        "projectUniqueName": "D:\\!LKho\\QLBanLeKho\\BLL\\BLL.csproj",
         "projectName": "BLL",
-        "projectPath": "D:\\BackEnd\\Chuan_Tuan_Bach\\QLBanLeKho\\QLBanLeKho\\BLL\\BLL.csproj",
-        "packagesPath": "C:\\Users\\Pham Chuan\\.nuget\\packages\\",
-        "outputPath": "D:\\BackEnd\\Chuan_Tuan_Bach\\QLBanLeKho\\QLBanLeKho\\BLL\\obj\\",
+        "projectPath": "D:\\!LKho\\QLBanLeKho\\BLL\\BLL.csproj",
+        "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
+        "outputPath": "D:\\!LKho\\QLBanLeKho\\BLL\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Pham Chuan\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -22,18 +22,17 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "D:\\BackEnd\\Chuan_Tuan_Bach\\QLBanLeKho\\QLBanLeKho\\DAL\\DAL.csproj": {
-                "projectPath": "D:\\BackEnd\\Chuan_Tuan_Bach\\QLBanLeKho\\QLBanLeKho\\DAL\\DAL.csproj"
+              "D:\\!LKho\\QLBanLeKho\\DAL\\DAL.csproj": {
+                "projectPath": "D:\\!LKho\\QLBanLeKho\\DAL\\DAL.csproj"
               },
-              "D:\\BackEnd\\Chuan_Tuan_Bach\\QLBanLeKho\\QLBanLeKho\\Model\\Model.csproj": {
-                "projectPath": "D:\\BackEnd\\Chuan_Tuan_Bach\\QLBanLeKho\\QLBanLeKho\\Model\\Model.csproj"
+              "D:\\!LKho\\QLBanLeKho\\Model\\Model.csproj": {
+                "projectPath": "D:\\!LKho\\QLBanLeKho\\Model\\Model.csproj"
               }
             }
           }
@@ -42,11 +41,6 @@
           "warnAsError": [
             "NU1605"
           ]
-        },
-        "restoreAuditProperties": {
-          "enableAudit": "true",
-          "auditLevel": "low",
-          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -68,21 +62,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\BackEnd\\Chuan_Tuan_Bach\\QLBanLeKho\\QLBanLeKho\\DAL\\DAL.csproj": {
+    "D:\\!LKho\\QLBanLeKho\\DAL\\DAL.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\BackEnd\\Chuan_Tuan_Bach\\QLBanLeKho\\QLBanLeKho\\DAL\\DAL.csproj",
+        "projectUniqueName": "D:\\!LKho\\QLBanLeKho\\DAL\\DAL.csproj",
         "projectName": "DAL",
-        "projectPath": "D:\\BackEnd\\Chuan_Tuan_Bach\\QLBanLeKho\\QLBanLeKho\\DAL\\DAL.csproj",
-        "packagesPath": "C:\\Users\\Pham Chuan\\.nuget\\packages\\",
-        "outputPath": "D:\\BackEnd\\Chuan_Tuan_Bach\\QLBanLeKho\\QLBanLeKho\\DAL\\obj\\",
+        "projectPath": "D:\\!LKho\\QLBanLeKho\\DAL\\DAL.csproj",
+        "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
+        "outputPath": "D:\\!LKho\\QLBanLeKho\\DAL\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Pham Chuan\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -90,15 +84,14 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "D:\\BackEnd\\Chuan_Tuan_Bach\\QLBanLeKho\\QLBanLeKho\\Model\\Model.csproj": {
-                "projectPath": "D:\\BackEnd\\Chuan_Tuan_Bach\\QLBanLeKho\\QLBanLeKho\\Model\\Model.csproj"
+              "D:\\!LKho\\QLBanLeKho\\Model\\Model.csproj": {
+                "projectPath": "D:\\!LKho\\QLBanLeKho\\Model\\Model.csproj"
               }
             }
           }
@@ -107,11 +100,6 @@
           "warnAsError": [
             "NU1605"
           ]
-        },
-        "restoreAuditProperties": {
-          "enableAudit": "true",
-          "auditLevel": "low",
-          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -119,6 +107,10 @@
           "targetAlias": "net8.0",
           "dependencies": {
             "Microsoft.Extensions.Configuration": {
+              "target": "Package",
+              "version": "[9.0.9, )"
+            },
+            "Microsoft.Extensions.Configuration.Json": {
               "target": "Package",
               "version": "[9.0.9, )"
             },
@@ -147,21 +139,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\BackEnd\\Chuan_Tuan_Bach\\QLBanLeKho\\QLBanLeKho\\Model\\Model.csproj": {
+    "D:\\!LKho\\QLBanLeKho\\Model\\Model.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\BackEnd\\Chuan_Tuan_Bach\\QLBanLeKho\\QLBanLeKho\\Model\\Model.csproj",
+        "projectUniqueName": "D:\\!LKho\\QLBanLeKho\\Model\\Model.csproj",
         "projectName": "Model",
-        "projectPath": "D:\\BackEnd\\Chuan_Tuan_Bach\\QLBanLeKho\\QLBanLeKho\\Model\\Model.csproj",
-        "packagesPath": "C:\\Users\\Pham Chuan\\.nuget\\packages\\",
-        "outputPath": "D:\\BackEnd\\Chuan_Tuan_Bach\\QLBanLeKho\\QLBanLeKho\\Model\\obj\\",
+        "projectPath": "D:\\!LKho\\QLBanLeKho\\Model\\Model.csproj",
+        "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
+        "outputPath": "D:\\!LKho\\QLBanLeKho\\Model\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Pham Chuan\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -169,7 +161,6 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -182,11 +173,6 @@
           "warnAsError": [
             "NU1605"
           ]
-        },
-        "restoreAuditProperties": {
-          "enableAudit": "true",
-          "auditLevel": "low",
-          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -208,7 +194,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
