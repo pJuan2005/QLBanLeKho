@@ -7,16 +7,16 @@ using System.Linq;
 
 namespace DAL
 {
-    public class ProductRepository : IProductRepository
+    public class ProductDAL : IDProductDAL
     {
         private readonly IDatabaseHelper _dbHelper;
 
-        public ProductRepository(IDatabaseHelper dbHelper)
+        public ProductDAL(IDatabaseHelper dbHelper)
         {
             _dbHelper = dbHelper;
         }
 
-        public SanPhamModel GetDatabyID(int id)
+        public ProductModel GetDatabyID(int id)
         {
             string msgError = "";
             try
@@ -25,7 +25,7 @@ namespace DAL
                      "@ProductID", id);
                 if (!string.IsNullOrEmpty(msgError))
                     throw new Exception(msgError);
-                return dt.ConvertTo<SanPhamModel>().FirstOrDefault();
+                return dt.ConvertTo<ProductModel>().FirstOrDefault();
             }
             catch (Exception ex)
             {
@@ -33,7 +33,7 @@ namespace DAL
             }
         }
 
-        public bool Create(SanPhamModel model)
+        public bool Create(ProductModel model)
         {
             string msgError = "";
             try
@@ -61,7 +61,7 @@ namespace DAL
             }
         }
 
-        public bool Update(SanPhamModel model)
+        public bool Update(ProductModel model)
         {
             string msgError = "";
             try
@@ -110,7 +110,7 @@ namespace DAL
             }
         }
 
-        public List<SanPhamModel> Search(int pageIndex, int pageSize, out long total,
+        public List<ProductModel> Search(int pageIndex, int pageSize, out long total,
                                          int? ProductID, string SKU, string ProductName,
                                          int? CategoryID, int? SupplierID, string option)
         {
@@ -131,7 +131,7 @@ namespace DAL
                 if (!string.IsNullOrEmpty(msgError))
                     throw new Exception(msgError);
                 if (dt.Rows.Count > 0) total = (long)dt.Rows[0]["RecordCount"];
-                return dt.ConvertTo<SanPhamModel>().ToList();
+                return dt.ConvertTo<ProductModel>().ToList();
             }
             catch (Exception ex)
             {

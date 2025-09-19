@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Model
 {
-    public class SanPhamModel
+    public class ProductModel
     {
         public int ProductID { get; set; }           // Mã sản phẩm (khóa chính)
         public string SKU { get; set; }              // Mã SKU (unique, not null)

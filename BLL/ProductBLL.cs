@@ -6,29 +6,29 @@ using System.Collections.Generic;
 
 namespace BLL
 {
-    public class SanPhamBusiness : IDSanPhamBLL
+    public class ProductBLL : IDProductBLL
     {
-        private readonly IProductRepository _res;
+        private readonly IDProductDAL _res;
 
-        public SanPhamBusiness(IProductRepository res)
+        public ProductBLL(IDProductDAL res)
         {
             _res = res;
         }
 
         // Lấy dữ liệu theo ID
-        public SanPhamModel GetDatabyID(int id)
+        public ProductModel GetDatabyID(int id)
         {
             return _res.GetDatabyID(id);
         }
 
         // Thêm mới sản phẩm
-        public bool Create(SanPhamModel model)
+        public bool Create(ProductModel model)
         {
             return _res.Create(model);
         }
 
         // Cập nhật sản phẩm
-        public bool Update(SanPhamModel model)
+        public bool Update(ProductModel model)
         {
             return _res.Update(model);
         }
@@ -40,7 +40,7 @@ namespace BLL
         }
 
         // Tìm kiếm & phân trang
-        public List<SanPhamModel> Search(int pageIndex, int pageSize, out long total,
+        public List<ProductModel> Search(int pageIndex, int pageSize, out long total,
                                  int? productId, string productName, string option)
         {
             return _res.Search(pageIndex, pageSize, out total, productId, null, productName, null, null, option);
