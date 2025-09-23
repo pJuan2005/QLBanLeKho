@@ -23,7 +23,7 @@ namespace DAL
             string msgError = "";
             try
             {
-                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "sp_donmuahang_get_by_id",
+                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "sp_PurchaseOrders_get_by_id",
                     "@POID", id);
                 if (!string.IsNullOrEmpty(msgError))
                     throw new Exception(msgError);
@@ -40,11 +40,12 @@ namespace DAL
             string msgError = "";
             try
             {
-                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_donmuahang_create",
-                    
+                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_PurchaseOrders_create",
+
                     "@SupplierID", model.SupplierID,
                     "@OrderDate", model.OrderDate,
-                    "@TotalAmount", model.TotalAmount);
+                    "@TotalAmount", model.TotalAmount,
+                    "@Status", model.Status);
                 if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
                 {
                     throw new Exception(Convert.ToString(result) + msgError);
@@ -62,11 +63,13 @@ namespace DAL
             string msgError = "";
             try
             {
-                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_donmuahang_update",
-                    "@POID", model.POID,
+                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_PurchaseOrders_update",
+
+                     "@POID", model.POID,
                     "@SupplierID", model.SupplierID,
                     "@OrderDate", model.OrderDate,
-                    "@TotalAmount", model.TotalAmount);
+                    "@TotalAmount", model.TotalAmount,
+                    "@Status", model.Status);
                 if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
                 {
                     throw new Exception(Convert.ToString(result) + msgError);
@@ -83,7 +86,7 @@ namespace DAL
             string msgError = "";
             try
             {
-                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_donmuahang_delete",
+                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_PurchaseOrders_delete",
                     "@POID", model.POID);
                 if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
                 {
@@ -98,16 +101,16 @@ namespace DAL
         }
 
 
-        public List<DonMuaHangModel> Search(int pageIndex, int pageSize, out long total, int POID, DateTime OrderDate, decimal TotalAmount)
+        public List<DonMuaHangModel> Search(int pageIndex, int pageSize, out long total, int SupplierID, DateTime OrderDate, decimal TotalAmount)
         {
             string msgError = "";
             total = 0;
             try
             {
-                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "sp_donmuahang_search",
+                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "sp_PurchaseOrders_search",
                     "@page_index", pageIndex,
                     "@page_size", pageSize,
-                    "@POID", POID,
+                    "@SupplierID", SupplierID,
                     "@OrderDate", OrderDate,
                     "@TotalAmount", TotalAmount);
                 if (!string.IsNullOrEmpty(msgError))

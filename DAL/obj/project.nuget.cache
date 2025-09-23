@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "3LfgvcMZlMKi3xfkWJh54tMMc5DMIN+xGeeMFZfFr8iltJF5ery+pZplBE7jh8y6OflAT6I99cPienrIXLYVEA==",
+  "dgSpecHash": "W4AXE3sC1rGggiop35Gp1/2BUG0jpVw2p62LJ28ZEDIeEY4cpZ9PFXJJ+GARmQG8DFxDidiLmyedUH7sN9A2Xg==",
   "success": true,
-  "projectFilePath": "D:\\!LKho\\QLBanLeKho\\DAL\\DAL.csproj",
+  "projectFilePath": "D:\\backend\\QLBanLeKho\\DAL\\DAL.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\ADMIN\\.nuget\\packages\\microsoft.extensions.configuration\\9.0.9\\microsoft.extensions.configuration.9.0.9.nupkg.sha512",
     "C:\\Users\\ADMIN\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\9.0.9\\microsoft.extensions.configuration.abstractions.9.0.9.nupkg.sha512",

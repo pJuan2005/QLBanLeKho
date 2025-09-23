@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "+mLiVim/t1cLBsOS+GgLRBqw2lg0TtWwjQuebxXNHxFptdvbLQmfABVnaS1Pz7NI74ECRkHD7kknKUvIPt1HOw==",
+  "dgSpecHash": "sqX2aWiL0Ha0DGl4galB0EYDMtIpuwCpmW43s+NOJpOlFNhvzLIKn5AazbMLKgkhSU/7HaL9AV+vBItlI7xDGA==",
   "success": true,
-  "projectFilePath": "D:\\!LKho\\QLBanLeKho\\Model\\Model.csproj",
+  "projectFilePath": "D:\\backend\\QLBanLeKho\\Model\\Model.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

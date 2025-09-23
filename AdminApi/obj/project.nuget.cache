@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "sJEF6iEf6H+pP2RUMgJiPbZv6w+s6I+Hf8UwAP2iI74BN9VjeirRa6PSD3V3KgevUeNxi7guy0QJp4TjOUPMvw==",
+  "dgSpecHash": "nYS627odovd5fBqyD+Lx8daYAs3rp9OHCZy4KgjGhv4aDLpOiFLVK5QNsliFpRyGZ4U61qEaT/+0t2gsWuaNCA==",
   "success": true,
-  "projectFilePath": "D:\\!LKho\\QLBanLeKho\\AdminApi\\AdminApi.csproj",
+  "projectFilePath": "D:\\backend\\QLBanLeKho\\AdminApi\\AdminApi.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\ADMIN\\.nuget\\packages\\microsoft.extensions.apidescription.server\\6.0.5\\microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
     "C:\\Users\\ADMIN\\.nuget\\packages\\microsoft.extensions.configuration\\9.0.9\\microsoft.extensions.configuration.9.0.9.nupkg.sha512",

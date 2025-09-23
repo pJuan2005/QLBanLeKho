@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\!LKho\\QLBanLeKho\\AdminApi\\AdminApi.csproj": {}
+    "D:\\backend\\QLBanLeKho\\AdminApi\\AdminApi.csproj": {}
   },
   "projects": {
-    "D:\\!LKho\\QLBanLeKho\\AdminApi\\AdminApi.csproj": {
+    "D:\\backend\\QLBanLeKho\\AdminApi\\AdminApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\!LKho\\QLBanLeKho\\AdminApi\\AdminApi.csproj",
+        "projectUniqueName": "D:\\backend\\QLBanLeKho\\AdminApi\\AdminApi.csproj",
         "projectName": "AdminApi",
-        "projectPath": "D:\\!LKho\\QLBanLeKho\\AdminApi\\AdminApi.csproj",
+        "projectPath": "D:\\backend\\QLBanLeKho\\AdminApi\\AdminApi.csproj",
         "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
-        "outputPath": "D:\\!LKho\\QLBanLeKho\\AdminApi\\obj\\",
+        "outputPath": "D:\\backend\\QLBanLeKho\\AdminApi\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -28,11 +28,11 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "D:\\!LKho\\QLBanLeKho\\BLL\\BLL.csproj": {
-                "projectPath": "D:\\!LKho\\QLBanLeKho\\BLL\\BLL.csproj"
+              "D:\\backend\\QLBanLeKho\\BLL\\BLL.csproj": {
+                "projectPath": "D:\\backend\\QLBanLeKho\\BLL\\BLL.csproj"
               },
-              "D:\\!LKho\\QLBanLeKho\\Model\\Model.csproj": {
-                "projectPath": "D:\\!LKho\\QLBanLeKho\\Model\\Model.csproj"
+              "D:\\backend\\QLBanLeKho\\Model\\Model.csproj": {
+                "projectPath": "D:\\backend\\QLBanLeKho\\Model\\Model.csproj"
               }
             }
           }
@@ -75,14 +75,14 @@
         }
       }
     },
-    "D:\\!LKho\\QLBanLeKho\\BLL\\BLL.csproj": {
+    "D:\\backend\\QLBanLeKho\\BLL\\BLL.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\!LKho\\QLBanLeKho\\BLL\\BLL.csproj",
+        "projectUniqueName": "D:\\backend\\QLBanLeKho\\BLL\\BLL.csproj",
         "projectName": "BLL",
-        "projectPath": "D:\\!LKho\\QLBanLeKho\\BLL\\BLL.csproj",
+        "projectPath": "D:\\backend\\QLBanLeKho\\BLL\\BLL.csproj",
         "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
-        "outputPath": "D:\\!LKho\\QLBanLeKho\\BLL\\obj\\",
+        "outputPath": "D:\\backend\\QLBanLeKho\\BLL\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -99,11 +99,11 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "D:\\!LKho\\QLBanLeKho\\DAL\\DAL.csproj": {
-                "projectPath": "D:\\!LKho\\QLBanLeKho\\DAL\\DAL.csproj"
+              "D:\\backend\\QLBanLeKho\\DAL\\DAL.csproj": {
+                "projectPath": "D:\\backend\\QLBanLeKho\\DAL\\DAL.csproj"
               },
-              "D:\\!LKho\\QLBanLeKho\\Model\\Model.csproj": {
-                "projectPath": "D:\\!LKho\\QLBanLeKho\\Model\\Model.csproj"
+              "D:\\backend\\QLBanLeKho\\Model\\Model.csproj": {
+                "projectPath": "D:\\backend\\QLBanLeKho\\Model\\Model.csproj"
               }
             }
           }
@@ -137,14 +137,14 @@
         }
       }
     },
-    "D:\\!LKho\\QLBanLeKho\\DAL\\DAL.csproj": {
+    "D:\\backend\\QLBanLeKho\\DAL\\DAL.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\!LKho\\QLBanLeKho\\DAL\\DAL.csproj",
+        "projectUniqueName": "D:\\backend\\QLBanLeKho\\DAL\\DAL.csproj",
         "projectName": "DAL",
-        "projectPath": "D:\\!LKho\\QLBanLeKho\\DAL\\DAL.csproj",
+        "projectPath": "D:\\backend\\QLBanLeKho\\DAL\\DAL.csproj",
         "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
-        "outputPath": "D:\\!LKho\\QLBanLeKho\\DAL\\obj\\",
+        "outputPath": "D:\\backend\\QLBanLeKho\\DAL\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -161,8 +161,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "D:\\!LKho\\QLBanLeKho\\Model\\Model.csproj": {
-                "projectPath": "D:\\!LKho\\QLBanLeKho\\Model\\Model.csproj"
+              "D:\\backend\\QLBanLeKho\\Model\\Model.csproj": {
+                "projectPath": "D:\\backend\\QLBanLeKho\\Model\\Model.csproj"
               }
             }
           }
@@ -214,14 +214,14 @@
         }
       }
     },
-    "D:\\!LKho\\QLBanLeKho\\Model\\Model.csproj": {
+    "D:\\backend\\QLBanLeKho\\Model\\Model.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\!LKho\\QLBanLeKho\\Model\\Model.csproj",
+        "projectUniqueName": "D:\\backend\\QLBanLeKho\\Model\\Model.csproj",
         "projectName": "Model",
-        "projectPath": "D:\\!LKho\\QLBanLeKho\\Model\\Model.csproj",
+        "projectPath": "D:\\backend\\QLBanLeKho\\Model\\Model.csproj",
         "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
-        "outputPath": "D:\\!LKho\\QLBanLeKho\\Model\\obj\\",
+        "outputPath": "D:\\backend\\QLBanLeKho\\Model\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",

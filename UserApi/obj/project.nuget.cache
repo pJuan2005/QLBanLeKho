@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "mojOfT6P3zoeHeY4YjNXk0UTC7nRFEqYLwjU+oW6U8oeQ73U3IoZ/ojKYmqG916rlHcHdesDosbsJOKP2ghzEg==",
+  "dgSpecHash": "UFKp8AyCS90lHGotKwKRr0mhnL1qTiCYydkb5oUjrTAfTnHIpqbL2imhVN7m3cew0wLTyetWPK4AfmBfHqav6w==",
   "success": true,
-  "projectFilePath": "D:\\!LKho\\QLBanLeKho\\UserApi\\UserApi.csproj",
+  "projectFilePath": "D:\\backend\\QLBanLeKho\\UserApi\\UserApi.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\ADMIN\\.nuget\\packages\\microsoft.extensions.apidescription.server\\6.0.5\\microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
     "C:\\Users\\ADMIN\\.nuget\\packages\\microsoft.extensions.configuration\\9.0.9\\microsoft.extensions.configuration.9.0.9.nupkg.sha512",

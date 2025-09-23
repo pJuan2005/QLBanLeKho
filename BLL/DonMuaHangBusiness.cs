@@ -34,9 +34,9 @@ namespace BLL
         {
             return _res.Delete(model);
         }
-        public List<DonMuaHangModel> Search(int pageIndex, int pageSize, out long total, int POID, DateTime OrderDate, decimal TotalAmount)
+        public List<DonMuaHangModel> Search(int pageIndex, int pageSize, out long total, int SupplierID, DateTime OrderDate, decimal TotalAmount)
         {
-            return _res.Search(pageIndex, pageSize, out total, POID, OrderDate, TotalAmount);
+            return _res.Search(pageIndex, pageSize, out total, SupplierID, OrderDate, TotalAmount);
         }
     }
 }

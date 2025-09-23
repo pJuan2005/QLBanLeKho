@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\!LKho\\QLBanLeKho\\Model\\Model.csproj": {}
+    "D:\\backend\\QLBanLeKho\\Model\\Model.csproj": {}
   },
   "projects": {
-    "D:\\!LKho\\QLBanLeKho\\Model\\Model.csproj": {
+    "D:\\backend\\QLBanLeKho\\Model\\Model.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\!LKho\\QLBanLeKho\\Model\\Model.csproj",
+        "projectUniqueName": "D:\\backend\\QLBanLeKho\\Model\\Model.csproj",
         "projectName": "Model",
-        "projectPath": "D:\\!LKho\\QLBanLeKho\\Model\\Model.csproj",
+        "projectPath": "D:\\backend\\QLBanLeKho\\Model\\Model.csproj",
         "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
-        "outputPath": "D:\\!LKho\\QLBanLeKho\\Model\\obj\\",
+        "outputPath": "D:\\backend\\QLBanLeKho\\Model\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",

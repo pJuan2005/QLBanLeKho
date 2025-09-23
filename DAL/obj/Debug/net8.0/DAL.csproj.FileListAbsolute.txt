@@ -1,0 +1,16 @@
+D:\backend\QLBanLeKho\DAL\bin\Debug\net8.0\DAL.deps.json
+D:\backend\QLBanLeKho\DAL\bin\Debug\net8.0\DAL.dll
+D:\backend\QLBanLeKho\DAL\bin\Debug\net8.0\DAL.pdb
+D:\backend\QLBanLeKho\DAL\bin\Debug\net8.0\Model.dll
+D:\backend\QLBanLeKho\DAL\bin\Debug\net8.0\Model.pdb
+D:\backend\QLBanLeKho\DAL\obj\Debug\net8.0\DAL.csproj.AssemblyReference.cache
+D:\backend\QLBanLeKho\DAL\obj\Debug\net8.0\DAL.GeneratedMSBuildEditorConfig.editorconfig
+D:\backend\QLBanLeKho\DAL\obj\Debug\net8.0\DAL.AssemblyInfoInputs.cache
+D:\backend\QLBanLeKho\DAL\obj\Debug\net8.0\DAL.AssemblyInfo.cs
+D:\backend\QLBanLeKho\DAL\obj\Debug\net8.0\DAL.csproj.CoreCompileInputs.cache
+D:\backend\QLBanLeKho\DAL\obj\Debug\net8.0\DAL.sourcelink.json
+D:\backend\QLBanLeKho\DAL\obj\Debug\net8.0\DAL.csproj.CopyComplete
+D:\backend\QLBanLeKho\DAL\obj\Debug\net8.0\DAL.dll
+D:\backend\QLBanLeKho\DAL\obj\Debug\net8.0\refint\DAL.dll
+D:\backend\QLBanLeKho\DAL\obj\Debug\net8.0\DAL.pdb
+D:\backend\QLBanLeKho\DAL\obj\Debug\net8.0\ref\DAL.dll

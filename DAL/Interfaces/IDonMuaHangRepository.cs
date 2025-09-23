@@ -13,6 +13,6 @@ namespace DAL.Interfaces
         bool Create(DonMuaHangModel model);
         bool Update(DonMuaHangModel model);
         bool Delete(DonMuaHangModel model);
-        List<DonMuaHangModel> Search(int pageIndex, int pageSize, out long total, int POID, DateTime OrderDate, decimal TotalAmount);
+        List<DonMuaHangModel> Search(int pageIndex, int pageSize, out long total, int SupplierID, DateTime OrderDate, decimal TotalAmount);
     }
 }

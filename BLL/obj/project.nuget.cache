@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "CiTusgS1VkIB7aBUKxqmSbG9YsGlW0Q4WYR8NbsnFOCeTA0oCkeoBZFBCw/0FHCCgKavWYy9DlYZhG39Hr0Ilg==",
+  "dgSpecHash": "SDQBUH4RLHCFykYIfl6Cj1OMQBljSuxlbTSlWFImZyBtxzaQr5tuTzd8OzOokA+J81tUJFpMdNJb5ufQxd+P1A==",
   "success": true,
-  "projectFilePath": "D:\\!LKho\\QLBanLeKho\\BLL\\BLL.csproj",
+  "projectFilePath": "D:\\backend\\QLBanLeKho\\BLL\\BLL.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\ADMIN\\.nuget\\packages\\microsoft.extensions.configuration\\9.0.9\\microsoft.extensions.configuration.9.0.9.nupkg.sha512",
     "C:\\Users\\ADMIN\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\9.0.9\\microsoft.extensions.configuration.abstractions.9.0.9.nupkg.sha512",
