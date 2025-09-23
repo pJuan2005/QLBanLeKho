@@ -23,6 +23,10 @@ namespace BLL.Interfaces
 
         // Tìm kiếm & phân trang
         List<ProductModel> Search(int pageIndex, int pageSize, out long total,
-                                  int? MaSanPham, string TenSanPham, string option);
+                                  int? ProductID, string SKU, string ProductName,
+                                  int? CategoryID, int? SupplierID, string option);
+
+
+
     }
 }

@@ -49,17 +49,26 @@ namespace DAL
                     "@MinStock", model.MinStock,
                     "@Status", model.Status
                 );
-                if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
+
+                if (!string.IsNullOrEmpty(msgError))
                 {
-                    throw new Exception(Convert.ToString(result) + msgError);
+                    throw new Exception(msgError);
                 }
-                return true;
+
+                if (result != null && int.TryParse(result.ToString(), out int newId))
+                {
+                    model.ProductID = newId; // Gán ProductID mới vào model
+                }
+
+                return true; // Thành công
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw;
             }
         }
+
+        
 
         public bool Update(ProductModel model)
         {
@@ -98,17 +107,24 @@ namespace DAL
                 var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_product_delete",
                     "@ProductID", productId
                 );
-                if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
+
+                if (!string.IsNullOrEmpty(msgError))
                 {
-                    throw new Exception(Convert.ToString(result) + msgError);
+                    Console.WriteLine("Lỗi: " + msgError);
+                    return false;
                 }
+
+                Console.WriteLine("Thành công: " + Convert.ToString(result));
                 return true;
             }
             catch (Exception ex)
             {
-                throw ex;
+                Console.WriteLine("Exception: " + ex.Message);
+                return false;
             }
         }
+
+
 
         public List<ProductModel> Search(int pageIndex, int pageSize, out long total,
                                          int? ProductID, string SKU, string ProductName,

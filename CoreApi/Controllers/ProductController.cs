@@ -16,7 +16,7 @@ namespace CoreApi.Controllers
             _ProductBusiness = sanPhamBusiness;
         }
 
-        [Route("create-sanpham")]
+        [Route("create-product")]
         [HttpPost]
         public ProductModel Create([FromBody] ProductModel model)
         {
@@ -24,7 +24,7 @@ namespace CoreApi.Controllers
             return model;
         }
 
-        [Route("update-sanpham")]
+        [Route("update-product")]
         [HttpPost]
         public ProductModel Update([FromBody] ProductModel model)
         {
@@ -32,7 +32,7 @@ namespace CoreApi.Controllers
             return model;
         }
 
-        [Route("delete-sanpham/{id}")]
+        [Route("delete-product/{id}")]
         [HttpDelete]
         public IActionResult Delete(int id)
         {
@@ -47,7 +47,9 @@ namespace CoreApi.Controllers
             return _ProductBusiness.GetDatabyID(id);
         }
 
-        [Route("search")]
+        //[Route("search-product")][HttpPost] public ResponseModel Search([FromBody] Dictionary<string, object> formData) { var response = new ResponseModel(); try { var page = int.Parse(formData["page"].ToString()); var pageSize = int.Parse(formData["pageSize"].ToString()); int? IDProduct = null; if (formData.Keys.Contains("IDProduct") && !string.IsNullOrEmpty(Convert.ToString(formData["IDProduct"]))) { IDProduct = Convert.ToInt32(formData["IDProduct"]); } string ProductName = ""; if (formData.Keys.Contains("ProductName") && !string.IsNullOrEmpty(Convert.ToString(formData["ProductName"]))) { ProductName = Convert.ToString(formData["ProductName"]); } string option = ""; if (formData.Keys.Contains("option") && !string.IsNullOrEmpty(Convert.ToString(formData["option"]))) { option = Convert.ToString(formData["option"]); } long total = 0; var data = _ProductBusiness.Search(page, pageSize, out total, IDProduct, ProductName, option); response.TotalItems = total; response.Data = data; response.Page = page; response.PageSize = pageSize; } catch (Exception ex) { throw new Exception(ex.Message); } return response; }
+
+        [Route("search-product")]
         [HttpPost]
         public ResponseModel Search([FromBody] Dictionary<string, object> formData)
         {
@@ -57,10 +59,16 @@ namespace CoreApi.Controllers
                 var page = int.Parse(formData["page"].ToString());
                 var pageSize = int.Parse(formData["pageSize"].ToString());
 
-                int? IDProduct = null;
-                if (formData.Keys.Contains("IDProduct") && !string.IsNullOrEmpty(Convert.ToString(formData["IDProduct"])))
+                int? CategoryID = null;
+                if (formData.Keys.Contains("CategoryID") && !string.IsNullOrEmpty(Convert.ToString(formData["CategoryID"])))
                 {
-                    IDProduct = Convert.ToInt32(formData["IDProduct"]);
+                    CategoryID = Convert.ToInt32(formData["CategoryID"]);
+                }
+
+                int? SupplierID = null;
+                if (formData.Keys.Contains("SupplierID") && !string.IsNullOrEmpty(Convert.ToString(formData["SupplierID"])))
+                {
+                    SupplierID = Convert.ToInt32(formData["SupplierID"]);
                 }
 
                 string ProductName = "";
@@ -76,7 +84,17 @@ namespace CoreApi.Controllers
                 }
 
                 long total = 0;
-                var data = _ProductBusiness.Search(page, pageSize, out total, IDProduct, ProductName, option);
+                var data = _ProductBusiness.Search(
+                    page, pageSize, out total,
+                    null,        // ProductID
+                    null,        // SKU
+                    ProductName, // ProductName
+                    CategoryID,  // CategoryID
+                    SupplierID,  // SupplierID
+                    option       // option
+                );
+
+
 
                 response.TotalItems = total;
                 response.Data = data;

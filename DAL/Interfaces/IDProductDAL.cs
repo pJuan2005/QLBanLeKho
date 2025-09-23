@@ -21,7 +21,7 @@ namespace DAL.Interfaces
         // ✅ Xóa sản phẩm
         bool Delete(int productId);
 
-        // ✅ Tìm kiếm sản phẩm (có phân trang)
+         //✅ Tìm kiếm sản phẩm(có phân trang)
         List<ProductModel> Search(int pageIndex, int pageSize, out long total,
                                   int? ProductID, string SKU, string ProductName,
                                   int? CategoryID, int? SupplierID, string option);

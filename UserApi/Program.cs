@@ -1,6 +1,22 @@
+using BLL;
+using BLL.Interfaces;
+using DAL;
+using DAL.Helper;
+using DAL.Interfaces;
+
+
+
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+builder.Services.AddTransient<IDatabaseHelper, DatabaseHelper>();
+builder.Services.AddTransient<IDPaymentDAL, PaymentDAL>();
+builder.Services.AddTransient<IDPaymentBLL, PaymentBLL>();
+
+
+
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
