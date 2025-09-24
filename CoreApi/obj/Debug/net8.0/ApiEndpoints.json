@@ -76,8 +76,34 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "formData",
-        "Type": "System.Collections.Generic.Dictionary\u00602[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Object, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "Name": "request",
+        "Type": "Model.PaymentSearchRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Model.ResponseModel",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "CoreApi.Controllers.PaymentController",
+    "Method": "Search",
+    "RelativePath": "api/payment/search-payment",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Model.PaymentSearchRequest",
         "IsRequired": true
       }
     ],
@@ -196,8 +222,8 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "formData",
-        "Type": "System.Collections.Generic.Dictionary\u00602[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Object, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "Name": "request",
+        "Type": "Model.ProductSearchRequest",
         "IsRequired": true
       }
     ],

@@ -173,20 +173,65 @@
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "additionalProperties": { }
+                "$ref": "#/components/schemas/PaymentSearchRequest"
               }
             },
             "text/json": {
               "schema": {
-                "type": "object",
-                "additionalProperties": { }
+                "$ref": "#/components/schemas/PaymentSearchRequest"
               }
             },
             "application/*+json": {
               "schema": {
-                "type": "object",
-                "additionalProperties": { }
+                "$ref": "#/components/schemas/PaymentSearchRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseModel"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseModel"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/payment/search-payment": {
+      "post": {
+        "tags": [
+          "Payment"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PaymentSearchRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PaymentSearchRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/PaymentSearchRequest"
               }
             }
           }
@@ -383,20 +428,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "additionalProperties": { }
+                "$ref": "#/components/schemas/ProductSearchRequest"
               }
             },
             "text/json": {
               "schema": {
-                "type": "object",
-                "additionalProperties": { }
+                "$ref": "#/components/schemas/ProductSearchRequest"
               }
             },
             "application/*+json": {
               "schema": {
-                "type": "object",
-                "additionalProperties": { }
+                "$ref": "#/components/schemas/ProductSearchRequest"
               }
             }
           }
@@ -460,6 +502,43 @@
         },
         "additionalProperties": false
       },
+      "PaymentSearchRequest": {
+        "type": "object",
+        "properties": {
+          "page": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "paymentID": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "customerID": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "supplierID": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "method": {
+            "type": "string",
+            "nullable": true
+          },
+          "option": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "ProductModel": {
         "type": "object",
         "properties": {
@@ -502,6 +581,51 @@
             "format": "int32"
           },
           "status": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ProductSearchRequest": {
+        "type": "object",
+        "properties": {
+          "page": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "productID": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "sku": {
+            "type": "string",
+            "nullable": true
+          },
+          "productName": {
+            "type": "string",
+            "nullable": true
+          },
+          "categoryID": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "supplierID": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "status": {
+            "type": "string",
+            "nullable": true
+          },
+          "option": {
             "type": "string",
             "nullable": true
           }

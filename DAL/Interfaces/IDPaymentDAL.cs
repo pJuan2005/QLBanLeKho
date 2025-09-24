@@ -24,7 +24,6 @@ namespace DAL.Interfaces
         // ✅ Tìm kiếm thanh toán (có phân trang)
         List<PaymentModel> Search(int pageIndex, int pageSize, out long total,
                                   int? PaymentID, int? CustomerID, int? SupplierID,
-                                  DateTime? FromDate, DateTime? ToDate,
                                   string Method, string option);
     }
 }

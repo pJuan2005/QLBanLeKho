@@ -64,7 +64,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
 

@@ -53,65 +53,29 @@ namespace CoreApi.Controllers
         // ✅ Tìm kiếm & phân trang
         [Route("search")]
         [HttpPost]
-        public ResponseModel Search([FromBody] Dictionary<string, object> formData)
+        [Route("search-payment")]
+        [HttpPost]
+        public ResponseModel Search([FromBody] PaymentSearchRequest request)
         {
             var response = new ResponseModel();
             try
             {
-                var page = int.Parse(formData["page"].ToString());
-                var pageSize = int.Parse(formData["pageSize"].ToString());
-
-                int? PaymentID = null;
-                if (formData.Keys.Contains("PaymentID") && !string.IsNullOrEmpty(Convert.ToString(formData["PaymentID"])))
-                {
-                    PaymentID = Convert.ToInt32(formData["PaymentID"]);
-                }
-
-                int? CustomerID = null;
-                if (formData.Keys.Contains("CustomerID") && !string.IsNullOrEmpty(Convert.ToString(formData["CustomerID"])))
-                {
-                    CustomerID = Convert.ToInt32(formData["CustomerID"]);
-                }
-
-                int? SupplierID = null;
-                if (formData.Keys.Contains("SupplierID") && !string.IsNullOrEmpty(Convert.ToString(formData["SupplierID"])))
-                {
-                    SupplierID = Convert.ToInt32(formData["SupplierID"]);
-                }
-
-                DateTime? FromDate = null;
-                if (formData.Keys.Contains("FromDate") && !string.IsNullOrEmpty(Convert.ToString(formData["FromDate"])))
-                {
-                    FromDate = Convert.ToDateTime(formData["FromDate"]);
-                }
-
-                DateTime? ToDate = null;
-                if (formData.Keys.Contains("ToDate") && !string.IsNullOrEmpty(Convert.ToString(formData["ToDate"])))
-                {
-                    ToDate = Convert.ToDateTime(formData["ToDate"]);
-                }
-
-                string Method = "";
-                if (formData.Keys.Contains("Method") && !string.IsNullOrEmpty(Convert.ToString(formData["Method"])))
-                {
-                    Method = Convert.ToString(formData["Method"]);
-                }
-
-                string option = "";
-                if (formData.Keys.Contains("option") && !string.IsNullOrEmpty(Convert.ToString(formData["option"])))
-                {
-                    option = Convert.ToString(formData["option"]);
-                }
-
                 long total = 0;
-                var data = _paymentBusiness.Search(page, pageSize, out total,
-                                                   PaymentID, CustomerID, SupplierID,
-                                                   FromDate, ToDate, Method, option);
+                var data = _paymentBusiness.Search(
+                    request.page,
+                    request.pageSize,
+                    out total,
+                    request.PaymentID,
+                    request.CustomerID,
+                    request.SupplierID,
+                    request.Method,
+                    request.option
+                );
 
                 response.TotalItems = total;
                 response.Data = data;
-                response.Page = page;
-                response.PageSize = pageSize;
+                response.Page = request.page;
+                response.PageSize = request.pageSize;
             }
             catch (Exception ex)
             {

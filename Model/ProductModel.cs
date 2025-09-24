@@ -20,4 +20,33 @@ namespace Model
         public string Status { get; set; }
 
     }
+
+
+    //public class ProductSearchRequest
+    //{
+    //    public int? ProductID1 { get; set; }
+    //    public string SKU1 { get; set; }
+    //    public string ProductName1 { get; set; }
+    //    public int? CategoryID1 { get; set; }
+    //    public int? SupplierID1 { get; set; }
+    //    public string Status1 { get; set; }
+    //    public string Option1 { get; set; }
+    //    public int Page1 { get; set; }
+    //    public int PageSize1 { get; set; }
+    //}
+
+
+
+    public class ProductSearchRequest
+    {
+        public int page { get; set; }
+        public int pageSize { get; set; }
+        public int? ProductID { get; set; }
+        public string SKU { get; set; }
+        public string ProductName { get; set; }
+        public int? CategoryID { get; set; }
+        public int? SupplierID { get; set; }
+        public string Status { get; set; }
+        public string option { get; set; }
+    }
 }

@@ -43,12 +43,11 @@ namespace BLL
         // ✅ Tìm kiếm & phân trang
         public List<PaymentModel> Search(int pageIndex, int pageSize, out long total,
                                          int? paymentId, int? customerId, int? supplierId,
-                                         DateTime? fromDate, DateTime? toDate,
                                          string method, string option)
         {
             return _res.Search(pageIndex, pageSize, out total,
                                paymentId, customerId, supplierId,
-                               fromDate, toDate, method, option);
+                                method, option);
         }
     }
 }

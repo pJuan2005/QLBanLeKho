@@ -15,4 +15,16 @@ namespace Model
         public DateTime PaymentDate { get; set; } // Ngày thanh toán
         public string Method { get; set; }
     }
+
+
+    public class PaymentSearchRequest
+    {
+        public int page { get; set; }
+        public int pageSize { get; set; }
+        public int? PaymentID { get; set; }
+        public int? CustomerID { get; set; }
+        public int? SupplierID { get; set; }
+        public string Method { get; set; }
+        public string option { get; set; }
+    }
 }

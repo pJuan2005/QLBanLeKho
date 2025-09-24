@@ -115,7 +115,6 @@ namespace DAL
 
         public List<PaymentModel> Search(int pageIndex, int pageSize, out long total,
                                          int? PaymentID, int? CustomerID, int? SupplierID,
-                                         DateTime? FromDate, DateTime? ToDate,
                                          string Method, string option)
         {
             string msgError = "";
@@ -128,8 +127,6 @@ namespace DAL
                     "@PaymentID", PaymentID,
                     "@CustomerID", CustomerID,
                     "@SupplierID", SupplierID,
-                    "@FromDate", FromDate,
-                    "@ToDate", ToDate,
                     "@Method", Method,
                     "@option", option
                 );

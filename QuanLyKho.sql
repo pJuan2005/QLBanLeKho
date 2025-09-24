@@ -565,6 +565,9 @@ END;
 GO
 
 
+
+DROP PROCEDURE [sp_payment_search]
+
 CREATE PROCEDURE [dbo].[sp_payment_search]
 (
     @page_index  INT, 
@@ -572,6 +575,8 @@ CREATE PROCEDURE [dbo].[sp_payment_search]
     @PaymentID   INT = NULL,
     @CustomerID  INT = NULL,
     @SupplierID  INT = NULL,
+	@Amount      DECIMAL(18,2) = NULL,  -- thêm vào
+    @PaymentDate DATETIME = NULL,       -- thêm vào
     @Method      NVARCHAR(20) = '',
     @option      VARCHAR(50) = ''
 )
@@ -689,4 +694,151 @@ BEGIN
     -- Trả về thông báo
     SELECT 'Xóa payment thành công (cứng)' AS Message;
 END;
+GO
+
+
+
+
+USE [QLBanLeKho]
+GO
+
+/****** Object:  StoredProcedure [dbo].[sp_category_create]    Script Date: 9/24/2025 5:05:13 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE   PROCEDURE [dbo].[sp_category_create]
+(
+    @CategoryName NVARCHAR(100),
+    @Description  NVARCHAR(255)
+)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    INSERT INTO Categories (CategoryName, [Description])
+    VALUES (@CategoryName, @Description);
+
+    SELECT '';
+END
+GO
+
+
+USE [QLBanLeKho]
+GO
+
+/****** Object:  StoredProcedure [dbo].[sp_category_delete]    Script Date: 9/24/2025 5:05:31 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+create procedure [dbo].[sp_category_delete](
+@CategoryID int)
+
+as
+begin
+delete from Categories
+where CategoryID = @CategoryID
+select'';
+end 
+GO
+
+
+USE [QLBanLeKho]
+GO
+
+/****** Object:  StoredProcedure [dbo].[sp_category_get_by_id]    Script Date: 9/24/2025 5:05:40 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+create procedure [dbo].[sp_category_get_by_id](@CategoryID int)
+as
+begin
+select * from Categories where CategoryID = @CategoryID;
+end;
+GO
+
+
+USE [QLBanLeKho]
+GO
+
+/****** Object:  StoredProcedure [dbo].[sp_category_search]    Script Date: 9/24/2025 5:05:48 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+CREATE PROCEDURE [dbo].[sp_category_search]
+    @page_index   INT,
+    @page_size    INT,
+    @CategoryName NVARCHAR(100) = N'',
+    @option       NVARCHAR(50)  = N'',   -- 'name_desc' hoặc rỗng/mặc định
+    @CategoryID   INT           = NULL
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    IF (@option = N'name_desc')
+    BEGIN
+        SELECT CAST(COUNT(1) OVER() AS BIGINT) AS RecordCount,
+               src.CategoryID, src.CategoryName, src.[Description]
+        FROM (
+            SELECT c.CategoryID, c.CategoryName, c.[Description]
+            FROM dbo.Categories AS c
+            WHERE (@CategoryID IS NULL OR c.CategoryID = @CategoryID)
+              AND (@CategoryName = N'' OR c.CategoryName LIKE N'%' + @CategoryName + N'%')
+        ) AS src
+        ORDER BY src.CategoryName DESC
+        OFFSET (@page_index - 1) * @page_size ROWS
+        FETCH NEXT @page_size ROWS ONLY;
+    END
+    ELSE
+    BEGIN
+        SELECT CAST(COUNT(1) OVER() AS BIGINT) AS RecordCount,
+               src.CategoryID, src.CategoryName, src.[Description]
+        FROM (
+            SELECT c.CategoryID, c.CategoryName, c.[Description]
+            FROM dbo.Categories AS c
+            WHERE (@CategoryID IS NULL OR c.CategoryID = @CategoryID)
+              AND (@CategoryName = N'' OR c.CategoryName LIKE N'%' + @CategoryName + N'%')
+        ) AS src
+        ORDER BY src.CategoryName ASC
+        OFFSET (@page_index - 1) * @page_size ROWS
+        FETCH NEXT @page_size ROWS ONLY;
+    END
+END
+GO
+
+
+USE [QLBanLeKho]
+GO
+
+/****** Object:  StoredProcedure [dbo].[sp_category_update]    Script Date: 9/24/2025 5:05:58 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+create procedure [dbo].[sp_category_update](
+@CategoryID int,
+@CategoryName nvarchar(100),
+@Description nvarchar(250))
+
+as 
+begin
+update Categories set CategoryName = isnull(@CategoryName,CategoryName),
+Description = isnull( @Description,Description)
+where CategoryID = @CategoryID
+select'';
+end
 GO

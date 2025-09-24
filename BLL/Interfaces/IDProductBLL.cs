@@ -10,7 +10,7 @@ namespace BLL.Interfaces
     public interface IDProductBLL
     {
         // Lấy sản phẩm theo ID
-        ProductModel GetDatabyID(int id);
+        ProductModel GetDatabyID(int productId);
 
         // Thêm mới sản phẩm
         bool Create(ProductModel model);
@@ -19,7 +19,7 @@ namespace BLL.Interfaces
         bool Update(ProductModel model);
 
         // Xóa sản phẩm
-        bool Delete(int id);
+        bool Delete(int productId);
 
         // Tìm kiếm & phân trang
         List<ProductModel> Search(int pageIndex, int pageSize, out long total,
