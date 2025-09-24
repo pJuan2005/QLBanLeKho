@@ -825,19 +825,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Pham Chuan\\.nuget\\packages\\": {}
+    "C:\\Users\\ADMIN\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\BackEnd\\Chuan_Tuan_Bach\\QLBanLeKho\\QLBanLeKho\\BLL\\BLL.csproj",
+      "projectUniqueName": "D:\\backend\\QLBanLeKho\\BLL\\BLL.csproj",
       "projectName": "BLL",
-      "projectPath": "D:\\BackEnd\\Chuan_Tuan_Bach\\QLBanLeKho\\QLBanLeKho\\BLL\\BLL.csproj",
-      "packagesPath": "C:\\Users\\Pham Chuan\\.nuget\\packages\\",
-      "outputPath": "D:\\BackEnd\\Chuan_Tuan_Bach\\QLBanLeKho\\QLBanLeKho\\BLL\\obj\\",
+      "projectPath": "D:\\backend\\QLBanLeKho\\BLL\\BLL.csproj",
+      "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
+      "outputPath": "D:\\backend\\QLBanLeKho\\BLL\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Pham Chuan\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -845,18 +845,17 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "D:\\BackEnd\\Chuan_Tuan_Bach\\QLBanLeKho\\QLBanLeKho\\DAL\\DAL.csproj": {
-              "projectPath": "D:\\BackEnd\\Chuan_Tuan_Bach\\QLBanLeKho\\QLBanLeKho\\DAL\\DAL.csproj"
+            "D:\\backend\\QLBanLeKho\\DAL\\DAL.csproj": {
+              "projectPath": "D:\\backend\\QLBanLeKho\\DAL\\DAL.csproj"
             },
-            "D:\\BackEnd\\Chuan_Tuan_Bach\\QLBanLeKho\\QLBanLeKho\\Model\\Model.csproj": {
-              "projectPath": "D:\\BackEnd\\Chuan_Tuan_Bach\\QLBanLeKho\\QLBanLeKho\\Model\\Model.csproj"
+            "D:\\backend\\QLBanLeKho\\Model\\Model.csproj": {
+              "projectPath": "D:\\backend\\QLBanLeKho\\Model\\Model.csproj"
             }
           }
         }
@@ -865,11 +864,6 @@
         "warnAsError": [
           "NU1605"
         ]
-      },
-      "restoreAuditProperties": {
-        "enableAudit": "true",
-        "auditLevel": "low",
-        "auditMode": "direct"
       }
     },
     "frameworks": {
@@ -891,7 +885,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
