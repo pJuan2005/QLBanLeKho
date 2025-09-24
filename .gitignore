@@ -1,11 +1,14 @@
-# Build folders
-bin/
-obj/
+# Visual Studio
 .vs/
-
-# User files
 *.user
 *.suo
 
-# Cache
+# Build results
+bin/
+obj/
+
+# Others
+*.log
 *.cache
+*.dll
+*.exe
