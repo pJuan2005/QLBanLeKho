@@ -11,4 +11,8 @@ obj/
 *.log
 *.cache
 *.dll
+<<<<<<< HEAD
 *.exe
+=======
+*.exe
+>>>>>>> dev
