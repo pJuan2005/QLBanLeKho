@@ -806,19 +806,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\ADMIN\\.nuget\\packages\\": {}
+    "C:\\Users\\Pham Chuan\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\backend\\QLBanLeKho\\DAL\\DAL.csproj",
+      "projectUniqueName": "D:\\BackEnd\\Chuan_Tuan_Bach\\QLBanLeKho\\QLBanLeKho\\DAL\\DAL.csproj",
       "projectName": "DAL",
-      "projectPath": "D:\\backend\\QLBanLeKho\\DAL\\DAL.csproj",
-      "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
-      "outputPath": "D:\\backend\\QLBanLeKho\\DAL\\obj\\",
+      "projectPath": "D:\\BackEnd\\Chuan_Tuan_Bach\\QLBanLeKho\\QLBanLeKho\\DAL\\DAL.csproj",
+      "packagesPath": "C:\\Users\\Pham Chuan\\.nuget\\packages\\",
+      "outputPath": "D:\\BackEnd\\Chuan_Tuan_Bach\\QLBanLeKho\\QLBanLeKho\\DAL\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Pham Chuan\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -826,14 +826,15 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "D:\\backend\\QLBanLeKho\\Model\\Model.csproj": {
-              "projectPath": "D:\\backend\\QLBanLeKho\\Model\\Model.csproj"
+            "D:\\BackEnd\\Chuan_Tuan_Bach\\QLBanLeKho\\QLBanLeKho\\Model\\Model.csproj": {
+              "projectPath": "D:\\BackEnd\\Chuan_Tuan_Bach\\QLBanLeKho\\QLBanLeKho\\Model\\Model.csproj"
             }
           }
         }
@@ -842,6 +843,11 @@
         "warnAsError": [
           "NU1605"
         ]
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "direct"
       }
     },
     "frameworks": {
@@ -881,7 +887,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
