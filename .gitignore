@@ -11,8 +11,8 @@ obj/
 *.log
 *.cache
 *.dll
-<<<<<<< HEAD
 *.exe
-=======
-*.exe
->>>>>>> dev
+
+# Editor temp
+*~RF*.TMP
+*.TMP
