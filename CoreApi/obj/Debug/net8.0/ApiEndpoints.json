@@ -70,32 +70,6 @@
   {
     "ContainingType": "CoreApi.Controllers.PaymentController",
     "Method": "Search",
-    "RelativePath": "api/payment/search",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "request",
-        "Type": "Model.PaymentSearchRequest",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": [
-      {
-        "Type": "Model.ResponseModel",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "CoreApi.Controllers.PaymentController",
-    "Method": "Search",
     "RelativePath": "api/payment/search-payment",
     "HttpMethod": "POST",
     "IsController": true,
@@ -144,6 +118,53 @@
         "StatusCode": 200
       }
     ]
+  },
+  {
+    "ContainingType": "CoreApi.Controllers.ReportController",
+    "Method": "GetImportExportReport",
+    "RelativePath": "api/report/import-export",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "fromDate",
+        "Type": "System.DateTime",
+        "IsRequired": false
+      },
+      {
+        "Name": "toDate",
+        "Type": "System.DateTime",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CoreApi.Controllers.ReportController",
+    "Method": "GetRevenueReport",
+    "RelativePath": "api/report/revenue",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Model.ReportRevenueRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CoreApi.Controllers.ReportController",
+    "Method": "GetStockReport",
+    "RelativePath": "api/report/stock",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
   },
   {
     "ContainingType": "CoreApi.Controllers.ProductController",
@@ -256,6 +277,126 @@
     "ReturnTypes": [
       {
         "Type": "Model.ProductModel",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "CoreApi.Controllers.StockCardController",
+    "Method": "Create",
+    "RelativePath": "api/StockCard/create-stockcard",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "Model.StockCardModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Model.StockCardModel",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "CoreApi.Controllers.StockCardController",
+    "Method": "Delete",
+    "RelativePath": "api/StockCard/delete/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CoreApi.Controllers.StockCardController",
+    "Method": "GetByID",
+    "RelativePath": "api/StockCard/get-by-id/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Model.StockCardModel",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "CoreApi.Controllers.StockCardController",
+    "Method": "Search",
+    "RelativePath": "api/StockCard/search-stockcard",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Model.StockCardSearchRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Model.ResponseModel",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "CoreApi.Controllers.StockCardController",
+    "Method": "Update",
+    "RelativePath": "api/StockCard/update",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "Model.StockCardModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Model.StockCardModel",
         "MediaTypes": [
           "text/plain",
           "application/json",

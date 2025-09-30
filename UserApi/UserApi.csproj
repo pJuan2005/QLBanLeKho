@@ -15,8 +15,4 @@
     <ProjectReference Include="..\Model\Model.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Controllers\Kế toán\" />
-  </ItemGroup>
-
 </Project>
