@@ -26,7 +26,7 @@ namespace CoreApi.Controllers
 
             if (user == null)
                 return BadRequest(new { message = "Username or password is incorrect" });
-            return Ok(new { userID = user.UserId, fullname = user.FullName, username = user.Username, token = user.Token });
+            return Ok(new { userID = user.UserID, fullname = user.FullName, username = user.Username, token = user.Token });
         }
     }
 }

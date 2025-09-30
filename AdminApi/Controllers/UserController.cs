@@ -66,7 +66,7 @@ namespace AdminApi.Controllers
             var response = new ResponseModel();
             try
             {
-                var page = int.Parse(formData["page"].ToString());
+                var page = int.Parse(formData["pageIndex"].ToString());
                 var pageSize = int.Parse(formData["pageSize"].ToString());
                 string fullname = "";
                 if(formData.Keys.Contains("FullName")&& !string.IsNullOrEmpty(Convert.ToString(formData["FullName"])))

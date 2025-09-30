@@ -59,13 +59,16 @@ namespace DAL
             {
                 var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_user_create",
                     "@Username",model.Username,
-                    "@Password",model.Password,
+                    "@Password",model.PasswordHash,
                     "@Role",model.Role,
                     "@FullName",model.FullName,
                     "@Email",model.Email,
                     "@Phone",model.Phone);
-                if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
-                    throw new Exception(Convert.ToString(result) + msgError);
+                if(!string.IsNullOrEmpty (msgError))
+                    throw new Exception(msgError);
+                if (result == null || !int.TryParse(result.ToString(), out int NewId))
+                    throw new Exception("Tạo user thất bại không lấy được id trả về");
+                model.UserID = NewId;
                 return true;
             }catch(Exception ex)
             {
@@ -78,9 +81,9 @@ namespace DAL
             try
             {
                 var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_user_update",
-                    "@UserId",model.UserId,
+                    "@UserId",model.UserID,
                     "@Username",model.Username,
-                    "@Password",model.Password,
+                    "@Password",model.PasswordHash,
                     "@Role",model.Role,
                     "@FullName",model.FullName,
                     "@Email",model.Email,
@@ -109,25 +112,25 @@ namespace DAL
                 throw ex;
             }
         }
-        public List<UserModel>Search(int pageIndex, int pageSize, out long total,string fullname,string username)
+        public List<UserModel> Search(int pageIndex, int pageSize, out long total, string fullname, string username)
         {
             string msgError = "";
             total = 0;
             try
             {
-                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "sp_user_search",
+                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "sp_user_search1",
                     "@pageIndex", pageIndex,
                     "@pageSize", pageSize,
-                    "@total", total,
+                    //"@total", total,
                     "@fullName", fullname,
                     "@username", username);
                 if (!string.IsNullOrEmpty(msgError))
                     throw new Exception(msgError);
-                if(dt.Rows.Count > 0)
+                if (dt.Rows.Count > 0)
                     total = (long)dt.Rows[0]["RecordCount"];
                 return dt.ConvertTo<UserModel>().ToList();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw ex;
             }
