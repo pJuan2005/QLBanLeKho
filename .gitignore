@@ -1,18 +1,21 @@
-# Visual Studio
+# Visual Studio / IDE
 .vs/
+.vscode/
+.idea/
 *.user
 *.suo
 
-# Build results
-bin/
-obj/
+# Build artifacts (all projects, all levels)
+**/bin/
+**/obj/
 
-# Others
-*.log
+# NuGet & build caches
+*.nuget.cache
+project.assets.json
 *.cache
+
+# Logs & binaries
+*.log
 *.dll
-<<<<<<< HEAD
+*.pdb
 *.exe
-=======
-*.exe
->>>>>>> dev
