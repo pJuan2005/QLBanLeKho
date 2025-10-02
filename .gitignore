@@ -19,3 +19,7 @@ project.assets.json
 *.dll
 *.pdb
 *.exe
+
+# Editor temp
+*~RF*.TMP
+*.TMP
