@@ -1,7 +1,10 @@
 ﻿create database QuanLyKho
 use  QuanLyKho
 
+<<<<<<< HEAD
+=======
 drop database QuanLyKho
+>>>>>>> bách
 
 CREATE TABLE Users (
     UserID INT IDENTITY(1,1) PRIMARY KEY, -- Mã người dùng
@@ -47,7 +50,10 @@ CREATE TABLE Products (
     Price DECIMAL(18,2) NOT NULL, -- Giá bán
     MinStock INT DEFAULT 0, -- Tồn kho tối thiểu
     Status NVARCHAR(20) DEFAULT 'Active', -- Trạng thái
+<<<<<<< HEAD
+=======
 	Image NVARCHAR(255),
+>>>>>>> bách
     FOREIGN KEY (CategoryID) REFERENCES Categories(CategoryID),
     FOREIGN KEY (SupplierID) REFERENCES Suppliers(SupplierID)
 );
@@ -64,7 +70,10 @@ CREATE TABLE PurchaseOrders (
 CREATE TABLE PurchaseOrderDetails (
     POID INT, -- Mã đơn mua hàng
     ProductID INT, -- Mã sản phẩm
+<<<<<<< HEAD
+=======
 	NameProduct NVARCHAR(50),
+>>>>>>> bách
     Quantity INT NOT NULL, -- Số lượng
     UnitPrice DECIMAL(18,2) NOT NULL, -- Đơn giá
     PRIMARY KEY (POID, ProductID),
@@ -107,7 +116,11 @@ CREATE TABLE Sales (
     SaleID INT IDENTITY(1,1) PRIMARY KEY, -- Mã đơn bán hàng
     CustomerID INT, -- Mã khách hàng
     UserID INT NOT NULL, -- Mã nhân viên (người bán)
+<<<<<<< HEAD
+    SaleDate DATETIME NOT NULL, -- Ngày bán
+=======
     SaleDate DATE NOT NULL, -- Ngày bán
+>>>>>>> bách
     TotalAmount DECIMAL(18,2), -- Tổng tiền
     VATAmount DECIMAL(18,2), -- Thuế VAT
     PromotionID INT, -- Mã khuyến mãi
@@ -170,6 +183,110 @@ CREATE TABLE StockCards (
     FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
 );
 
+<<<<<<< HEAD
+INSERT INTO Users (Username, PasswordHash, Role, FullName, Email, Phone)
+VALUES 
+('admin', '123456', 'Admin', N'Nguyễn Văn A', 'admin@kho.com', '0901111111'),
+('thungan1', '123456', 'ThuNgan', N'Trần Thị B', 'b@kho.com', '0902222222'),
+('thukho1', '123456', 'ThuKho', N'Lê Văn C', 'c@kho.com', '0903333333'),
+('ketoan1', '123456', 'KeToan', N'Phạm Thị D', 'd@kho.com', '0904444444');
+
+
+INSERT INTO Categories (CategoryName, Description)
+VALUES 
+(N'Laptop', N'Máy tính xách tay'),
+(N'Điện thoại', N'Smartphone'),
+(N'Phụ kiện', N'Tai nghe, sạc, cáp...');
+
+
+INSERT INTO Suppliers (SupplierName, Address, Phone, Email)
+VALUES 
+(N'Công ty FPT', N'Hà Nội', '0241111111', 'contact@fpt.com'),
+(N'Công ty Viettel', N'Hồ Chí Minh', '0282222222', 'support@viettel.com');
+
+
+INSERT INTO Customers (CustomerName, Phone, Email, Address, DebtLimit)
+VALUES 
+(N'Nguyễn Văn Khách', '0905555555', 'khach1@gmail.com', N'Hà Nội', 5000000),
+(N'Trần Thị Người Mua', '0906666666', 'khach2@gmail.com', N'Hồ Chí Minh', 3000000);
+
+
+INSERT INTO Products (SKU, Barcode, ProductName, CategoryID, SupplierID, Unit, Price, MinStock, Status)
+VALUES 
+('LAP001', '1111111111111', N'Laptop Dell XPS', 1, 1, N'Cái', 25000000, 5, 'Active'),
+('DT001', '2222222222222', N'iPhone 14 Pro', 2, 2, N'Cái', 30000000, 3, 'Active'),
+('PK001', '3333333333333', N'Tai nghe AirPods', 3, 2, N'Cái', 5000000, 10, 'Active');
+
+
+INSERT INTO PurchaseOrders (SupplierID, OrderDate, TotalAmount, Status)
+VALUES 
+(1, '2025-09-01', 55000000, 'Pending'),
+(2, '2025-09-05', 30000000, 'Completed');
+
+
+INSERT INTO PurchaseOrderDetails (POID, ProductID, Quantity, UnitPrice)
+VALUES 
+(1, 1, 2, 24000000), -- Dell XPS
+(1, 3, 5, 4500000),  -- AirPods
+(2, 2, 1, 29000000); -- iPhone 14 Pro
+
+
+INSERT INTO GoodsReceipts (POID, ReceiptDate, TotalAmount)
+VALUES 
+(1, '2025-09-02', 48000000),
+(2, '2025-09-06', 29000000);
+
+
+INSERT INTO GoodsReceiptDetails (ReceiptID, ProductID, Quantity, UnitPrice, BatchNo, ExpiryDate)
+VALUES 
+(1, 1, 2, 24000000, 'BATCH-LAP-01', NULL),
+(1, 3, 5, 4500000, 'BATCH-PK-01', '2026-12-31'),
+(2, 2, 1, 29000000, 'BATCH-DT-01', '2027-01-01');
+
+
+INSERT INTO Promotions (PromotionName, Type, Value, StartDate, EndDate, ProductGroup)
+VALUES 
+(N'Giảm giá Laptop 10%', 'Percent', 10, '2025-09-01', '2025-09-30', N'Laptop'),
+(N'Giảm 1 triệu cho iPhone', 'Value', 1000000, '2025-09-05', '2025-09-20', N'Điện thoại');
+
+
+INSERT INTO Sales (CustomerID, UserID, SaleDate, TotalAmount, VATAmount, PromotionID, PaymentStatus)
+VALUES 
+(1, 2, '2025-09-10', 25000000, 2500000, 1, 'Paid'),
+(2, 2, '2025-09-12', 30000000, 3000000, 2, 'Unpaid');
+
+
+INSERT INTO SalesItems (SaleID, ProductID, Quantity, UnitPrice, Discount)
+VALUES 
+(1, 1, 1, 25000000, 0),   -- Dell XPS
+(2, 2, 1, 30000000, 1000000); -- iPhone 14 Pro
+
+
+INSERT INTO Returns (SaleID, CustomerID, ReturnDate, Reason)
+VALUES 
+(2, 2, '2025-09-15', N'Khách đổi sang sản phẩm khác');
+
+
+INSERT INTO Invoices (SaleID, InvoiceNo, InvoiceDate, TotalAmount, VATAmount)
+VALUES 
+(1, 'INV-0001', '2025-09-10', 25000000, 2500000),
+(2, 'INV-0002', '2025-09-12', 30000000, 3000000);
+
+
+INSERT INTO Payments (CustomerID, SupplierID, Amount, PaymentDate, Method)
+VALUES 
+(1, NULL, 25000000, '2025-09-11', N'Tiền mặt'),
+(NULL, 1, 48000000, '2025-09-03', N'Chuyển khoản');
+
+
+INSERT INTO StockCards (ProductID, TransactionType, Quantity, Balance, RefID, TransactionDate)
+VALUES 
+(1, 'IN', 2, 2, 1, '2025-09-02'),
+(3, 'IN', 5, 5, 1, '2025-09-02'),
+(2, 'IN', 1, 1, 2, '2025-09-06'),
+(1, 'OUT', 1, 1, 1, '2025-09-10'),
+(2, 'OUT', 1, 0, 2, '2025-09-12');
+=======
 
 
 
@@ -516,6 +633,7 @@ VALUES
 
 
 
+>>>>>>> bách
 
 -- Hiển thị tất cả dữ liệu từ từng bảng
 SELECT * FROM Users;
@@ -562,8 +680,12 @@ CREATE PROCEDURE [dbo].[sp_product_create]
     @Unit NVARCHAR(20) = NULL,
     @Price DECIMAL(18,2),
     @MinStock INT = 0,
+<<<<<<< HEAD
+    @Status NVARCHAR(20) = 'Active'
+=======
     @Status NVARCHAR(20) = 'Active',
 	@Image NVARCHAR(255) = NULL  -- 🆕
+>>>>>>> bách
 )
 AS
 BEGIN
@@ -579,8 +701,12 @@ BEGIN
         Unit,
         Price,
         MinStock,
+<<<<<<< HEAD
+        Status
+=======
         Status,
 		Image
+>>>>>>> bách
     )
     VALUES
     (
@@ -592,8 +718,12 @@ BEGIN
         @Unit,
         @Price,
         @MinStock,
+<<<<<<< HEAD
+        @Status
+=======
         @Status,
 		@Image
+>>>>>>> bách
     );
 
     -- Trả về ID vừa thêm (giúp frontend/backend biết sản phẩm nào vừa được tạo)
@@ -614,8 +744,12 @@ CREATE PROCEDURE [dbo].[sp_product_update]
     @Unit        NVARCHAR(20) = NULL,
     @Price       DECIMAL(18,2) = NULL,
     @MinStock    INT = NULL,
+<<<<<<< HEAD
+    @Status      NVARCHAR(20) = NULL
+=======
     @Status      NVARCHAR(20) = NULL,
 	@Image       NVARCHAR(255) = NULL
+>>>>>>> bách
 )
 AS
 BEGIN
@@ -629,8 +763,12 @@ BEGIN
         Unit        = IIF(@Unit IS NULL, Unit, @Unit),
         Price       = IIF(@Price IS NULL, Price, @Price),
         MinStock    = IIF(@MinStock IS NULL, MinStock, @MinStock),
+<<<<<<< HEAD
+        Status      = IIF(@Status IS NULL, Status, @Status)
+=======
         Status      = IIF(@Status IS NULL, Status, @Status),
 		Image       = IIF(@Image IS NULL, Image, @Image)
+>>>>>>> bách
     WHERE ProductID = @ProductID;
 
     SELECT '';
@@ -683,8 +821,12 @@ BEGIN
                p.Unit,
                p.Price,
                p.MinStock,
+<<<<<<< HEAD
+               p.Status
+=======
                p.Status,
 			   p.Image
+>>>>>>> bách
         INTO #Results1
         FROM Products AS p
         WHERE (@ProductID IS NULL OR p.ProductID = @ProductID)
@@ -724,8 +866,12 @@ BEGIN
                p.Unit,
                p.Price,
                p.MinStock,
+<<<<<<< HEAD
+               p.Status
+=======
                p.Status,
 			   p.Image
+>>>>>>> bách
         INTO #Results2
         FROM Products AS p
         WHERE (@ProductID IS NULL OR p.ProductID = @ProductID)
@@ -748,6 +894,8 @@ GO
 
 
 
+<<<<<<< HEAD
+=======
 
 CREATE PROCEDURE [dbo].[sp_product_delete]
     @ProductID INT
@@ -781,6 +929,7 @@ DROP PROCEDURE [dbo].[sp_product_delete];
 
 
 
+>>>>>>> bách
 CREATE PROCEDURE [dbo].[sp_payment_get_by_id]
     @PaymentID INT
 AS
@@ -941,7 +1090,33 @@ GO
 
 
 
+<<<<<<< HEAD
+CREATE PROCEDURE [dbo].[sp_product_delete]
+    @ProductID INT
+AS
+BEGIN
+    SET NOCOUNT ON;
 
+    -- Xóa dữ liệu liên quan trước (nếu bạn muốn xóa tất cả dấu vết của sản phẩm)
+    DELETE FROM SalesItems WHERE ProductID = @ProductID;
+    DELETE FROM StockCards WHERE ProductID = @ProductID;
+    DELETE FROM GoodsReceiptDetails WHERE ProductID = @ProductID;
+    DELETE FROM PurchaseOrderDetails WHERE ProductID = @ProductID;
+
+    -- Cuối cùng xóa trong bảng Products
+    DELETE FROM Products
+    WHERE ProductID = @ProductID;
+
+    SELECT 'Xóa sản phẩm thành công (cứng)' AS Message;
+END;
+GO
+
+
+
+DROP PROCEDURE [dbo].[sp_product_delete];
+=======
+
+>>>>>>> bách
 
 
 
@@ -967,6 +1142,15 @@ GO
 USE [QLBanLeKho]
 GO
 
+<<<<<<< HEAD
+/****** Object:  StoredProcedure [dbo].[sp_category_create]    Script Date: 9/24/2025 5:05:13 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+=======
+>>>>>>> bách
 
 CREATE   PROCEDURE [dbo].[sp_category_create]
 (
@@ -1010,6 +1194,15 @@ GO
 USE [QLBanLeKho]
 GO
 
+<<<<<<< HEAD
+/****** Object:  StoredProcedure [dbo].[sp_category_get_by_id]    Script Date: 9/24/2025 5:05:40 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+=======
+>>>>>>> bách
 
 create procedure [dbo].[sp_category_get_by_id](@CategoryID int)
 as
@@ -1022,6 +1215,15 @@ GO
 USE [QLBanLeKho]
 GO
 
+<<<<<<< HEAD
+/****** Object:  StoredProcedure [dbo].[sp_category_search]    Script Date: 9/24/2025 5:05:48 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+=======
+>>>>>>> bách
 
 
 CREATE PROCEDURE [dbo].[sp_category_search]
@@ -1069,6 +1271,15 @@ GO
 USE [QLBanLeKho]
 GO
 
+<<<<<<< HEAD
+/****** Object:  StoredProcedure [dbo].[sp_category_update]    Script Date: 9/24/2025 5:05:58 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+=======
+>>>>>>> bách
 
 create procedure [dbo].[sp_category_update](
 @CategoryID int,
@@ -1082,6 +1293,9 @@ Description = isnull( @Description,Description)
 where CategoryID = @CategoryID
 select'';
 end
+<<<<<<< HEAD
+GO
+=======
 GO
 
 
@@ -1671,3 +1885,4 @@ JOIN (
     GROUP BY gr.ProductID
 ) avgc ON si.ProductID = avgc.ProductID
 GROUP BY s.SaleID;
+>>>>>>> bách

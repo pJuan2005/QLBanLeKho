@@ -1,3 +1,30 @@
+<<<<<<< HEAD
+# Visual Studio / IDE
+.vs/
+.vscode/
+.idea/
+*.user
+*.suo
+
+# Build artifacts (all projects, all levels)
+**/bin/
+**/obj/
+
+# NuGet & build caches
+*.nuget.cache
+project.assets.json
+*.cache
+
+# Logs & binaries
+*.log
+*.dll
+*.pdb
+*.exe
+
+# Editor temp
+*~RF*.TMP
+*.TMP
+=======
 # Visual Studio
 .vs/
 *.user
@@ -12,3 +39,4 @@ obj/
 *.cache
 *.dll
 *.exe
+>>>>>>> bách
