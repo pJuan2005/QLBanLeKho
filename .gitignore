@@ -4,22 +4,52 @@
 .idea/
 *.user
 *.suo
+*.sln.docstates
 
-# Build artifacts (all projects, all levels)
+# Build artifacts (recursive for all projects, all levels)
 **/bin/
 **/obj/
+[Bb]uild/
+[Dd]ebug/
+[Rr]elease/
+**/GeneratedFiles/
 
 # NuGet & build caches
-*.nuget.cache
+*.nupkg
+*.snupkg
+packages/
+project.lock.json
 project.assets.json
+*.nuget.cache
 *.cache
+
+# ASP.NET Core
+appsettings*.json         # Ignore local config files (e.g., appsettings.Development.json)
+*.runtimeconfig.json
+*.runtimeconfig.dev.json
 
 # Logs & binaries
 *.log
 *.dll
-*.pdb
 *.exe
+*.pdb
+*.sourcelink.json
+*.AssemblyInfo.cs
+*.AssemblyInfoInputs.cache
+*.csproj.*
+*.assets.cache
+*.CoreCompileInputs.cache
+*.ref/
+*.refint/
+*.editorconfig
+*.vscode/
+node_modules/            # Nếu dùng Node.js trong dự án
+*.dbmdl                 # Nếu dùng EDMX hoặc database model
 
-# Editor temp
-*~RF*.TMP
-*.TMP
+# Test and Coverage Results
+TestResults/
+coverage/
+
+# User-specific files
+[Dd]ata/
+[Dd]ataSources/

@@ -59,26 +59,35 @@ namespace UserApi.Controllers
                 var page = int.Parse(formData["page"].ToString());
                 var pageSize = int.Parse(formData["pageSize"].ToString());
 
-                int POID = 0;
-                if (formData.ContainsKey("POID") && !string.IsNullOrEmpty(formData["POID"].ToString()))
+                int? SupplierID = null; // Sử dụng nullable int
+                if (formData.ContainsKey("SupplierID") && !string.IsNullOrEmpty(formData["SupplierID"].ToString()))
                 {
-                    POID = Convert.ToInt32(formData["POID"]);
+                    SupplierID = Convert.ToInt32(formData["SupplierID"]);
                 }
 
-                DateTime orderDate = DateTime.MinValue;
+                DateTime? orderDate = null; // Sử dụng nullable DateTime, mặc định là null nếu không cung cấp
                 if (formData.ContainsKey("OrderDate") && DateTime.TryParse(formData["OrderDate"].ToString(), out DateTime parsedDate))
                 {
-                    orderDate = parsedDate;
+                    orderDate = parsedDate.Date; // Gán giá trị nếu có
                 }
+
 
                 decimal totalAmount = 0;
-                if (formData.ContainsKey("TotalAmount") && decimal.TryParse(formData["TotalAmount"].ToString(), out decimal parsedAmount))
+                if (formData.ContainsKey("TotalAmount"))
                 {
-                    totalAmount = parsedAmount;
+                    try
+                    {
+                        totalAmount = Convert.ToDecimal(formData["TotalAmount"]);
+                    }
+                    catch
+                    {
+                        totalAmount = 0; // hoặc log lỗi nếu cần
+                    }
                 }
 
+
                 long total = 0;
-                var data = _donMuaHangBusiness.Search(page, pageSize, out total, POID, orderDate, totalAmount);
+                var data = _donMuaHangBusiness.Search(page, pageSize, out total, SupplierID, orderDate, totalAmount);
                 response.TotalItems = total;
                 response.Data = data;
                 response.Page = page;
