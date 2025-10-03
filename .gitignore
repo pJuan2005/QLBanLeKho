@@ -6,13 +6,28 @@
 # Build results
 bin/
 obj/
+[Bb]uild/
+[Dd]ebug/
+[Rr]elease/
+
+# NuGet
+*.nupkg
+*.snupkg
+project.lock.json
+project.assets.json
+*.nuget.cache
 
 # Others
 *.log
 *.cache
 *.dll
-<<<<<<< HEAD
 *.exe
-=======
-*.exe
->>>>>>> dev
+*.pdb
+*.sourcelink.json
+*.AssemblyInfo.cs
+*.AssemblyInfoInputs.cache
+*.csproj.*
+*.assets.cache
+*.CoreCompileInputs.cache
+*.ref/
+*.refint/
