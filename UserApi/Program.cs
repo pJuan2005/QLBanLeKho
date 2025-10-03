@@ -13,10 +13,15 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// // Đăng ký các lớp xử lý nghiệp vụ và truy cập dữ liệu vào hệ thống DI
+// // Đăng ký các lớp xử lý nghiệp vụ và truy cập dữ liệu vào hệ thống DI <DonMuaHang>
 builder.Services.AddScoped<IDatabaseHelper, DatabaseHelper>();
 builder.Services.AddScoped<IDonMuaHangBusiness, DonMuaHangBusiness>();
 builder.Services.AddScoped<IDonMuaHangRepository, DonMuaHangRepository>();
+
+//Đăng ký các lớp xử lý nghiệp vụ và truy cập dữ liệu vào hệ thống DI <PurchaseOrderDetails>
+builder.Services.AddScoped<IPurchaseOrderDetailsBusiness, PurchaseOrderDetailsBusiness>();
+builder.Services.AddScoped<IPurchaseOrderDetailsRepository, PurchaseOrderDetailsRepository>();
+
 
 
 var app = builder.Build();

@@ -101,25 +101,43 @@ namespace DAL
         }
 
 
-        public List<DonMuaHangModel> Search(int pageIndex, int pageSize, out long total, int SupplierID, DateTime OrderDate, decimal TotalAmount)
+        public List<DonMuaHangModel> Search(int pageIndex, int pageSize, out long total, int? SupplierID, DateTime? OrderDate, decimal TotalAmount)
         {
             string msgError = "";
             total = 0;
             try
             {
+                // Log hoặc breakpoint để kiểm tra tham số
+                Console.WriteLine($"Debug - pageIndex: {pageIndex}, pageSize: {pageSize}");
+                Console.WriteLine($"Debug - SupplierID: {SupplierID} (type: {SupplierID?.GetType()})");
+                Console.WriteLine($"Debug - OrderDate: {OrderDate} (type: {OrderDate?.GetType()})");
+                Console.WriteLine($"Debug - TotalAmount: {TotalAmount}");
+
                 var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "sp_PurchaseOrders_search",
                     "@page_index", pageIndex,
                     "@page_size", pageSize,
-                    "@SupplierID", SupplierID,
-                    "@OrderDate", OrderDate,
-                    "@TotalAmount", TotalAmount);
+                    "@SupplierID", (object)SupplierID ?? DBNull.Value,
+                    "@OrderDate", (object)OrderDate ?? DBNull.Value,
+                    "@TotalAmount", (object)TotalAmount ?? DBNull.Value);
+
+                // Log kết quả từ stored procedure
+                Console.WriteLine($"Debug - msgError: {msgError}");
+                Console.WriteLine($"Debug - dt.Rows.Count: {dt?.Rows.Count ?? 0}");
+                if (dt?.Rows.Count > 0)
+                {
+                    Console.WriteLine($"Debug - SobanGhi from first row: {dt.Rows[0]["SobanGhi"]}");
+                }
+
                 if (!string.IsNullOrEmpty(msgError))
                     throw new Exception(msgError);
-                if (dt.Rows.Count > 0) total = (long)dt.Rows[0]["RecordCount"];
+                if (dt.Rows.Count > 0)
+                    total = Convert.ToInt64(dt.Rows[0]["SobanGhi"]);
+
                 return dt.ConvertTo<DonMuaHangModel>().ToList();
             }
             catch (Exception ex)
             {
+                Console.WriteLine($"Debug - Exception: {ex.Message}");
                 throw ex;
             }
         }
