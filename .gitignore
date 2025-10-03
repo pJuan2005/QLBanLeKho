@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Visual Studio / IDE
 .vs/
 .vscode/
@@ -23,3 +24,19 @@ project.assets.json
 # Editor temp
 *~RF*.TMP
 *.TMP
+=======
+# Visual Studio
+.vs/
+*.user
+*.suo
+
+# Build results
+bin/
+obj/
+
+# Others
+*.log
+*.cache
+*.dll
+*.exe
+>>>>>>> bách

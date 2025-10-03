@@ -47,7 +47,12 @@ namespace DAL
                     "@Unit", model.Unit,
                     "@Price", model.Price,
                     "@MinStock", model.MinStock,
+<<<<<<< HEAD
                     "@Status", model.Status
+=======
+                    "@Status", model.Status,
+                    "@Image", model.Image // 🆕
+>>>>>>> bách
                 );
 
                 if (!string.IsNullOrEmpty(msgError))
@@ -85,7 +90,12 @@ namespace DAL
                     "@Unit", model.Unit,
                     "@Price", model.Price,
                     "@MinStock", model.MinStock,
+<<<<<<< HEAD
                     "@Status", model.Status
+=======
+                    "@Status", model.Status,
+                    "@Image", model.Image
+>>>>>>> bách
                 );
                 if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
                 {

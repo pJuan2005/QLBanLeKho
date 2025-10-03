@@ -51,8 +51,12 @@ namespace CoreApi.Controllers
         }
 
         // ✅ Tìm kiếm & phân trang
+<<<<<<< HEAD
         [Route("search")]
         [HttpPost]
+=======
+
+>>>>>>> bách
         [Route("search-payment")]
         [HttpPost]
         public ResponseModel Search([FromBody] PaymentSearchRequest request)
