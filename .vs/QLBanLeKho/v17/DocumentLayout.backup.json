@@ -3,28 +3,16 @@
   "WorkspaceRootPath": "C:\\Users\\ADMIN\\OneDrive\\Desktop\\QuanLyKho\\QLBanLeKho\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{67AFBC2A-27F8-4CB8-9294-B2CAA4EA55E9}|DAL\\DAL.csproj|c:\\users\\admin\\onedrive\\desktop\\quanlykho\\qlbanlekho\\dal\\productdal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{67AFBC2A-27F8-4CB8-9294-B2CAA4EA55E9}|DAL\\DAL.csproj|solutionrelative:dal\\productdal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{7ABCB83C-E535-46F2-A29B-C792309B4CF2}|CoreApi\\CoreApi.csproj|c:\\users\\admin\\onedrive\\desktop\\quanlykho\\qlbanlekho\\coreapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7ABCB83C-E535-46F2-A29B-C792309B4CF2}|CoreApi\\CoreApi.csproj|solutionrelative:coreapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{7ABCB83C-E535-46F2-A29B-C792309B4CF2}|CoreApi\\CoreApi.csproj|c:\\users\\admin\\onedrive\\desktop\\quanlykho\\qlbanlekho\\coreapi\\controllers\\stockcardcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7ABCB83C-E535-46F2-A29B-C792309B4CF2}|CoreApi\\CoreApi.csproj|solutionrelative:coreapi\\controllers\\stockcardcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{7ABCB83C-E535-46F2-A29B-C792309B4CF2}|CoreApi\\CoreApi.csproj|c:\\users\\admin\\onedrive\\desktop\\quanlykho\\qlbanlekho\\coreapi\\controllers\\reportcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7ABCB83C-E535-46F2-A29B-C792309B4CF2}|CoreApi\\CoreApi.csproj|solutionrelative:coreapi\\controllers\\reportcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{868024DA-637A-4266-860F-9C089C749415}|BLL\\BLL.csproj|c:\\users\\admin\\onedrive\\desktop\\quanlykho\\qlbanlekho\\bll\\reportbll.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{868024DA-637A-4266-860F-9C089C749415}|BLL\\BLL.csproj|solutionrelative:bll\\reportbll.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{868024DA-637A-4266-860F-9C089C749415}|BLL\\BLL.csproj|c:\\users\\admin\\onedrive\\desktop\\quanlykho\\qlbanlekho\\bll\\interfaces\\idreportbll.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{868024DA-637A-4266-860F-9C089C749415}|BLL\\BLL.csproj|solutionrelative:bll\\interfaces\\idreportbll.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7ABCB83C-E535-46F2-A29B-C792309B4CF2}|CoreApi\\CoreApi.csproj|c:\\users\\admin\\onedrive\\desktop\\quanlykho\\qlbanlekho\\coreapi\\controllers\\reportcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7ABCB83C-E535-46F2-A29B-C792309B4CF2}|CoreApi\\CoreApi.csproj|solutionrelative:coreapi\\controllers\\reportcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{67AFBC2A-27F8-4CB8-9294-B2CAA4EA55E9}|DAL\\DAL.csproj|c:\\users\\admin\\onedrive\\desktop\\quanlykho\\qlbanlekho\\dal\\reportdal .cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -39,44 +27,24 @@
       "RelativeMoniker": "D:0:0:{05014BAA-3857-46C6-A873-C13DD08C1492}|Model\\Model.csproj|solutionrelative:model\\reportmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{05014BAA-3857-46C6-A873-C13DD08C1492}|Model\\Model.csproj|c:\\users\\admin\\onedrive\\desktop\\quanlykho\\qlbanlekho\\model\\responsemodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{05014BAA-3857-46C6-A873-C13DD08C1492}|Model\\Model.csproj|solutionrelative:model\\responsemodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{7ABCB83C-E535-46F2-A29B-C792309B4CF2}|CoreApi\\CoreApi.csproj|c:\\users\\admin\\onedrive\\desktop\\quanlykho\\qlbanlekho\\coreapi\\controllers\\productcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7ABCB83C-E535-46F2-A29B-C792309B4CF2}|CoreApi\\CoreApi.csproj|solutionrelative:coreapi\\controllers\\productcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{67AFBC2A-27F8-4CB8-9294-B2CAA4EA55E9}|DAL\\DAL.csproj|c:\\users\\admin\\onedrive\\desktop\\quanlykho\\qlbanlekho\\dal\\interfaces\\idproductdal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{67AFBC2A-27F8-4CB8-9294-B2CAA4EA55E9}|DAL\\DAL.csproj|solutionrelative:dal\\interfaces\\idproductdal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{67AFBC2A-27F8-4CB8-9294-B2CAA4EA55E9}|DAL\\DAL.csproj|c:\\users\\admin\\onedrive\\desktop\\quanlykho\\qlbanlekho\\dal\\productdal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{67AFBC2A-27F8-4CB8-9294-B2CAA4EA55E9}|DAL\\DAL.csproj|solutionrelative:dal\\productdal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{05014BAA-3857-46C6-A873-C13DD08C1492}|Model\\Model.csproj|c:\\users\\admin\\onedrive\\desktop\\quanlykho\\qlbanlekho\\model\\productmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{05014BAA-3857-46C6-A873-C13DD08C1492}|Model\\Model.csproj|solutionrelative:model\\productmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{7ABCB83C-E535-46F2-A29B-C792309B4CF2}|CoreApi\\CoreApi.csproj|c:\\users\\admin\\onedrive\\desktop\\quanlykho\\qlbanlekho\\coreapi\\controllers\\paymentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7ABCB83C-E535-46F2-A29B-C792309B4CF2}|CoreApi\\CoreApi.csproj|solutionrelative:coreapi\\controllers\\paymentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{868024DA-637A-4266-860F-9C089C749415}|BLL\\BLL.csproj|c:\\users\\admin\\onedrive\\desktop\\quanlykho\\qlbanlekho\\bll\\interfaces\\idproductbll.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{868024DA-637A-4266-860F-9C089C749415}|BLL\\BLL.csproj|solutionrelative:bll\\interfaces\\idproductbll.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{868024DA-637A-4266-860F-9C089C749415}|BLL\\BLL.csproj|c:\\users\\admin\\onedrive\\desktop\\quanlykho\\qlbanlekho\\bll\\productbll.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{868024DA-637A-4266-860F-9C089C749415}|BLL\\BLL.csproj|solutionrelative:bll\\productbll.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{67AFBC2A-27F8-4CB8-9294-B2CAA4EA55E9}|DAL\\DAL.csproj|c:\\users\\admin\\onedrive\\desktop\\quanlykho\\qlbanlekho\\dal\\helper\\databasehelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{67AFBC2A-27F8-4CB8-9294-B2CAA4EA55E9}|DAL\\DAL.csproj|solutionrelative:dal\\helper\\databasehelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{7ABCB83C-E535-46F2-A29B-C792309B4CF2}|CoreApi\\CoreApi.csproj|c:\\users\\admin\\onedrive\\desktop\\quanlykho\\qlbanlekho\\coreapi\\coreapi.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}",
-      "RelativeMoniker": "D:0:0:{7ABCB83C-E535-46F2-A29B-C792309B4CF2}|CoreApi\\CoreApi.csproj|solutionrelative:coreapi\\coreapi.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{868024DA-637A-4266-860F-9C089C749415}|BLL\\BLL.csproj|c:\\users\\admin\\onedrive\\desktop\\quanlykho\\qlbanlekho\\bll\\paymentbll.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{868024DA-637A-4266-860F-9C089C749415}|BLL\\BLL.csproj|solutionrelative:bll\\paymentbll.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{868024DA-637A-4266-860F-9C089C749415}|BLL\\BLL.csproj|c:\\users\\admin\\onedrive\\desktop\\quanlykho\\qlbanlekho\\bll\\interfaces\\idproductbll.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{868024DA-637A-4266-860F-9C089C749415}|BLL\\BLL.csproj|solutionrelative:bll\\interfaces\\idproductbll.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -86,7 +54,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 10,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Bookmark",
@@ -94,242 +62,143 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\ADMIN\\OneDrive\\Desktop\\QuanLyKho\\QLBanLeKho\\CoreApi\\Program.cs",
-              "RelativeDocumentMoniker": "CoreApi\\Program.cs",
-              "ToolTip": "C:\\Users\\ADMIN\\OneDrive\\Desktop\\QuanLyKho\\QLBanLeKho\\CoreApi\\Program.cs",
-              "RelativeToolTip": "CoreApi\\Program.cs",
-              "ViewState": "AgIAABIAAAAAAAAAAAAUwCwAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-30T01:33:33.682Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "ReportController.cs",
-              "DocumentMoniker": "C:\\Users\\ADMIN\\OneDrive\\Desktop\\QuanLyKho\\QLBanLeKho\\CoreApi\\Controllers\\ReportController.cs",
-              "RelativeDocumentMoniker": "CoreApi\\Controllers\\ReportController.cs",
-              "ToolTip": "C:\\Users\\ADMIN\\OneDrive\\Desktop\\QuanLyKho\\QLBanLeKho\\CoreApi\\Controllers\\ReportController.cs",
-              "RelativeToolTip": "CoreApi\\Controllers\\ReportController.cs",
-              "ViewState": "AgIAACIAAAAAAAAAAADwv0IAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-30T08:03:22.253Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 0,
               "Title": "ReportBLL.cs",
               "DocumentMoniker": "C:\\Users\\ADMIN\\OneDrive\\Desktop\\QuanLyKho\\QLBanLeKho\\BLL\\ReportBLL.cs",
               "RelativeDocumentMoniker": "BLL\\ReportBLL.cs",
               "ToolTip": "C:\\Users\\ADMIN\\OneDrive\\Desktop\\QuanLyKho\\QLBanLeKho\\BLL\\ReportBLL.cs",
               "RelativeToolTip": "BLL\\ReportBLL.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAowCEAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-30T08:02:56.458Z",
+              "WhenOpened": "2025-10-03T00:42:07.03Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 1,
               "Title": "IDReportBLL.cs",
               "DocumentMoniker": "C:\\Users\\ADMIN\\OneDrive\\Desktop\\QuanLyKho\\QLBanLeKho\\BLL\\Interfaces\\IDReportBLL.cs",
               "RelativeDocumentMoniker": "BLL\\Interfaces\\IDReportBLL.cs",
               "ToolTip": "C:\\Users\\ADMIN\\OneDrive\\Desktop\\QuanLyKho\\QLBanLeKho\\BLL\\Interfaces\\IDReportBLL.cs",
               "RelativeToolTip": "BLL\\Interfaces\\IDReportBLL.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAPAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-30T08:02:31.331Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "ReportDAL .cs",
-              "DocumentMoniker": "C:\\Users\\ADMIN\\OneDrive\\Desktop\\QuanLyKho\\QLBanLeKho\\DAL\\ReportDAL .cs",
-              "RelativeDocumentMoniker": "DAL\\ReportDAL .cs",
-              "ToolTip": "C:\\Users\\ADMIN\\OneDrive\\Desktop\\QuanLyKho\\QLBanLeKho\\DAL\\ReportDAL .cs",
-              "RelativeToolTip": "DAL\\ReportDAL .cs",
-              "ViewState": "AgIAAC0AAAAAAAAAAAAIwE4AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-30T08:02:06.026Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "IDReportDAL.cs",
-              "DocumentMoniker": "C:\\Users\\ADMIN\\OneDrive\\Desktop\\QuanLyKho\\QLBanLeKho\\DAL\\Interfaces\\IDReportDAL.cs",
-              "RelativeDocumentMoniker": "DAL\\Interfaces\\IDReportDAL.cs",
-              "ToolTip": "C:\\Users\\ADMIN\\OneDrive\\Desktop\\QuanLyKho\\QLBanLeKho\\DAL\\Interfaces\\IDReportDAL.cs",
-              "RelativeToolTip": "DAL\\Interfaces\\IDReportDAL.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-30T08:01:34.358Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "ReportModel.cs",
-              "DocumentMoniker": "C:\\Users\\ADMIN\\OneDrive\\Desktop\\QuanLyKho\\QLBanLeKho\\Model\\ReportModel.cs",
-              "RelativeDocumentMoniker": "Model\\ReportModel.cs",
-              "ToolTip": "C:\\Users\\ADMIN\\OneDrive\\Desktop\\QuanLyKho\\QLBanLeKho\\Model\\ReportModel.cs",
-              "RelativeToolTip": "Model\\ReportModel.cs",
-              "ViewState": "AgIAABEAAAAAAAAAAAAqwCgAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-30T08:00:35.28Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "ResponseModel.cs",
-              "DocumentMoniker": "C:\\Users\\ADMIN\\OneDrive\\Desktop\\QuanLyKho\\QLBanLeKho\\Model\\ResponseModel.cs",
-              "RelativeDocumentMoniker": "Model\\ResponseModel.cs",
-              "ToolTip": "C:\\Users\\ADMIN\\OneDrive\\Desktop\\QuanLyKho\\QLBanLeKho\\Model\\ResponseModel.cs",
-              "RelativeToolTip": "Model\\ResponseModel.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-30T03:25:53.441Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "ProductController.cs",
-              "DocumentMoniker": "C:\\Users\\ADMIN\\OneDrive\\Desktop\\QuanLyKho\\QLBanLeKho\\CoreApi\\Controllers\\ProductController.cs",
-              "RelativeDocumentMoniker": "CoreApi\\Controllers\\ProductController.cs",
-              "ToolTip": "C:\\Users\\ADMIN\\OneDrive\\Desktop\\QuanLyKho\\QLBanLeKho\\CoreApi\\Controllers\\ProductController.cs",
-              "RelativeToolTip": "CoreApi\\Controllers\\ProductController.cs",
-              "ViewState": "AgIAABEAAAAAAAAAAAAlwDUAAAA8AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-30T01:32:21.542Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "ProductDAL.cs",
-              "DocumentMoniker": "C:\\Users\\ADMIN\\OneDrive\\Desktop\\QuanLyKho\\QLBanLeKho\\DAL\\ProductDAL.cs",
-              "RelativeDocumentMoniker": "DAL\\ProductDAL.cs",
-              "ToolTip": "C:\\Users\\ADMIN\\OneDrive\\Desktop\\QuanLyKho\\QLBanLeKho\\DAL\\ProductDAL.cs",
-              "RelativeToolTip": "DAL\\ProductDAL.cs",
-              "ViewState": "AgIAAAwAAAAAAAAAAIAwwB8AAAAQAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-27T14:52:17.81Z",
+              "WhenOpened": "2025-10-03T00:41:57.266Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "StockCardController.cs",
-              "DocumentMoniker": "C:\\Users\\ADMIN\\OneDrive\\Desktop\\QuanLyKho\\QLBanLeKho\\CoreApi\\Controllers\\StockCardController.cs",
-              "RelativeDocumentMoniker": "CoreApi\\Controllers\\StockCardController.cs",
-              "ToolTip": "C:\\Users\\ADMIN\\OneDrive\\Desktop\\QuanLyKho\\QLBanLeKho\\CoreApi\\Controllers\\StockCardController.cs",
-              "RelativeToolTip": "CoreApi\\Controllers\\StockCardController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Title": "ReportController.cs",
+              "DocumentMoniker": "C:\\Users\\ADMIN\\OneDrive\\Desktop\\QuanLyKho\\QLBanLeKho\\CoreApi\\Controllers\\ReportController.cs",
+              "RelativeDocumentMoniker": "CoreApi\\Controllers\\ReportController.cs",
+              "ToolTip": "C:\\Users\\ADMIN\\OneDrive\\Desktop\\QuanLyKho\\QLBanLeKho\\CoreApi\\Controllers\\ReportController.cs",
+              "RelativeToolTip": "CoreApi\\Controllers\\ReportController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAYAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-30T07:45:40.043Z",
+              "WhenOpened": "2025-10-03T00:41:35.23Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "IDProductDAL.cs",
-              "DocumentMoniker": "C:\\Users\\ADMIN\\OneDrive\\Desktop\\QuanLyKho\\QLBanLeKho\\DAL\\Interfaces\\IDProductDAL.cs",
-              "RelativeDocumentMoniker": "DAL\\Interfaces\\IDProductDAL.cs",
-              "ToolTip": "C:\\Users\\ADMIN\\OneDrive\\Desktop\\QuanLyKho\\QLBanLeKho\\DAL\\Interfaces\\IDProductDAL.cs",
-              "RelativeToolTip": "DAL\\Interfaces\\IDProductDAL.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB0AAAAAAAAAAAAAAA==",
+              "DocumentIndex": 3,
+              "Title": "ReportDAL .cs",
+              "DocumentMoniker": "C:\\Users\\ADMIN\\OneDrive\\Desktop\\QuanLyKho\\QLBanLeKho\\DAL\\ReportDAL .cs",
+              "RelativeDocumentMoniker": "DAL\\ReportDAL .cs",
+              "ToolTip": "C:\\Users\\ADMIN\\OneDrive\\Desktop\\QuanLyKho\\QLBanLeKho\\DAL\\ReportDAL .cs",
+              "RelativeToolTip": "DAL\\ReportDAL .cs",
+              "ViewState": "AgIAACwAAAAAAAAAAAAgwEUAAAAcAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-27T14:52:37.43Z"
+              "WhenOpened": "2025-10-03T00:41:11.999Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 4,
+              "Title": "IDReportDAL.cs",
+              "DocumentMoniker": "C:\\Users\\ADMIN\\OneDrive\\Desktop\\QuanLyKho\\QLBanLeKho\\DAL\\Interfaces\\IDReportDAL.cs",
+              "RelativeDocumentMoniker": "DAL\\Interfaces\\IDReportDAL.cs",
+              "ToolTip": "C:\\Users\\ADMIN\\OneDrive\\Desktop\\QuanLyKho\\QLBanLeKho\\DAL\\Interfaces\\IDReportDAL.cs",
+              "RelativeToolTip": "DAL\\Interfaces\\IDReportDAL.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-03T00:40:43.125Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "ReportModel.cs",
+              "DocumentMoniker": "C:\\Users\\ADMIN\\OneDrive\\Desktop\\QuanLyKho\\QLBanLeKho\\Model\\ReportModel.cs",
+              "RelativeDocumentMoniker": "Model\\ReportModel.cs",
+              "ToolTip": "C:\\Users\\ADMIN\\OneDrive\\Desktop\\QuanLyKho\\QLBanLeKho\\Model\\ReportModel.cs",
+              "RelativeToolTip": "Model\\ReportModel.cs",
+              "ViewState": "AgIAABAAAAAAAAAAAAAkwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-03T00:40:28.946Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
               "Title": "ProductModel.cs",
               "DocumentMoniker": "C:\\Users\\ADMIN\\OneDrive\\Desktop\\QuanLyKho\\QLBanLeKho\\Model\\ProductModel.cs",
               "RelativeDocumentMoniker": "Model\\ProductModel.cs",
               "ToolTip": "C:\\Users\\ADMIN\\OneDrive\\Desktop\\QuanLyKho\\QLBanLeKho\\Model\\ProductModel.cs",
               "RelativeToolTip": "Model\\ProductModel.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAuwBYAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAowBUAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-27T14:52:23.045Z"
+              "WhenOpened": "2025-10-01T14:18:21.123Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "PaymentController.cs",
-              "DocumentMoniker": "C:\\Users\\ADMIN\\OneDrive\\Desktop\\QuanLyKho\\QLBanLeKho\\CoreApi\\Controllers\\PaymentController.cs",
-              "RelativeDocumentMoniker": "CoreApi\\Controllers\\PaymentController.cs",
-              "ToolTip": "C:\\Users\\ADMIN\\OneDrive\\Desktop\\QuanLyKho\\QLBanLeKho\\CoreApi\\Controllers\\PaymentController.cs",
-              "RelativeToolTip": "CoreApi\\Controllers\\PaymentController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 7,
+              "Title": "ProductDAL.cs",
+              "DocumentMoniker": "C:\\Users\\ADMIN\\OneDrive\\Desktop\\QuanLyKho\\QLBanLeKho\\DAL\\ProductDAL.cs",
+              "RelativeDocumentMoniker": "DAL\\ProductDAL.cs",
+              "ToolTip": "C:\\Users\\ADMIN\\OneDrive\\Desktop\\QuanLyKho\\QLBanLeKho\\DAL\\ProductDAL.cs",
+              "RelativeToolTip": "DAL\\ProductDAL.cs",
+              "ViewState": "AgIAADYAAAAAAAAAAIAwwEMAAAAQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-30T07:59:41.784Z"
+              "WhenOpened": "2025-10-01T14:18:41.359Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
-              "Title": "DatabaseHelper.cs",
-              "DocumentMoniker": "C:\\Users\\ADMIN\\OneDrive\\Desktop\\QuanLyKho\\QLBanLeKho\\DAL\\Helper\\DatabaseHelper.cs",
-              "RelativeDocumentMoniker": "DAL\\Helper\\DatabaseHelper.cs",
-              "ToolTip": "C:\\Users\\ADMIN\\OneDrive\\Desktop\\QuanLyKho\\QLBanLeKho\\DAL\\Helper\\DatabaseHelper.cs",
-              "RelativeToolTip": "DAL\\Helper\\DatabaseHelper.cs",
-              "ViewState": "AgIAAHcDAAAAAAAAAAAiwJUDAAASAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-30T03:26:55.56Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "ProductBLL.cs",
-              "DocumentMoniker": "C:\\Users\\ADMIN\\OneDrive\\Desktop\\QuanLyKho\\QLBanLeKho\\BLL\\ProductBLL.cs",
-              "RelativeDocumentMoniker": "BLL\\ProductBLL.cs",
-              "ToolTip": "C:\\Users\\ADMIN\\OneDrive\\Desktop\\QuanLyKho\\QLBanLeKho\\BLL\\ProductBLL.cs",
-              "RelativeToolTip": "BLL\\ProductBLL.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-27T14:53:08.832Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 16,
-              "Title": "CoreApi.http",
-              "DocumentMoniker": "C:\\Users\\ADMIN\\OneDrive\\Desktop\\QuanLyKho\\QLBanLeKho\\CoreApi\\CoreApi.http",
-              "RelativeDocumentMoniker": "CoreApi\\CoreApi.http",
-              "ToolTip": "C:\\Users\\ADMIN\\OneDrive\\Desktop\\QuanLyKho\\QLBanLeKho\\CoreApi\\CoreApi.http",
-              "RelativeToolTip": "CoreApi\\CoreApi.http",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003502|",
-              "WhenOpened": "2025-09-30T06:29:06.706Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 17,
-              "Title": "PaymentBLL.cs",
-              "DocumentMoniker": "C:\\Users\\ADMIN\\OneDrive\\Desktop\\QuanLyKho\\QLBanLeKho\\BLL\\PaymentBLL.cs",
-              "RelativeDocumentMoniker": "BLL\\PaymentBLL.cs",
-              "ToolTip": "C:\\Users\\ADMIN\\OneDrive\\Desktop\\QuanLyKho\\QLBanLeKho\\BLL\\PaymentBLL.cs",
-              "RelativeToolTip": "BLL\\PaymentBLL.cs",
-              "ViewState": "AgIAABkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-30T03:49:06.088Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 9,
               "Title": "IDProductBLL.cs",
               "DocumentMoniker": "C:\\Users\\ADMIN\\OneDrive\\Desktop\\QuanLyKho\\QLBanLeKho\\BLL\\Interfaces\\IDProductBLL.cs",
               "RelativeDocumentMoniker": "BLL\\Interfaces\\IDProductBLL.cs",
               "ToolTip": "C:\\Users\\ADMIN\\OneDrive\\Desktop\\QuanLyKho\\QLBanLeKho\\BLL\\Interfaces\\IDProductBLL.cs",
               "RelativeToolTip": "BLL\\Interfaces\\IDProductBLL.cs",
-              "ViewState": "AgIAAAIAAAAAAAAAAAAqwCAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAgwBUAAAAjAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-30T01:33:06.467Z"
+              "WhenOpened": "2025-10-01T14:19:17.72Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "ProductBLL.cs",
+              "DocumentMoniker": "C:\\Users\\ADMIN\\OneDrive\\Desktop\\QuanLyKho\\QLBanLeKho\\BLL\\ProductBLL.cs",
+              "RelativeDocumentMoniker": "BLL\\ProductBLL.cs",
+              "ToolTip": "C:\\Users\\ADMIN\\OneDrive\\Desktop\\QuanLyKho\\QLBanLeKho\\BLL\\ProductBLL.cs",
+              "RelativeToolTip": "BLL\\ProductBLL.cs",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAkwC0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-01T14:19:00.566Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "IDProductDAL.cs",
+              "DocumentMoniker": "C:\\Users\\ADMIN\\OneDrive\\Desktop\\QuanLyKho\\QLBanLeKho\\DAL\\Interfaces\\IDProductDAL.cs",
+              "RelativeDocumentMoniker": "DAL\\Interfaces\\IDProductDAL.cs",
+              "ToolTip": "C:\\Users\\ADMIN\\OneDrive\\Desktop\\QuanLyKho\\QLBanLeKho\\DAL\\Interfaces\\IDProductDAL.cs",
+              "RelativeToolTip": "DAL\\Interfaces\\IDProductDAL.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAAhAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-01T14:18:50.211Z",
+              "EditorCaption": ""
             }
           ]
         }

@@ -47,6 +47,7 @@ CREATE TABLE Products (
     Price DECIMAL(18,2) NOT NULL, -- Giá bán
     MinStock INT DEFAULT 0, -- Tồn kho tối thiểu
     Status NVARCHAR(20) DEFAULT 'Active', -- Trạng thái
+	Image NVARCHAR(255),
     FOREIGN KEY (CategoryID) REFERENCES Categories(CategoryID),
     FOREIGN KEY (SupplierID) REFERENCES Suppliers(SupplierID)
 );
@@ -84,7 +85,7 @@ CREATE TABLE GoodsReceiptDetails (
     ReceiptID INT, -- Mã phiếu nhập kho
     ProductID INT, -- Mã sản phẩm
     Quantity INT NOT NULL, -- Số lượng
-    CostPrice DECIMAL(18,2) NOT NULL, -- Đơn giá
+    UnitPrice DECIMAL(18,2) NOT NULL, -- Đơn giá
     BatchNo VARCHAR(50), -- Số lô
     ExpiryDate DATE, -- Hạn dùng
     PRIMARY KEY (ReceiptID, ProductID),
@@ -251,23 +252,23 @@ VALUES
 (N'Khách Hàng 15', '0923000015', 'kh15@shop.com', N'Vĩnh Phúc', 15000000);
 
 -- PRODUCTS (15 bản ghi)
-INSERT INTO Products (SKU, Barcode, ProductName, CategoryID, SupplierID, Unit, Price, MinStock, Status)
+INSERT INTO Products (SKU, Barcode, ProductName, CategoryID, SupplierID, Unit, Price, MinStock, Status,Image)
 VALUES
-('SKU001', 'BC001', N'Giày Sneaker Trắng', 1, 1, N'Đôi', 800000, 10, 'Active'),
-('SKU002', 'BC002', N'Giày Sneaker Đen', 1, 2, N'Đôi', 850000, 10, 'Active'),
-('SKU003', 'BC003', N'Giày Chạy Bộ Nam', 8, 3, N'Đôi', 1200000, 5, 'Active'),
-('SKU004', 'BC004', N'Giày Chạy Bộ Nữ', 8, 4, N'Đôi', 1150000, 5, 'Active'),
-('SKU005', 'BC005', N'Giày Tennis Trắng', 11, 5, N'Đôi', 950000, 3, 'Active'),
-('SKU006', 'BC006', N'Giày Bóng Đá Cỏ Tự Nhiên', 13, 6, N'Đôi', 1350000, 7, 'Active'),
-('SKU007', 'BC007', N'Giày Bóng Đá Cỏ Nhân Tạo', 13, 7, N'Đôi', 1100000, 7, 'Active'),
-('SKU008', 'BC008', N'Giày Bóng Rổ Cao Cổ', 14, 8, N'Đôi', 1400000, 6, 'Active'),
-('SKU009', 'BC009', N'Giày Golf Chống Thấm', 12, 9, N'Đôi', 2500000, 2, 'Active'),
-('SKU010', 'BC010', N'Giày Tây Nam', 4, 10, N'Đôi', 1600000, 4, 'Active'),
-('SKU011', 'BC011', N'Giày Cao Gót Đen', 5, 11, N'Đôi', 900000, 3, 'Active'),
-('SKU012', 'BC012', N'Giày Boot Da', 6, 12, N'Đôi', 2200000, 2, 'Active'),
-('SKU013', 'BC013', N'Dép Lê Nam', 3, 13, N'Đôi', 150000, 20, 'Active'),
-('SKU014', 'BC014', N'Sandal Nữ Thời Trang', 2, 14, N'Đôi', 350000, 15, 'Active'),
-('SKU015', 'BC015', N'Giày Lười Nam', 10, 15, N'Đôi', 780000, 8, 'Active');
+('SKU001', 'BC001', N'Giày Sneaker Trắng', 1, 1, N'Đôi', 800000, 10, 'Active', N'Ảnh 1'),
+('SKU002', 'BC002', N'Giày Sneaker Đen', 1, 2, N'Đôi', 850000, 10, 'Active', N'Ảnh 1'),
+('SKU003', 'BC003', N'Giày Chạy Bộ Nam', 8, 3, N'Đôi', 1200000, 5, 'Active', N'Ảnh 1'),
+('SKU004', 'BC004', N'Giày Chạy Bộ Nữ', 8, 4, N'Đôi', 1150000, 5, 'Active', N'Ảnh 1'),
+('SKU005', 'BC005', N'Giày Tennis Trắng', 11, 5, N'Đôi', 950000, 3, 'Active', N'Ảnh 1'),
+('SKU006', 'BC006', N'Giày Bóng Đá Cỏ Tự Nhiên', 13, 6, N'Đôi', 1350000, 7, 'Active', N'Ảnh 1'),
+('SKU007', 'BC007', N'Giày Bóng Đá Cỏ Nhân Tạo', 13, 7, N'Đôi', 1100000, 7, 'Active', N'Ảnh 1'),
+('SKU008', 'BC008', N'Giày Bóng Rổ Cao Cổ', 14, 8, N'Đôi', 1400000, 6, 'Active', N'Ảnh 1'),
+('SKU009', 'BC009', N'Giày Golf Chống Thấm', 12, 9, N'Đôi', 2500000, 2, 'Active', N'Ảnh 1'),
+('SKU010', 'BC010', N'Giày Tây Nam', 4, 10, N'Đôi', 1600000, 4, 'Active', N'Ảnh 1'),
+('SKU011', 'BC011', N'Giày Cao Gót Đen', 5, 11, N'Đôi', 900000, 3, 'Active', N'Ảnh 1'),
+('SKU012', 'BC012', N'Giày Boot Da', 6, 12, N'Đôi', 2200000, 2, 'Active', N'Ảnh 1'),
+('SKU013', 'BC013', N'Dép Lê Nam', 3, 13, N'Đôi', 150000, 20, 'Active', N'Ảnh 1'),
+('SKU014', 'BC014', N'Sandal Nữ Thời Trang', 2, 14, N'Đôi', 350000, 15, 'Active', N'Ảnh 1'),
+('SKU015', 'BC015', N'Giày Lười Nam', 10, 15, N'Đôi', 780000, 8, 'Active', N'Ảnh 1');
 
 
 
@@ -339,7 +340,7 @@ VALUES
 
 
 
-INSERT INTO GoodsReceiptDetails (ReceiptID, ProductID, Quantity, CostPrice, BatchNo, ExpiryDate)
+INSERT INTO GoodsReceiptDetails (ReceiptID, ProductID, Quantity, UnitPrice, BatchNo, ExpiryDate)
 VALUES
 (1, 1, 50, 600000, 'B001', '2026-01-01'),
 (2, 2, 40, 650000, 'B002', '2026-01-02'),
@@ -561,7 +562,8 @@ CREATE PROCEDURE [dbo].[sp_product_create]
     @Unit NVARCHAR(20) = NULL,
     @Price DECIMAL(18,2),
     @MinStock INT = 0,
-    @Status NVARCHAR(20) = 'Active'
+    @Status NVARCHAR(20) = 'Active',
+	@Image NVARCHAR(255) = NULL  -- 🆕
 )
 AS
 BEGIN
@@ -577,7 +579,8 @@ BEGIN
         Unit,
         Price,
         MinStock,
-        Status
+        Status,
+		Image
     )
     VALUES
     (
@@ -589,7 +592,8 @@ BEGIN
         @Unit,
         @Price,
         @MinStock,
-        @Status
+        @Status,
+		@Image
     );
 
     -- Trả về ID vừa thêm (giúp frontend/backend biết sản phẩm nào vừa được tạo)
@@ -610,7 +614,8 @@ CREATE PROCEDURE [dbo].[sp_product_update]
     @Unit        NVARCHAR(20) = NULL,
     @Price       DECIMAL(18,2) = NULL,
     @MinStock    INT = NULL,
-    @Status      NVARCHAR(20) = NULL
+    @Status      NVARCHAR(20) = NULL,
+	@Image       NVARCHAR(255) = NULL
 )
 AS
 BEGIN
@@ -624,7 +629,8 @@ BEGIN
         Unit        = IIF(@Unit IS NULL, Unit, @Unit),
         Price       = IIF(@Price IS NULL, Price, @Price),
         MinStock    = IIF(@MinStock IS NULL, MinStock, @MinStock),
-        Status      = IIF(@Status IS NULL, Status, @Status)
+        Status      = IIF(@Status IS NULL, Status, @Status),
+		Image       = IIF(@Image IS NULL, Image, @Image)
     WHERE ProductID = @ProductID;
 
     SELECT '';
@@ -677,7 +683,8 @@ BEGIN
                p.Unit,
                p.Price,
                p.MinStock,
-               p.Status
+               p.Status,
+			   p.Image
         INTO #Results1
         FROM Products AS p
         WHERE (@ProductID IS NULL OR p.ProductID = @ProductID)
@@ -717,7 +724,8 @@ BEGIN
                p.Unit,
                p.Price,
                p.MinStock,
-               p.Status
+               p.Status,
+			   p.Image
         INTO #Results2
         FROM Products AS p
         WHERE (@ProductID IS NULL OR p.ProductID = @ProductID)
@@ -761,6 +769,10 @@ BEGIN
 END;
 GO
 
+
+
+
+EXEC sp_product_delete @ProductID = 16;
 
 
 DROP PROCEDURE [dbo].[sp_product_delete];

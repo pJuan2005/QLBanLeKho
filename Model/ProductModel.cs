@@ -12,13 +12,13 @@ namespace Model
         public string SKU { get; set; }              // Mã SKU (unique, not null)
         public string Barcode { get; set; }          // Mã barcode (unique, có thể null)
         public string ProductName { get; set; }      // Tên sản phẩm
-        public int? CategoryID { get; set; }         // Mã loại hàng (nullable vì có thể chưa gán)
-        public int? SupplierID { get; set; }         // Mã nhà cung cấp (nullable)
+        public int? CategoryID { get; set; }         // Mã loại hàng
+        public int? SupplierID { get; set; }         // Mã nhà cung cấp
         public string Unit { get; set; }             // Đơn vị tính
         public decimal Price { get; set; }           // Giá bán
-        public int MinStock { get; set; }            // Tồn kho tối thiểu (default 0)
-        public string Status { get; set; }
-
+        public int MinStock { get; set; }            // Tồn kho tối thiểu
+        public string Status { get; set; }           // Trạng thái
+        public string Image { get; set; }            // 🆕 Link ảnh sản phẩm
     }
 
 
