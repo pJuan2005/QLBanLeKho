@@ -967,12 +967,6 @@ GO
 USE [QLBanLeKho]
 GO
 
-/****** Object:  StoredProcedure [dbo].[sp_category_create]    Script Date: 9/24/2025 5:05:13 PM ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
 
 CREATE   PROCEDURE [dbo].[sp_category_create]
 (
@@ -1016,12 +1010,6 @@ GO
 USE [QLBanLeKho]
 GO
 
-/****** Object:  StoredProcedure [dbo].[sp_category_get_by_id]    Script Date: 9/24/2025 5:05:40 PM ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
 
 create procedure [dbo].[sp_category_get_by_id](@CategoryID int)
 as
@@ -1034,12 +1022,6 @@ GO
 USE [QLBanLeKho]
 GO
 
-/****** Object:  StoredProcedure [dbo].[sp_category_search]    Script Date: 9/24/2025 5:05:48 PM ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
 
 
 CREATE PROCEDURE [dbo].[sp_category_search]
@@ -1087,12 +1069,6 @@ GO
 USE [QLBanLeKho]
 GO
 
-/****** Object:  StoredProcedure [dbo].[sp_category_update]    Script Date: 9/24/2025 5:05:58 PM ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
 
 create procedure [dbo].[sp_category_update](
 @CategoryID int,
@@ -1328,7 +1304,7 @@ BEGIN
             ELSE CAST(CONVERT(DATE, hd.InvoiceDate) AS NVARCHAR)
         END AS DateLabel,
         SUM(ct.Quantity * ct.UnitPrice) AS Revenue,
-        SUM((ct.UnitPrice - ct.CostPrice) * ct.Quantity) AS GrossProfit
+        SUM((ct.UnitPrice - ct.UnitPrice) * ct.Quantity) AS GrossProfit
     FROM Invoices hd
     INNER JOIN InvoiceDetails ct ON hd.InvoiceID = ct.InvoiceID
     WHERE hd.InvoiceDate BETWEEN @FromDate AND @ToDate
@@ -1346,7 +1322,7 @@ GO
 
 DROP PROCEDURE [dbo].[sp_report_revenue]
 
-CREATE OR ALTER PROCEDURE sp_report_revenue
+CREATE PROCEDURE sp_report_revenue
 (
     @FromDate DATE,
     @ToDate   DATE,
@@ -1361,11 +1337,11 @@ BEGIN
         SELECT 
             CAST(s.SaleDate AS DATE) AS [Date],
             SUM(si.Quantity * (si.UnitPrice - si.Discount)) AS Revenue,
-            SUM(si.Quantity * (si.UnitPrice - si.Discount) - ISNULL(grd.CostPrice,0) * si.Quantity) AS GrossProfit
+            SUM(si.Quantity * (si.UnitPrice - si.Discount) - ISNULL(grd.UnitPrice,0) * si.Quantity) AS GrossProfit
         FROM Sales s
         INNER JOIN SalesItems si ON s.SaleID = si.SaleID
         LEFT JOIN (
-            SELECT ProductID, AVG(CostPrice) AS CostPrice
+            SELECT ProductID, AVG(UnitPrice) AS UnitPrice
             FROM GoodsReceiptDetails
             GROUP BY ProductID
         ) grd ON si.ProductID = grd.ProductID
@@ -1379,11 +1355,11 @@ BEGIN
         SELECT 
             FORMAT(s.SaleDate, 'yyyy-MM') AS [Date],
             SUM(si.Quantity * (si.UnitPrice - si.Discount)) AS Revenue,
-            SUM(si.Quantity * (si.UnitPrice - si.Discount) - ISNULL(grd.CostPrice,0) * si.Quantity) AS GrossProfit
+            SUM(si.Quantity * (si.UnitPrice - si.Discount) - ISNULL(grd.UnitPrice,0) * si.Quantity) AS GrossProfit
         FROM Sales s
         INNER JOIN SalesItems si ON s.SaleID = si.SaleID
         LEFT JOIN (
-            SELECT ProductID, AVG(CostPrice) AS CostPrice
+            SELECT ProductID, AVG(UnitPrice) AS UnitPrice
             FROM GoodsReceiptDetails
             GROUP BY ProductID
         ) grd ON si.ProductID = grd.ProductID

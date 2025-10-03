@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "C:\\Users\\ADMIN\\OneDrive\\Desktop\\QuanLyKho\\QLBanLeKho\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{67AFBC2A-27F8-4CB8-9294-B2CAA4EA55E9}|DAL\\DAL.csproj|c:\\users\\admin\\onedrive\\desktop\\quanlykho\\qlbanlekho\\dal\\productdal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{67AFBC2A-27F8-4CB8-9294-B2CAA4EA55E9}|DAL\\DAL.csproj|solutionrelative:dal\\productdal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{868024DA-637A-4266-860F-9C089C749415}|BLL\\BLL.csproj|c:\\users\\admin\\onedrive\\desktop\\quanlykho\\qlbanlekho\\bll\\reportbll.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{868024DA-637A-4266-860F-9C089C749415}|BLL\\BLL.csproj|solutionrelative:bll\\reportbll.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -31,10 +35,6 @@
       "RelativeMoniker": "D:0:0:{67AFBC2A-27F8-4CB8-9294-B2CAA4EA55E9}|DAL\\DAL.csproj|solutionrelative:dal\\interfaces\\idproductdal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{67AFBC2A-27F8-4CB8-9294-B2CAA4EA55E9}|DAL\\DAL.csproj|c:\\users\\admin\\onedrive\\desktop\\quanlykho\\qlbanlekho\\dal\\productdal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{67AFBC2A-27F8-4CB8-9294-B2CAA4EA55E9}|DAL\\DAL.csproj|solutionrelative:dal\\productdal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{05014BAA-3857-46C6-A873-C13DD08C1492}|Model\\Model.csproj|c:\\users\\admin\\onedrive\\desktop\\quanlykho\\qlbanlekho\\model\\productmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{05014BAA-3857-46C6-A873-C13DD08C1492}|Model\\Model.csproj|solutionrelative:model\\productmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -54,7 +54,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 8,
           "Children": [
             {
               "$type": "Bookmark",
@@ -62,7 +62,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "ReportBLL.cs",
               "DocumentMoniker": "C:\\Users\\ADMIN\\OneDrive\\Desktop\\QuanLyKho\\QLBanLeKho\\BLL\\ReportBLL.cs",
               "RelativeDocumentMoniker": "BLL\\ReportBLL.cs",
@@ -75,7 +75,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "IDReportBLL.cs",
               "DocumentMoniker": "C:\\Users\\ADMIN\\OneDrive\\Desktop\\QuanLyKho\\QLBanLeKho\\BLL\\Interfaces\\IDReportBLL.cs",
               "RelativeDocumentMoniker": "BLL\\Interfaces\\IDReportBLL.cs",
@@ -88,7 +88,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "ReportController.cs",
               "DocumentMoniker": "C:\\Users\\ADMIN\\OneDrive\\Desktop\\QuanLyKho\\QLBanLeKho\\CoreApi\\Controllers\\ReportController.cs",
               "RelativeDocumentMoniker": "CoreApi\\Controllers\\ReportController.cs",
@@ -101,7 +101,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "ReportDAL .cs",
               "DocumentMoniker": "C:\\Users\\ADMIN\\OneDrive\\Desktop\\QuanLyKho\\QLBanLeKho\\DAL\\ReportDAL .cs",
               "RelativeDocumentMoniker": "DAL\\ReportDAL .cs",
@@ -114,7 +114,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "IDReportDAL.cs",
               "DocumentMoniker": "C:\\Users\\ADMIN\\OneDrive\\Desktop\\QuanLyKho\\QLBanLeKho\\DAL\\Interfaces\\IDReportDAL.cs",
               "RelativeDocumentMoniker": "DAL\\Interfaces\\IDReportDAL.cs",
@@ -127,7 +127,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "ReportModel.cs",
               "DocumentMoniker": "C:\\Users\\ADMIN\\OneDrive\\Desktop\\QuanLyKho\\QLBanLeKho\\Model\\ReportModel.cs",
               "RelativeDocumentMoniker": "Model\\ReportModel.cs",
@@ -152,7 +152,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 0,
               "Title": "ProductDAL.cs",
               "DocumentMoniker": "C:\\Users\\ADMIN\\OneDrive\\Desktop\\QuanLyKho\\QLBanLeKho\\DAL\\ProductDAL.cs",
               "RelativeDocumentMoniker": "DAL\\ProductDAL.cs",
@@ -189,7 +189,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "IDProductDAL.cs",
               "DocumentMoniker": "C:\\Users\\ADMIN\\OneDrive\\Desktop\\QuanLyKho\\QLBanLeKho\\DAL\\Interfaces\\IDProductDAL.cs",
               "RelativeDocumentMoniker": "DAL\\Interfaces\\IDProductDAL.cs",
