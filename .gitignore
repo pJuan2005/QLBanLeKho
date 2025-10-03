@@ -1,10 +1,12 @@
-# Visual Studio
+# Visual Studio / IDE
 .vs/
+.vscode/
+.idea/
 *.user
 *.suo
 *.sln.docstates
 
-# Build results (recursive for all subdirectories)
+# Build artifacts (recursive for all projects, all levels)
 **/bin/
 **/obj/
 [Bb]uild/
@@ -12,22 +14,22 @@
 [Rr]elease/
 **/GeneratedFiles/
 
-# NuGet Packages
+# NuGet & build caches
 *.nupkg
 *.snupkg
 packages/
 project.lock.json
 project.assets.json
 *.nuget.cache
+*.cache
 
 # ASP.NET Core
 appsettings*.json         # Ignore local config files (e.g., appsettings.Development.json)
 *.runtimeconfig.json
 *.runtimeconfig.dev.json
 
-# Others
+# Logs & binaries
 *.log
-*.cache
 *.dll
 *.exe
 *.pdb
