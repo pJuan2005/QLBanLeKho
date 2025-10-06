@@ -21,6 +21,8 @@ builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddTransient<IUserBusiness, UserBusiness>();
 builder.Services.AddTransient<ISupplierRepository, SupplierRepository>();
 builder.Services.AddTransient<ISupplierBusiness,SupplierBusiness>();
+builder.Services.AddTransient<IDSystemSettingDAL, SystemSettingDAL>();
+builder.Services.AddTransient<IDSystemSettingBLL, SystemSettingBLL>();
 IConfiguration configuration = builder.Configuration;
 var appSettingsSection = configuration.GetSection("AppSettings");
 builder.Services.Configure<AppSettings>(appSettingsSection);

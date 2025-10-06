@@ -1,5 +1,4 @@
-using BLL;
-<<<<<<< HEAD
+﻿using BLL;
 using DAL.Helper;
 using DAL;
 using BLL.Interfaces;
@@ -8,8 +7,6 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using DAL.Interfaces;
-
-=======
 using BLL.Interfaces;
 using DAL;
 using DAL.Helper;
@@ -17,7 +14,7 @@ using DAL.Interfaces;
 
 
 
->>>>>>> bách
+
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddMemoryCache();
 builder.Services.AddCors(options =>
@@ -27,7 +24,6 @@ builder.Services.AddCors(options =>
 
 // Add services to the container.
 builder.Services.AddTransient<IDatabaseHelper, DatabaseHelper>();
-<<<<<<< HEAD
 builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
 builder.Services.AddTransient<ICategoryBusiness, CategoryBusiness>();
 builder.Services.AddTransient<IUserBusiness, UserBusiness>();
@@ -56,7 +52,6 @@ builder.Services.AddAuthentication(x =>
         ValidateAudience = false
     };
 });
-=======
 builder.Services.AddTransient<IDProductDAL, ProductDAL>();
 builder.Services.AddTransient<IDProductBLL, ProductBLL>();
 
@@ -73,7 +68,6 @@ builder.Services.AddTransient<IDStockCardBLL, StockCardBLL>();
 
 builder.Services.AddTransient<IDReportDAL, ReportDAL>();
 builder.Services.AddTransient<IDReportBLL, ReportBLL>();
->>>>>>> bách
 
 
 

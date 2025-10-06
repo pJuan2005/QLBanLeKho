@@ -1,10 +1,9 @@
 ﻿create database QuanLyKho
 use  QuanLyKho
 
-<<<<<<< HEAD
-=======
+
 drop database QuanLyKho
->>>>>>> bách
+
 
 CREATE TABLE Users (
     UserID INT IDENTITY(1,1) PRIMARY KEY, -- Mã người dùng
@@ -50,10 +49,7 @@ CREATE TABLE Products (
     Price DECIMAL(18,2) NOT NULL, -- Giá bán
     MinStock INT DEFAULT 0, -- Tồn kho tối thiểu
     Status NVARCHAR(20) DEFAULT 'Active', -- Trạng thái
-<<<<<<< HEAD
-=======
 	Image NVARCHAR(255),
->>>>>>> bách
     FOREIGN KEY (CategoryID) REFERENCES Categories(CategoryID),
     FOREIGN KEY (SupplierID) REFERENCES Suppliers(SupplierID)
 );
@@ -70,10 +66,7 @@ CREATE TABLE PurchaseOrders (
 CREATE TABLE PurchaseOrderDetails (
     POID INT, -- Mã đơn mua hàng
     ProductID INT, -- Mã sản phẩm
-<<<<<<< HEAD
-=======
 	NameProduct NVARCHAR(50),
->>>>>>> bách
     Quantity INT NOT NULL, -- Số lượng
     UnitPrice DECIMAL(18,2) NOT NULL, -- Đơn giá
     PRIMARY KEY (POID, ProductID),
@@ -116,11 +109,8 @@ CREATE TABLE Sales (
     SaleID INT IDENTITY(1,1) PRIMARY KEY, -- Mã đơn bán hàng
     CustomerID INT, -- Mã khách hàng
     UserID INT NOT NULL, -- Mã nhân viên (người bán)
-<<<<<<< HEAD
     SaleDate DATETIME NOT NULL, -- Ngày bán
-=======
-    SaleDate DATE NOT NULL, -- Ngày bán
->>>>>>> bách
+    --SaleDate DATE NOT NULL, -- Ngày bán
     TotalAmount DECIMAL(18,2), -- Tổng tiền
     VATAmount DECIMAL(18,2), -- Thuế VAT
     PromotionID INT, -- Mã khuyến mãi
@@ -183,110 +173,17 @@ CREATE TABLE StockCards (
     FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
 );
 
-<<<<<<< HEAD
-INSERT INTO Users (Username, PasswordHash, Role, FullName, Email, Phone)
-VALUES 
-('admin', '123456', 'Admin', N'Nguyễn Văn A', 'admin@kho.com', '0901111111'),
-('thungan1', '123456', 'ThuNgan', N'Trần Thị B', 'b@kho.com', '0902222222'),
-('thukho1', '123456', 'ThuKho', N'Lê Văn C', 'c@kho.com', '0903333333'),
-('ketoan1', '123456', 'KeToan', N'Phạm Thị D', 'd@kho.com', '0904444444');
 
 
-INSERT INTO Categories (CategoryName, Description)
-VALUES 
-(N'Laptop', N'Máy tính xách tay'),
-(N'Điện thoại', N'Smartphone'),
-(N'Phụ kiện', N'Tai nghe, sạc, cáp...');
 
-
-INSERT INTO Suppliers (SupplierName, Address, Phone, Email)
-VALUES 
-(N'Công ty FPT', N'Hà Nội', '0241111111', 'contact@fpt.com'),
-(N'Công ty Viettel', N'Hồ Chí Minh', '0282222222', 'support@viettel.com');
-
-
-INSERT INTO Customers (CustomerName, Phone, Email, Address, DebtLimit)
-VALUES 
-(N'Nguyễn Văn Khách', '0905555555', 'khach1@gmail.com', N'Hà Nội', 5000000),
-(N'Trần Thị Người Mua', '0906666666', 'khach2@gmail.com', N'Hồ Chí Minh', 3000000);
-
-
-INSERT INTO Products (SKU, Barcode, ProductName, CategoryID, SupplierID, Unit, Price, MinStock, Status)
-VALUES 
-('LAP001', '1111111111111', N'Laptop Dell XPS', 1, 1, N'Cái', 25000000, 5, 'Active'),
-('DT001', '2222222222222', N'iPhone 14 Pro', 2, 2, N'Cái', 30000000, 3, 'Active'),
-('PK001', '3333333333333', N'Tai nghe AirPods', 3, 2, N'Cái', 5000000, 10, 'Active');
-
-
-INSERT INTO PurchaseOrders (SupplierID, OrderDate, TotalAmount, Status)
-VALUES 
-(1, '2025-09-01', 55000000, 'Pending'),
-(2, '2025-09-05', 30000000, 'Completed');
-
-
-INSERT INTO PurchaseOrderDetails (POID, ProductID, Quantity, UnitPrice)
-VALUES 
-(1, 1, 2, 24000000), -- Dell XPS
-(1, 3, 5, 4500000),  -- AirPods
-(2, 2, 1, 29000000); -- iPhone 14 Pro
-
-
-INSERT INTO GoodsReceipts (POID, ReceiptDate, TotalAmount)
-VALUES 
-(1, '2025-09-02', 48000000),
-(2, '2025-09-06', 29000000);
-
-
-INSERT INTO GoodsReceiptDetails (ReceiptID, ProductID, Quantity, UnitPrice, BatchNo, ExpiryDate)
-VALUES 
-(1, 1, 2, 24000000, 'BATCH-LAP-01', NULL),
-(1, 3, 5, 4500000, 'BATCH-PK-01', '2026-12-31'),
-(2, 2, 1, 29000000, 'BATCH-DT-01', '2027-01-01');
-
-
-INSERT INTO Promotions (PromotionName, Type, Value, StartDate, EndDate, ProductGroup)
-VALUES 
-(N'Giảm giá Laptop 10%', 'Percent', 10, '2025-09-01', '2025-09-30', N'Laptop'),
-(N'Giảm 1 triệu cho iPhone', 'Value', 1000000, '2025-09-05', '2025-09-20', N'Điện thoại');
-
-
-INSERT INTO Sales (CustomerID, UserID, SaleDate, TotalAmount, VATAmount, PromotionID, PaymentStatus)
-VALUES 
-(1, 2, '2025-09-10', 25000000, 2500000, 1, 'Paid'),
-(2, 2, '2025-09-12', 30000000, 3000000, 2, 'Unpaid');
-
-
-INSERT INTO SalesItems (SaleID, ProductID, Quantity, UnitPrice, Discount)
-VALUES 
-(1, 1, 1, 25000000, 0),   -- Dell XPS
-(2, 2, 1, 30000000, 1000000); -- iPhone 14 Pro
-
-
-INSERT INTO Returns (SaleID, CustomerID, ReturnDate, Reason)
-VALUES 
-(2, 2, '2025-09-15', N'Khách đổi sang sản phẩm khác');
-
-
-INSERT INTO Invoices (SaleID, InvoiceNo, InvoiceDate, TotalAmount, VATAmount)
-VALUES 
-(1, 'INV-0001', '2025-09-10', 25000000, 2500000),
-(2, 'INV-0002', '2025-09-12', 30000000, 3000000);
-
-
-INSERT INTO Payments (CustomerID, SupplierID, Amount, PaymentDate, Method)
-VALUES 
-(1, NULL, 25000000, '2025-09-11', N'Tiền mặt'),
-(NULL, 1, 48000000, '2025-09-03', N'Chuyển khoản');
-
-
-INSERT INTO StockCards (ProductID, TransactionType, Quantity, Balance, RefID, TransactionDate)
-VALUES 
-(1, 'IN', 2, 2, 1, '2025-09-02'),
-(3, 'IN', 5, 5, 1, '2025-09-02'),
-(2, 'IN', 1, 1, 2, '2025-09-06'),
-(1, 'OUT', 1, 1, 1, '2025-09-10'),
-(2, 'OUT', 1, 0, 2, '2025-09-12');
-=======
+CREATE TABLE SystemSettings (
+    SettingID INT IDENTITY(1,1) PRIMARY KEY,
+    SettingKey NVARCHAR(100) UNIQUE NOT NULL, -- Tên cấu hình
+    SettingValue NVARCHAR(255),               -- Giá trị cấu hình
+    Description NVARCHAR(255),                -- Mô tả cấu hình
+    UpdatedDate DATETIME DEFAULT GETDATE(),   -- Ngày cập nhật
+    UpdatedBy NVARCHAR(50)                    -- Người cập nhật
+);
 
 
 
@@ -633,7 +530,7 @@ VALUES
 
 
 
->>>>>>> bách
+
 
 -- Hiển thị tất cả dữ liệu từ từng bảng
 SELECT * FROM Users;
@@ -680,12 +577,8 @@ CREATE PROCEDURE [dbo].[sp_product_create]
     @Unit NVARCHAR(20) = NULL,
     @Price DECIMAL(18,2),
     @MinStock INT = 0,
-<<<<<<< HEAD
-    @Status NVARCHAR(20) = 'Active'
-=======
     @Status NVARCHAR(20) = 'Active',
 	@Image NVARCHAR(255) = NULL  -- 🆕
->>>>>>> bách
 )
 AS
 BEGIN
@@ -701,12 +594,8 @@ BEGIN
         Unit,
         Price,
         MinStock,
-<<<<<<< HEAD
-        Status
-=======
         Status,
 		Image
->>>>>>> bách
     )
     VALUES
     (
@@ -718,12 +607,8 @@ BEGIN
         @Unit,
         @Price,
         @MinStock,
-<<<<<<< HEAD
-        @Status
-=======
         @Status,
 		@Image
->>>>>>> bách
     );
 
     -- Trả về ID vừa thêm (giúp frontend/backend biết sản phẩm nào vừa được tạo)
@@ -744,12 +629,8 @@ CREATE PROCEDURE [dbo].[sp_product_update]
     @Unit        NVARCHAR(20) = NULL,
     @Price       DECIMAL(18,2) = NULL,
     @MinStock    INT = NULL,
-<<<<<<< HEAD
-    @Status      NVARCHAR(20) = NULL
-=======
     @Status      NVARCHAR(20) = NULL,
 	@Image       NVARCHAR(255) = NULL
->>>>>>> bách
 )
 AS
 BEGIN
@@ -763,12 +644,8 @@ BEGIN
         Unit        = IIF(@Unit IS NULL, Unit, @Unit),
         Price       = IIF(@Price IS NULL, Price, @Price),
         MinStock    = IIF(@MinStock IS NULL, MinStock, @MinStock),
-<<<<<<< HEAD
-        Status      = IIF(@Status IS NULL, Status, @Status)
-=======
         Status      = IIF(@Status IS NULL, Status, @Status),
 		Image       = IIF(@Image IS NULL, Image, @Image)
->>>>>>> bách
     WHERE ProductID = @ProductID;
 
     SELECT '';
@@ -777,11 +654,7 @@ GO
 
 
 
-DROP PROCEDURE IF EXISTS sp_product_update;
-GO
 
-
-EXEC sp_helptext 'sp_product_update';
 
 
 
@@ -821,12 +694,8 @@ BEGIN
                p.Unit,
                p.Price,
                p.MinStock,
-<<<<<<< HEAD
-               p.Status
-=======
                p.Status,
 			   p.Image
->>>>>>> bách
         INTO #Results1
         FROM Products AS p
         WHERE (@ProductID IS NULL OR p.ProductID = @ProductID)
@@ -866,12 +735,8 @@ BEGIN
                p.Unit,
                p.Price,
                p.MinStock,
-<<<<<<< HEAD
-               p.Status
-=======
                p.Status,
 			   p.Image
->>>>>>> bách
         INTO #Results2
         FROM Products AS p
         WHERE (@ProductID IS NULL OR p.ProductID = @ProductID)
@@ -894,8 +759,7 @@ GO
 
 
 
-<<<<<<< HEAD
-=======
+
 
 CREATE PROCEDURE [dbo].[sp_product_delete]
     @ProductID INT
@@ -917,19 +781,15 @@ BEGIN
 END;
 GO
 
-
-
-
+select * from Products
 EXEC sp_product_delete @ProductID = 16;
-
-
 DROP PROCEDURE [dbo].[sp_product_delete];
 
 
 
 
 
->>>>>>> bách
+
 CREATE PROCEDURE [dbo].[sp_payment_get_by_id]
     @PaymentID INT
 AS
@@ -941,6 +801,8 @@ BEGIN
     WHERE PaymentID = @PaymentID;
 END;
 GO
+
+
 
 
 
@@ -976,6 +838,8 @@ END;
 GO
 
 
+
+
 CREATE PROCEDURE [dbo].[sp_payment_update]
 (
     @PaymentID   INT,
@@ -999,6 +863,8 @@ BEGIN
     SELECT '';
 END;
 GO
+
+
 
 
 
@@ -1090,33 +956,6 @@ GO
 
 
 
-<<<<<<< HEAD
-CREATE PROCEDURE [dbo].[sp_product_delete]
-    @ProductID INT
-AS
-BEGIN
-    SET NOCOUNT ON;
-
-    -- Xóa dữ liệu liên quan trước (nếu bạn muốn xóa tất cả dấu vết của sản phẩm)
-    DELETE FROM SalesItems WHERE ProductID = @ProductID;
-    DELETE FROM StockCards WHERE ProductID = @ProductID;
-    DELETE FROM GoodsReceiptDetails WHERE ProductID = @ProductID;
-    DELETE FROM PurchaseOrderDetails WHERE ProductID = @ProductID;
-
-    -- Cuối cùng xóa trong bảng Products
-    DELETE FROM Products
-    WHERE ProductID = @ProductID;
-
-    SELECT 'Xóa sản phẩm thành công (cứng)' AS Message;
-END;
-GO
-
-
-
-DROP PROCEDURE [dbo].[sp_product_delete];
-=======
-
->>>>>>> bách
 
 
 
@@ -1138,165 +977,6 @@ GO
 
 
 
-
-USE [QLBanLeKho]
-GO
-
-<<<<<<< HEAD
-/****** Object:  StoredProcedure [dbo].[sp_category_create]    Script Date: 9/24/2025 5:05:13 PM ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
-=======
->>>>>>> bách
-
-CREATE   PROCEDURE [dbo].[sp_category_create]
-(
-    @CategoryName NVARCHAR(100),
-    @Description  NVARCHAR(255)
-)
-AS
-BEGIN
-    SET NOCOUNT ON;
-
-    INSERT INTO Categories (CategoryName, [Description])
-    VALUES (@CategoryName, @Description);
-
-    SELECT '';
-END
-GO
-
-
-USE [QLBanLeKho]
-GO
-
-/****** Object:  StoredProcedure [dbo].[sp_category_delete]    Script Date: 9/24/2025 5:05:31 PM ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
-
-create procedure [dbo].[sp_category_delete](
-@CategoryID int)
-
-as
-begin
-delete from Categories
-where CategoryID = @CategoryID
-select'';
-end 
-GO
-
-
-USE [QLBanLeKho]
-GO
-
-<<<<<<< HEAD
-/****** Object:  StoredProcedure [dbo].[sp_category_get_by_id]    Script Date: 9/24/2025 5:05:40 PM ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
-=======
->>>>>>> bách
-
-create procedure [dbo].[sp_category_get_by_id](@CategoryID int)
-as
-begin
-select * from Categories where CategoryID = @CategoryID;
-end;
-GO
-
-
-USE [QLBanLeKho]
-GO
-
-<<<<<<< HEAD
-/****** Object:  StoredProcedure [dbo].[sp_category_search]    Script Date: 9/24/2025 5:05:48 PM ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
-=======
->>>>>>> bách
-
-
-CREATE PROCEDURE [dbo].[sp_category_search]
-    @page_index   INT,
-    @page_size    INT,
-    @CategoryName NVARCHAR(100) = N'',
-    @option       NVARCHAR(50)  = N'',   -- 'name_desc' hoặc rỗng/mặc định
-    @CategoryID   INT           = NULL
-AS
-BEGIN
-    SET NOCOUNT ON;
-
-    IF (@option = N'name_desc')
-    BEGIN
-        SELECT CAST(COUNT(1) OVER() AS BIGINT) AS RecordCount,
-               src.CategoryID, src.CategoryName, src.[Description]
-        FROM (
-            SELECT c.CategoryID, c.CategoryName, c.[Description]
-            FROM dbo.Categories AS c
-            WHERE (@CategoryID IS NULL OR c.CategoryID = @CategoryID)
-              AND (@CategoryName = N'' OR c.CategoryName LIKE N'%' + @CategoryName + N'%')
-        ) AS src
-        ORDER BY src.CategoryName DESC
-        OFFSET (@page_index - 1) * @page_size ROWS
-        FETCH NEXT @page_size ROWS ONLY;
-    END
-    ELSE
-    BEGIN
-        SELECT CAST(COUNT(1) OVER() AS BIGINT) AS RecordCount,
-               src.CategoryID, src.CategoryName, src.[Description]
-        FROM (
-            SELECT c.CategoryID, c.CategoryName, c.[Description]
-            FROM dbo.Categories AS c
-            WHERE (@CategoryID IS NULL OR c.CategoryID = @CategoryID)
-              AND (@CategoryName = N'' OR c.CategoryName LIKE N'%' + @CategoryName + N'%')
-        ) AS src
-        ORDER BY src.CategoryName ASC
-        OFFSET (@page_index - 1) * @page_size ROWS
-        FETCH NEXT @page_size ROWS ONLY;
-    END
-END
-GO
-
-
-USE [QLBanLeKho]
-GO
-
-<<<<<<< HEAD
-/****** Object:  StoredProcedure [dbo].[sp_category_update]    Script Date: 9/24/2025 5:05:58 PM ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
-=======
->>>>>>> bách
-
-create procedure [dbo].[sp_category_update](
-@CategoryID int,
-@CategoryName nvarchar(100),
-@Description nvarchar(250))
-
-as 
-begin
-update Categories set CategoryName = isnull(@CategoryName,CategoryName),
-Description = isnull( @Description,Description)
-where CategoryID = @CategoryID
-select'';
-end
-<<<<<<< HEAD
-GO
-=======
-GO
 
 
 
@@ -1497,42 +1177,6 @@ GO
 -- =============================================
 -- Báo cáo doanh thu & lợi nhuận gộp
 -- =============================================
-CREATE PROCEDURE [dbo].[sp_report_revenue]
-(
-    @FromDate DATETIME,
-    @ToDate DATETIME,
-    @Option VARCHAR(20) = 'DAY'  -- DAY | MONTH | SHIFT
-)
-AS
-BEGIN
-    SET NOCOUNT ON;
-
-    -- Giả sử doanh thu nằm ở bảng HoaDon (Invoices) và ChiTietHoaDon (InvoiceDetails)
-    -- Các cột: InvoiceDate, Quantity, UnitPrice, TotalAmount, CostPrice
-
-    SELECT
-        CASE 
-            WHEN @Option = 'DAY'   THEN CAST(CONVERT(DATE, hd.InvoiceDate) AS NVARCHAR)
-            WHEN @Option = 'MONTH' THEN FORMAT(hd.InvoiceDate, 'yyyy-MM')
-            WHEN @Option = 'SHIFT' THEN CONCAT(CONVERT(DATE, hd.InvoiceDate), ' - Ca ', hd.ShiftID)
-            ELSE CAST(CONVERT(DATE, hd.InvoiceDate) AS NVARCHAR)
-        END AS DateLabel,
-        SUM(ct.Quantity * ct.UnitPrice) AS Revenue,
-        SUM((ct.UnitPrice - ct.UnitPrice) * ct.Quantity) AS GrossProfit
-    FROM Invoices hd
-    INNER JOIN InvoiceDetails ct ON hd.InvoiceID = ct.InvoiceID
-    WHERE hd.InvoiceDate BETWEEN @FromDate AND @ToDate
-    GROUP BY 
-        CASE 
-            WHEN @Option = 'DAY'   THEN CAST(CONVERT(DATE, hd.InvoiceDate) AS NVARCHAR)
-            WHEN @Option = 'MONTH' THEN FORMAT(hd.InvoiceDate, 'yyyy-MM')
-            WHEN @Option = 'SHIFT' THEN CONCAT(CONVERT(DATE, hd.InvoiceDate), ' - Ca ', hd.ShiftID)
-            ELSE CAST(CONVERT(DATE, hd.InvoiceDate) AS NVARCHAR)
-        END
-    ORDER BY MIN(hd.InvoiceDate);
-END;
-GO
-
 
 DROP PROCEDURE [dbo].[sp_report_revenue]
 
@@ -1598,52 +1242,10 @@ EXEC sp_report_revenue
 -- =============================================
 -- Báo cáo nhập / xuất
 -- =============================================
-CREATE PROCEDURE [dbo].[sp_report_import_export]
-(
-    @FromDate DATETIME,
-    @ToDate DATETIME
-)
-AS
-BEGIN
-    SET NOCOUNT ON;
-
-    -- Giả sử nhập nằm ở bảng PhieuNhap + ChiTietPhieuNhap
-    -- Xuất nằm ở bảng HoaDon + ChiTietHoaDon
-
-    SELECT 
-        d.DateValue,
-        ISNULL(SUM(d.ImportQty), 0) AS ImportQty,
-        ISNULL(SUM(d.ExportQty), 0) AS ExportQty
-    FROM
-    (
-        -- Nhập
-        SELECT CONVERT(DATE, pn.NgayNhap) AS DateValue, SUM(ct.SoLuong) AS ImportQty, 0 AS ExportQty
-        FROM PhieuNhap pn
-        INNER JOIN ChiTietPhieuNhap ct ON pn.PhieuNhapID = ct.PhieuNhapID
-        WHERE pn.NgayNhap BETWEEN @FromDate AND @ToDate
-        GROUP BY CONVERT(DATE, pn.NgayNhap)
-
-        UNION ALL
-
-        -- Xuất (bán hàng)
-        SELECT CONVERT(DATE, hd.InvoiceDate) AS DateValue, 0 AS ImportQty, SUM(ct.Quantity) AS ExportQty
-        FROM Invoices hd
-        INNER JOIN InvoiceDetails ct ON hd.InvoiceID = ct.InvoiceID
-        WHERE hd.InvoiceDate BETWEEN @FromDate AND @ToDate
-        GROUP BY CONVERT(DATE, hd.InvoiceDate)
-    ) d
-    GROUP BY d.DateValue
-    ORDER BY d.DateValue;
-END;
-GO
-
-
 drop PROCEDURE [dbo].[sp_report_import_export]
 
-
-
 --2
-CREATE OR ALTER PROCEDURE [dbo].[sp_report_import_export] -- Dùng CREATE OR ALTER để có thể chạy lại mà không cần xóa SP cũ
+CREATE  PROCEDURE [dbo].[sp_report_import_export] -- Dùng CREATE OR ALTER để có thể chạy lại mà không cần xóa SP cũ
 (
     @FromDate DATETIME,
     @ToDate DATETIME
@@ -1686,6 +1288,7 @@ BEGIN
     ORDER BY d.Date; -- FIX: Đổi từ d.DateValue thành d.Date
 END;
 GO
+
 
 
 
@@ -1794,95 +1397,443 @@ GO
 -- Tìm kiếm & phân trang thẻ kho
 -- =============================================
 
-DROP PROCEDURE [dbo].[sp_BaoCaoDoanhThu]
+USE [QLBanLeKho]
+GO
 
 
-CREATE OR ALTER PROCEDURE sp_BaoCaoDoanhThu
-    @option NVARCHAR(10),       -- 'Ngay' | 'Thang' | 'Khoang'
-    @Ngay DATE = NULL,          -- dùng cho option = 'Ngay'
-    @Nam INT = NULL,            -- dùng cho option = 'Thang'
-    @Thang INT = NULL,          -- dùng cho option = 'Thang'
-    @TuNgay DATE = NULL,        -- dùng cho option = 'Khoang'
-    @DenNgay DATE = NULL        -- dùng cho option = 'Khoang'
+create procedure [dbo].[sp_user_update]
+(@UserId int,
+@Username varchar(50),
+@Password varchar(255),
+@Role nvarchar(20),
+@FullName nvarchar(100),
+@Email nvarchar(100),
+@Phone varchar(20)
+)
+as begin
+update[Users]set Username = @Username, PasswordHash = @Password,Role = @Role,FullName=@FullName,Email =@Email,Phone=@Phone
+where UserID = @UserId
+select ''
+end
+GO
+
+
+USE [QLBanLeKho]
+GO
+
+
+
+CREATE   PROCEDURE [dbo].[sp_user_search1]
+(
+    @pageIndex int,
+    @pageSize int,
+    @fullname nvarchar(100),
+    @username varchar(50)
+)
+AS
+BEGIN
+    DECLARE @RecordCount bigint;
+
+    IF (@pageSize <> 0)
+    BEGIN
+        SET NOCOUNT ON;
+
+        SELECT (ROW_NUMBER() OVER (ORDER BY u.FullName ASC)) AS RowNumber,
+               u.UserID,
+               u.Username,
+               u.PasswordHash,
+               u.Role,
+               u.FullName,
+               u.Email,
+               u.Phone
+        INTO #Results1
+        FROM [Users] AS u
+        WHERE (u.Username <> 'Admin')
+          AND ((@fullname = '') OR (u.FullName LIKE '%' + @fullname + '%'))
+          AND ((@username = '') OR (u.Username = @username));
+
+        SELECT @RecordCount = COUNT(*) FROM #Results1;
+
+        SELECT *,
+               @RecordCount AS RecordCount
+        FROM #Results1
+        WHERE RowNumber BETWEEN (@pageIndex - 1) * @pageSize + 1
+                             AND (((@pageIndex - 1) * @pageSize + 1) + @pageSize) - 1
+           OR @pageIndex = -1;
+
+        DROP TABLE #Results1;
+    END
+    ELSE
+    BEGIN
+        SET NOCOUNT ON;
+
+        SELECT (ROW_NUMBER() OVER (ORDER BY u.FullName ASC)) AS RowNumber,
+               u.UserID,
+               u.Username,
+               u.PasswordHash,
+               u.Role,
+               u.FullName,
+               u.Email,
+               u.Phone
+        INTO #Results2
+        FROM [Users] AS u
+        WHERE (u.Username <> 'Admin')
+          AND ((@fullname = '') OR (u.FullName LIKE '%' + @fullname + '%'))
+          AND ((@username = '') OR (u.Username = @username));
+
+        SELECT @RecordCount = COUNT(*) FROM #Results2;
+
+        SELECT *,
+               @RecordCount AS RecordCount
+        FROM #Results2;
+
+        DROP TABLE #Results2;
+    END
+END
+GO
+
+
+
+
+
+USE [QLBanLeKho]
+GO
+
+
+
+create procedure [dbo].[sp_user_get_by_username_password](@username varchar(50), @password varchar(255))
+as
+begin
+select [UserID],
+Username,
+PasswordHash,
+Role,
+FullName,
+Email,
+Phone
+from Users where UserName = @username and PasswordHash = @password
+end
+GO
+
+
+USE [QLBanLeKho]
+GO
+
+
+
+create procedure [dbo].[sp_user_get_by_id](@UserId int)
+as
+begin 
+select [UserID],
+Username,
+PasswordHash,
+Role,
+FullName,
+Email,
+Phone
+From [Users] where [UserID] = @UserId
+end
+GO
+
+
+USE [QLBanLeKho]
+GO
+
+
+
+create procedure [dbo].[sp_user_delete](@UserId int)
+as
+begin delete from [Users] where UserID = @UserId
+select ''
+end
+GO
+
+
+USE [QLBanLeKho]
+GO
+
+
+
+create procedure [dbo].[sp_user_create](
+@Username varchar(50),
+@Password varchar(255),
+@Role nvarchar(20),
+@FullName nvarchar(100),
+@Email nvarchar(100),
+@Phone varchar(20)
+)
+as begin
+set nocount on
+insert into Users (Username,PasswordHash,Role,FullName,Email,Phone)
+values (@Username,@Password,@Role,@FullName,@Email,@Phone)
+select cast (SCOPE_IDENTITY()as int) as NewId
+end
+GO
+
+
+USE [QLBanLeKho]
+GO
+
+
+
+
+
+USE [QLBanLeKho]
+GO
+
+
+CREATE   PROCEDURE [dbo].[sp_category_create]
+(
+    @CategoryName NVARCHAR(100),
+    @Description  NVARCHAR(255)
+)
 AS
 BEGIN
     SET NOCOUNT ON;
 
-    -- Chuẩn hóa option về chữ hoa
-    SET @option = UPPER(LTRIM(RTRIM(@option)));
+    INSERT INTO Categories (CategoryName, [Description])
+    VALUES (@CategoryName, @Description);
 
-    IF @option = 'NGAY'
+    SELECT '';
+END
+GO
+
+
+
+USE [QLBanLeKho]
+GO
+
+
+create procedure [dbo].[sp_category_delete](
+@CategoryID int)
+
+as
+begin
+delete from Categories
+where CategoryID = @CategoryID
+select'';
+end 
+GO
+
+
+USE [QLBanLeKho]
+GO
+
+
+create procedure [dbo].[sp_category_get_by_id](@CategoryID int)
+as
+begin
+select * from Categories where CategoryID = @CategoryID;
+end;
+GO
+
+
+USE [QLBanLeKho]
+GO
+
+
+
+
+CREATE PROCEDURE [dbo].[sp_category_search]
+    @page_index   INT,
+    @page_size    INT,
+    @CategoryName NVARCHAR(100) = N'',
+    @option       NVARCHAR(50)  = N'',   -- 'name_desc' hoặc rỗng/mặc định
+    @CategoryID   INT           = NULL
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    IF (@option = N'name_desc')
     BEGIN
-        SELECT 
-            CAST(S.SaleDate AS DATE) AS Ngay,
-            SUM(SI.Quantity * SI.UnitPrice) AS TienHang,
-            SUM(SI.Discount) AS TongGiamGia,
-            SUM(S.VATAmount) AS VAT,
-            SUM(S.TotalAmount) AS TongTien
-        FROM Sales S
-        INNER JOIN SalesItems SI ON S.SaleID = SI.SaleID
-        WHERE CAST(S.SaleDate AS DATE) = @Ngay
-        GROUP BY CAST(S.SaleDate AS DATE);
-    END
-    ELSE IF @option = 'THANG'
-    BEGIN
-        SELECT 
-            YEAR(S.SaleDate) AS Nam,
-            MONTH(S.SaleDate) AS Thang,
-            SUM(SI.Quantity * SI.UnitPrice) AS TienHang,
-            SUM(SI.Discount) AS TongGiamGia,
-            SUM(S.VATAmount) AS VAT,
-            SUM(S.TotalAmount) AS TongTien
-        FROM Sales S
-        INNER JOIN SalesItems SI ON S.SaleID = SI.SaleID
-        WHERE YEAR(S.SaleDate) = @Nam AND MONTH(S.SaleDate) = @Thang
-        GROUP BY YEAR(S.SaleDate), MONTH(S.SaleDate);
-    END
-    ELSE IF @option = 'KHOANG'
-    BEGIN
-        SELECT 
-            CAST(S.SaleDate AS DATE) AS Ngay,
-            SUM(SI.Quantity * SI.UnitPrice) AS TienHang,
-            SUM(SI.Discount) AS TongGiamGia,
-            SUM(S.VATAmount) AS VAT,
-            SUM(S.TotalAmount) AS TongTien
-        FROM Sales S
-        INNER JOIN SalesItems SI ON S.SaleID = SI.SaleID
-        WHERE CAST(S.SaleDate AS DATE) BETWEEN @TuNgay AND @DenNgay
-        GROUP BY CAST(S.SaleDate AS DATE)
-        ORDER BY Ngay;
+        SELECT CAST(COUNT(1) OVER() AS BIGINT) AS RecordCount,
+               src.CategoryID, src.CategoryName, src.[Description]
+        FROM (
+            SELECT c.CategoryID, c.CategoryName, c.[Description]
+            FROM dbo.Categories AS c
+            WHERE (@CategoryID IS NULL OR c.CategoryID = @CategoryID)
+              AND (@CategoryName = N'' OR c.CategoryName LIKE N'%' + @CategoryName + N'%')
+        ) AS src
+        ORDER BY src.CategoryName DESC
+        OFFSET (@page_index - 1) * @page_size ROWS
+        FETCH NEXT @page_size ROWS ONLY;
     END
     ELSE
     BEGIN
-        RAISERROR('Gia tri @option khong hop le. Dung ''Ngay'', ''Thang'' hoac ''Khoang''.', 16, 1);
+        SELECT CAST(COUNT(1) OVER() AS BIGINT) AS RecordCount,
+               src.CategoryID, src.CategoryName, src.[Description]
+        FROM (
+            SELECT c.CategoryID, c.CategoryName, c.[Description]
+            FROM dbo.Categories AS c
+            WHERE (@CategoryID IS NULL OR c.CategoryID = @CategoryID)
+              AND (@CategoryName = N'' OR c.CategoryName LIKE N'%' + @CategoryName + N'%')
+        ) AS src
+        ORDER BY src.CategoryName ASC
+        OFFSET (@page_index - 1) * @page_size ROWS
+        FETCH NEXT @page_size ROWS ONLY;
     END
+END
+GO
+
+
+USE [QLBanLeKho]
+GO
+
+
+
+create procedure [dbo].[sp_category_update](
+@CategoryID int,
+@CategoryName nvarchar(100),
+@Description nvarchar(250))
+
+as 
+begin
+update Categories set CategoryName = isnull(@CategoryName,CategoryName),
+Description = isnull( @Description,Description)
+where CategoryID = @CategoryID
+select'';
+end
+GO
+
+
+
+
+
+
+INSERT INTO SystemSettings (SettingKey, SettingValue, Description, UpdatedBy)
+VALUES
+('VATRate', '10', N'Thuế VAT mặc định (%)', 'admin'),
+('PaymentMethod', N'Tiền mặt,Chuyển khoản,QR', N'Danh sách phương thức thanh toán', 'admin'),
+('SystemName', N'Cửa hàng giày Nike', N'Tên hiển thị trên hệ thống', 'admin');
+
+
+select * from SystemSettings
+select * from Products
+
+delete SystemSettings
+
+
+drop PROCEDURE [dbo].[sp_systemsetting_get_by_key]
+
+CREATE OR ALTER PROCEDURE [dbo].[sp_systemsetting_get_by_key]
+    @SettingKey NVARCHAR(100)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT *
+    FROM SystemSettings
+    WHERE SettingKey = @SettingKey;
+END;
+GO
+
+
+drop PROCEDURE [dbo].[sp_systemsetting_create]
+
+CREATE OR ALTER PROCEDURE [dbo].[sp_systemsetting_create]
+    @SettingKey NVARCHAR(100),
+    @SettingValue NVARCHAR(255),
+    @Description NVARCHAR(255),
+    @UpdatedBy NVARCHAR(50)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    IF EXISTS (SELECT 1 FROM SystemSettings WHERE SettingKey = @SettingKey)
+    BEGIN
+        RAISERROR(N'Khóa cấu hình đã tồn tại', 16, 1);
+        RETURN;
+    END
+
+    INSERT INTO SystemSettings (SettingKey, SettingValue, Description, UpdatedBy)
+    VALUES (@SettingKey, @SettingValue, @Description, @UpdatedBy);
 END;
 GO
 
 
 
 
-EXEC sp_BaoCaoDoanhThu @option = 'Ngay', @Ngay = '2025-09-12';
-EXEC sp_BaoCaoDoanhThu @option = 'Thang', @Nam = 2025, @Thang = 9;
-EXEC sp_BaoCaoDoanhThu @option = 'Khoang', @TuNgay = '2025-09-01', @DenNgay = '2025-09-15';
+drop PROCEDURE [dbo].[sp_systemsetting_update]
+
+CREATE OR ALTER PROCEDURE [dbo].[sp_systemsetting_update]
+    @SettingID INT,
+    @SettingValue NVARCHAR(255),
+    @Description NVARCHAR(255),
+    @UpdatedBy NVARCHAR(50)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    IF NOT EXISTS (SELECT 1 FROM SystemSettings WHERE SettingID = @SettingID)
+    BEGIN
+        RAISERROR(N'Không tìm thấy cấu hình cần cập nhật', 16, 1);
+        RETURN;
+    END
+
+    UPDATE SystemSettings
+    SET SettingValue = @SettingValue,
+        Description = @Description,
+        UpdatedBy = @UpdatedBy,
+        UpdatedDate = GETDATE()
+    WHERE SettingID = @SettingID;
+END;
+GO
 
 
 
 
+drop PROCEDURE [dbo].[sp_systemsetting_delete]
 
-SELECT 
-    s.SaleID,
-    SUM(si.Quantity * si.UnitPrice - si.Discount) AS Revenue,
-    SUM(si.Quantity * avgc.AvgCost) AS COGS,
-    SUM(si.Quantity * si.UnitPrice - si.Discount) - SUM(si.Quantity * avgc.AvgCost) AS Profit
-FROM SalesItems si
-JOIN Sales s ON si.SaleID = s.SaleID
-JOIN (
-    SELECT 
-        gr.ProductID,
-        SUM(gr.Quantity * gr.UnitPrice) * 1.0 / NULLIF(SUM(gr.Quantity),0) AS AvgCost
-    FROM GoodsReceiptDetails gr
-    GROUP BY gr.ProductID
-) avgc ON si.ProductID = avgc.ProductID
-GROUP BY s.SaleID;
->>>>>>> bách
+CREATE OR ALTER PROCEDURE [dbo].[sp_systemsetting_delete]
+    @SettingID INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    IF NOT EXISTS (SELECT 1 FROM SystemSettings WHERE SettingID = @SettingID)
+    BEGIN
+        RAISERROR(N'Cấu hình không tồn tại', 16, 1);
+        RETURN;
+    END
+
+    DELETE FROM SystemSettings WHERE SettingID = @SettingID;
+END;
+GO
+
+
+
+
+drop PROCEDURE [dbo].[sp_systemsetting_search]
+
+CREATE OR ALTER PROCEDURE [dbo].[sp_systemsetting_search]
+    @page_index INT = 1,
+    @page_size INT = 10,
+    @SettingKey NVARCHAR(100) = NULL,
+    @Description NVARCHAR(255) = NULL,
+    @option NVARCHAR(50) = NULL
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    ;WITH Filtered AS (
+        SELECT 
+            s.*,
+            ROW_NUMBER() OVER (ORDER BY s.UpdatedDate DESC) AS RowNum,
+            COUNT(*) OVER() AS RecordCount
+        FROM SystemSettings s
+        WHERE 
+            (@SettingKey IS NULL OR s.SettingKey LIKE N'%' + @SettingKey + N'%')
+            AND (@Description IS NULL OR s.Description LIKE N'%' + @Description + N'%')
+    )
+    SELECT *
+    FROM Filtered
+    WHERE RowNum BETWEEN ((@page_index - 1) * @page_size + 1)
+                     AND (@page_index * @page_size);
+END;
+GO
+
+
+EXEC sp_systemsetting_search @page_index = 1, @page_size = 10;
+EXEC sp_systemsetting_get_by_key @SettingKey = 'VATRate';
+EXEC sp_systemsetting_update @SettingID = 5, @SettingValue = '8', @Description = N'Cập nhật VAT', @UpdatedBy = 'Admin';
+EXEC sp_systemsetting_delete @SettingID = 5;
