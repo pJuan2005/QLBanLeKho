@@ -24,6 +24,8 @@ builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
 builder.Services.AddTransient<ICategoryBusiness, CategoryBusiness>();
 builder.Services.AddTransient<IUserBusiness, UserBusiness>();
 builder.Services.AddTransient<IUserRepository, UserRepository>();
+builder.Services.AddTransient<ICustomerRepository, CustomerRepository>();
+builder.Services.AddTransient<ICustomerBusiness, CustomerBusiness>();
 
 // configure strongly typed settings objects
 IConfiguration configuration = builder.Configuration;
