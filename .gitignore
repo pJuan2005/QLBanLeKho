@@ -1,3 +1,4 @@
+
 # Visual Studio / IDE
 .vs/
 .vscode/
@@ -46,6 +47,26 @@ appsettings*.json         # Ignore local config files (e.g., appsettings.Develop
 node_modules/            # Nếu dùng Node.js trong dự án
 *.dbmdl                 # Nếu dùng EDMX hoặc database model
 
+# Editor temp
+*~RF*.TMP
+*.TMP
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+
+# Build results
+bin/
+obj/
+
+# Others
+*.log
+*.cache
+*.dll
+*.exe
+
+
 # Test and Coverage Results
 TestResults/
 coverage/
@@ -53,3 +74,4 @@ coverage/
 # User-specific files
 [Dd]ata/
 [Dd]ataSources/
+

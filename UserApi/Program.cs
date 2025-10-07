@@ -1,3 +1,4 @@
+
 ﻿using BLL.Interfaces;
 using BLL;
 using DAL.Interfaces;
@@ -7,6 +8,14 @@ using Helper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using BLL;
+using BLL.Interfaces;
+using DAL;
+using DAL.Helper;
+using DAL.Interfaces;
+
+
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -67,6 +76,18 @@ if (appSettings != null && !string.IsNullOrWhiteSpace(appSettings.Secret))
 
     builder.Services.AddAuthorization();
 }
+
+
+builder.Services.AddTransient<IDatabaseHelper, DatabaseHelper>();
+builder.Services.AddTransient<IDPaymentDAL, PaymentDAL>();
+builder.Services.AddTransient<IDPaymentBLL, PaymentBLL>();
+
+
+
+
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 

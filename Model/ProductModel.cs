@@ -18,22 +18,13 @@ namespace Model
         public decimal Price { get; set; }           // Giá bán
         public int MinStock { get; set; }            // Tồn kho tối thiểu (default 0)
         public string Status { get; set; }
+        public string Image { get; set; }
 
     }
 
 
-    //public class ProductSearchRequest
-    //{
-    //    public int? ProductID1 { get; set; }
-    //    public string SKU1 { get; set; }
-    //    public string ProductName1 { get; set; }
-    //    public int? CategoryID1 { get; set; }
-    //    public int? SupplierID1 { get; set; }
-    //    public string Status1 { get; set; }
-    //    public string Option1 { get; set; }
-    //    public int Page1 { get; set; }
-    //    public int PageSize1 { get; set; }
-    //}
+
+
 
 
 

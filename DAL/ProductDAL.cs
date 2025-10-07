@@ -47,7 +47,9 @@ namespace DAL
                     "@Unit", model.Unit,
                     "@Price", model.Price,
                     "@MinStock", model.MinStock,
-                    "@Status", model.Status
+                    "@Status", model.Status,
+                    "@Image", model.Image // 🆕
+
                 );
 
                 if (!string.IsNullOrEmpty(msgError))
@@ -85,7 +87,8 @@ namespace DAL
                     "@Unit", model.Unit,
                     "@Price", model.Price,
                     "@MinStock", model.MinStock,
-                    "@Status", model.Status
+                    "@Status", model.Status,
+                    "@Image", model.Image
                 );
                 if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
                 {
