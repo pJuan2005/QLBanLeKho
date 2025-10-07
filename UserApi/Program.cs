@@ -36,6 +36,10 @@ builder.Services.AddScoped<IUserBusiness, UserBusiness>();
 builder.Services.AddScoped<IPurchaseOrderDetailsBusiness, PurchaseOrderDetailsBusiness>();
 builder.Services.AddScoped<IPurchaseOrderDetailsRepository, PurchaseOrderDetailsRepository>();
 
+// Đăng ký các lớp xử lý nghiệp vụ và truy cập dữ liệu vào hệ thống DI <Promotions>
+builder.Services.AddScoped<IPromotionsBusiness, PromotionsBusiness>();
+builder.Services.AddScoped<IPromotionsRepository, PromotionsRepository>();
+
 // Cấu hình JWT Authentication từ nhánh dev
 IConfiguration configuration = builder.Configuration;
 var appSettingsSection = configuration.GetSection("AppSettings");

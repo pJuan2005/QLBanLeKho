@@ -1,4 +1,4 @@
-using BLL;
+﻿using BLL;
 using DAL.Helper;
 using DAL;
 using BLL.Interfaces;
@@ -26,6 +26,20 @@ builder.Services.AddTransient<IUserBusiness, UserBusiness>();
 builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddTransient<ICustomerRepository, CustomerRepository>();
 builder.Services.AddTransient<ICustomerBusiness, CustomerBusiness>();
+
+
+// Đăng ký các lớp xử lý nghiệp vụ và truy cập dữ liệu vào hệ thống DI <PurchaseOrderDetails>
+builder.Services.AddScoped<IPurchaseOrderDetailsBusiness, PurchaseOrderDetailsBusiness>();
+builder.Services.AddScoped<IPurchaseOrderDetailsRepository, PurchaseOrderDetailsRepository>();
+
+// Đăng ký các lớp xử lý nghiệp vụ và truy cập dữ liệu vào hệ thống DI <Promotions>
+builder.Services.AddScoped<IPromotionsBusiness, PromotionsBusiness>();
+builder.Services.AddScoped<IPromotionsRepository, PromotionsRepository>();
+
+// Đăng ký các lớp xử lý nghiệp vụ và truy cập dữ liệu vào hệ thống DI
+
+builder.Services.AddScoped<IDonMuaHangBusiness, DonMuaHangBusiness>();
+builder.Services.AddScoped<IDonMuaHangRepository, DonMuaHangRepository>();
 
 // configure strongly typed settings objects
 IConfiguration configuration = builder.Configuration;
