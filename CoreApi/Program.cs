@@ -24,6 +24,8 @@ builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
 builder.Services.AddTransient<ICategoryBusiness, CategoryBusiness>();
 builder.Services.AddTransient<IUserBusiness, UserBusiness>();
 builder.Services.AddTransient<IUserRepository, UserRepository>();
+builder.Services.AddTransient<ICustomerRepository, CustomerRepository>();
+builder.Services.AddTransient<ICustomerBusiness, CustomerBusiness>();
 
 
 // Đăng ký các lớp xử lý nghiệp vụ và truy cập dữ liệu vào hệ thống DI <PurchaseOrderDetails>

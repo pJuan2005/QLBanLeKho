@@ -8,12 +8,6 @@ using Helper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using BLL;
-using BLL.Interfaces;
-using DAL;
-using DAL.Helper;
-using DAL.Interfaces;
-
 
 
 
