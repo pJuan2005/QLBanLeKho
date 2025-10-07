@@ -5,7 +5,7 @@ using System.Reflection;
 using BLL.Interfaces;
 using Model;
 
-namespace UserApi.Controllers
+namespace CoreApi.Controllers
 {
     [Route("api/purchaseorderdetails")]
    

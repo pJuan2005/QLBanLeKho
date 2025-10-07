@@ -5,9 +5,9 @@ using Model;
 using System.Reflection;
 using BLL.Interfaces;
 
-namespace UserApi.Controllers
+namespace CoreApi.Controllers
 {
-   
+
     [Route("api/donmuahang")]
     public class DonMuaHangController : ControllerBase
     {
