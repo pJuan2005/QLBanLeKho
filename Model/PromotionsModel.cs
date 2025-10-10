@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Model;
 
+
 namespace Model
 {
     public class PromotionsModel
@@ -15,6 +16,6 @@ namespace Model
         public decimal Value { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        public string ProductGroup { get; set; }
+        public int CategoryID { get; set; }
     }
 }

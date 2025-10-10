@@ -38,6 +38,16 @@ builder.Services.AddScoped<IPurchaseOrderDetailsRepository, PurchaseOrderDetails
 builder.Services.AddScoped<IPromotionsBusiness, PromotionsBusiness>();
 builder.Services.AddScoped<IPromotionsRepository, PromotionsRepository>();
 
+// Đăng ký các lớp xử lý nghiệp vụ và truy cập dữ liệu vào hệ thống DI <Sales>
+
+builder.Services.AddScoped<ISalesBusiness, SalesBusiness>();
+builder.Services.AddScoped<ISalesRepository, SalesRepository>();
+
+// Đăng ký các lớp xử lý nghiệp vụ và truy cập dữ liệu vào hệ thống DI <SalesItem>
+
+builder.Services.AddScoped<ISalesItemBusiness, SalesItemBusiness>();
+builder.Services.AddScoped<ISalesItemRepository, SalesItemRepository>();
+
 // Đăng ký các lớp xử lý nghiệp vụ và truy cập dữ liệu vào hệ thống DI
 
 builder.Services.AddScoped<IDonMuaHangBusiness, DonMuaHangBusiness>();
