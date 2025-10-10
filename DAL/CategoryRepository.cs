@@ -39,7 +39,8 @@ namespace DAL
             string msgError = "";
             try
             {
-                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_category_create", "@CategoryName", model.CategoryName, "@Description", model.Description);
+                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_category_create", "@CategoryName", model.CategoryName, "@Description", model.Description
+                    , "@VATRate", model.VATRate);
                 if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
                     throw new Exception(Convert.ToString(result) + msgError);
                 return true;
@@ -56,7 +57,7 @@ namespace DAL
             string msgError = "";
             try
             {
-                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_category_update", "@CategoryID", model.CategoryID, "@CategoryName", model.CategoryName, "@Description", model.Description);
+                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_category_update", "@CategoryID", model.CategoryID, "@CategoryName", model.CategoryName, "@Description", model.Description, "@VATRate",model.VATRate);
                 if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
                     throw new Exception(Convert.ToString(result) + msgError);
                 return true;

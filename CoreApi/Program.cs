@@ -94,22 +94,28 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+
+// Pipeline
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-app.UseRouting();
-app.UseCors(x => x
-.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
 app.UseHttpsRedirection();
 
-app.UseAuthentication();
+app.UseRouting();
 
-app.UseAuthorization();
+app.UseCors("AllowAll");
 
+// Nếu auth đã được cấu hình (secret != null) bật authentication middleware
+if (appSettings != null && !string.IsNullOrWhiteSpace(appSettings.Secret))
+{
+    app.UseAuthentication();
+    app.UseAuthorization();
+}
+
+// Map controllers
 app.MapControllers();
 
 app.Run();
