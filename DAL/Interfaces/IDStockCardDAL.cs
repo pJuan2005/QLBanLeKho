@@ -13,7 +13,6 @@ namespace DAL.Interfaces
                             int? StockID,
                             int? ProductID,
                             string TransactionType,
-                            int? RefID,
-                            string option);
+                            int? RefID);
     }
 }
