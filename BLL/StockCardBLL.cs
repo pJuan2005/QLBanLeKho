@@ -41,10 +41,9 @@ namespace BLL
                                            int? StockID,
                                            int? ProductID,
                                            string TransactionType,
-                                           int? RefID,
-                                           string option)
+                                           int? RefID)
         {
-            return _res.Search(pageIndex, pageSize, out total, StockID, ProductID, TransactionType, RefID, option);
+            return _res.Search(pageIndex, pageSize, out total, StockID, ProductID, TransactionType, RefID);
         }
     }
 }

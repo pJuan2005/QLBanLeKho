@@ -26,7 +26,6 @@ namespace Model
         public string? TransactionType { get; set; } 
         public int? RefID { get; set; }              
         public string? Status { get; set; }          
-        public string? option { get; set; }          
     }
 }
 

@@ -11,9 +11,9 @@ namespace CoreApi.Controllers
     {
         private readonly IDProductBLL _ProductBusiness;
 
-        public ProductController(IDProductBLL sanPhamBusiness)
+        public ProductController(IDProductBLL productBLL)
         {
-            _ProductBusiness = sanPhamBusiness;
+            _ProductBusiness = productBLL;
         }
 
         [Route("create-product")]
@@ -50,36 +50,35 @@ namespace CoreApi.Controllers
         //[Route("search-product")][HttpPost] public ResponseModel Search([FromBody] Dictionary<string, object> formData) { var response = new ResponseModel(); try { var page = int.Parse(formData["page"].ToString()); var pageSize = int.Parse(formData["pageSize"].ToString()); int? IDProduct = null; if (formData.Keys.Contains("IDProduct") && !string.IsNullOrEmpty(Convert.ToString(formData["IDProduct"]))) { IDProduct = Convert.ToInt32(formData["IDProduct"]); } string ProductName = ""; if (formData.Keys.Contains("ProductName") && !string.IsNullOrEmpty(Convert.ToString(formData["ProductName"]))) { ProductName = Convert.ToString(formData["ProductName"]); } string option = ""; if (formData.Keys.Contains("option") && !string.IsNullOrEmpty(Convert.ToString(formData["option"]))) { option = Convert.ToString(formData["option"]); } long total = 0; var data = _ProductBusiness.Search(page, pageSize, out total, IDProduct, ProductName, option); response.TotalItems = total; response.Data = data; response.Page = page; response.PageSize = pageSize; } catch (Exception ex) { throw new Exception(ex.Message); } return response; }
 
         [Route("search-product")]
-[HttpPost]
-public ResponseModel Search([FromBody] ProductSearchRequest request)
-{
-    var response = new ResponseModel();
-    try
-    {
-        long total = 0;
-        var data = _ProductBusiness.Search(
-            request.page,
-            request.pageSize,
-            out total,
-            request.ProductID,
-            request.SKU,
-            request.ProductName,
-            request.CategoryID,
-            request.SupplierID,
-            request.option
-        );
-
-        response.TotalItems = total;
-        response.Data = data;
-        response.Page = request.page;
-        response.PageSize = request.pageSize;
-    }
-    catch (Exception ex)
+        [HttpPost]
+        public ResponseModel Search([FromBody] ProductSearchRequest request)
         {
-            throw new Exception(ex.Message);
+            var response = new ResponseModel();
+            try
+            {
+                long total = 0;
+                var data = _ProductBusiness.Search(
+                    request.page,
+                    request.pageSize,
+                    out total,
+                    request.ProductID,
+                    request.SKU,
+                    request.ProductName,
+                    request.CategoryID,
+                    request.SupplierID
+                );
+
+                response.TotalItems = total;
+                response.Data = data;
+                response.Page = request.page;
+                response.PageSize = request.pageSize;
+            }
+            catch (Exception ex)
+                {
+                    throw new Exception(ex.Message);
+                }
+            return response;
         }
-    return response;
-    }
 
     }
 }
