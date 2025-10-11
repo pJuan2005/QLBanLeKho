@@ -1343,6 +1343,192 @@ GO
 
 
 
+
+-- =============================================
+-- Lấy trả hàngtheo ID
+-- =============================================
+CREATE PROCEDURE [dbo].[sp_return_get_by_id]
+    @ReturnID INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT *
+    FROM Returns
+    WHERE ReturnID = @ReturnID;
+END;
+GO
+
+
+
+
+
+-- =============================================
+-- tạo return
+-- =============================================
+CREATE PROCEDURE [dbo].[sp_return_create]
+(
+    @SaleID INT = NULL,
+    @CustomerID INT = NULL,
+    @ReturnDate DATE,
+    @Reason NVARCHAR(255)
+)
+AS
+BEGIN
+	SET NOCOUNT ON;
+    INSERT INTO Returns
+    (
+        SaleID,
+        CustomerID,
+		ReturnDate,
+        Reason
+    )
+    VALUES
+    (
+        @SaleID,
+        @CustomerID,
+		@ReturnDate,
+        @Reason
+    );
+
+    SELECT SCOPE_IDENTITY() AS NewReturnID;
+END;
+GO
+
+
+
+
+
+-- =============================================
+-- cập nhật return
+-- =============================================
+CREATE PROCEDURE [dbo].[sp_return_update]
+(
+	@ReturnID INT,
+	@SaleID INT = NULL,
+    @CustomerID INT = NULL,
+    @ReturnDate DATE,
+    @Reason NVARCHAR(255)
+)
+AS
+BEGIN
+    UPDATE Returns
+    SET
+        SaleID = IIF(@SaleID IS NULL, SaleID, @SaleID),
+        CustomerID = IIF(@CustomerID IS NULL, CustomerID, @CustomerID),
+        ReturnDate= IIF(@ReturnDate IS NULL, ReturnDate, @ReturnDate),
+        Reason     = IIF(@Reason IS NULL, Reason, @Reason)
+    WHERE ReturnID = @ReturnID;
+
+    SELECT '';
+END;
+GO
+
+
+
+drop PROCEDURE [dbo].[sp_return_search]
+
+-- =============================================
+-- tìm kiếm return
+-- =============================================
+CREATE PROCEDURE [dbo].[sp_return_search]
+(
+    @page_index  INT, 
+    @page_size   INT,
+    @ReturnID    INT = NULL,
+    @SaleID      INT = NULL,
+    @CustomerID  INT = NULL,
+    @FromDate    DATETIME = NULL,
+    @ToDate      DATETIME = NULL
+)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    DECLARE @RecordCount BIGINT;
+
+    IF (@page_size <> 0)
+    BEGIN
+        SELECT 
+            ROW_NUMBER() OVER (ORDER BY r.ReturnID DESC) AS RowNumber,
+            r.ReturnID,
+            r.SaleID,
+            r.CustomerID,
+            r.ReturnDate,
+            r.Reason
+        INTO #Results1
+        FROM Returns AS r
+        WHERE (@ReturnID IS NULL OR r.ReturnID = @ReturnID)
+          AND (@SaleID IS NULL OR r.SaleID = @SaleID)
+          AND (@CustomerID IS NULL OR r.CustomerID = @CustomerID)
+          AND (@FromDate IS NULL OR r.ReturnDate >= @FromDate)
+          AND (@ToDate IS NULL OR r.ReturnDate <= @ToDate);
+
+        SELECT @RecordCount = COUNT(*) FROM #Results1;
+
+        SELECT 
+            *, 
+            @RecordCount AS RecordCount
+        FROM #Results1
+        WHERE RowNumber BETWEEN (@page_index - 1) * @page_size + 1 
+                            AND ((@page_index - 1) * @page_size + @page_size);
+
+        DROP TABLE #Results1;
+    END
+    ELSE
+    BEGIN
+        -- Nếu không phân trang, trả toàn bộ kết quả
+        SELECT 
+            ROW_NUMBER() OVER (ORDER BY r.ReturnID DESC) AS RowNumber,
+            r.ReturnID,
+            r.SaleID,
+            r.CustomerID,
+            r.ReturnDate,
+            r.Reason
+        INTO #Results2
+        FROM Returns AS r
+        WHERE (@ReturnID IS NULL OR r.ReturnID = @ReturnID)
+          AND (@SaleID IS NULL OR r.SaleID = @SaleID)
+          AND (@CustomerID IS NULL OR r.CustomerID = @CustomerID)
+          AND (@FromDate IS NULL OR r.ReturnDate >= @FromDate)
+          AND (@ToDate IS NULL OR r.ReturnDate <= @ToDate);
+
+        SELECT @RecordCount = COUNT(*) FROM #Results2;
+
+        SELECT *, @RecordCount AS RecordCount FROM #Results2;
+
+        DROP TABLE #Results2;
+    END
+END;
+GO
+
+
+
+
+
+
+-- =============================================
+-- xóa return
+-- =============================================
+
+CREATE PROCEDURE [dbo].[sp_return_delete]
+    @ReturnID INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+
+    DELETE FROM Returns
+    WHERE ReturnID = @ReturnID;
+
+    -- Trả về thông báo
+    SELECT 'Xóa payment thành công (cứng)' AS Message;
+END;
+GO
+
+
+drop PROCEDURE [dbo].[sp_return_delete]
+
 -- =============================================
 -- chuẩn
 -- =============================================

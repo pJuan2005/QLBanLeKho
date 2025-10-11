@@ -5,67 +5,67 @@ using Model;
 
 namespace CoreApi.Controllers
 {
-    [Route("api/product")]
+    [Route("api/return")]
     [ApiController]
-    public class ProductController : ControllerBase
+    public class ReturnController : ControllerBase
     {
-        private readonly IDProductBLL _ProductBusiness;
+        private readonly IDReturnBLL _ReturnBusiness;
 
-        public ProductController(IDProductBLL productBLL)
+        public ReturnController(IDReturnBLL returnID)
         {
-            _ProductBusiness = productBLL;
+            _ReturnBusiness = returnID;
         }
 
-        [Route("create-product")]
+        [Route("create-return")]
         [HttpPost]
-        public ProductModel Create([FromBody] ProductModel model)
+        public ReturnModel Create([FromBody] ReturnModel model)
         {
-            _ProductBusiness.Create(model);
+            _ReturnBusiness.Create(model);
             return model;
         }
 
-        [Route("update-product")]
+        [Route("update-return")]
         [HttpPost]
-        public ProductModel Update([FromBody] ProductModel model)
+        public ReturnModel Update([FromBody] ReturnModel model)
         {
-            _ProductBusiness.Update(model);
+            _ReturnBusiness.Update(model);
             return model;
         }
 
-        [Route("delete-product/{id}")]
+        [Route("delete-return/{id}")]
         [HttpDelete]
         public IActionResult Delete(int id)
         {
-            _ProductBusiness.Delete(id);
+            _ReturnBusiness.Delete(id);
             return Ok(new { data = "OK" });
         }
 
         [Route("get-by-id/{id}")]
         [HttpGet]
-        public ProductModel GetDatabyID(int id)
+        public ReturnModel GetDatabyID(int id)
         {
-            return _ProductBusiness.GetDatabyID(id);
+            return _ReturnBusiness.GetDatabyID(id);
         }
 
         //[Route("search-product")][HttpPost] public ResponseModel Search([FromBody] Dictionary<string, object> formData) { var response = new ResponseModel(); try { var page = int.Parse(formData["page"].ToString()); var pageSize = int.Parse(formData["pageSize"].ToString()); int? IDProduct = null; if (formData.Keys.Contains("IDProduct") && !string.IsNullOrEmpty(Convert.ToString(formData["IDProduct"]))) { IDProduct = Convert.ToInt32(formData["IDProduct"]); } string ProductName = ""; if (formData.Keys.Contains("ProductName") && !string.IsNullOrEmpty(Convert.ToString(formData["ProductName"]))) { ProductName = Convert.ToString(formData["ProductName"]); } string option = ""; if (formData.Keys.Contains("option") && !string.IsNullOrEmpty(Convert.ToString(formData["option"]))) { option = Convert.ToString(formData["option"]); } long total = 0; var data = _ProductBusiness.Search(page, pageSize, out total, IDProduct, ProductName, option); response.TotalItems = total; response.Data = data; response.Page = page; response.PageSize = pageSize; } catch (Exception ex) { throw new Exception(ex.Message); } return response; }
 
         [Route("search-product")]
         [HttpPost]
-        public ResponseModel Search([FromBody] ProductSearchRequest request)
+        public ResponseModel Search([FromBody] ReturnSearchRequest request)
         {
             var response = new ResponseModel();
             try
             {
                 long total = 0;
-                var data = _ProductBusiness.Search(
+                var data = _ReturnBusiness.Search(
                     request.page,
                     request.pageSize,
                     out total,
-                    request.ProductID,
-                    request.SKU,
-                    request.ProductName,
-                    request.CategoryID,
-                    request.SupplierID
+                    request.ReturnID,
+                    request.SaleID,
+                    request.CustomerID,
+                    request.FromDate,
+                    request.ToDate
                 );
 
                 response.TotalItems = total;
@@ -74,9 +74,9 @@ namespace CoreApi.Controllers
                 response.PageSize = request.pageSize;
             }
             catch (Exception ex)
-                {
-                    throw new Exception(ex.Message);
-                }
+            {
+                throw new Exception(ex.Message);
+            }
             return response;
         }
 

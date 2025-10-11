@@ -53,6 +53,13 @@ builder.Services.AddScoped<ISalesItemRepository, SalesItemRepository>();
 builder.Services.AddScoped<IDonMuaHangBusiness, DonMuaHangBusiness>();
 builder.Services.AddScoped<IDonMuaHangRepository, DonMuaHangRepository>();
 
+
+
+builder.Services.AddScoped<IDReturnBLL, ReturnBLL>();
+builder.Services.AddScoped<IDReturnDAL, ReturnDAL>();
+
+
+
 // configure strongly typed settings objects
 IConfiguration configuration = builder.Configuration;
 var appSettingsSection = configuration.GetSection("AppSettings");
@@ -76,6 +83,9 @@ builder.Services.AddAuthentication(x =>
         ValidateAudience = false
     };
 });
+
+builder.Services.AddTransient<IDReturnBLL, ReturnBLL>();
+builder.Services.AddTransient<IDReturnDAL, ReturnDAL>();
 
 builder.Services.AddTransient<IDProductDAL, ProductDAL>();
 builder.Services.AddTransient<IDProductBLL, ProductBLL>();
