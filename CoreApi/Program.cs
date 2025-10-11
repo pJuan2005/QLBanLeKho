@@ -28,7 +28,8 @@ builder.Services.AddTransient<ICustomerRepository, CustomerRepository>();
 builder.Services.AddTransient<ICustomerBusiness, CustomerBusiness>();
 builder.Services.AddTransient<IArCustomerBusiness, ArCustomerBusiness>();
 builder.Services.AddTransient<IArCustomerRepository,ArCustomerRepository>();
-
+builder.Services.AddTransient<IApSupplierRepository, ApSupplierRepository>();
+builder.Services.AddTransient<IApSupplierBusiness, ApSupplierBusiness>();
 
 // Đăng ký các lớp xử lý nghiệp vụ và truy cập dữ liệu vào hệ thống DI <PurchaseOrderDetails>
 builder.Services.AddScoped<IPurchaseOrderDetailsBusiness, PurchaseOrderDetailsBusiness>();
