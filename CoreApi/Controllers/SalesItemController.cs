@@ -26,14 +26,7 @@ namespace CoreApi.Controllers
             return model;
         }
 
-        [Route("update")]
-        [HttpPost]
-        public SalesItemModel Update([FromBody] SalesItemModel model)
-        {
-            _salesItemBusiness.Update(model);
-            return model;
-        }
-
+      
         [Route("delete")]
         [HttpPost]
         public IActionResult Delete([FromBody] SalesItemModel model)

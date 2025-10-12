@@ -48,6 +48,18 @@ builder.Services.AddScoped<ISalesRepository, SalesRepository>();
 builder.Services.AddScoped<ISalesItemBusiness, SalesItemBusiness>();
 builder.Services.AddScoped<ISalesItemRepository, SalesItemRepository>();
 
+// Đăng ký các lớp xử lý nghiệp vụ và truy cập dữ liệu vào hệ thống DI <Invoice>
+builder.Services.AddScoped<IInvoiceBusiness, InvoiceBusiness>();
+builder.Services.AddScoped<IInvoiceRepository, InvoiceRepository>();
+
+// Đăng ký các lớp xử lý nghiệp vụ và truy cập dữ liệu vào hệ thống DI <GoodsReceipts>
+builder.Services.AddScoped<IGoodsReceiptsBusiness, GoodsReceiptsBusiness>();
+builder.Services.AddScoped<IGoodsReceiptsRepository, GoodsReceiptsRepository>();
+
+// Đăng ký các lớp xử lý nghiệp vụ và truy cập dữ liệu vào hệ thống DI <GoodsReceiptDetails>
+builder.Services.AddScoped<IGoodsReceiptDetailsBusiness, GoodsReceiptDetailsBusiness>();
+builder.Services.AddScoped<IGoodsReceiptDetailsRepository, GoodsReceiptDetailsRepository>();
+
 // Đăng ký các lớp xử lý nghiệp vụ và truy cập dữ liệu vào hệ thống DI
 
 builder.Services.AddScoped<IDonMuaHangBusiness, DonMuaHangBusiness>();

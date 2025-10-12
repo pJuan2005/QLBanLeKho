@@ -46,7 +46,7 @@ namespace DAL
                         "@UserID", model.UserID,
                         "@SaleDate", model.SaleDate
                         );
-                    // ✅ Không cần truyền TotalAmount và VATAmount
+                    
 
                     if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
                     {
