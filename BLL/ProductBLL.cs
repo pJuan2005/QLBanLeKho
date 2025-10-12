@@ -35,11 +35,9 @@ namespace BLL
             return _res.Delete(id);
         }
 
-        public List<ProductModel> Search(int pageIndex, int pageSize, out long total,
-                                         int? ProductID, string SKU, string ProductName,
-                                         int? CategoryID, int? SupplierID)
+        public List<ProductModel> Search(ProductSearchRequest request, out long total)
         {
-            return _res.Search(pageIndex, pageSize, out total, ProductID, SKU, ProductName, CategoryID, SupplierID);
+            return _res.Search(request, out total);
         }
     }
 }

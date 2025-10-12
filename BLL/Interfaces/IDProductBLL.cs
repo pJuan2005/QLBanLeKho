@@ -13,10 +13,7 @@ namespace BLL.Interfaces
         bool Create(ProductModel model);
         bool Update(ProductModel model);
         bool Delete(int productId);
-        List<ProductModel> Search(int pageIndex, int pageSize, out long total,
-                                  int? ProductID, string SKU, string ProductName,
-                                  int? CategoryID, int? SupplierID);
-
+        List<ProductModel> Search(ProductSearchRequest request, out long total);
 
 
     }
