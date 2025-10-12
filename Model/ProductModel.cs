@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 namespace Model
 {
     public class ProductModel
     {
+        
         public int ProductID { get; set; }           // Mã sản phẩm (khóa chính)
         public string SKU { get; set; }              // Mã SKU (unique, not null)
         public string Barcode { get; set; }          // Mã barcode (unique, có thể null)
@@ -19,7 +19,7 @@ namespace Model
         public int MinStock { get; set; }            // Tồn kho tối thiểu (default 0)
         public string Status { get; set; }
         public string Image { get; set; }
-
+        public decimal VATRate { get; set; }
     }
 
 
@@ -38,6 +38,6 @@ namespace Model
         public int? CategoryID { get; set; }
         public int? SupplierID { get; set; }
         public string Status { get; set; }
-        public string option { get; set; }
+
     }
 }

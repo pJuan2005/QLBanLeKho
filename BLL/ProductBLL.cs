@@ -37,9 +37,9 @@ namespace BLL
 
         public List<ProductModel> Search(int pageIndex, int pageSize, out long total,
                                          int? ProductID, string SKU, string ProductName,
-                                         int? CategoryID, int? SupplierID, string option)
+                                         int? CategoryID, int? SupplierID)
         {
-            return _res.Search(pageIndex, pageSize, out total, ProductID, SKU, ProductName, CategoryID, SupplierID, option);
+            return _res.Search(pageIndex, pageSize, out total, ProductID, SKU, ProductName, CategoryID, SupplierID);
         }
     }
 }

@@ -122,8 +122,7 @@ namespace DAL
                                            int? StockID,
                                            int? ProductID,
                                            string TransactionType,
-                                           int? RefID,
-                                           string option)
+                                           int? RefID)
         {
             string msgError = "";
             total = 0;
@@ -135,8 +134,7 @@ namespace DAL
                     "@StockID", StockID,
                     "@ProductID", ProductID,
                     "@TransactionType", TransactionType,
-                    "@RefID", RefID,
-                    "@option", option
+                    "@RefID", RefID
                 );
 
                 if (!string.IsNullOrEmpty(msgError))

@@ -48,21 +48,18 @@ namespace DAL
                     "@Price", model.Price,
                     "@MinStock", model.MinStock,
                     "@Status", model.Status,
-                    "@Image", model.Image // 🆕
+                    "@Image", model.Image,
+                    "@VATRate", model.VATRate
 
                 );
 
                 if (!string.IsNullOrEmpty(msgError))
-                {
                     throw new Exception(msgError);
-                }
 
                 if (result != null && int.TryParse(result.ToString(), out int newId))
-                {
-                    model.ProductID = newId; // Gán ProductID mới vào model
-                }
+                    model.ProductID = newId;
 
-                return true; // Thành công
+                return true; 
             }
             catch (Exception ex)
             {
@@ -88,7 +85,8 @@ namespace DAL
                     "@Price", model.Price,
                     "@MinStock", model.MinStock,
                     "@Status", model.Status,
-                    "@Image", model.Image
+                    "@Image", model.Image,
+                    "@VATRate", model.VATRate
                 );
                 if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
                 {
@@ -131,7 +129,7 @@ namespace DAL
 
         public List<ProductModel> Search(int pageIndex, int pageSize, out long total,
                                          int? ProductID, string SKU, string ProductName,
-                                         int? CategoryID, int? SupplierID, string option)
+                                         int? CategoryID, int? SupplierID)
         {
             string msgError = "";
             total = 0;
@@ -144,8 +142,7 @@ namespace DAL
                     "@SKU", SKU,
                     "@ProductName", ProductName,
                     "@CategoryID", CategoryID,
-                    "@SupplierID", SupplierID,
-                    "@option", option
+                    "@SupplierID", SupplierID
                 );
                 if (!string.IsNullOrEmpty(msgError))
                     throw new Exception(msgError);

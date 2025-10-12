@@ -62,8 +62,7 @@ namespace CoreApi.Controllers
                     request.StockID,
                     request.ProductID,
                     request.TransactionType,
-                    request.RefID,
-                    request.option
+                    request.RefID
                 );
 
                 response.TotalItems = total;

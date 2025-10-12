@@ -1,56 +1,59 @@
 ﻿using BLL.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Model;
+using System;
 
 namespace CoreApi.Controllers
 {
-    [Route("api/payment")]
+    [Route("api/payments")]
     [ApiController]
     public class PaymentController : ControllerBase
     {
-        private readonly IDPaymentBLL _paymentBusiness;
+        private readonly IDPaymentBLL _paymentBLL;
 
-        public PaymentController(IDPaymentBLL paymentBusiness)
+        public PaymentController(IDPaymentBLL paymentBLL)
         {
-            _paymentBusiness = paymentBusiness;
+            _paymentBLL = paymentBLL;
         }
 
-        // ✅ Thêm mới thanh toán
-        [Route("create-payment")]
+        [Route("create-payment-customer")]
         [HttpPost]
-        public PaymentModel Create([FromBody] PaymentModel model)
+        public PaymentCustomerModel CreateCustomer([FromBody] PaymentCustomerModel model)
         {
-            _paymentBusiness.Create(model);
+            _paymentBLL.CreateCustomer(model);
+            return model;
+        }
+        [Route("create-payment-supplier")]
+        [HttpPost]
+        public PaymentSupplierModel CreateSupplier([FromBody] PaymentSupplierModel model)
+        {
+            _paymentBLL.CreateSupplier(model);
             return model;
         }
 
-        // ✅ Cập nhật thanh toán
         [Route("update-payment")]
         [HttpPost]
         public PaymentModel Update([FromBody] PaymentModel model)
         {
-            _paymentBusiness.Update(model);
+            _paymentBLL.Update(model);
             return model;
         }
 
-        // ✅ Xoá thanh toán
         [Route("delete-payment/{id}")]
         [HttpDelete]
         public IActionResult Delete(int id)
         {
-            _paymentBusiness.Delete(id);
+            _paymentBLL.Delete(id);
             return Ok(new { data = "OK" });
         }
 
-        // ✅ Lấy thanh toán theo ID
         [Route("get-by-id/{id}")]
         [HttpGet]
-        public PaymentModel GetDatabyID(int id)
+        public PaymentModel GetByID(int id)
         {
-            return _paymentBusiness.GetDatabyID(id);
+            return _paymentBLL.GetByID(id);
         }
 
-        // ✅ Tìm kiếm & phân trang
         [Route("search-payment")]
         [HttpPost]
         public ResponseModel Search([FromBody] PaymentSearchRequest request)
@@ -59,16 +62,9 @@ namespace CoreApi.Controllers
             try
             {
                 long total = 0;
-                var data = _paymentBusiness.Search(
-                    request.page,
-                    request.pageSize,
-                    out total,
-                    request.PaymentID,
-                    request.CustomerID,
-                    request.SupplierID,
-                    request.Method,
-                    request.option
-                );
+                var data = _paymentBLL.Search(
+                    request.page, request.pageSize, out total,
+                    request.CustomerID,request.SupplierID, request.SaleID, request.Method, request.FromDate, request.ToDate);
 
                 response.TotalItems = total;
                 response.Data = data;
@@ -81,5 +77,9 @@ namespace CoreApi.Controllers
             }
             return response;
         }
+
+
+
+
     }
 }

@@ -1,9 +1,8 @@
-﻿create database QuanLyKho
-use  QuanLyKho
+﻿create database QLBanLeKho
+use QLBanLeKho
 
 
-drop database QuanLyKho
-
+drop database QLBanLeKho
 
 CREATE TABLE Users (
     UserID INT IDENTITY(1,1) PRIMARY KEY, -- Mã người dùng
@@ -36,6 +35,7 @@ CREATE TABLE Customers (
     Email NVARCHAR(100), -- Email
     Address NVARCHAR(255), -- Địa chỉ
     DebtLimit DECIMAL(18,2) DEFAULT 0 -- Hạn mức công nợ
+
 );
 
 CREATE TABLE Products (
@@ -50,9 +50,12 @@ CREATE TABLE Products (
     MinStock INT DEFAULT 0, -- Tồn kho tối thiểu
     Status NVARCHAR(20) DEFAULT 'Active', -- Trạng thái
 	Image NVARCHAR(255),
+	VATRate DECIMAL(5,2) DEFAULT 10.00,
     FOREIGN KEY (CategoryID) REFERENCES Categories(CategoryID),
     FOREIGN KEY (SupplierID) REFERENCES Suppliers(SupplierID)
 );
+
+
 
 CREATE TABLE PurchaseOrders (
     POID INT IDENTITY(1,1) PRIMARY KEY, -- Mã đơn mua hàng
@@ -151,16 +154,25 @@ CREATE TABLE Invoices (
     FOREIGN KEY (SaleID) REFERENCES Sales(SaleID)
 );
 
+
 CREATE TABLE Payments (
-    PaymentID INT IDENTITY(1,1) PRIMARY KEY, -- Mã thanh toán
-    CustomerID INT, -- Mã khách hàng
-    SupplierID INT, -- Mã nhà cung cấp
-    Amount DECIMAL(18,2) NOT NULL, -- Số tiền
-PaymentDate DATE NOT NULL, -- Ngày thanh toán
-    Method NVARCHAR(20) NOT NULL, -- Hình thức thanh toán
-    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID),
-    FOREIGN KEY (SupplierID) REFERENCES Suppliers(SupplierID)
+    PaymentID INT IDENTITY(1,1) PRIMARY KEY,
+    SaleID INT NOT NULL,                  -- Liên kết đến đơn bán
+    CustomerID INT NOT NULL,              -- Khách hàng trả tiền
+    Amount DECIMAL(18,2) NOT NULL,        -- Số tiền khách hàng sẽ thanh toán tại thời điểm đó
+    PaymentDate DATE NOT NULL DEFAULT GETDATE(),
+    Method NVARCHAR(30) NOT NULL,         -- Tiền mặt / Chuyển khoản / QR
+    Description NVARCHAR(200) NULL,       -- Ghi chú (vd: trả lần 1)
+    FOREIGN KEY (SaleID) REFERENCES Sales(SaleID),
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
 );
+
+ALTER TABLE Payments
+ADD SupplierID INT -- Mã nhà cung cấp
+ALTER TABLE Payments
+ALTER COLUMN CustomerID INT NULL;
+
+
 
 CREATE TABLE StockCards (
     StockID INT IDENTITY(1,1) PRIMARY KEY, -- Mã thẻ kho
@@ -171,18 +183,6 @@ CREATE TABLE StockCards (
     RefID INT, -- Mã tham chiếu chứng từ
     TransactionDate DATETIME NOT NULL, -- Ngày giao dịch
     FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
-);
-
-
-
-
-CREATE TABLE SystemSettings (
-    SettingID INT IDENTITY(1,1) PRIMARY KEY,
-    SettingKey NVARCHAR(100) UNIQUE NOT NULL, -- Tên cấu hình
-    SettingValue NVARCHAR(255),               -- Giá trị cấu hình
-    Description NVARCHAR(255),                -- Mô tả cấu hình
-    UpdatedDate DATETIME DEFAULT GETDATE(),   -- Ngày cập nhật
-    UpdatedBy NVARCHAR(50)                    -- Người cập nhật
 );
 
 
@@ -266,23 +266,23 @@ VALUES
 (N'Khách Hàng 15', '0923000015', 'kh15@shop.com', N'Vĩnh Phúc', 15000000);
 
 -- PRODUCTS (15 bản ghi)
-INSERT INTO Products (SKU, Barcode, ProductName, CategoryID, SupplierID, Unit, Price, MinStock, Status,Image)
+INSERT INTO Products (SKU, Barcode, ProductName, CategoryID, SupplierID, Unit, Price, MinStock, Status,Image,VATRate)
 VALUES
-('SKU001', 'BC001', N'Giày Sneaker Trắng', 1, 1, N'Đôi', 800000, 10, 'Active', N'Ảnh 1'),
-('SKU002', 'BC002', N'Giày Sneaker Đen', 1, 2, N'Đôi', 850000, 10, 'Active', N'Ảnh 1'),
-('SKU003', 'BC003', N'Giày Chạy Bộ Nam', 8, 3, N'Đôi', 1200000, 5, 'Active', N'Ảnh 1'),
-('SKU004', 'BC004', N'Giày Chạy Bộ Nữ', 8, 4, N'Đôi', 1150000, 5, 'Active', N'Ảnh 1'),
-('SKU005', 'BC005', N'Giày Tennis Trắng', 11, 5, N'Đôi', 950000, 3, 'Active', N'Ảnh 1'),
-('SKU006', 'BC006', N'Giày Bóng Đá Cỏ Tự Nhiên', 13, 6, N'Đôi', 1350000, 7, 'Active', N'Ảnh 1'),
-('SKU007', 'BC007', N'Giày Bóng Đá Cỏ Nhân Tạo', 13, 7, N'Đôi', 1100000, 7, 'Active', N'Ảnh 1'),
-('SKU008', 'BC008', N'Giày Bóng Rổ Cao Cổ', 14, 8, N'Đôi', 1400000, 6, 'Active', N'Ảnh 1'),
-('SKU009', 'BC009', N'Giày Golf Chống Thấm', 12, 9, N'Đôi', 2500000, 2, 'Active', N'Ảnh 1'),
-('SKU010', 'BC010', N'Giày Tây Nam', 4, 10, N'Đôi', 1600000, 4, 'Active', N'Ảnh 1'),
-('SKU011', 'BC011', N'Giày Cao Gót Đen', 5, 11, N'Đôi', 900000, 3, 'Active', N'Ảnh 1'),
-('SKU012', 'BC012', N'Giày Boot Da', 6, 12, N'Đôi', 2200000, 2, 'Active', N'Ảnh 1'),
-('SKU013', 'BC013', N'Dép Lê Nam', 3, 13, N'Đôi', 150000, 20, 'Active', N'Ảnh 1'),
-('SKU014', 'BC014', N'Sandal Nữ Thời Trang', 2, 14, N'Đôi', 350000, 15, 'Active', N'Ảnh 1'),
-('SKU015', 'BC015', N'Giày Lười Nam', 10, 15, N'Đôi', 780000, 8, 'Active', N'Ảnh 1');
+('SKU001', 'BC001', N'Giày Sneaker Trắng', 1, 1, N'Đôi', 800000, 10, 'Active', N'Ảnh 1',10.00),
+('SKU002', 'BC002', N'Giày Sneaker Đen', 1, 2, N'Đôi', 850000, 10, 'Active', N'Ảnh 1',10.00),
+('SKU003', 'BC003', N'Giày Chạy Bộ Nam', 8, 3, N'Đôi', 1200000, 5, 'Active', N'Ảnh 1',10.00),
+('SKU004', 'BC004', N'Giày Chạy Bộ Nữ', 8, 4, N'Đôi', 1150000, 5, 'Active', N'Ảnh 1',10.00),
+('SKU005', 'BC005', N'Giày Tennis Trắng', 11, 5, N'Đôi', 950000, 3, 'Active', N'Ảnh 1',10.00),
+('SKU006', 'BC006', N'Giày Bóng Đá Cỏ Tự Nhiên', 13, 6, N'Đôi', 1350000, 7, 'Active', N'Ảnh 1',10.00),
+('SKU007', 'BC007', N'Giày Bóng Đá Cỏ Nhân Tạo', 13, 7, N'Đôi', 1100000, 7, 'Active', N'Ảnh 1',10.00),
+('SKU008', 'BC008', N'Giày Bóng Rổ Cao Cổ', 14, 8, N'Đôi', 1400000, 6, 'Active', N'Ảnh 1',10.00),
+('SKU009', 'BC009', N'Giày Golf Chống Thấm', 12, 9, N'Đôi', 2500000, 2, 'Active', N'Ảnh 1',10.00),
+('SKU010', 'BC010', N'Giày Tây Nam', 4, 10, N'Đôi', 1600000, 4, 'Active', N'Ảnh 1',10.00),
+('SKU011', 'BC011', N'Giày Cao Gót Đen', 5, 11, N'Đôi', 900000, 3, 'Active', N'Ảnh 1',10.00),
+('SKU012', 'BC012', N'Giày Boot Da', 6, 12, N'Đôi', 2200000, 2, 'Active', N'Ảnh 1',10.00),
+('SKU013', 'BC013', N'Dép Lê Nam', 3, 13, N'Đôi', 150000, 20, 'Active', N'Ảnh 1',10.00),
+('SKU014', 'BC014', N'Sandal Nữ Thời Trang', 2, 14, N'Đôi', 350000, 15, 'Active', N'Ảnh 1',10.00),
+('SKU015', 'BC015', N'Giày Lười Nam', 10, 15, N'Đôi', 780000, 8, 'Active', N'Ảnh 1',10.00);
 
 
 
@@ -483,25 +483,28 @@ VALUES
 
 
 
-INSERT INTO Payments (CustomerID, SupplierID, Amount, PaymentDate, Method)
+-- PAYMENTS (đồng bộ với bảng Sales & Customers)
+INSERT INTO Payments (SaleID, CustomerID,SupplierID, Amount, PaymentDate, Method, Description)
 VALUES
-(1, NULL, 2000000, '2025-02-16', N'Tiền mặt'),
-(2, NULL, 1500000, '2025-02-17', N'Chuyển khoản'),
-(3, NULL, 2500000, '2025-02-18', N'Thẻ tín dụng'),
-(4, NULL, 1800000, '2025-02-19', N'Tiền mặt'),
-(5, NULL, 1200000, '2025-02-20', N'Ví điện tử'),
-(NULL, 1, 3000000, '2025-02-21', N'Chuyển khoản'),
-(NULL, 2, 2200000, '2025-02-22', N'Tiền mặt'),
-(NULL, 3, 2800000, '2025-02-23', N'Chuyển khoản'),
-(6, NULL, 3500000, '2025-02-24', N'Thẻ tín dụng'),
-(7, NULL, 4000000, '2025-02-25', N'Tiền mặt'),
-(NULL, 4, 2700000, '2025-02-26', N'Chuyển khoản'),
-(8, NULL, 5000000, '2025-02-27', N'Thẻ tín dụng'),
-(NULL, 5, 3200000, '2025-02-28', N'Tiền mặt'),
-(9, NULL, 1500000, '2025-03-01', N'Ví điện tử'),
-(NULL, 6, 1800000, '2025-03-02', N'Chuyển khoản');
+-- Các hóa đơn đã thanh toán đầy đủ (Paid)
+(1, 1,1, 2200000, '2025-02-01', N'Tiền mặt', N'Thanh toán đủ đơn #1'),
+(3, 3,3, 2750000, '2025-02-03', N'Chuyển khoản', N'Thanh toán đủ đơn #3'),
+(4, 4,4, 1980000, '2025-02-04', N'QR', N'Thanh toán đủ đơn #4'),
+(6, 6,6, 3300000, '2025-02-06', N'Tiền mặt', N'Thanh toán đủ đơn #6'),
+(7, 7,7, 2420000, '2025-02-07', N'Chuyển khoản', N'Thanh toán đủ đơn #7'),
+(9, 9,9, 3850000, '2025-02-09', N'Tiền mặt', N'Thanh toán đủ đơn #9'),
+(10, 10,10, 4400000, '2025-02-10', N'QR', N'Thanh toán đủ đơn #10'),
+(12, 12,12, 5500000, '2025-02-12', N'Chuyển khoản', N'Thanh toán đủ đơn #12'),
+(13, 13,13, 3520000, '2025-02-13', N'Tiền mặt', N'Thanh toán đủ đơn #13'),
+(15, 15,15, 1980000, '2025-02-15', N'QR', N'Thanh toán đủ đơn #15'),
+(2, 2,2, 800000, '2025-02-02', N'Tiền mặt', N'Thanh toán lần 1 (còn nợ)'),
+(5, 5,5, 600000, '2025-02-05', N'Chuyển khoản', N'Thanh toán lần 1 (còn nợ)'),
+(8, 8,8, 1500000, '2025-02-08', N'QR', N'Thanh toán lần 1 (còn nợ)'),
+(11, 11,11, 2000000,'2025-02-11', N'Tiền mặt', N'Thanh toán lần 1 (còn nợ)'),
+(14, 14,15, 1000000, '2025-02-14', N'Chuyển khoản', N'Thanh toán lần 1 (còn nợ)');
 
 
+delete  Payments
 
 
 INSERT INTO StockCards (ProductID, TransactionType, Quantity, Balance, RefID, TransactionDate)
@@ -578,7 +581,8 @@ CREATE PROCEDURE [dbo].[sp_product_create]
     @Price DECIMAL(18,2),
     @MinStock INT = 0,
     @Status NVARCHAR(20) = 'Active',
-	@Image NVARCHAR(255) = NULL  -- 🆕
+	@Image NVARCHAR(255) = NULL , 
+	@VATRate decimal(5,2) = NULL
 )
 AS
 BEGIN
@@ -595,7 +599,8 @@ BEGIN
         Price,
         MinStock,
         Status,
-		Image
+		Image,
+		VATRate
     )
     VALUES
     (
@@ -608,7 +613,8 @@ BEGIN
         @Price,
         @MinStock,
         @Status,
-		@Image
+		@Image,
+		@VATRate
     );
 
     -- Trả về ID vừa thêm (giúp frontend/backend biết sản phẩm nào vừa được tạo)
@@ -630,7 +636,8 @@ CREATE PROCEDURE [dbo].[sp_product_update]
     @Price       DECIMAL(18,2) = NULL,
     @MinStock    INT = NULL,
     @Status      NVARCHAR(20) = NULL,
-	@Image       NVARCHAR(255) = NULL
+	@Image       NVARCHAR(255) = NULL,
+	@VATRate     Decimal(5,2) =NULL
 )
 AS
 BEGIN
@@ -645,15 +652,18 @@ BEGIN
         Price       = IIF(@Price IS NULL, Price, @Price),
         MinStock    = IIF(@MinStock IS NULL, MinStock, @MinStock),
         Status      = IIF(@Status IS NULL, Status, @Status),
-		Image       = IIF(@Image IS NULL, Image, @Image)
+		Image       = IIF(@Image IS NULL, Image, @Image),
+		VATRate		= IIF(@VATRate IS NULL, VATRate, @VATRate)	
     WHERE ProductID = @ProductID;
 
     SELECT '';
 END;
 GO
 
+select * from Products
 
 
+drop PROCEDURE [dbo].[sp_product_search]
 
 
 
@@ -678,14 +688,9 @@ BEGIN
     BEGIN
         SET NOCOUNT ON;
 
-        SELECT (ROW_NUMBER() OVER(
-                  ORDER BY 
-                      CASE 
-                          WHEN @option = 'NAME' THEN p.ProductName
-                          WHEN @option = 'PRICE' THEN CAST(p.Price AS NVARCHAR)
-                          ELSE p.ProductID
-                      END ASC)) AS RowNumber,
-               p.ProductID,
+        SELECT 
+            ROW_NUMBER() OVER (ORDER BY p.ProductID ASC) AS RowNumber,
+			   p.ProductID,
                p.SKU,
                p.Barcode,
                p.ProductName,
@@ -695,7 +700,8 @@ BEGIN
                p.Price,
                p.MinStock,
                p.Status,
-			   p.Image
+			   p.Image,
+			   p.VATRate
         INTO #Results1
         FROM Products AS p
         WHERE (@ProductID IS NULL OR p.ProductID = @ProductID)
@@ -719,14 +725,9 @@ BEGIN
     BEGIN
         SET NOCOUNT ON;
 
-        SELECT (ROW_NUMBER() OVER(
-                  ORDER BY 
-                      CASE 
-                          WHEN @option = 'NAME' THEN p.ProductName
-                          WHEN @option = 'PRICE' THEN CAST(p.Price AS NVARCHAR)
-                          ELSE p.ProductID
-                      END ASC)) AS RowNumber,
-               p.ProductID,
+        SELECT 
+            ROW_NUMBER() OVER (ORDER BY p.ProductID ASC) AS RowNumber,
+		       p.ProductID,
                p.SKU,
                p.Barcode,
                p.ProductName,
@@ -736,7 +737,8 @@ BEGIN
                p.Price,
                p.MinStock,
                p.Status,
-			   p.Image
+			   p.Image,
+			   p.VATRate
         INTO #Results2
         FROM Products AS p
         WHERE (@ProductID IS NULL OR p.ProductID = @ProductID)
@@ -804,60 +806,69 @@ GO
 
 
 
-
+drop PROCEDURE [dbo].[sp_payment_create]
 
 CREATE PROCEDURE [dbo].[sp_payment_create]
 (
+    @SaleID INT = NULL,
     @CustomerID INT = NULL,
-    @SupplierID INT = NULL,
+	@SupplierID INT = NULL,
     @Amount DECIMAL(18,2),
     @PaymentDate DATE,
-    @Method NVARCHAR(20)
+    @Method NVARCHAR(30),
+	@Description NVARCHAR(200)
 )
 AS
 BEGIN
+	SET NOCOUNT ON;
     INSERT INTO Payments
     (
+        SaleID,
         CustomerID,
-        SupplierID,
+		SupplierID,
         Amount,
         PaymentDate,
-        Method
+        Method,
+		Description
     )
     VALUES
     (
+        @SaleID,
         @CustomerID,
-        @SupplierID,
+		@SupplierID,
         @Amount,
         @PaymentDate,
-        @Method
+        @Method,
+		@Description
     );
 
-    SELECT '';
+    SELECT SCOPE_IDENTITY() AS NewProductID;
 END;
 GO
 
-
+SELECT * FROM Payments;
 
 
 CREATE PROCEDURE [dbo].[sp_payment_update]
 (
-    @PaymentID   INT,
+	@PaymentID   INT,    
+    @SaleID   INT,
     @CustomerID  INT = NULL,
-    @SupplierID  INT = NULL,
     @Amount      DECIMAL(18,2),
     @PaymentDate DATE,
-    @Method      NVARCHAR(20)
+    @Method      NVARCHAR(30),
+	@Description NVARCHAR(200)
 )
 AS
 BEGIN
     UPDATE Payments
     SET
+        SaleID = IIF(@SaleID IS NULL, SaleID, @SaleID),
         CustomerID = IIF(@CustomerID IS NULL, CustomerID, @CustomerID),
-        SupplierID = IIF(@SupplierID IS NULL, SupplierID, @SupplierID),
         Amount     = IIF(@Amount IS NULL, Amount, @Amount),
         PaymentDate= IIF(@PaymentDate IS NULL, PaymentDate, @PaymentDate),
-        Method     = IIF(@Method IS NULL, Method, @Method)
+        Method     = IIF(@Method IS NULL, Method, @Method),
+		Description = IIF(@Description IS NULL, Description, @Description)
     WHERE PaymentID = @PaymentID;
 
     SELECT '';
@@ -876,11 +887,11 @@ CREATE PROCEDURE [dbo].[sp_payment_search]
     @page_size   INT,
     @PaymentID   INT = NULL,
     @CustomerID  INT = NULL,
-    @SupplierID  INT = NULL,
-	@Amount      DECIMAL(18,2) = NULL,  -- thêm vào
-    @PaymentDate DATETIME = NULL,       -- thêm vào
+    @PaymentDate DATETIME = NULL,       
+	@FromDate    DATETIME = NULL,
+    @ToDate      DATETIME = NULL,
     @Method      NVARCHAR(20) = '',
-    @option      VARCHAR(50) = ''
+	@saleID		 INT
 )
 AS
 BEGIN
@@ -890,25 +901,22 @@ BEGIN
     BEGIN
         SET NOCOUNT ON;
 
-        SELECT (ROW_NUMBER() OVER(
-                  ORDER BY 
-                      CASE 
-                          WHEN @option = 'DATE' THEN CONVERT(NVARCHAR, p.PaymentDate, 23)
-                          WHEN @option = 'AMOUNT' THEN CAST(p.Amount AS NVARCHAR)
-                          ELSE p.PaymentID
-                      END ASC)) AS RowNumber,
+        SELECT ROW_NUMBER() OVER (ORDER BY p.PaymentID ASC) AS RowNumber,
                p.PaymentID,
                p.CustomerID,
-               p.SupplierID,
+               p.SaleID,
                p.Amount,
                p.PaymentDate,
-               p.Method
+               p.Method,
+			   p.Description
         INTO #Results1
         FROM Payments AS p
         WHERE (@PaymentID IS NULL OR p.PaymentID = @PaymentID)
           AND (@CustomerID IS NULL OR p.CustomerID = @CustomerID)
-          AND (@SupplierID IS NULL OR p.SupplierID = @SupplierID)
-          AND (@Method = '' OR p.Method LIKE N'%' + @Method + '%');
+          AND (@SaleID IS NULL OR p.SaleID = @SaleID)
+          AND (@Method = '' OR p.Method LIKE N'%' + @Method + '%')
+		  AND (@FromDate IS NULL OR p.PaymentDate >= @FromDate)
+          AND (@ToDate IS NULL OR p.PaymentDate <= @ToDate);
 
         SELECT @RecordCount = COUNT(*) FROM #Results1;
 
@@ -924,25 +932,22 @@ BEGIN
     BEGIN
         SET NOCOUNT ON;
 
-        SELECT (ROW_NUMBER() OVER(
-                  ORDER BY 
-                      CASE 
-                          WHEN @option = 'DATE' THEN CONVERT(NVARCHAR, p.PaymentDate, 23)
-                          WHEN @option = 'AMOUNT' THEN CAST(p.Amount AS NVARCHAR)
-                          ELSE p.PaymentID
-                      END ASC)) AS RowNumber,
+        SELECT ROW_NUMBER() OVER (ORDER BY p.PaymentID ASC) AS RowNumber,
                p.PaymentID,
                p.CustomerID,
-               p.SupplierID,
+               p.SaleID,
                p.Amount,
                p.PaymentDate,
-               p.Method
+               p.Method,
+			   p.Description
         INTO #Results2
         FROM Payments AS p
         WHERE (@PaymentID IS NULL OR p.PaymentID = @PaymentID)
           AND (@CustomerID IS NULL OR p.CustomerID = @CustomerID)
-          AND (@SupplierID IS NULL OR p.SupplierID = @SupplierID)
-          AND (@Method = '' OR p.Method LIKE N'%' + @Method + '%');
+          AND (@SaleID IS NULL OR p.SaleID = @SaleID)
+          AND (@Method = '' OR p.Method LIKE N'%' + @Method + '%')
+		  AND (@FromDate IS NULL OR p.PaymentDate >= @FromDate)
+          AND (@ToDate IS NULL OR p.PaymentDate <= @ToDate);
 
         SELECT @RecordCount = COUNT(*) FROM #Results2;
 
@@ -965,8 +970,7 @@ AS
 BEGIN
     SET NOCOUNT ON;
 
-    -- Vì bảng Payments chưa có liên kết trực tiếp đến bảng con,
-    -- nên chỉ cần xóa bản ghi theo PaymentID
+
     DELETE FROM Payments
     WHERE PaymentID = @PaymentID;
 
@@ -976,7 +980,7 @@ END;
 GO
 
 
-
+select * from Payments
 
 
 
@@ -984,6 +988,7 @@ GO
 -- =============================================
 -- Lấy thẻ kho theo ID
 -- =============================================
+
 CREATE PROCEDURE [dbo].[sp_stockcard_get_by_id]
     @StockID INT
 AS
@@ -1039,7 +1044,7 @@ END;
 GO
 
 
-
+SELECT * FROM StockCards;
 -- =============================================
 -- Cập nhật thẻ kho
 -- =============================================
@@ -1077,6 +1082,7 @@ DROP PROCEDURE [sp_stockcard_delete]
 -- =============================================
 -- Xóa thẻ kho (cứng)
 -- =============================================
+
 CREATE PROCEDURE [dbo].[sp_stockcard_delete]
 (
     @StockID INT
@@ -1096,6 +1102,8 @@ GO
 
 EXEC sp_stockcard_delete @StockID = 12;
 
+
+DROP  PROCEDURE [dbo].[sp_stockcard_search]
 -- =============================================
 -- Tìm kiếm & phân trang thẻ kho
 -- =============================================
@@ -1107,8 +1115,7 @@ CREATE PROCEDURE [dbo].[sp_stockcard_search]
     @ProductID       INT = NULL,
     @TransactionType NVARCHAR(10) = '',
     @RefID           INT = NULL,
-    @Status          NVARCHAR(20) = '',
-    @option          VARCHAR(50) = ''
+    @Status          NVARCHAR(20) = ''
 )
 AS
 BEGIN
@@ -1118,13 +1125,7 @@ BEGIN
     BEGIN
         SET NOCOUNT ON;
 
-        SELECT (ROW_NUMBER() OVER(
-                  ORDER BY 
-                      CASE 
-                          WHEN @option = 'DATE' THEN sc.TransactionDate
-                          WHEN @option = 'QTY' THEN sc.Quantity
-                          ELSE sc.StockID
-                      END ASC)) AS RowNumber,
+        SELECT ROW_NUMBER() OVER (ORDER BY sc.StockID ASC) AS RowNumber,
                sc.*
         INTO #Results1
         FROM StockCards AS sc
@@ -1147,13 +1148,7 @@ BEGIN
     BEGIN
         SET NOCOUNT ON;
 
-        SELECT (ROW_NUMBER() OVER(
-                  ORDER BY 
-                      CASE 
-                          WHEN @option = 'DATE' THEN sc.TransactionDate
-                          WHEN @option = 'QTY' THEN sc.Quantity
-                          ELSE sc.StockID
-                      END ASC)) AS RowNumber,
+        SELECT ROW_NUMBER() OVER (ORDER BY sc.StockID ASC) AS RowNumber,
                sc.*
         INTO #Results2
         FROM StockCards AS sc
@@ -1347,6 +1342,192 @@ GO
 
 
 
+
+
+-- =============================================
+-- Lấy trả hàngtheo ID
+-- =============================================
+CREATE PROCEDURE [dbo].[sp_return_get_by_id]
+    @ReturnID INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT *
+    FROM Returns
+    WHERE ReturnID = @ReturnID;
+END;
+GO
+
+
+
+
+
+-- =============================================
+-- tạo return
+-- =============================================
+CREATE PROCEDURE [dbo].[sp_return_create]
+(
+    @SaleID INT = NULL,
+    @CustomerID INT = NULL,
+    @ReturnDate DATE,
+    @Reason NVARCHAR(255)
+)
+AS
+BEGIN
+	SET NOCOUNT ON;
+    INSERT INTO Returns
+    (
+        SaleID,
+        CustomerID,
+		ReturnDate,
+        Reason
+    )
+    VALUES
+    (
+        @SaleID,
+        @CustomerID,
+		@ReturnDate,
+        @Reason
+    );
+
+    SELECT SCOPE_IDENTITY() AS NewReturnID;
+END;
+GO
+
+
+
+
+
+-- =============================================
+-- cập nhật return
+-- =============================================
+CREATE PROCEDURE [dbo].[sp_return_update]
+(
+	@ReturnID INT,
+	@SaleID INT = NULL,
+    @CustomerID INT = NULL,
+    @ReturnDate DATE,
+    @Reason NVARCHAR(255)
+)
+AS
+BEGIN
+    UPDATE Returns
+    SET
+        SaleID = IIF(@SaleID IS NULL, SaleID, @SaleID),
+        CustomerID = IIF(@CustomerID IS NULL, CustomerID, @CustomerID),
+        ReturnDate= IIF(@ReturnDate IS NULL, ReturnDate, @ReturnDate),
+        Reason     = IIF(@Reason IS NULL, Reason, @Reason)
+    WHERE ReturnID = @ReturnID;
+
+    SELECT '';
+END;
+GO
+
+
+
+drop PROCEDURE [dbo].[sp_return_search]
+
+-- =============================================
+-- tìm kiếm return
+-- =============================================
+CREATE PROCEDURE [dbo].[sp_return_search]
+(
+    @page_index  INT, 
+    @page_size   INT,
+    @ReturnID    INT = NULL,
+    @SaleID      INT = NULL,
+    @CustomerID  INT = NULL,
+    @FromDate    DATETIME = NULL,
+    @ToDate      DATETIME = NULL
+)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    DECLARE @RecordCount BIGINT;
+
+    IF (@page_size <> 0)
+    BEGIN
+        SELECT 
+            ROW_NUMBER() OVER (ORDER BY r.ReturnID DESC) AS RowNumber,
+            r.ReturnID,
+            r.SaleID,
+            r.CustomerID,
+            r.ReturnDate,
+            r.Reason
+        INTO #Results1
+        FROM Returns AS r
+        WHERE (@ReturnID IS NULL OR r.ReturnID = @ReturnID)
+          AND (@SaleID IS NULL OR r.SaleID = @SaleID)
+          AND (@CustomerID IS NULL OR r.CustomerID = @CustomerID)
+          AND (@FromDate IS NULL OR r.ReturnDate >= @FromDate)
+          AND (@ToDate IS NULL OR r.ReturnDate <= @ToDate);
+
+        SELECT @RecordCount = COUNT(*) FROM #Results1;
+
+        SELECT 
+            *, 
+            @RecordCount AS RecordCount
+        FROM #Results1
+        WHERE RowNumber BETWEEN (@page_index - 1) * @page_size + 1 
+                            AND ((@page_index - 1) * @page_size + @page_size);
+
+        DROP TABLE #Results1;
+    END
+    ELSE
+    BEGIN
+        -- Nếu không phân trang, trả toàn bộ kết quả
+        SELECT 
+            ROW_NUMBER() OVER (ORDER BY r.ReturnID DESC) AS RowNumber,
+            r.ReturnID,
+            r.SaleID,
+            r.CustomerID,
+            r.ReturnDate,
+            r.Reason
+        INTO #Results2
+        FROM Returns AS r
+        WHERE (@ReturnID IS NULL OR r.ReturnID = @ReturnID)
+          AND (@SaleID IS NULL OR r.SaleID = @SaleID)
+          AND (@CustomerID IS NULL OR r.CustomerID = @CustomerID)
+          AND (@FromDate IS NULL OR r.ReturnDate >= @FromDate)
+          AND (@ToDate IS NULL OR r.ReturnDate <= @ToDate);
+
+        SELECT @RecordCount = COUNT(*) FROM #Results2;
+
+        SELECT *, @RecordCount AS RecordCount FROM #Results2;
+
+        DROP TABLE #Results2;
+    END
+END;
+GO
+
+
+
+
+
+
+-- =============================================
+-- xóa return
+-- =============================================
+
+CREATE PROCEDURE [dbo].[sp_return_delete]
+    @ReturnID INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+
+    DELETE FROM Returns
+    WHERE ReturnID = @ReturnID;
+
+    -- Trả về thông báo
+    SELECT 'Xóa payment thành công (cứng)' AS Message;
+END;
+GO
+
+
+drop PROCEDURE [dbo].[sp_return_delete]
 
 -- =============================================
 -- chuẩn
