@@ -30,10 +30,6 @@ namespace BLL
             return _res.Create(model);
         }
 
-        public bool Update(SalesItemModel model)
-        {
-            return _res.Update(model);
-        }
 
         public bool Delete(SalesItemModel model)
         {
