@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danh sách sản phẩm</title>
+    <style>
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            margin: 20px 40px;
+            background-color: #f8f9fa;
+            color: #343a40;
+        }
+        h1 {
+            text-align: center;
+            color: #0056b3;
+        }
+        table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            margin-top: 20px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            background-color: white;
+            font-size: 14px;
+        }
+        th, td { 
+            border: 1px solid #dee2e6; 
+            padding: 8px 10px; 
+            text-align: left; 
+            vertical-align: middle;
+        }
+        thead {
+            background-color: #007bff;
+            color: #ffffff;
+        }
+        tbody tr:nth-of-type(even) {
+            background-color: #f2f2f2;
+        }
+        tbody tr:hover {
+            background-color: #e9ecef;
+        }
+        td.center, th.center {
+             text-align: center;
+        }
+        a { 
+            color: #007bff; 
+            text-decoration: none; 
+            font-weight: bold;
+        }
+        a:hover { 
+            text-decoration: underline; 
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Danh Sách Sản Phẩm</h1>
+
+    <table id="productTable">
+        <thead>
+            <tr>
+                <th class="center">ID</th>
+                <th>SKU</th>
+                <th>Barcode</th>
+                <th>Tên sản phẩm</th>
+                <th class="center">Mã loại</th>
+                <th class="center">Mã NCC</th>
+                <th>Đơn vị</th>
+                <th>Giá bán</th>
+                <th class="center">Tồn T.Thiểu</th>
+                <th>Trạng thái</th>
+                <th class="center">VAT (%)</th>
+                <th class="center">Ảnh</th>
+            </tr>
+        </thead>
+        <tbody>
+            </tbody>
+    </table>
+
+    <script>
+        // Hàm giúp định dạng số thành tiền tệ Việt Nam
+        function formatPrice(price) {
+            if (price === null || isNaN(price)) return 'N/A';
+            return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(price);
+        }
+
+        fetch('/api/product/search-product', {
+            method: 'POST',
+            headers: { 
+                'Content-Type': 'application/json' 
+            },
+            body: JSON.stringify({ 
+                page: 1, 
+                pageSize: 15, // Bạn có thể tăng số này nếu muốn hiển thị nhiều hơn
+                ProductID: null,
+                SKU: "",
+                ProductName: "",
+                CategoryID: null,
+                SupplierID: null,
+                Status: ""
+            }) 
+        })
+        .then(res => {
+            if (!res.ok) throw new Error(`Lỗi HTTP! Trạng thái: ${res.status}`);
+            return res.json();
+        })
+        .then(response => {
+            const products = response.data;
+            const tableBody = document.querySelector("#productTable tbody");
+            tableBody.innerHTML = ''; 
+
+            if (!products || products.length === 0) {
+                // Cập nhật colspan thành 12 (tổng số cột)
+                tableBody.innerHTML = '<tr><td colspan="12" style="text-align: center;">Không tìm thấy sản phẩm nào.</td></tr>';
+                return;
+            }
+
+            products.forEach(product => {
+                const imageUrl = product.image;
+
+                // BƯỚC 2: Thêm đầy đủ dữ liệu cho các ô tương ứng
+                const row = `
+                    <tr>
+                        <td class="center">${product.productID}</td>
+                        <td>${product.sku}</td>
+                        <td>${product.barcode}</td>
+                        <td>${product.productName}</td>
+                        <td class="center">${product.categoryID}</td>
+                        <td class="center">${product.supplierID}</td>
+                        <td>${product.unit}</td>
+                        <td>${formatPrice(product.price)}</td>
+                        <td class="center">${product.minStock}</td>
+                        <td>${product.status}</td>
+                        <td class="center">${product.vatRate}</td>
+                        <td class="center">
+                            <a href="${imageUrl}" target="_blank">Xem</a>
+                        </td>
+                    </tr>
+                `;
+                tableBody.innerHTML += row;
+            });
+        })
+        .catch(error => {
+            console.error('Đã xảy ra lỗi khi tải dữ liệu sản phẩm:', error);
+            const tableBody = document.querySelector("#productTable tbody");
+            // Cập nhật colspan thành 12
+            tableBody.innerHTML = `<tr><td colspan="12" style="text-align: center; color: red;">Có lỗi xảy ra khi tải dữ liệu. Vui lòng kiểm tra Console (nhấn F12).</td></tr>`;
+        });
+    </script>
+
+</body>
+</html>

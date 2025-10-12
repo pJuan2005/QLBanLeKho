@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Model;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CoreApi.Controllers
 {
@@ -10,6 +11,18 @@ namespace CoreApi.Controllers
     public class ProductController : ControllerBase
     {
         private readonly IDProductBLL _ProductBusiness;
+
+
+        private void GenerateImageUrl(ProductModel product)
+        {
+            if (product != null && !string.IsNullOrEmpty(product.Image))
+            {
+                // Tạo URL dựa trên request hiện tại
+                // Ví dụ: https://localhost:7123/ImageProducts/TenFileAnh.jpg
+                product.Image = $"{Request.Scheme}://{Request.Host}/{product.Image.Replace('\\', '/')}";
+            }
+        }
+
 
         public ProductController(IDProductBLL productBLL)
         {
@@ -44,7 +57,9 @@ namespace CoreApi.Controllers
         [HttpGet]
         public ProductModel GetDatabyID(int id)
         {
-            return _ProductBusiness.GetDatabyID(id);
+            var product = _ProductBusiness.GetDatabyID(id);
+            GenerateImageUrl(product); // Tạo URL cho sản phẩm
+            return product;
         }
 
         //[Route("search-product")][HttpPost] public ResponseModel Search([FromBody] Dictionary<string, object> formData) { var response = new ResponseModel(); try { var page = int.Parse(formData["page"].ToString()); var pageSize = int.Parse(formData["pageSize"].ToString()); int? IDProduct = null; if (formData.Keys.Contains("IDProduct") && !string.IsNullOrEmpty(Convert.ToString(formData["IDProduct"]))) { IDProduct = Convert.ToInt32(formData["IDProduct"]); } string ProductName = ""; if (formData.Keys.Contains("ProductName") && !string.IsNullOrEmpty(Convert.ToString(formData["ProductName"]))) { ProductName = Convert.ToString(formData["ProductName"]); } string option = ""; if (formData.Keys.Contains("option") && !string.IsNullOrEmpty(Convert.ToString(formData["option"]))) { option = Convert.ToString(formData["option"]); } long total = 0; var data = _ProductBusiness.Search(page, pageSize, out total, IDProduct, ProductName, option); response.TotalItems = total; response.Data = data; response.Page = page; response.PageSize = pageSize; } catch (Exception ex) { throw new Exception(ex.Message); } return response; }
@@ -57,16 +72,7 @@ namespace CoreApi.Controllers
             try
             {
                 long total = 0;
-                var data = _ProductBusiness.Search(
-                    request.page,
-                    request.pageSize,
-                    out total,
-                    request.ProductID,
-                    request.SKU,
-                    request.ProductName,
-                    request.CategoryID,
-                    request.SupplierID
-                );
+                var data = _ProductBusiness.Search(request, out total);
 
                 response.TotalItems = total;
                 response.Data = data;
@@ -74,9 +80,9 @@ namespace CoreApi.Controllers
                 response.PageSize = request.pageSize;
             }
             catch (Exception ex)
-                {
-                    throw new Exception(ex.Message);
-                }
+            {
+                throw new Exception(ex.Message);
+            }
             return response;
         }
 
