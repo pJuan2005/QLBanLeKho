@@ -1,8 +1,11 @@
+
 ﻿using BLL.Interfaces;
 using BLL;
 using DAL.Interfaces;
 using DAL;
 using DAL.Helper;
+
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +21,18 @@ builder.Services.AddScoped<IDatabaseHelper, DatabaseHelper>();
 builder.Services.AddScoped<IDonMuaHangBusiness, DonMuaHangBusiness>();
 builder.Services.AddScoped<IDonMuaHangRepository, DonMuaHangRepository>();
 
+
+
+builder.Services.AddTransient<IDatabaseHelper, DatabaseHelper>();
+builder.Services.AddTransient<IDPaymentDAL, PaymentDAL>();
+builder.Services.AddTransient<IDPaymentBLL, PaymentBLL>();
+
+
+
+
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 

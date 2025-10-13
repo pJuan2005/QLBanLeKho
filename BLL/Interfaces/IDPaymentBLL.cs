@@ -1,27 +1,18 @@
 ﻿using Model;
-using System;
 using System.Collections.Generic;
 
 namespace BLL.Interfaces
 {
+
     public interface IDPaymentBLL
     {
-        // ✅ Lấy thanh toán theo ID
-        PaymentModel GetDatabyID(int id);
-
-        // ✅ Thêm mới thanh toán
-        bool Create(PaymentModel model);
-
-        // ✅ Cập nhật thanh toán
+        PaymentModel GetByID(int paymentId);
+        bool CreateSupplier(PaymentSupplierModel model);
+        bool CreateCustomer(PaymentCustomerModel model);
         bool Update(PaymentModel model);
-
-        // ✅ Xóa thanh toán
-        bool Delete(int id);
-
-        // ✅ Tìm kiếm & phân trang
+        bool Delete(int paymentId);
         List<PaymentModel> Search(int pageIndex, int pageSize, out long total,
-                                  int? PaymentID, int? CustomerID, int? SupplierID,
-                                  string Method, string option);
+                                  int? CustomerID,int? SupplierID, int? SaleID, string Method,
+                                  DateTime? FromDate, DateTime? ToDate);
     }
 }
-

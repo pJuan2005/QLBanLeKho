@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 namespace Model
 {
     public class ProductModel
     {
+        
         public int ProductID { get; set; }           // Mã sản phẩm (khóa chính)
         public string SKU { get; set; }              // Mã SKU (unique, not null)
         public string Barcode { get; set; }          // Mã barcode (unique, có thể null)
@@ -18,22 +19,18 @@ namespace Model
         public decimal Price { get; set; }           // Giá bán
         public int MinStock { get; set; }            // Tồn kho tối thiểu (default 0)
         public string Status { get; set; }
+        //public string Image { get; set; }
+        public decimal VATRate { get; set; }
+
+        [NotMapped] // Báo cho Entity Framework/Dapper biết không map cột này vào DB
+        public string Image { get; set; } // Thuộc tính mới để chứa URL đầy đủ
+        public int Quantity { get; set; }  
 
     }
 
 
-    //public class ProductSearchRequest
-    //{
-    //    public int? ProductID1 { get; set; }
-    //    public string SKU1 { get; set; }
-    //    public string ProductName1 { get; set; }
-    //    public int? CategoryID1 { get; set; }
-    //    public int? SupplierID1 { get; set; }
-    //    public string Status1 { get; set; }
-    //    public string Option1 { get; set; }
-    //    public int Page1 { get; set; }
-    //    public int PageSize1 { get; set; }
-    //}
+
+
 
 
 
@@ -47,6 +44,6 @@ namespace Model
         public int? CategoryID { get; set; }
         public int? SupplierID { get; set; }
         public string Status { get; set; }
-        public string option { get; set; }
+
     }
 }

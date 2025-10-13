@@ -44,7 +44,7 @@ namespace DAL
 
                     "@SupplierID", model.SupplierID,
                     "@OrderDate", model.OrderDate,
-                    "@TotalAmount", model.TotalAmount,
+                    
                     "@Status", model.Status);
                 if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
                 {
@@ -54,7 +54,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw ;
             }
         }
         

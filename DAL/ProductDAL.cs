@@ -47,20 +47,20 @@ namespace DAL
                     "@Unit", model.Unit,
                     "@Price", model.Price,
                     "@MinStock", model.MinStock,
-                    "@Status", model.Status
+                    "@Status", model.Status,
+                    "@Image", model.Image,
+                    "@VATRate", model.VATRate,
+                    "@Quantity ", model.Quantity
+
                 );
 
                 if (!string.IsNullOrEmpty(msgError))
-                {
                     throw new Exception(msgError);
-                }
 
                 if (result != null && int.TryParse(result.ToString(), out int newId))
-                {
-                    model.ProductID = newId; // Gán ProductID mới vào model
-                }
+                    model.ProductID = newId;
 
-                return true; // Thành công
+                return true; 
             }
             catch (Exception ex)
             {
@@ -85,7 +85,10 @@ namespace DAL
                     "@Unit", model.Unit,
                     "@Price", model.Price,
                     "@MinStock", model.MinStock,
-                    "@Status", model.Status
+                    "@Status", model.Status,
+                    "@Image", model.Image,
+                    "@VATRate", model.VATRate,
+                    "@Quantity ", model.Quantity
                 );
                 if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
                 {
@@ -126,24 +129,23 @@ namespace DAL
 
 
 
-        public List<ProductModel> Search(int pageIndex, int pageSize, out long total,
-                                         int? ProductID, string SKU, string ProductName,
-                                         int? CategoryID, int? SupplierID, string option)
+        public List<ProductModel> Search(ProductSearchRequest request, out long total)
         {
             string msgError = "";
             total = 0;
             try
             {
                 var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "sp_product_search",
-                    "@page_index", pageIndex,
-                    "@page_size", pageSize,
-                    "@ProductID", ProductID,
-                    "@SKU", SKU,
-                    "@ProductName", ProductName,
-                    "@CategoryID", CategoryID,
-                    "@SupplierID", SupplierID,
-                    "@option", option
+                    "@page_index", request.page,               // Thay đổi ở đây
+                    "@page_size", request.pageSize,           // Thay đổi ở đây
+                    "@ProductID", request.ProductID,         // Thay đổi ở đây
+                    "@SKU", request.SKU,                     // Thay đổi ở đây
+                    "@ProductName", request.ProductName,     // Thay đổi ở đây
+                    "@CategoryID", request.CategoryID,       // Thay đổi ở đây
+                    "@SupplierID", request.SupplierID,       // Thay đổi ở đây
+                    "@Status", request.Status               // ✨ Thêm tham số Status
                 );
+
                 if (!string.IsNullOrEmpty(msgError))
                     throw new Exception(msgError);
                 if (dt.Rows.Count > 0) total = (long)dt.Rows[0]["RecordCount"];

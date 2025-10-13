@@ -16,38 +16,34 @@ namespace BLL
             _res = res;
         }
 
-        // ✅ Lấy dữ liệu theo ID
-        public PaymentModel GetDatabyID(int id)
+        public PaymentModel GetByID(int id)
         {
-            return _res.GetDatabyID(id);
+            return _res.GetByID(id);
         }
 
-        // ✅ Thêm mới thanh toán
-        public bool Create(PaymentModel model)
+        public bool CreateCustomer(PaymentCustomerModel model)
         {
-            return _res.Create(model);
+            return _res.CreateCustomer(model);
+        }
+        public bool CreateSupplier(PaymentSupplierModel model)
+        {
+            return _res.CreateSupplier(model);
         }
 
-        // ✅ Cập nhật thanh toán
         public bool Update(PaymentModel model)
         {
             return _res.Update(model);
         }
 
-        // ✅ Xoá thanh toán
         public bool Delete(int id)
         {
             return _res.Delete(id);
         }
-
-        // ✅ Tìm kiếm & phân trang
         public List<PaymentModel> Search(int pageIndex, int pageSize, out long total,
-                                         int? paymentId, int? customerId, int? supplierId,
-                                         string method, string option)
+                                         int? CustomerID,int? SupplierID, int? SaleID, string Method,
+                                         DateTime? FromDate, DateTime? ToDate)
         {
-            return _res.Search(pageIndex, pageSize, out total,
-                               paymentId, customerId, supplierId,
-                                method, option);
+            return _res.Search(pageIndex, pageSize, out total, CustomerID, SaleID, SupplierID, Method, FromDate, ToDate);
         }
     }
 }

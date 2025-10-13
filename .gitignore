@@ -1,18 +1,69 @@
-# Visual Studio
+# Visual Studio / IDE
 .vs/
+.vscode/
+.idea/
 *.user
 *.suo
+*.sln.docstates
+
+# Build artifacts (recursive for all projects)
+**/bin/
+**/obj/
+[Bb]uild/
+[Dd]ebug/
+[Rr]elease/
+**/GeneratedFiles/
+
+# NuGet & build caches
+*.nupkg
+*.snupkg
+packages/
+project.lock.json
+project.assets.json
+*.nuget.cache
+*.cache
+
+# ASP.NET Core
+# ⚠️ Chỉ ignore file cấu hình môi trường, KHÔNG ignore file appsettings.json chính
+appsettings.Development.json
+appsettings.Production.json
+appsettings.Staging.json
+*.runtimeconfig.json
+*.runtimeconfig.dev.json
+
+# Logs & binaries
+*.log
+*.dll
+*.exe
+*.pdb
+*.sourcelink.json
+*.AssemblyInfo.cs
+*.AssemblyInfoInputs.cache
+*.csproj.user
+*.assets.cache
+*.CoreCompileInputs.cache
+*.ref/
+*.refint/
+*.editorconfig
+node_modules/
+*.dbmdl
+
+# Editor temp
+*~RF*.TMP
+*.TMP
 
 # Build results
 bin/
 obj/
 
-# Others
-*.log
-*.cache
-*.dll
-*.exe
+# Test and Coverage Results
+TestResults/
+coverage/
 
-# Editor temp
-*~RF*.TMP
-*.TMP
+# User-specific or local data
+[Dd]ata/
+[Dd]ataSources/
+
+# Ignore sensitive user/project files
+*.csproj.user
+*.json.user

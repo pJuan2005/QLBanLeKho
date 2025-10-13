@@ -1,11 +1,9 @@
-﻿using DAL.Helper;
-using DAL.Interfaces;
+﻿using DAL.Interfaces;
+using DAL.Helper;
 using Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DAL
 {
@@ -18,13 +16,13 @@ namespace DAL
             _dbHelper = dbHelper;
         }
 
-        public PaymentModel GetDatabyID(int id)
+        public PaymentModel GetByID(int id)
         {
             string msgError = "";
             try
             {
                 var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "sp_payment_get_by_id",
-                     "@PaymentID", id);
+                    "@PaymentID", id);
                 if (!string.IsNullOrEmpty(msgError))
                     throw new Exception(msgError);
                 return dt.ConvertTo<PaymentModel>().FirstOrDefault();
@@ -35,22 +33,54 @@ namespace DAL
             }
         }
 
-        public bool Create(PaymentModel model)
+        public bool CreateCustomer(PaymentCustomerModel model)
         {
             string msgError = "";
             try
             {
                 var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_payment_create",
                     "@CustomerID", model.CustomerID,
-                    "@SupplierID", model.SupplierID,
+                    "@SaleID", model.SaleID,
                     "@Amount", model.Amount,
                     "@PaymentDate", model.PaymentDate,
-                    "@Method", model.Method
+                    "@Method", model.Method,
+                    "@Description", model.Description
                 );
-                if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
-                {
-                    throw new Exception(Convert.ToString(result) + msgError);
-                }
+
+                if (!string.IsNullOrEmpty(msgError))
+                    throw new Exception(msgError);
+
+                if (result != null && int.TryParse(result.ToString(), out int newId))
+                    model.PaymentID = newId;
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public bool CreateSupplier(PaymentSupplierModel model)
+        {
+            string msgError = "";
+            try
+            {
+                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_payment_create",
+                    "@SupplierID", model.SupplierID,
+                    "@SaleID", model.SaleID,
+                    "@Amount", model.Amount,
+                    "@PaymentDate", model.PaymentDate,
+                    "@Method", model.Method,
+                    "@Description", model.Description
+                );
+
+                if (!string.IsNullOrEmpty(msgError))
+                    throw new Exception(msgError);
+
+                if (result != null && int.TryParse(result.ToString(), out int newId))
+                    model.PaymentID = newId;
+
                 return true;
             }
             catch (Exception ex)
@@ -67,15 +97,16 @@ namespace DAL
                 var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_payment_update",
                     "@PaymentID", model.PaymentID,
                     "@CustomerID", model.CustomerID,
-                    "@SupplierID", model.SupplierID,
+                    "@SaleID", model.SaleID,
                     "@Amount", model.Amount,
                     "@PaymentDate", model.PaymentDate,
-                    "@Method", model.Method
+                    "@Method", model.Method,
+                    "@Description", model.Description
                 );
+
                 if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
-                {
                     throw new Exception(Convert.ToString(result) + msgError);
-                }
+
                 return true;
             }
             catch (Exception ex)
@@ -84,38 +115,54 @@ namespace DAL
             }
         }
 
-        public bool Delete(int productId)
+        public bool Delete(int id)
         {
             string msgError = "";
             try
             {
                 var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_payment_delete",
-                    "@PaymentID", productId
-                );
+                    "@PaymentID", id);
 
                 if (!string.IsNullOrEmpty(msgError))
-                {
-                    Console.WriteLine("Lỗi: " + msgError);
-                    return false;
-                }
+                    throw new Exception(msgError);
 
-                Console.WriteLine("Thành công: " + Convert.ToString(result));
                 return true;
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Exception: " + ex.Message);
-                return false;
+                throw ex;
             }
         }
 
 
-        //out msgError, "sp_payment_delete",
-        //            "@PaymentID"
+        //public bool Delete(int productId)
+        //{
+        //    string msgError = "";
+        //    try
+        //    {
+        //        var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_product_delete",
+        //            "@ProductID", productId
+        //        );
+
+        //        if (!string.IsNullOrEmpty(msgError))
+        //        {
+        //            Console.WriteLine("Lỗi: " + msgError);
+        //            return false;
+        //        }
+
+        //        Console.WriteLine("Thành công: " + Convert.ToString(result));
+        //        return true;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Console.WriteLine("Exception: " + ex.Message);
+        //        return false;
+        //    }
+        //}
 
         public List<PaymentModel> Search(int pageIndex, int pageSize, out long total,
-                                         int? PaymentID, int? CustomerID, int? SupplierID,
-                                         string Method, string option)
+                                         int? CustomerID,int? SupplierID, int? SaleID, string Method,
+                                         DateTime? FromDate, DateTime? ToDate)
         {
             string msgError = "";
             total = 0;
@@ -124,12 +171,13 @@ namespace DAL
                 var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "sp_payment_search",
                     "@page_index", pageIndex,
                     "@page_size", pageSize,
-                    "@PaymentID", PaymentID,
                     "@CustomerID", CustomerID,
-                    "@SupplierID", SupplierID,
+                    "@SaleID", SaleID,
                     "@Method", Method,
-                    "@option", option
+                    "@FromDate", FromDate,
+                    "@ToDate", ToDate
                 );
+
                 if (!string.IsNullOrEmpty(msgError))
                     throw new Exception(msgError);
                 if (dt.Rows.Count > 0) total = (long)dt.Rows[0]["RecordCount"];
@@ -141,5 +189,4 @@ namespace DAL
             }
         }
     }
-
 }
