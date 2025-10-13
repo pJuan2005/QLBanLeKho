@@ -9,25 +9,25 @@ using DAL.Interfaces;
 
 namespace DAL
 {
-    public partial class GoodsReceiptsRepository : IGoodsReceiptsRepository
+    public partial class GoodsIssuesRepository : IGoodsIssuesRepository
     {
         private IDatabaseHelper _dbHelper;
 
-        public GoodsReceiptsRepository(IDatabaseHelper dbHelper)
+        public GoodsIssuesRepository(IDatabaseHelper dbHelper)
         {
             _dbHelper = dbHelper;
         }
 
-        public GoodsReceiptsModel GetDatabyID(int id)
+        public GoodsIssuesModel GetDatabyID(int id)
         {
             string msgError = "";
             try
             {
-                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "sp_GoodsReceipts_get_by_id",
-                    "@ReceiptID", id);
+                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "sp_GoodsIssues_get_by_id",
+                    "@IssueID", id);
                 if (!string.IsNullOrEmpty(msgError))
                     throw new Exception(msgError);
-                return dt.ConvertTo<GoodsReceiptsModel>().FirstOrDefault();
+                return dt.ConvertTo<GoodsIssuesModel>().FirstOrDefault();
             }
             catch (Exception ex)
             {
@@ -35,15 +35,16 @@ namespace DAL
             }
         }
 
-        public bool Create(GoodsReceiptsModel model)
+        public bool Create(GoodsIssuesModel model)
         {
             string msgError = "";
             try
             {
-                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_GoodsReceipts_create",
-                    "@POID", model.POID,
-                    "@ReceiptDate", model.ReceiptDate,
-                    "@USerID", model.UserID);
+                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_GoodsIssues_create",
+                    "@IssueDate", model.IssueDate,
+                    "@UserID", model.UserID,
+                    "@CustomerID", model.CustomerID,
+                    "@Reason", model.Reason);
 
                 if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
                 {
@@ -57,17 +58,17 @@ namespace DAL
             }
         }
 
-        public bool Update(GoodsReceiptsModel model)
+        public bool Update(GoodsIssuesModel model)
         {
             string msgError = "";
             try
             {
-                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_GoodsReceipts_update",
-                    "@ReceiptID", model.ReceiptID,
-                    "@POID", model.POID,
-                    "@ReceiptDate", model.ReceiptDate,
-                    "@TotalAmount", model.TotalAmount,
-                    "@UserID", model.UserID);
+                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_GoodsIssues_update",
+                    "@IssueID", model.IssueID,
+                    "@IssueDate", model.IssueDate,
+                    "@UserID", model.UserID,
+                    "@CustomerID", model.CustomerID,
+                    "@Reason", model.Reason);
 
                 if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
                 {
@@ -77,17 +78,17 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                throw ;
+                throw ex;
             }
         }
 
-        public bool Delete(GoodsReceiptsModel model)
+        public bool Delete(GoodsIssuesModel model)
         {
             string msgError = "";
             try
             {
-                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_GoodsReceipts_delete",
-                    "@ReceiptID", model.ReceiptID);
+                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_GoodsIssues_delete",
+                    "@IssueID", model.IssueID);
 
                 if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
                 {

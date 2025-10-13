@@ -54,7 +54,8 @@ CREATE TABLE Products (
     FOREIGN KEY (CategoryID) REFERENCES Categories(CategoryID),
     FOREIGN KEY (SupplierID) REFERENCES Suppliers(SupplierID)
 );
-
+ALTER TABLE Products
+ADD Quantity INT DEFAULT 0;
 
 
 CREATE TABLE PurchaseOrders (
@@ -285,6 +286,40 @@ VALUES
 ('SKU015', 'BC015', N'Giày Lười Nam', 10, 15, N'Đôi', 780000, 8, 'Active', N'Ảnh 1',10.00);
 
 
+UPDATE Products SET Image = N'ImageProducts\Giày Sneaker Trắng.jpg' WHERE SKU = 'SKU001';
+UPDATE Products SET Image = N'ImageProducts\Giày Sneaker Đen.jpg' WHERE SKU = 'SKU002';
+UPDATE Products SET Image = N'ImageProducts\Giày Chạy Bộ Nam.jpg' WHERE SKU = 'SKU003';
+UPDATE Products SET Image = N'ImageProducts\Giày Chạy Bộ Nữ.jpg' WHERE SKU = 'SKU004';
+UPDATE Products SET Image = N'ImageProducts\Giày Tennis Trắng.jpg' WHERE SKU = 'SKU005';
+UPDATE Products SET Image = N'ImageProducts\Giày Bóng Đá Cỏ Tự Nhiên.jpg' WHERE SKU = 'SKU006';
+UPDATE Products SET Image = N'ImageProducts\Giày Bóng Đá Cỏ Nhân Tạo.jpg' WHERE SKU = 'SKU007';
+UPDATE Products SET Image = N'ImageProducts\Giày Bóng Rổ Cao Cổ.jpg' WHERE SKU = 'SKU008';
+UPDATE Products SET Image = N'ImageProducts\Giày Golf Chống Thấm.jpg' WHERE SKU = 'SKU009';
+UPDATE Products SET Image = N'ImageProducts\Giày Tây Nam.jpg' WHERE SKU = 'SKU010';
+UPDATE Products SET Image = N'ImageProducts\Giày Cao Gót Đen.jpg' WHERE SKU = 'SKU011';
+UPDATE Products SET Image = N'ImageProducts\Giày Boot Da.jpg' WHERE SKU = 'SKU012';
+UPDATE Products SET Image = N'ImageProducts\Dép Lê Nam.jpg' WHERE SKU = 'SKU013';
+UPDATE Products SET Image = N'ImageProducts\Sandal Nữ Thời Trang.jpg' WHERE SKU = 'SKU014';
+UPDATE Products SET Image = N'ImageProducts\Giày Lười Nam.jpg' WHERE SKU = 'SKU015';
+
+
+
+
+UPDATE Products SET Quantity = 50 WHERE SKU = 'SKU001';
+UPDATE Products SET Quantity = 40 WHERE SKU = 'SKU002';
+UPDATE Products SET Quantity = 35 WHERE SKU = 'SKU003';
+UPDATE Products SET Quantity = 25 WHERE SKU = 'SKU004';
+UPDATE Products SET Quantity = 30 WHERE SKU = 'SKU005';
+UPDATE Products SET Quantity = 20 WHERE SKU = 'SKU006';
+UPDATE Products SET Quantity = 25 WHERE SKU = 'SKU007';
+UPDATE Products SET Quantity = 15 WHERE SKU = 'SKU008';
+UPDATE Products SET Quantity = 10 WHERE SKU = 'SKU009';
+UPDATE Products SET Quantity = 12 WHERE SKU = 'SKU010';
+UPDATE Products SET Quantity = 18 WHERE SKU = 'SKU011';
+UPDATE Products SET Quantity = 10 WHERE SKU = 'SKU012';
+UPDATE Products SET Quantity = 60 WHERE SKU = 'SKU013';
+UPDATE Products SET Quantity = 45 WHERE SKU = 'SKU014';
+UPDATE Products SET Quantity = 28 WHERE SKU = 'SKU015';
 
 
 
@@ -567,7 +602,7 @@ END;
 GO
 
 
-DROP PROCEDURE IF EXISTS sp_product_update;
+DROP PROCEDURE [dbo].[sp_product_create]
 
 
 CREATE PROCEDURE [dbo].[sp_product_create]
@@ -582,7 +617,8 @@ CREATE PROCEDURE [dbo].[sp_product_create]
     @MinStock INT = 0,
     @Status NVARCHAR(20) = 'Active',
 	@Image NVARCHAR(255) = NULL , 
-	@VATRate decimal(5,2) = NULL
+	@VATRate decimal(5,2) = NULL,
+	@Quantity INT = 0
 )
 AS
 BEGIN
@@ -600,7 +636,8 @@ BEGIN
         MinStock,
         Status,
 		Image,
-		VATRate
+		VATRate,
+		Quantity 
     )
     VALUES
     (
@@ -614,7 +651,8 @@ BEGIN
         @MinStock,
         @Status,
 		@Image,
-		@VATRate
+		@VATRate,
+		@Quantity 
     );
 
     -- Trả về ID vừa thêm (giúp frontend/backend biết sản phẩm nào vừa được tạo)
@@ -622,7 +660,7 @@ BEGIN
 END;
 GO
 
-
+drop PROCEDURE [dbo].[sp_product_update]
 
 CREATE PROCEDURE [dbo].[sp_product_update]
 (
@@ -637,7 +675,8 @@ CREATE PROCEDURE [dbo].[sp_product_update]
     @MinStock    INT = NULL,
     @Status      NVARCHAR(20) = NULL,
 	@Image       NVARCHAR(255) = NULL,
-	@VATRate     Decimal(5,2) =NULL
+	@VATRate     Decimal(5,2) =NULL,
+	@Quantity	 INT = NULL
 )
 AS
 BEGIN
@@ -653,7 +692,8 @@ BEGIN
         MinStock    = IIF(@MinStock IS NULL, MinStock, @MinStock),
         Status      = IIF(@Status IS NULL, Status, @Status),
 		Image       = IIF(@Image IS NULL, Image, @Image),
-		VATRate		= IIF(@VATRate IS NULL, VATRate, @VATRate)	
+		VATRate		= IIF(@VATRate IS NULL, VATRate, @VATRate),
+		Quantity 		= IIF(@Quantity  IS NULL, Quantity , @Quantity)	
     WHERE ProductID = @ProductID;
 
     SELECT '';
@@ -668,6 +708,10 @@ drop PROCEDURE [dbo].[sp_product_search]
 
 
 
+drop PROCEDURE [dbo].[sp_product_search]
+
+select *from Products
+
 CREATE PROCEDURE [dbo].[sp_product_search]
 (
     @page_index  INT, 
@@ -677,8 +721,7 @@ CREATE PROCEDURE [dbo].[sp_product_search]
     @ProductName NVARCHAR(100) = '',
     @CategoryID  INT = NULL,
     @SupplierID  INT = NULL,
-    @Status      NVARCHAR(20) = '',
-    @option      VARCHAR(50) = ''
+    @Status      NVARCHAR(20) = ''
 )
 AS
 BEGIN
@@ -701,7 +744,8 @@ BEGIN
                p.MinStock,
                p.Status,
 			   p.Image,
-			   p.VATRate
+			   p.VATRate,
+			   p.Quantity 
         INTO #Results1
         FROM Products AS p
         WHERE (@ProductID IS NULL OR p.ProductID = @ProductID)
@@ -709,7 +753,8 @@ BEGIN
           AND (@ProductName = '' OR p.ProductName LIKE N'%' + @ProductName + '%')
           AND (@CategoryID IS NULL OR p.CategoryID = @CategoryID)
           AND (@SupplierID IS NULL OR p.SupplierID = @SupplierID)
-          AND (@Status = '' OR p.Status = @Status);
+          AND (@Status = '' OR p.Status = @Status)
+
 
         SELECT @RecordCount = COUNT(*) FROM #Results1;
 
@@ -738,7 +783,8 @@ BEGIN
                p.MinStock,
                p.Status,
 			   p.Image,
-			   p.VATRate
+			   p.VATRate,
+			   p.Quantity 
         INTO #Results2
         FROM Products AS p
         WHERE (@ProductID IS NULL OR p.ProductID = @ProductID)

@@ -61,6 +61,14 @@ builder.Services.AddScoped<IGoodsReceiptsRepository, GoodsReceiptsRepository>();
 builder.Services.AddScoped<IGoodsReceiptDetailsBusiness, GoodsReceiptDetailsBusiness>();
 builder.Services.AddScoped<IGoodsReceiptDetailsRepository, GoodsReceiptDetailsRepository>();
 
+// Đăng ký các lớp xử lý nghiệp vụ và truy cập dữ liệu vào hệ thống DI <GoodsIssues>
+builder.Services.AddScoped<IGoodsIssuesBusiness, GoodsIssuesBusiness>();
+builder.Services.AddScoped<IGoodsIssuesRepository, GoodsIssuesRepository>();
+
+// Đăng ký các lớp xử lý nghiệp vụ và truy cập dữ liệu vào hệ thống DI <GoodsIssueDetails>
+builder.Services.AddScoped<IGoodsIssueDetailsBusiness, GoodsIssueDetailsBusiness>();
+builder.Services.AddScoped<IGoodsIssueDetailsRepository, GoodsIssueDetailsRepository>();
+
 // Đăng ký các lớp xử lý nghiệp vụ và truy cập dữ liệu vào hệ thống DI
 
 builder.Services.AddScoped<IDonMuaHangBusiness, DonMuaHangBusiness>();
@@ -137,9 +145,15 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseStaticFiles();
+
 app.UseRouting();
 
 app.UseCors("AllowAll");
+
+app.UseDefaultFiles(); // Tìm file mặc định như index.html
+app.UseStaticFiles();  // Phục vụ các file tĩnh từ wwwroot (bao gồm index.html và ảnh)
+
 
 // Nếu auth đã được cấu hình (secret != null) bật authentication middleware
 if (appSettings != null && !string.IsNullOrWhiteSpace(appSettings.Secret))
