@@ -1,12 +1,12 @@
-{
+﻿{
   "$schema": "http://json.schemastore.org/launchsettings.json",
   "profiles": {
-    "UserApi": {
+    "BanMayTinh-Gateway": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
       "launchUrl": "swagger",
-      "applicationUrl": "http://localhost:5091;https://localhost:7091",
+      "applicationUrl": "http://localhost:5000",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
