@@ -13,5 +13,6 @@ namespace Model
         public int POID { get; set; }            
         public DateTime ReceiptDate { get; set; }    
         public decimal TotalAmount { get; set; }
+        public int UserID { get; set; }
     }
 }
