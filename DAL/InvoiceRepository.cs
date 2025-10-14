@@ -9,49 +9,25 @@ using DAL.Helper;
 
 namespace DAL
 {
-    public class SalesItemRepository : ISalesItemRepository
+    public class InvoiceRepository : IInvoiceRepository
     {
         private IDatabaseHelper _dbHelper;
 
-        public SalesItemRepository(IDatabaseHelper dbHelper)
+        public InvoiceRepository(IDatabaseHelper dbHelper)
         {
             _dbHelper = dbHelper;
         }
 
-        public SalesItemModel GetDatabyID(int saleID, int productID)
+        public InvoiceModel GetDatabyID(int id)
         {
             string msgError = "";
             try
             {
-                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "sp_SalesItem_get_by_id",
-                    "@SaleID", saleID,
-                    "@ProductID", productID);
-
+                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "sp_Invoice_get_by_id",
+                    "@InvoiceID", id);
                 if (!string.IsNullOrEmpty(msgError))
                     throw new Exception(msgError);
-
-                return dt.ConvertTo<SalesItemModel>().FirstOrDefault();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
-        public bool Create(SalesItemModel model)
-        {
-            string msgError = "";
-            try
-            {
-                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_SalesItem_create",
-                    "@SaleID", model.SaleID,
-                    "@ProductID", model.ProductID,
-                    "@Quantity", model.Quantity);
-
-                if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
-                    throw new Exception(Convert.ToString(result) + msgError);
-
-                return true;
+                return dt.ConvertTo<InvoiceModel>().FirstOrDefault();
             }
             catch (Exception ex)
             {
@@ -59,28 +35,45 @@ namespace DAL
             }
         }
 
-      
-
-        public bool Delete(SalesItemModel model)
+        public bool Create(InvoiceModel model)
         {
             string msgError = "";
             try
             {
-                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_SalesItem_delete",
-                    "@SaleID", model.SaleID,
-                    "@ProductID", model.ProductID);
+                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_Invoice_create",
+                    "@SaleID", model.SaleID);
 
                 if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
                 {
                     throw new Exception(Convert.ToString(result) + msgError);
-                }    
-                   
-
+                }
                 return true;
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw;
+            }
+        }
+
+  
+
+        public bool Delete(InvoiceModel model)
+        {
+            string msgError = "";
+            try
+            {
+                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_Invoice_delete",
+                    "@InvoiceID", model.InvoiceID);
+
+                if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
+                {
+                    throw new Exception(Convert.ToString(result) + msgError);
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw ;
             }
         }
     }
