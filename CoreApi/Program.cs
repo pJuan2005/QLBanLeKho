@@ -151,9 +151,6 @@ app.UseRouting();
 
 app.UseCors("AllowAll");
 
-app.UseDefaultFiles(); // Tìm file mặc định như index.html
-app.UseStaticFiles();  // Phục vụ các file tĩnh từ wwwroot (bao gồm index.html và ảnh)
-
 
 // Nếu auth đã được cấu hình (secret != null) bật authentication middleware
 if (appSettings != null && !string.IsNullOrWhiteSpace(appSettings.Secret))

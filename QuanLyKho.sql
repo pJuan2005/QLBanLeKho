@@ -188,7 +188,197 @@ CREATE TABLE StockCards (
 
 
 
+---------------------------------------------------------------------------------------------------------------------------------
 
+
+drop TABLE SystemSettings
+
+CREATE TABLE SystemSettings (
+	SettingID INT IDENTITY(1,1) PRIMARY KEY, 
+    Setting NVARCHAR(100) ,
+	Information NVARCHAR(100)
+);
+
+-- =============================================
+-- Stored Procedure để TẠO MỚI một cài đặt
+-- =============================================
+select * from SystemSettings
+
+CREATE PROCEDURE [dbo].[sp_system_setting_create]
+(
+    @Setting NVARCHAR(100),
+    @Information NVARCHAR(100)
+)
+AS
+BEGIN
+    SET NOCOUNT ON;
+    INSERT INTO SystemSettings (Setting, Information)
+    VALUES (@Setting, @Information);
+    SELECT SCOPE_IDENTITY();
+END
+GO
+
+-- =============================================
+-- Stored Procedure để XÓA một cài đặt theo ID
+-- =============================================
+CREATE PROCEDURE [dbo].[sp_system_setting_delete]
+(
+    @SettingID INT
+)
+AS
+BEGIN
+    SET NOCOUNT ON;
+    DELETE FROM SystemSettings
+    WHERE SettingID = @SettingID;
+END
+GO
+
+
+
+
+
+CREATE PROCEDURE [dbo].[sp_system_setting_update]
+(
+    @SettingID INT,
+    @Setting NVARCHAR(100),
+    @Information NVARCHAR(100)
+)
+AS
+BEGIN
+    SET NOCOUNT ON;
+    UPDATE SystemSettings
+    SET 
+        Setting = @Setting,
+        Information = @Information
+    WHERE 
+        SettingID = @SettingID;
+END
+GO
+
+
+
+CREATE PROCEDURE [dbo].[sp_system_settings_get_all] @SettingID INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+    SELECT *
+    FROM SystemSettings
+	WHERE SettingID = @SettingID
+END
+GO
+
+
+CREATE PROCEDURE [dbo].[sp_system_setting_search]
+(
+    @page_index  INT, 
+    @page_size   INT,
+    @SettingID   INT = NULL,
+    @Setting     VARCHAR(100) = '',
+    @Information NVARCHAR(100) = ''
+)
+AS
+BEGIN
+    DECLARE @RecordCount BIGINT;
+
+    IF(@page_size <> 0)
+    BEGIN
+        SET NOCOUNT ON;
+
+        SELECT 
+            ROW_NUMBER() OVER (ORDER BY p.SettingID ASC) AS RowNumber,
+			   p.SettingID,
+               p.Setting,
+               p.Information
+        INTO #Results1
+        FROM SystemSettings AS p
+        WHERE (@SettingID IS NULL OR p.SettingID = @SettingID)
+          AND (@Setting = '' OR p.Setting LIKE '%' + @Setting + '%')
+          AND (@Information = '' OR p.Information LIKE N'%' + @Information + '%')
+
+        SELECT @RecordCount = COUNT(*) FROM #Results1;
+
+        SELECT *, @RecordCount AS RecordCount
+        FROM #Results1
+        WHERE RowNumber BETWEEN(@page_index - 1) * @page_size + 1 
+                            AND (((@page_index - 1) * @page_size + 1) + @page_size) - 1
+           OR @page_index = -1;
+
+        DROP TABLE #Results1; 
+    END
+    ELSE
+    BEGIN
+        SET NOCOUNT ON;
+
+        SELECT 
+            ROW_NUMBER() OVER (ORDER BY p.SettingID ASC) AS RowNumber,
+		       p.SettingID,
+               p.Setting,
+               p.Information 
+        INTO #Results2
+        FROM SystemSettings AS p
+        WHERE (@SettingID IS NULL OR p.SettingID = @SettingID)
+          AND (@Setting = '' OR p.Setting LIKE '%' + @Setting + '%')
+          AND (@Information = '' OR p.Information LIKE N'%' + @Information + '%')
+
+        SELECT @RecordCount = COUNT(*) FROM #Results2;
+
+        SELECT *, @RecordCount AS RecordCount
+        FROM #Results2;
+
+        DROP TABLE #Results2;
+    END;
+END;
+GO
+
+
+INSERT INTO SystemSettings (Setting,Information)
+VALUES
+(N'Logo', N'https://localhost:7019/ImageProducts/Giày Sneaker Đen.jpg'),
+(N'Address', N'38 tống duy tân'),
+(N'Name', N'Hệ Thống Quản Lý Bán Lẻ & Kho'),
+(N'Phonenumber', N'0941771437'),
+(N'Email', N'a@gmail.com'),
+(N'Currency', N'VND'),
+(N'Currency', N'USD'),
+(N'Currency', N'EUR'),
+(N'Currency', N'JPY'),
+(N'Currency', N'GBP'),
+(N'Currency', N'CNY'),
+(N'Payment method', N'tiền mặt,chuyển khoản,quét QR,thẻ'),
+(N'Payment method', N'Chuyển khoản'),
+(N'Payment method', N'Quét QR'),
+(N'Payment method', N'Thẻ'),
+(N'Time zone', N'UTC-12: Đường Quốc tế Thay Đổi Ngày (International Date Line)'),
+(N'Time zone', N'UTC-11: Samoa'),
+(N'Time zone', N'UTC-10: Hawaii'),
+(N'Time zone', N'UTC-9: Alaska'),
+(N'Time zone', N'UTC-8: Thái Bình Dương (Canada, Mỹ)'),
+(N'Time zone', N'UTC-7: Núi Rocky (Canada, Mỹ)'),
+(N'Time zone', N'UTC-6: Trung Mỹ (Mexico, Canada, Mỹ)'),
+(N'Time zone', N'UTC-5: Đông Bắc Mỹ (Canada, Mỹ)'),
+(N'Time zone', N'UTC-4: Đông Nam Mỹ (Brazil, Argentina)'),
+(N'Time zone', N'UTC-3: Đông Nam Mỹ (Brazil, Argentina)'),
+(N'Time zone', N'UTC-2: Đại Tây Dương'),
+(N'Time zone', N'UTC-1: Đại Tây Dương (Greenland)'),
+(N'Time zone', N'UTC+0: Anh, Bồ Đào Nha, Ireland'),
+(N'Time zone', N'UTC+1: Tây Âu (Pháp, Đức, Italy)'),
+(N'Time zone', N'UTC+2: Trung Đông và Đông Âu'),
+(N'Time zone', N'UTC+3: Nga, Trung Đông'),
+(N'Time zone', N'UTC+4: Caucasus, Nga'),
+(N'Time zone', N'UTC+5: Trung Á'),
+(N'Time zone', N'UTC+6: Bangladesh, Siberia'),
+(N'Time zone', N'UTC+7: Đông Nam Á'),
+(N'Time zone', N'UTC+8: Trung Quốc, Đông Á'),
+(N'Time zone', N'UTC+9: Nhật Bản, Hàn Quốc'),
+(N'Time zone', N'UTC+10: Đông Úc'),
+(N'Time zone', N'UTC+11: Tây Thái Bình Dương'),
+(N'Time zone', N'UTC+12: Tân Zeeland, Fiji')
+
+select * from  SystemSettings
+
+--------------------------------------------------------------------------------------------------------
+
+drop PROCEDURE [dbo].[sp_system_settings_get_all]
 
 -- USERS (15 bản ghi)
 INSERT INTO Users (Username, PasswordHash, Role, FullName, Email, Phone)

@@ -17,8 +17,6 @@ namespace CoreApi.Controllers
         {
             if (product != null && !string.IsNullOrEmpty(product.Image))
             {
-                // Tạo URL dựa trên request hiện tại
-                // Ví dụ: https://localhost:7123/ImageProducts/TenFileAnh.jpg
                 product.Image = $"{Request.Scheme}://{Request.Host}/{product.Image.Replace('\\', '/')}";
             }
         }
