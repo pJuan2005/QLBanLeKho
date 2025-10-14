@@ -23,9 +23,14 @@ namespace BLL
             return _res.GetDatabyID(id);
         }
 
-        public bool Create(ReturnModel model)
+        public bool CreateCustomer(ReturnCustomerModel model)
         {
-            return _res.Create(model);
+            return _res.CreateCustomer(model);
+        }
+
+        public bool CreateSupplier(ReturnSupplierModel model)
+        {
+            return _res.CreateSupplier(model);
         }
 
         public bool Update(ReturnModel model)
@@ -39,10 +44,10 @@ namespace BLL
         }
 
         public List<ReturnModel> Search(int pageIndex, int pageSize, out long total,
-                                  int? ReturnID, int? SaleID, int? CustomerID,
+                                  int? ReturnID, int? SaleID, int? CustomerID, int? SupplierID, int? ReceiptID,
                                   DateTime? FromDate, DateTime? ToDate)
         {
-            return _res.Search(pageIndex, pageSize, out total, ReturnID, SaleID, CustomerID, FromDate, ToDate);
+            return _res.Search(pageIndex, pageSize, out total, ReturnID, SaleID, CustomerID, ReceiptID, SupplierID ,FromDate, ToDate);
         }
     }
 }

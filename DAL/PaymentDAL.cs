@@ -134,32 +134,6 @@ namespace DAL
             }
         }
 
-
-        //public bool Delete(int productId)
-        //{
-        //    string msgError = "";
-        //    try
-        //    {
-        //        var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_product_delete",
-        //            "@ProductID", productId
-        //        );
-
-        //        if (!string.IsNullOrEmpty(msgError))
-        //        {
-        //            Console.WriteLine("Lỗi: " + msgError);
-        //            return false;
-        //        }
-
-        //        Console.WriteLine("Thành công: " + Convert.ToString(result));
-        //        return true;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Console.WriteLine("Exception: " + ex.Message);
-        //        return false;
-        //    }
-        //}
-
         public List<PaymentModel> Search(int pageIndex, int pageSize, out long total,
                                          int? CustomerID,int? SupplierID, int? SaleID, string Method,
                                          DateTime? FromDate, DateTime? ToDate)
