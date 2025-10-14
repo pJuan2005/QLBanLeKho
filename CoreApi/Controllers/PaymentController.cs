@@ -64,7 +64,7 @@ namespace CoreApi.Controllers
                 long total = 0;
                 var data = _paymentBLL.Search(
                     request.page, request.pageSize, out total,
-                    request.CustomerID,request.SupplierID, request.SaleID, request.Method, request.FromDate, request.ToDate);
+                    request.CustomerID,request.SupplierID, request.SaleID,request.ReceiptID, request.Method, request.FromDate, request.ToDate);
 
                 response.TotalItems = total;
                 response.Data = data;
