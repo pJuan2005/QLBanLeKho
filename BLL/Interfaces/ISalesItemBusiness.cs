@@ -11,7 +11,7 @@ namespace BLL.Interfaces
     {
         SalesItemModel GetDatabyID(int saleID, int productID);
         bool Create(SalesItemModel model);
-        bool Update(SalesItemModel model);
+        
         bool Delete(SalesItemModel model);
     }
 }

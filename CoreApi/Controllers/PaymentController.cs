@@ -78,8 +78,5 @@ namespace CoreApi.Controllers
             return response;
         }
 
-
-
-
     }
 }

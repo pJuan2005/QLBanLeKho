@@ -28,7 +28,8 @@ builder.Services.AddTransient<ICustomerRepository, CustomerRepository>();
 builder.Services.AddTransient<ICustomerBusiness, CustomerBusiness>();
 builder.Services.AddTransient<IArCustomerBusiness, ArCustomerBusiness>();
 builder.Services.AddTransient<IArCustomerRepository,ArCustomerRepository>();
-
+builder.Services.AddTransient<IApSupplierRepository, ApSupplierRepository>();
+builder.Services.AddTransient<IApSupplierBusiness, ApSupplierBusiness>();
 
 // Đăng ký các lớp xử lý nghiệp vụ và truy cập dữ liệu vào hệ thống DI <PurchaseOrderDetails>
 builder.Services.AddScoped<IPurchaseOrderDetailsBusiness, PurchaseOrderDetailsBusiness>();
@@ -47,6 +48,26 @@ builder.Services.AddScoped<ISalesRepository, SalesRepository>();
 
 builder.Services.AddScoped<ISalesItemBusiness, SalesItemBusiness>();
 builder.Services.AddScoped<ISalesItemRepository, SalesItemRepository>();
+
+// Đăng ký các lớp xử lý nghiệp vụ và truy cập dữ liệu vào hệ thống DI <Invoice>
+builder.Services.AddScoped<IInvoiceBusiness, InvoiceBusiness>();
+builder.Services.AddScoped<IInvoiceRepository, InvoiceRepository>();
+
+// Đăng ký các lớp xử lý nghiệp vụ và truy cập dữ liệu vào hệ thống DI <GoodsReceipts>
+builder.Services.AddScoped<IGoodsReceiptsBusiness, GoodsReceiptsBusiness>();
+builder.Services.AddScoped<IGoodsReceiptsRepository, GoodsReceiptsRepository>();
+
+// Đăng ký các lớp xử lý nghiệp vụ và truy cập dữ liệu vào hệ thống DI <GoodsReceiptDetails>
+builder.Services.AddScoped<IGoodsReceiptDetailsBusiness, GoodsReceiptDetailsBusiness>();
+builder.Services.AddScoped<IGoodsReceiptDetailsRepository, GoodsReceiptDetailsRepository>();
+
+// Đăng ký các lớp xử lý nghiệp vụ và truy cập dữ liệu vào hệ thống DI <GoodsIssues>
+builder.Services.AddScoped<IGoodsIssuesBusiness, GoodsIssuesBusiness>();
+builder.Services.AddScoped<IGoodsIssuesRepository, GoodsIssuesRepository>();
+
+// Đăng ký các lớp xử lý nghiệp vụ và truy cập dữ liệu vào hệ thống DI <GoodsIssueDetails>
+builder.Services.AddScoped<IGoodsIssueDetailsBusiness, GoodsIssueDetailsBusiness>();
+builder.Services.AddScoped<IGoodsIssueDetailsRepository, GoodsIssueDetailsRepository>();
 
 // Đăng ký các lớp xử lý nghiệp vụ và truy cập dữ liệu vào hệ thống DI
 

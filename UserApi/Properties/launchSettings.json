@@ -1,6 +1,7 @@
 {
+  "$schema": "http://json.schemastore.org/launchsettings.json",
   "profiles": {
-    "http": {
+    "UserApi": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "swagger",
@@ -24,6 +25,7 @@
       "commandName": "IISExpress",
       "launchBrowser": true,
       "launchUrl": "swagger",
+      "applicationUrl": "http://localhost:5091;https://localhost:7091",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
