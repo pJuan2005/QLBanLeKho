@@ -85,6 +85,19 @@ CREATE TABLE GoodsReceipts (
     TotalAmount DECIMAL(18,2), -- Tổng tiền
     FOREIGN KEY (POID) REFERENCES PurchaseOrders(POID)
 );
+ALTER TABLE GoodsReceipts
+ADD UserID INT NULL; -- Thêm cột mã nhân viên
+
+UPDATE GoodsReceipts SET UserID = 1;
+
+ALTER TABLE GoodsReceipts
+ALTER COLUMN UserID INT NOT NULL;
+
+ALTER TABLE GoodsReceipts
+ADD CONSTRAINT FK_GoodsReceipts_Users
+FOREIGN KEY (UserID) REFERENCES Users(UserID); -- Thiết lập khóa ngo
+
+
 
 
 CREATE TABLE GoodsReceiptDetails (
@@ -108,6 +121,25 @@ CREATE TABLE Promotions (
     EndDate DATE NOT NULL, -- Ngày kết thúc
     ProductGroup NVARCHAR(255) -- Nhóm sản phẩm áp dụng
 );
+
+ALTER TABLE Promotions
+ADD CategoryID INT NULL;
+
+UPDATE Promotions
+SET CategoryID = 1;
+
+ALTER TABLE Promotions
+ALTER COLUMN CategoryID INT NOT NULL;
+
+ALTER TABLE Promotions
+ADD CONSTRAINT FK_Promotions_Categories
+FOREIGN KEY (CategoryID) REFERENCES Categories(CategoryID);
+
+ALTER TABLE Promotions
+DROP COLUMN ProductGroup;
+
+
+
 
 CREATE TABLE Sales (
     SaleID INT IDENTITY(1,1) PRIMARY KEY, -- Mã đơn bán hàng
@@ -144,6 +176,37 @@ CREATE TABLE Returns (
     FOREIGN KEY (SaleID) REFERENCES Sales(SaleID),
     FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
 );
+ALTER TABLE Returns
+ADD SupplierID INT NULL;
+
+ALTER TABLE Returns
+ADD ReceiptID INT NULL;
+
+
+ALTER TABLE Returns
+ADD CONSTRAINT FK_Returns_Suppliers 
+FOREIGN KEY (SupplierID) REFERENCES Suppliers(SupplierID);
+
+ALTER TABLE Returns
+ADD CONSTRAINT FK_Returns_GoodsReceipts 
+FOREIGN KEY (ReceiptID) REFERENCES GoodsReceipts(ReceiptID);
+
+
+ALTER TABLE Returns
+ADD SupplierID INT NULL;
+ALTER TABLE Returns
+ADD ReceiptID INT NULL;
+
+
+ALTER TABLE Returns
+ALTER COLUMN SaleID INT NULL;
+ALTER TABLE Returns
+ALTER COLUMN CustomerID INT NULL;
+
+
+
+
+
 
 CREATE TABLE Invoices (
     InvoiceID INT IDENTITY(1,1) PRIMARY KEY, -- Mã hóa đơn
@@ -188,7 +251,197 @@ CREATE TABLE StockCards (
 
 
 
+---------------------------------------------------------------------------------------------------------------------------------
 
+
+drop TABLE SystemSettings
+
+CREATE TABLE SystemSettings (
+	SettingID INT IDENTITY(1,1) PRIMARY KEY, 
+    Setting NVARCHAR(100) ,
+	Information NVARCHAR(100)
+);
+
+-- =============================================
+-- Stored Procedure để TẠO MỚI một cài đặt
+-- =============================================
+select * from SystemSettings
+
+CREATE PROCEDURE [dbo].[sp_system_setting_create]
+(
+    @Setting NVARCHAR(100),
+    @Information NVARCHAR(100)
+)
+AS
+BEGIN
+    SET NOCOUNT ON;
+    INSERT INTO SystemSettings (Setting, Information)
+    VALUES (@Setting, @Information);
+    SELECT SCOPE_IDENTITY();
+END
+GO
+
+-- =============================================
+-- Stored Procedure để XÓA một cài đặt theo ID
+-- =============================================
+CREATE PROCEDURE [dbo].[sp_system_setting_delete]
+(
+    @SettingID INT
+)
+AS
+BEGIN
+    SET NOCOUNT ON;
+    DELETE FROM SystemSettings
+    WHERE SettingID = @SettingID;
+END
+GO
+
+
+
+
+
+CREATE PROCEDURE [dbo].[sp_system_setting_update]
+(
+    @SettingID INT,
+    @Setting NVARCHAR(100),
+    @Information NVARCHAR(100)
+)
+AS
+BEGIN
+    SET NOCOUNT ON;
+    UPDATE SystemSettings
+    SET 
+        Setting = @Setting,
+        Information = @Information
+    WHERE 
+        SettingID = @SettingID;
+END
+GO
+
+
+
+CREATE PROCEDURE [dbo].[sp_system_settings_get_all] @SettingID INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+    SELECT *
+    FROM SystemSettings
+	WHERE SettingID = @SettingID
+END
+GO
+
+
+CREATE PROCEDURE [dbo].[sp_system_setting_search]
+(
+    @page_index  INT, 
+    @page_size   INT,
+    @SettingID   INT = NULL,
+    @Setting     VARCHAR(100) = '',
+    @Information NVARCHAR(100) = ''
+)
+AS
+BEGIN
+    DECLARE @RecordCount BIGINT;
+
+    IF(@page_size <> 0)
+    BEGIN
+        SET NOCOUNT ON;
+
+        SELECT 
+            ROW_NUMBER() OVER (ORDER BY p.SettingID ASC) AS RowNumber,
+			   p.SettingID,
+               p.Setting,
+               p.Information
+        INTO #Results1
+        FROM SystemSettings AS p
+        WHERE (@SettingID IS NULL OR p.SettingID = @SettingID)
+          AND (@Setting = '' OR p.Setting LIKE '%' + @Setting + '%')
+          AND (@Information = '' OR p.Information LIKE N'%' + @Information + '%')
+
+        SELECT @RecordCount = COUNT(*) FROM #Results1;
+
+        SELECT *, @RecordCount AS RecordCount
+        FROM #Results1
+        WHERE RowNumber BETWEEN(@page_index - 1) * @page_size + 1 
+                            AND (((@page_index - 1) * @page_size + 1) + @page_size) - 1
+           OR @page_index = -1;
+
+        DROP TABLE #Results1; 
+    END
+    ELSE
+    BEGIN
+        SET NOCOUNT ON;
+
+        SELECT 
+            ROW_NUMBER() OVER (ORDER BY p.SettingID ASC) AS RowNumber,
+		       p.SettingID,
+               p.Setting,
+               p.Information 
+        INTO #Results2
+        FROM SystemSettings AS p
+        WHERE (@SettingID IS NULL OR p.SettingID = @SettingID)
+          AND (@Setting = '' OR p.Setting LIKE '%' + @Setting + '%')
+          AND (@Information = '' OR p.Information LIKE N'%' + @Information + '%')
+
+        SELECT @RecordCount = COUNT(*) FROM #Results2;
+
+        SELECT *, @RecordCount AS RecordCount
+        FROM #Results2;
+
+        DROP TABLE #Results2;
+    END;
+END;
+GO
+
+
+INSERT INTO SystemSettings (Setting,Information)
+VALUES
+(N'Logo', N'https://localhost:7019/ImageProducts/Giày Sneaker Đen.jpg'),
+(N'Address', N'38 tống duy tân'),
+(N'Name', N'Hệ Thống Quản Lý Bán Lẻ & Kho'),
+(N'Phonenumber', N'0941771437'),
+(N'Email', N'a@gmail.com'),
+(N'Currency', N'VND'),
+(N'Currency', N'USD'),
+(N'Currency', N'EUR'),
+(N'Currency', N'JPY'),
+(N'Currency', N'GBP'),
+(N'Currency', N'CNY'),
+(N'Payment method', N'tiền mặt,chuyển khoản,quét QR,thẻ'),
+(N'Payment method', N'Chuyển khoản'),
+(N'Payment method', N'Quét QR'),
+(N'Payment method', N'Thẻ'),
+(N'Time zone', N'UTC-12: Đường Quốc tế Thay Đổi Ngày (International Date Line)'),
+(N'Time zone', N'UTC-11: Samoa'),
+(N'Time zone', N'UTC-10: Hawaii'),
+(N'Time zone', N'UTC-9: Alaska'),
+(N'Time zone', N'UTC-8: Thái Bình Dương (Canada, Mỹ)'),
+(N'Time zone', N'UTC-7: Núi Rocky (Canada, Mỹ)'),
+(N'Time zone', N'UTC-6: Trung Mỹ (Mexico, Canada, Mỹ)'),
+(N'Time zone', N'UTC-5: Đông Bắc Mỹ (Canada, Mỹ)'),
+(N'Time zone', N'UTC-4: Đông Nam Mỹ (Brazil, Argentina)'),
+(N'Time zone', N'UTC-3: Đông Nam Mỹ (Brazil, Argentina)'),
+(N'Time zone', N'UTC-2: Đại Tây Dương'),
+(N'Time zone', N'UTC-1: Đại Tây Dương (Greenland)'),
+(N'Time zone', N'UTC+0: Anh, Bồ Đào Nha, Ireland'),
+(N'Time zone', N'UTC+1: Tây Âu (Pháp, Đức, Italy)'),
+(N'Time zone', N'UTC+2: Trung Đông và Đông Âu'),
+(N'Time zone', N'UTC+3: Nga, Trung Đông'),
+(N'Time zone', N'UTC+4: Caucasus, Nga'),
+(N'Time zone', N'UTC+5: Trung Á'),
+(N'Time zone', N'UTC+6: Bangladesh, Siberia'),
+(N'Time zone', N'UTC+7: Đông Nam Á'),
+(N'Time zone', N'UTC+8: Trung Quốc, Đông Á'),
+(N'Time zone', N'UTC+9: Nhật Bản, Hàn Quốc'),
+(N'Time zone', N'UTC+10: Đông Úc'),
+(N'Time zone', N'UTC+11: Tây Thái Bình Dương'),
+(N'Time zone', N'UTC+12: Tân Zeeland, Fiji')
+
+select * from  SystemSettings
+
+--------------------------------------------------------------------------------------------------------
+
+drop PROCEDURE [dbo].[sp_system_settings_get_all]
 
 -- USERS (15 bản ghi)
 INSERT INTO Users (Username, PasswordHash, Role, FullName, Email, Phone)
@@ -1416,6 +1669,8 @@ CREATE PROCEDURE [dbo].[sp_return_create]
 (
     @SaleID INT = NULL,
     @CustomerID INT = NULL,
+	@ReceiptID INT = NULL,
+    @SupplierID INT = NULL,
     @ReturnDate DATE,
     @Reason NVARCHAR(255)
 )
@@ -1426,6 +1681,8 @@ BEGIN
     (
         SaleID,
         CustomerID,
+		SupplierID,
+		ReceiptID,
 		ReturnDate,
         Reason
     )
@@ -1433,6 +1690,8 @@ BEGIN
     (
         @SaleID,
         @CustomerID,
+		@SupplierID,
+		@ReceiptID,
 		@ReturnDate,
         @Reason
     );
@@ -1453,6 +1712,8 @@ CREATE PROCEDURE [dbo].[sp_return_update]
 	@ReturnID INT,
 	@SaleID INT = NULL,
     @CustomerID INT = NULL,
+	@SupplierID INT = NULL,
+    @ReceiptID INT = NULL,
     @ReturnDate DATE,
     @Reason NVARCHAR(255)
 )
@@ -1460,8 +1721,10 @@ AS
 BEGIN
     UPDATE Returns
     SET
-        SaleID = IIF(@SaleID IS NULL, SaleID, @SaleID),
+        SaleID = IIF(@SaleID IS NULL, SaleID, @SaleID ),
         CustomerID = IIF(@CustomerID IS NULL, CustomerID, @CustomerID),
+		ReceiptID = IIF(@ReceiptID IS NULL, ReceiptID, @ReceiptID),
+        SupplierID = IIF(@SupplierID IS NULL, SupplierID, @SupplierID),
         ReturnDate= IIF(@ReturnDate IS NULL, ReturnDate, @ReturnDate),
         Reason     = IIF(@Reason IS NULL, Reason, @Reason)
     WHERE ReturnID = @ReturnID;
@@ -1484,6 +1747,8 @@ CREATE PROCEDURE [dbo].[sp_return_search]
     @ReturnID    INT = NULL,
     @SaleID      INT = NULL,
     @CustomerID  INT = NULL,
+	@ReceiptID     INT = NULL,
+    @SupplierID  INT = NULL,
     @FromDate    DATETIME = NULL,
     @ToDate      DATETIME = NULL
 )
@@ -1500,6 +1765,8 @@ BEGIN
             r.ReturnID,
             r.SaleID,
             r.CustomerID,
+			r.ReceiptID,
+			r.SupplierID,
             r.ReturnDate,
             r.Reason
         INTO #Results1
@@ -1507,6 +1774,8 @@ BEGIN
         WHERE (@ReturnID IS NULL OR r.ReturnID = @ReturnID)
           AND (@SaleID IS NULL OR r.SaleID = @SaleID)
           AND (@CustomerID IS NULL OR r.CustomerID = @CustomerID)
+		  AND (@ReceiptID IS NULL OR r.ReceiptID = @ReceiptID)
+          AND (@SupplierID IS NULL OR r.SupplierID = @SupplierID)
           AND (@FromDate IS NULL OR r.ReturnDate >= @FromDate)
           AND (@ToDate IS NULL OR r.ReturnDate <= @ToDate);
 
@@ -1529,6 +1798,8 @@ BEGIN
             r.ReturnID,
             r.SaleID,
             r.CustomerID,
+			r.ReceiptID,
+			r.SupplierID,
             r.ReturnDate,
             r.Reason
         INTO #Results2
@@ -1536,6 +1807,8 @@ BEGIN
         WHERE (@ReturnID IS NULL OR r.ReturnID = @ReturnID)
           AND (@SaleID IS NULL OR r.SaleID = @SaleID)
           AND (@CustomerID IS NULL OR r.CustomerID = @CustomerID)
+		  AND (@ReceiptID IS NULL OR r.ReceiptID = @ReceiptID)
+          AND (@SupplierID IS NULL OR r.SupplierID = @SupplierID)
           AND (@FromDate IS NULL OR r.ReturnDate >= @FromDate)
           AND (@ToDate IS NULL OR r.ReturnDate <= @ToDate);
 

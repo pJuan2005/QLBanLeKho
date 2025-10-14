@@ -36,7 +36,7 @@ namespace DAL
         }
 
 
-        public bool Create(ReturnModel model)
+        public bool CreateCustomer(ReturnCustomerModel model)
         {
             string msgError = "";
             try
@@ -64,7 +64,32 @@ namespace DAL
         }
 
 
+        public bool CreateSupplier(ReturnSupplierModel model)
+        {
+            string msgError = "";
+            try
+            {
+                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_return_create",
+                    "@ReceiptID", model.ReceiptID,
+                    "@SupplierID", model.SupplierID,
+                    "@ReturnDate", model.ReturnDate,
+                    "@Reason", model.Reason
 
+                );
+
+                if (!string.IsNullOrEmpty(msgError))
+                    throw new Exception(msgError);
+
+                if (result != null && int.TryParse(result.ToString(), out int newId))
+                    model.ReturnID = newId;
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
 
         public bool Update(ReturnModel model)
         {
@@ -75,6 +100,8 @@ namespace DAL
                     "@ReturnID", model.ReturnID,
                     "@SaleID", model.SaleID,
                     "@CustomerID", model.CustomerID,
+                    "@ReceiptID", model.ReceiptID,
+                    "@SupplierID", model.SupplierID,
                     "@ReturnDate", model.ReturnDate,
                     "@Reason", model.Reason
                 );
@@ -102,18 +129,13 @@ namespace DAL
                 );
 
                 if (!string.IsNullOrEmpty(msgError))
-                {
-                    Console.WriteLine("Lỗi: " + msgError);
-                    return false;
-                }
+                    throw new Exception(msgError);
 
-                Console.WriteLine("Thành công: " + Convert.ToString(result));
                 return true;
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Exception: " + ex.Message);
-                return false;
+                throw ex;
             }
         }
 
@@ -122,7 +144,7 @@ namespace DAL
 
 
         public List<ReturnModel> Search(int pageIndex, int pageSize, out long total,
-                                         int? ReturnID, int? SaleID, int? CustomerID,
+                                         int? ReturnID, int? SaleID, int? CustomerID, int? ReceiptID, int? SupplierID,
                                          DateTime? FromDate, DateTime? ToDate)
         {
             string msgError = "";
@@ -135,6 +157,8 @@ namespace DAL
                     "@ReturnID", ReturnID,
                     "@SaleID", SaleID,
                     "@CustomerID", CustomerID,
+                    "@ReceiptID", ReceiptID,
+                    "@SupplierID", SupplierID,
                     "@FromDate", FromDate,
                     "@ToDate", ToDate
                 );

@@ -21,6 +21,11 @@ builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddTransient<IUserBusiness, UserBusiness>();
 builder.Services.AddTransient<ISupplierRepository, SupplierRepository>();
 builder.Services.AddTransient<ISupplierBusiness,SupplierBusiness>();
+
+builder.Services.AddTransient<ISystemDAL, SystemDAL>();
+builder.Services.AddTransient<ISystemBLL, SystemBLL>();
+// Đăng ký cho System
+
 IConfiguration configuration = builder.Configuration;
 var appSettingsSection = configuration.GetSection("AppSettings");
 builder.Services.Configure<AppSettings>(appSettingsSection);
