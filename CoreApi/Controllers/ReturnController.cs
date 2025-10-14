@@ -16,13 +16,25 @@ namespace CoreApi.Controllers
             _ReturnBusiness = returnID;
         }
 
-        [Route("create-return")]
+
+
+        [Route("create-return-customer")]
         [HttpPost]
-        public ReturnModel Create([FromBody] ReturnModel model)
+        public ReturnCustomerModel Create([FromBody] ReturnCustomerModel model)
         {
-            _ReturnBusiness.Create(model);
+            _ReturnBusiness.CreateCustomer(model);
             return model;
         }
+
+
+        [Route("create-return-supplier")]
+        [HttpPost]
+        public ReturnSupplierModel Create([FromBody] ReturnSupplierModel model)
+        {
+            _ReturnBusiness.CreateSupplier(model);
+            return model;
+        }
+
 
         [Route("update-return")]
         [HttpPost]
@@ -64,6 +76,8 @@ namespace CoreApi.Controllers
                     request.ReturnID,
                     request.SaleID,
                     request.CustomerID,
+                    request.ReceiptID,
+                    request.SupplierID,
                     request.FromDate,
                     request.ToDate
                 );

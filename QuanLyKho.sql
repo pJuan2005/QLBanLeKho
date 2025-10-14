@@ -85,6 +85,19 @@ CREATE TABLE GoodsReceipts (
     TotalAmount DECIMAL(18,2), -- Tổng tiền
     FOREIGN KEY (POID) REFERENCES PurchaseOrders(POID)
 );
+ALTER TABLE GoodsReceipts
+ADD UserID INT NULL; -- Thêm cột mã nhân viên
+
+UPDATE GoodsReceipts SET UserID = 1;
+
+ALTER TABLE GoodsReceipts
+ALTER COLUMN UserID INT NOT NULL;
+
+ALTER TABLE GoodsReceipts
+ADD CONSTRAINT FK_GoodsReceipts_Users
+FOREIGN KEY (UserID) REFERENCES Users(UserID); -- Thiết lập khóa ngo
+
+
 
 
 CREATE TABLE GoodsReceiptDetails (
@@ -108,6 +121,25 @@ CREATE TABLE Promotions (
     EndDate DATE NOT NULL, -- Ngày kết thúc
     ProductGroup NVARCHAR(255) -- Nhóm sản phẩm áp dụng
 );
+
+ALTER TABLE Promotions
+ADD CategoryID INT NULL;
+
+UPDATE Promotions
+SET CategoryID = 1;
+
+ALTER TABLE Promotions
+ALTER COLUMN CategoryID INT NOT NULL;
+
+ALTER TABLE Promotions
+ADD CONSTRAINT FK_Promotions_Categories
+FOREIGN KEY (CategoryID) REFERENCES Categories(CategoryID);
+
+ALTER TABLE Promotions
+DROP COLUMN ProductGroup;
+
+
+
 
 CREATE TABLE Sales (
     SaleID INT IDENTITY(1,1) PRIMARY KEY, -- Mã đơn bán hàng
@@ -144,6 +176,37 @@ CREATE TABLE Returns (
     FOREIGN KEY (SaleID) REFERENCES Sales(SaleID),
     FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
 );
+ALTER TABLE Returns
+ADD SupplierID INT NULL;
+
+ALTER TABLE Returns
+ADD ReceiptID INT NULL;
+
+
+ALTER TABLE Returns
+ADD CONSTRAINT FK_Returns_Suppliers 
+FOREIGN KEY (SupplierID) REFERENCES Suppliers(SupplierID);
+
+ALTER TABLE Returns
+ADD CONSTRAINT FK_Returns_GoodsReceipts 
+FOREIGN KEY (ReceiptID) REFERENCES GoodsReceipts(ReceiptID);
+
+
+ALTER TABLE Returns
+ADD SupplierID INT NULL;
+ALTER TABLE Returns
+ADD ReceiptID INT NULL;
+
+
+ALTER TABLE Returns
+ALTER COLUMN SaleID INT NULL;
+ALTER TABLE Returns
+ALTER COLUMN CustomerID INT NULL;
+
+
+
+
+
 
 CREATE TABLE Invoices (
     InvoiceID INT IDENTITY(1,1) PRIMARY KEY, -- Mã hóa đơn
@@ -1606,6 +1669,8 @@ CREATE PROCEDURE [dbo].[sp_return_create]
 (
     @SaleID INT = NULL,
     @CustomerID INT = NULL,
+	@ReceiptID INT = NULL,
+    @SupplierID INT = NULL,
     @ReturnDate DATE,
     @Reason NVARCHAR(255)
 )
@@ -1616,6 +1681,8 @@ BEGIN
     (
         SaleID,
         CustomerID,
+		SupplierID,
+		ReceiptID,
 		ReturnDate,
         Reason
     )
@@ -1623,6 +1690,8 @@ BEGIN
     (
         @SaleID,
         @CustomerID,
+		@SupplierID,
+		@ReceiptID,
 		@ReturnDate,
         @Reason
     );
@@ -1643,6 +1712,8 @@ CREATE PROCEDURE [dbo].[sp_return_update]
 	@ReturnID INT,
 	@SaleID INT = NULL,
     @CustomerID INT = NULL,
+	@SupplierID INT = NULL,
+    @ReceiptID INT = NULL,
     @ReturnDate DATE,
     @Reason NVARCHAR(255)
 )
@@ -1650,8 +1721,10 @@ AS
 BEGIN
     UPDATE Returns
     SET
-        SaleID = IIF(@SaleID IS NULL, SaleID, @SaleID),
+        SaleID = IIF(@SaleID IS NULL, SaleID, @SaleID ),
         CustomerID = IIF(@CustomerID IS NULL, CustomerID, @CustomerID),
+		ReceiptID = IIF(@ReceiptID IS NULL, ReceiptID, @ReceiptID),
+        SupplierID = IIF(@SupplierID IS NULL, SupplierID, @SupplierID),
         ReturnDate= IIF(@ReturnDate IS NULL, ReturnDate, @ReturnDate),
         Reason     = IIF(@Reason IS NULL, Reason, @Reason)
     WHERE ReturnID = @ReturnID;
@@ -1674,6 +1747,8 @@ CREATE PROCEDURE [dbo].[sp_return_search]
     @ReturnID    INT = NULL,
     @SaleID      INT = NULL,
     @CustomerID  INT = NULL,
+	@ReceiptID     INT = NULL,
+    @SupplierID  INT = NULL,
     @FromDate    DATETIME = NULL,
     @ToDate      DATETIME = NULL
 )
@@ -1690,6 +1765,8 @@ BEGIN
             r.ReturnID,
             r.SaleID,
             r.CustomerID,
+			r.ReceiptID,
+			r.SupplierID,
             r.ReturnDate,
             r.Reason
         INTO #Results1
@@ -1697,6 +1774,8 @@ BEGIN
         WHERE (@ReturnID IS NULL OR r.ReturnID = @ReturnID)
           AND (@SaleID IS NULL OR r.SaleID = @SaleID)
           AND (@CustomerID IS NULL OR r.CustomerID = @CustomerID)
+		  AND (@ReceiptID IS NULL OR r.ReceiptID = @ReceiptID)
+          AND (@SupplierID IS NULL OR r.SupplierID = @SupplierID)
           AND (@FromDate IS NULL OR r.ReturnDate >= @FromDate)
           AND (@ToDate IS NULL OR r.ReturnDate <= @ToDate);
 
@@ -1719,6 +1798,8 @@ BEGIN
             r.ReturnID,
             r.SaleID,
             r.CustomerID,
+			r.ReceiptID,
+			r.SupplierID,
             r.ReturnDate,
             r.Reason
         INTO #Results2
@@ -1726,6 +1807,8 @@ BEGIN
         WHERE (@ReturnID IS NULL OR r.ReturnID = @ReturnID)
           AND (@SaleID IS NULL OR r.SaleID = @SaleID)
           AND (@CustomerID IS NULL OR r.CustomerID = @CustomerID)
+		  AND (@ReceiptID IS NULL OR r.ReceiptID = @ReceiptID)
+          AND (@SupplierID IS NULL OR r.SupplierID = @SupplierID)
           AND (@FromDate IS NULL OR r.ReturnDate >= @FromDate)
           AND (@ToDate IS NULL OR r.ReturnDate <= @ToDate);
 
