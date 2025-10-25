@@ -1,0 +1,144 @@
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+/* khôi phục font chữ */
+body {
+  font-size: 1.6rem;
+  font-family: "Inter", sans-serif;
+}
+
+/* ===================common==================== */
+a {
+  text-decoration: none;
+}
+
+input,
+textarea,
+select,
+button {
+  font-family: inherit;
+  font-size: inherit;
+}
+/* ==================main======================= */
+.log {
+  display: flex;
+  justify-content: center;
+}
+
+.login-customer {
+  display: inline-block;
+  padding: 33px;
+  border-radius: 15px;
+  border: 1px solid #ccc;
+  min-width: 150px;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 8px 10px -6px rgba(0, 0, 0, 0.1);
+}
+
+.login-customer .icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  background-color: #0ea5e9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+}
+
+.login-customer h1 {
+  margin-top: 16px;
+  color: #0f172a;
+  text-align: center;
+  font-size: 2.4rem;
+  line-height: 1.33;
+}
+
+.login-customer .desc {
+  margin-top: 8px;
+  color: #0f172a;
+  text-align: center;
+  line-height: 1.42;
+}
+
+form {
+  margin-top: 32px;
+}
+
+form label {
+  color: #0f172a;
+  font-family: Inter;
+  font-size: 1.4rem;
+  font-weight: 500;
+}
+
+form input {
+  margin-top: 6px;
+  min-width: 380px;
+  height: 36px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.password-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#togglePass{
+  width: 24px;
+  height: 24px;
+  margin-top: 5px;
+  margin-left: 5px;
+}
+
+#submit {
+  background: #0ea5e9;
+  color: #fff;
+  margin-top: 40px;
+  cursor: pointer;
+}
+
+.register {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2px;
+}
+
+.register a:hover {
+  text-decoration: underline;
+}
+
+.login-staff {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.link-admin {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+}
+
+.link-admin a:hover {
+  text-decoration: underline;
+}
+
+.back-home {
+  display: flex;
+  justify-content: center;
+}
+
+.error{
+  color: red;
+}
