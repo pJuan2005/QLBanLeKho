@@ -17,8 +17,11 @@ CREATE TABLE Users (
 CREATE TABLE Categories (
     CategoryID INT IDENTITY(1,1) PRIMARY KEY, -- Mã loại hàng
     CategoryName NVARCHAR(100) NOT NULL, -- Tên loại hàng
-    Description NVARCHAR(255) -- Mô tả
+    Description NVARCHAR(255), -- Mô tả
+	VATRate DECIMAL(5,2) NOT NULL DEFAULT 10.00
 );
+
+
 
 CREATE TABLE Suppliers (
     SupplierID INT IDENTITY(1,1) PRIMARY KEY, -- Mã nhà cung cấp
@@ -50,12 +53,15 @@ CREATE TABLE Products (
     MinStock INT DEFAULT 0, -- Tồn kho tối thiểu
     Status NVARCHAR(20) DEFAULT 'Active', -- Trạng thái
 	Image NVARCHAR(255),
-	VATRate DECIMAL(5,2) DEFAULT 10.00,
+	VATRate DECIMAL(5,2) ,
+	Quantity INT DEFAULT 0,
     FOREIGN KEY (CategoryID) REFERENCES Categories(CategoryID),
     FOREIGN KEY (SupplierID) REFERENCES Suppliers(SupplierID)
 );
-ALTER TABLE Products
-ADD Quantity INT DEFAULT 0;
+
+select * from Products
+
+
 
 
 CREATE TABLE PurchaseOrders (
@@ -81,22 +87,12 @@ CREATE TABLE PurchaseOrderDetails (
 CREATE TABLE GoodsReceipts (
     ReceiptID INT IDENTITY(1,1) PRIMARY KEY, -- Mã phiếu nhập kho
     POID INT, -- Mã đơn mua hàng
-    ReceiptDate DATE NOT NULL, -- Ngày nhập kho
+	ReceiptDate DATE NOT NULL, -- Ngày nhập kho
     TotalAmount DECIMAL(18,2), -- Tổng tiền
-    FOREIGN KEY (POID) REFERENCES PurchaseOrders(POID)
+    UserID INT NOT NULL, -- Thêm cột mã nhân viên
+    FOREIGN KEY (POID) REFERENCES PurchaseOrders(POID),
+    FOREIGN KEY (UserID) REFERENCES Users(UserID) -- Thiết lập khóa ngoại
 );
-ALTER TABLE GoodsReceipts
-ADD UserID INT NULL; -- Thêm cột mã nhân viên
-
-UPDATE GoodsReceipts SET UserID = 1;
-
-ALTER TABLE GoodsReceipts
-ALTER COLUMN UserID INT NOT NULL;
-
-ALTER TABLE GoodsReceipts
-ADD CONSTRAINT FK_GoodsReceipts_Users
-FOREIGN KEY (UserID) REFERENCES Users(UserID); -- Thiết lập khóa ngo
-
 
 
 
@@ -114,29 +110,41 @@ CREATE TABLE GoodsReceiptDetails (
 
 CREATE TABLE Promotions (
     PromotionID INT IDENTITY(1,1) PRIMARY KEY, -- Mã khuyến mãi
+	CategoryID INT NULL,
     PromotionName NVARCHAR(100) NOT NULL, -- Tên khuyến mãi
     Type NVARCHAR(20) NOT NULL, -- Loại giảm giá (Percent/Value)
     Value DECIMAL(18,2) NOT NULL, -- Giá trị giảm
     StartDate DATE NOT NULL, -- Ngày bắt đầu
     EndDate DATE NOT NULL, -- Ngày kết thúc
-    ProductGroup NVARCHAR(255) -- Nhóm sản phẩm áp dụng
+	FOREIGN KEY (CategoryID) REFERENCES Categories(CategoryID)
+    
 );
 
-ALTER TABLE Promotions
-ADD CategoryID INT NULL;
 
-UPDATE Promotions
-SET CategoryID = 1;
 
-ALTER TABLE Promotions
-ALTER COLUMN CategoryID INT NOT NULL;
+CREATE TABLE GoodsIssues (
+    IssueID INT IDENTITY(1,1) PRIMARY KEY,         -- Mã phiếu xuất kho
+    IssueDate DATETIME NOT NULL DEFAULT GETDATE(), -- Ngày xuất kho
+    UserID INT NOT NULL,                           -- Nhân viên thực hiện xuất kho
+    CustomerID INT NULL,                           -- Khách hàng nhận hàng (nếu có)
+    Reason NVARCHAR(255),                          -- Lý do xuất kho (bán hàng, chuyển kho, trả hàng...)
+    TotalAmount DECIMAL(18,2) DEFAULT 0,           -- Tổng giá trị hàng xuất
+    FOREIGN KEY (UserID) REFERENCES Users(UserID),
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
+);
 
-ALTER TABLE Promotions
-ADD CONSTRAINT FK_Promotions_Categories
-FOREIGN KEY (CategoryID) REFERENCES Categories(CategoryID);
 
-ALTER TABLE Promotions
-DROP COLUMN ProductGroup;
+
+CREATE TABLE GoodsIssueDetails (
+    IssueID INT NOT NULL,                          -- Mã phiếu xuất kho
+    ProductID INT NOT NULL,                        -- Mã sản phẩm
+    Quantity INT NOT NULL,                         -- Số lượng xuất
+    UnitPrice DECIMAL(18,2) NOT NULL,              -- Đơn giá xuất
+    BatchNo VARCHAR(50),                           -- Số lô (nếu có)
+    PRIMARY KEY (IssueID, ProductID),
+    FOREIGN KEY (IssueID) REFERENCES GoodsIssues(IssueID),
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+);
 
 
 
@@ -146,15 +154,14 @@ CREATE TABLE Sales (
     CustomerID INT, -- Mã khách hàng
     UserID INT NOT NULL, -- Mã nhân viên (người bán)
     SaleDate DATETIME NOT NULL, -- Ngày bán
-    --SaleDate DATE NOT NULL, -- Ngày bán
     TotalAmount DECIMAL(18,2), -- Tổng tiền
     VATAmount DECIMAL(18,2), -- Thuế VAT
-    PromotionID INT, -- Mã khuyến mãi
     PaymentStatus NVARCHAR(20) DEFAULT 'Unpaid', -- Trạng thái thanh toán
     FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID),
-    FOREIGN KEY (UserID) REFERENCES Users(UserID),
-    FOREIGN KEY (PromotionID) REFERENCES Promotions(PromotionID)
+    FOREIGN KEY (UserID) REFERENCES Users(UserID)
 );
+
+
 
 CREATE TABLE SalesItems (
     SaleID INT, -- Mã đơn bán hàng
@@ -169,42 +176,15 @@ CREATE TABLE SalesItems (
 
 CREATE TABLE Returns (
     ReturnID INT IDENTITY(1,1) PRIMARY KEY, -- Mã phiếu trả hàng
-    SaleID INT NOT NULL, -- Mã đơn bán hàng
-    CustomerID INT NOT NULL, -- Mã khách hàng
+    SaleID INT NULL, -- Mã đơn bán hàng
+    CustomerID INT NULL, -- Mã khách hàng
     ReturnDate DATE NOT NULL, -- Ngày trả hàng
     Reason NVARCHAR(255), -- Lý do trả
+	SupplierID INT NULL,
+    ReceiptID INT NULL,
     FOREIGN KEY (SaleID) REFERENCES Sales(SaleID),
     FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
 );
-ALTER TABLE Returns
-ADD SupplierID INT NULL;
-
-ALTER TABLE Returns
-ADD ReceiptID INT NULL;
-
-
-ALTER TABLE Returns
-ADD CONSTRAINT FK_Returns_Suppliers 
-FOREIGN KEY (SupplierID) REFERENCES Suppliers(SupplierID);
-
-ALTER TABLE Returns
-ADD CONSTRAINT FK_Returns_GoodsReceipts 
-FOREIGN KEY (ReceiptID) REFERENCES GoodsReceipts(ReceiptID);
-
-
-ALTER TABLE Returns
-ADD SupplierID INT NULL;
-ALTER TABLE Returns
-ADD ReceiptID INT NULL;
-
-
-ALTER TABLE Returns
-ALTER COLUMN SaleID INT NULL;
-ALTER TABLE Returns
-ALTER COLUMN CustomerID INT NULL;
-
-
-
 
 
 
@@ -219,22 +199,32 @@ CREATE TABLE Invoices (
 );
 
 
+
 CREATE TABLE Payments (
     PaymentID INT IDENTITY(1,1) PRIMARY KEY,
-    SaleID INT NOT NULL,                  -- Liên kết đến đơn bán
-    CustomerID INT NOT NULL,              -- Khách hàng trả tiền
+    SaleID INT NULL,                  -- Liên kết đến đơn bán
+    CustomerID INT NULL,              -- Khách hàng trả tiền
+	SupplierID INT NULL,
+	ReceiptID INT NULL,
     Amount DECIMAL(18,2) NOT NULL,        -- Số tiền khách hàng sẽ thanh toán tại thời điểm đó
     PaymentDate DATE NOT NULL DEFAULT GETDATE(),
     Method NVARCHAR(30) NOT NULL,         -- Tiền mặt / Chuyển khoản / QR
     Description NVARCHAR(200) NULL,       -- Ghi chú (vd: trả lần 1)
     FOREIGN KEY (SaleID) REFERENCES Sales(SaleID),
-    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID),
+	FOREIGN KEY (SupplierID) REFERENCES Suppliers(SupplierID),
+	FOREIGN KEY (ReceiptID) REFERENCES GoodsReceipts(ReceiptID)
 );
+ALTER TABLE Payments
+ADD ReceiptID INT NULL;  -- Cho phép NULL vì không phải mọi thanh toán đều có phiếu nhập
 
 ALTER TABLE Payments
-ADD SupplierID INT -- Mã nhà cung cấp
-ALTER TABLE Payments
-ALTER COLUMN CustomerID INT NULL;
+ADD CONSTRAINT FK_Payments_GoodsReceipts
+FOREIGN KEY (ReceiptID) REFERENCES GoodsReceipts(ReceiptID);
+
+select * from Payments
+
+
 
 
 
@@ -396,7 +386,7 @@ GO
 
 INSERT INTO SystemSettings (Setting,Information)
 VALUES
-(N'Logo', N'https://localhost:7019/ImageProducts/Giày Sneaker Đen.jpg'),
+(N'Logo', N'/ImageProducts/Giày Sneaker Đen.jpg'),
 (N'Address', N'38 tống duy tân'),
 (N'Name', N'Hệ Thống Quản Lý Bán Lẻ & Kho'),
 (N'Phonenumber', N'0941771437'),
@@ -407,11 +397,7 @@ VALUES
 (N'Currency', N'JPY'),
 (N'Currency', N'GBP'),
 (N'Currency', N'CNY'),
-(N'Payment method', N'tiền mặt,chuyển khoản,quét QR,thẻ'),
-(N'Payment method', N'Chuyển khoản'),
-(N'Payment method', N'Quét QR'),
-(N'Payment method', N'Thẻ'),
-(N'Time zone', N'UTC-12: Đường Quốc tế Thay Đổi Ngày (International Date Line)'),
+(N'Time zone', N'UTC-12: Đường Quốc tế Thay Đổi Ngày'),
 (N'Time zone', N'UTC-11: Samoa'),
 (N'Time zone', N'UTC-10: Hawaii'),
 (N'Time zone', N'UTC-9: Alaska'),
@@ -437,7 +423,14 @@ VALUES
 (N'Time zone', N'UTC+11: Tây Thái Bình Dương'),
 (N'Time zone', N'UTC+12: Tân Zeeland, Fiji')
 
-select * from  SystemSettings
+
+
+
+
+
+
+
+
 
 --------------------------------------------------------------------------------------------------------
 
@@ -1090,6 +1083,25 @@ DROP PROCEDURE [dbo].[sp_product_delete];
 
 
 
+CREATE TRIGGER trg_Products_Insert_VATRate
+ON Products
+AFTER INSERT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    -- Cập nhật lại VATRate cho những sản phẩm mới mà chưa có giá trị VATRate (NULL)
+    UPDATE p
+    SET p.VATRate = c.VATRate
+    FROM Products p
+    INNER JOIN inserted i ON p.ProductID = i.ProductID
+    INNER JOIN Categories c ON i.CategoryID = c.CategoryID
+    WHERE i.VATRate IS NULL;  -- Chỉ cập nhật nếu người dùng không nhập VATRate
+END;
+GO
+
+
+---------------------------------------------------------------------------------------------
 
 CREATE PROCEDURE [dbo].[sp_payment_get_by_id]
     @PaymentID INT
@@ -1112,6 +1124,7 @@ CREATE PROCEDURE [dbo].[sp_payment_create]
     @SaleID INT = NULL,
     @CustomerID INT = NULL,
 	@SupplierID INT = NULL,
+	@ReceiptID INT = NULL,
     @Amount DECIMAL(18,2),
     @PaymentDate DATE,
     @Method NVARCHAR(30),
@@ -1125,6 +1138,7 @@ BEGIN
         SaleID,
         CustomerID,
 		SupplierID,
+		ReceiptID,
         Amount,
         PaymentDate,
         Method,
@@ -1135,6 +1149,7 @@ BEGIN
         @SaleID,
         @CustomerID,
 		@SupplierID,
+		@ReceiptID,
         @Amount,
         @PaymentDate,
         @Method,
@@ -1150,9 +1165,11 @@ SELECT * FROM Payments;
 
 CREATE PROCEDURE [dbo].[sp_payment_update]
 (
-	@PaymentID   INT,    
-    @SaleID   INT,
+	@PaymentID   INT = NULL,    
+    @SaleID   INT = NULL,
     @CustomerID  INT = NULL,
+	@SupplierID INT = NULL,
+	@ReceiptID INT = NULL,
     @Amount      DECIMAL(18,2),
     @PaymentDate DATE,
     @Method      NVARCHAR(30),
@@ -1164,6 +1181,8 @@ BEGIN
     SET
         SaleID = IIF(@SaleID IS NULL, SaleID, @SaleID),
         CustomerID = IIF(@CustomerID IS NULL, CustomerID, @CustomerID),
+		SupplierID = IIF(@SupplierID IS NULL, SupplierID, @SupplierID),
+		ReceiptID = IIF(@ReceiptID IS NULL, ReceiptID, @ReceiptID),
         Amount     = IIF(@Amount IS NULL, Amount, @Amount),
         PaymentDate= IIF(@PaymentDate IS NULL, PaymentDate, @PaymentDate),
         Method     = IIF(@Method IS NULL, Method, @Method),
@@ -1186,6 +1205,8 @@ CREATE PROCEDURE [dbo].[sp_payment_search]
     @page_size   INT,
     @PaymentID   INT = NULL,
     @CustomerID  INT = NULL,
+	@SupplierID	 INT = NULL,
+	@ReceiptID	 INT = NULL,
     @PaymentDate DATETIME = NULL,       
 	@FromDate    DATETIME = NULL,
     @ToDate      DATETIME = NULL,
@@ -1203,6 +1224,8 @@ BEGIN
         SELECT ROW_NUMBER() OVER (ORDER BY p.PaymentID ASC) AS RowNumber,
                p.PaymentID,
                p.CustomerID,
+			   p.SupplierID,
+			   p.ReceiptID,
                p.SaleID,
                p.Amount,
                p.PaymentDate,
@@ -1213,6 +1236,8 @@ BEGIN
         WHERE (@PaymentID IS NULL OR p.PaymentID = @PaymentID)
           AND (@CustomerID IS NULL OR p.CustomerID = @CustomerID)
           AND (@SaleID IS NULL OR p.SaleID = @SaleID)
+		  AND (@ReceiptID IS NULL OR p.ReceiptID = @ReceiptID)
+		  AND (@SupplierID IS NULL OR p.SupplierID = @SupplierID)
           AND (@Method = '' OR p.Method LIKE N'%' + @Method + '%')
 		  AND (@FromDate IS NULL OR p.PaymentDate >= @FromDate)
           AND (@ToDate IS NULL OR p.PaymentDate <= @ToDate);
@@ -1235,6 +1260,8 @@ BEGIN
                p.PaymentID,
                p.CustomerID,
                p.SaleID,
+			   p.SupplierID,
+			   p.ReceiptID,
                p.Amount,
                p.PaymentDate,
                p.Method,
@@ -1244,6 +1271,8 @@ BEGIN
         WHERE (@PaymentID IS NULL OR p.PaymentID = @PaymentID)
           AND (@CustomerID IS NULL OR p.CustomerID = @CustomerID)
           AND (@SaleID IS NULL OR p.SaleID = @SaleID)
+		  AND (@ReceiptID IS NULL OR p.ReceiptID = @ReceiptID)
+		  AND (@SupplierID IS NULL OR p.SupplierID = @SupplierID)
           AND (@Method = '' OR p.Method LIKE N'%' + @Method + '%')
 		  AND (@FromDate IS NULL OR p.PaymentDate >= @FromDate)
           AND (@ToDate IS NULL OR p.PaymentDate <= @ToDate);
@@ -1258,6 +1287,9 @@ BEGIN
 END;
 GO
 
+SELECT * 
+FROM INFORMATION_SCHEMA.COLUMNS
+WHERE TABLE_NAME = 'Payments';
 
 
 
@@ -1847,6 +1879,16 @@ GO
 
 
 drop PROCEDURE [dbo].[sp_return_delete]
+
+
+
+
+
+
+select * from Products
+
+
+
 
 -- =============================================
 -- chuẩn

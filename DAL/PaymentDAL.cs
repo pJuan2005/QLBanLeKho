@@ -68,7 +68,7 @@ namespace DAL
             {
                 var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_payment_create",
                     "@SupplierID", model.SupplierID,
-                    "@SaleID", model.SaleID,
+                    "@ReceiptID", model.ReceiptID,
                     "@Amount", model.Amount,
                     "@PaymentDate", model.PaymentDate,
                     "@Method", model.Method,
@@ -98,6 +98,7 @@ namespace DAL
                     "@PaymentID", model.PaymentID,
                     "@CustomerID", model.CustomerID,
                     "@SaleID", model.SaleID,
+                    "@ReceiptID", model.ReceiptID,
                     "@Amount", model.Amount,
                     "@PaymentDate", model.PaymentDate,
                     "@Method", model.Method,
@@ -135,7 +136,7 @@ namespace DAL
         }
 
         public List<PaymentModel> Search(int pageIndex, int pageSize, out long total,
-                                         int? CustomerID,int? SupplierID, int? SaleID, string Method,
+                                         int? CustomerID,int? SupplierID, int? SaleID,int? ReceiptID, string Method,
                                          DateTime? FromDate, DateTime? ToDate)
         {
             string msgError = "";
@@ -147,6 +148,8 @@ namespace DAL
                     "@page_size", pageSize,
                     "@CustomerID", CustomerID,
                     "@SaleID", SaleID,
+                    "@ReceiptID", ReceiptID,
+                    "SupplierID", SupplierID,
                     "@Method", Method,
                     "@FromDate", FromDate,
                     "@ToDate", ToDate
