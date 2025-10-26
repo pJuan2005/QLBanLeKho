@@ -30,23 +30,23 @@ namespace UserApi.Controllers
         }
 
         [HttpPost("register")]
-        [AllowAnonymous]
         public IActionResult Register([FromBody] UserModel model)
         {
             if (model == null || string.IsNullOrWhiteSpace(model.Username) || string.IsNullOrWhiteSpace(model.PasswordHash))
-                return BadRequest(new { message = "Tên đăng nhập và mật khẩu không được để trống" });
-            if (string.IsNullOrWhiteSpace(model.Role)) model.Role = "User";
-            var ok = _userBusiness.Create(model);
-            if (!ok) return BadRequest(new { message = "Tạo tài khoản thất bại!" });
-            var user = _userBusiness.Authenticate(model.Username,model.PasswordHash);
+                return BadRequest(new { message = "Tên đăng nhập và mật khẩu không được để trống!" });
 
+            model.FullName ??= "";
+            model.Email ??= "";
+            model.Phone ??= "";
+            model.Role = string.IsNullOrWhiteSpace(model.Role) ? "User" : model.Role;
+            var ok = _userBusiness.Create(model);
+            if (!ok)
+                return BadRequest(new { message = "Tạo tài khoản thất bại!" });
             return Created("", new
             {
-                userID = user?.UserID ?? model.UserID,
                 username = model.Username,
                 fullname = model.FullName,
-                role = model.Role,
-                token = user?.Token
+                role = model.Role
             });
         }
 
