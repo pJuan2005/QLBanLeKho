@@ -1,0 +1,160 @@
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+/* khôi phục font chữ */
+body {
+  font-size: 1.6rem;
+  font-family: "Inter", sans-serif;
+}
+
+/* =====================common================= */
+a {
+  text-decoration: none;
+}
+
+input,
+textarea,
+select,
+button {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+/* =========================main===================== */
+.register-top {
+  display: flex;
+  justify-content: center;
+}
+
+.contanier {
+  min-width: 448px;
+  border: 1px solid #ccc;
+  border-radius: 15px;
+  padding: 33px 33px 5px 33px;
+}
+
+.contanier .icon {
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  background-color: #0ea5e9;
+}
+
+.contanier h1 {
+  margin-top: 16px;
+  color: #0f172a;
+  text-align: center;
+  font-size: 2.4rem;
+  line-height: 1.33;
+}
+
+.contanier .desc {
+  margin-top: 8px;
+  color: #0f172a;
+  text-align: center;
+  font-family: Inter;
+  font-size: 1.4rem;
+  line-height: 1.43;
+}
+
+form {
+  margin-top: 32px;
+}
+
+form label {
+  color: #0f172a;
+  font-family: Inter;
+  font-size: 1.4rem;
+  font-weight: 500;
+  line-height: 1;
+}
+
+form input {
+  margin-top: 6px;
+  display: flex;
+  min-width: 380px;
+  height: 36px;
+  border-radius: 10px;
+  border: 1.067px solid #e2e8f0;
+  background: #fff;
+  padding: 5px;
+}
+
+.password,
+.confirm {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
+
+.eye {
+  margin-top: 5px;
+  width: 16px;
+  height: 16px;
+}
+
+.submit {
+  min-width: 399px;
+  background-color: #0ea5e9;
+  color: #fff;
+  font-family: Inter;
+  font-size: 1.4rem;
+  font-weight: 500;
+  line-height: 1.42;
+  cursor: pointer;
+}
+
+.change {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  margin-top: 30px;
+}
+
+.change a:hover {
+  text-decoration: underline;
+}
+
+.register-bottom {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.change-admin {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
+
+.change-admin a:hover {
+  text-decoration: underline;
+}
+
+.back-home {
+  color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.back-home:hover {
+  color: #0ea5e9;
+}
+
+.error {
+  color: red;
+}

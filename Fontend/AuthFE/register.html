@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- css -->
+    <link rel="stylesheet" href="../Shared/css/register.css" />
+    <script src="../Shared/angular/angular.min.js"></script>
+    <script src="../Shared/angular/global.js"></script>
+    <script src="../Shared/angular/register.js"></script>
+    <title>Register</title>
+  </head>
+  <body ng-app="AppRetailPos" ng-controller="registerCtrl">
+    <div class="register-top">
+      <div class="contanier">
+        <img src="../Shared/img/register/wheel.png" alt="" class="icon" />
+        <h1>Retail Store</h1>
+        <p class="desc">Sign in to your account or create a new one</p>
+        <form ng-submit="create()">
+          <label for="fullname">Full Name</label>
+          <br />
+          <input
+            type="text"
+            placeholder="Enter your name"
+            id="fullname"
+            ng-model="model.fullname"
+          />
+          <br />
+          <label for="username">User Name</label>
+          <br />
+          <input
+            type="text"
+            placeholder="Enter account"
+            id="username"
+            ng-model="model.username"
+            required
+          />
+          <br />
+          <label for="password">Password</label>
+          <br />
+          <div class="password">
+            <input
+              type="password"
+              placeholder="***********"
+              id="password"
+              ng-model="model.password"
+              required
+            />
+            <img
+              src="../Shared/img/register/eye-slash.svg"
+              alt=""
+              class="eye"
+              id="togglePass"
+            />
+          </div>
+          <br />
+          <label for="confirmpass">Confirm Password</label>
+          <br />
+          <div class="confirm">
+            <input
+              type="password"
+              placeholder="***********"
+              id="confirmpass"
+              ng-model="model.confirmpass"
+              required
+            />
+            <img
+              src="../Shared/img/register/eye-slash.svg"
+              alt=""
+              class="eye"
+              id="togglePass2"
+            />
+          </div>
+          <br />
+          <p
+            class="error"
+            ng-if="model.confirmpass && model.confirmpass !== model.password"
+          >
+            Password do not math!
+          </p>
+          <p class="error" ng-if="error">{{error}}</p>
+
+          <input
+            type="submit"
+            value="Create Account"
+            class="submit"
+            ng-disabled="loading"
+          />
+        </form>
+        <div class="change">
+          <p class="title">Already have an account?</p>
+          <a href="../AuthFE/login.html">Sign In</a>
+        </div>
+      </div>
+    </div>
+    <div class="register-bottom">
+      <div class="container-bottom">
+        <div class="change-admin">
+          <p class="title">Are you a staff member?</p>
+          <a href="#!">Go to Admin Portal</a>
+        </div>
+        <a href="#!" class="back-home">← Back to Home</a>
+      </div>
+    </div>
+
+    <script src="../Shared/js/register.js"></script>
+  </body>
+</html>
