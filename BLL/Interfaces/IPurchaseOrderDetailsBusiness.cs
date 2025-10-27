@@ -7,11 +7,13 @@ using Model;
 
 namespace BLL.Interfaces
 {
-    public  interface IPurchaseOrderDetailsBusiness
+    public interface IPurchaseOrderDetailsBusiness
     {
         PurchaseOrderDetailsModel GetDatabyID(int poid, int productId);
-        bool Create(PurchaseOrderDetailsModel model);
-        bool Update(PurchaseOrderDetailsModel model);
+      
+        bool CreateMultiple(List<PurchaseOrderDetailsModel> models); // 👈 Thêm dòng này
+    
         bool Delete(PurchaseOrderDetailsModel model);
     }
+
 }

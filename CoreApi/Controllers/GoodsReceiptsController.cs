@@ -19,11 +19,12 @@ namespace CoreApi.Controllers
 
         [Route("create")]
         [HttpPost]
-        public GoodsReceiptsModel Create([FromBody] GoodsReceiptsModel model)
+        public IActionResult Create([FromBody] List<GoodsReceiptsModel> models)
         {
-            _goodsReceiptsBusiness.Create(model);
-            return model;
+            _goodsReceiptsBusiness.CreateMultiple(models);
+            return Ok(models);
         }
+
 
         [Route("update")]
         [HttpPost]

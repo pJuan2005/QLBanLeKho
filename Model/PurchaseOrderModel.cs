@@ -7,7 +7,7 @@ using Model;
 
 namespace Model
 {
-    public class DonMuaHangModel
+    public class PurchaseOrderModel
     {
         public int POID { get; set; }
         public int SupplierID { get; set; }

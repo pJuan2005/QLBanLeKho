@@ -24,9 +24,9 @@ namespace BLL
             return _res.GetDatabyID(id);
         }
 
-        public bool Create(GoodsReceiptsModel model)
+        public bool CreateMultiple(List<GoodsReceiptsModel> models)
         {
-            return _res.Create(model);
+            return _res.CreateMultiple(models);
         }
         public bool Update(GoodsReceiptsModel model)
         {

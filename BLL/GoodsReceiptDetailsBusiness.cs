@@ -23,14 +23,11 @@ namespace BLL
             return _res.GetDatabyID(id);
         }
 
-        public bool Create(GoodsReceiptDetailsModel model)
+        public bool CreateMultiple(List<GoodsReceiptDetailsModel> models)
         {
-            return _res.Create(model);
+            return _res.CreateMultiple(models);
         }
-        public bool Update(GoodsReceiptDetailsModel model)
-        {
-            return (_res.Update(model));
-        }
+        
         public bool Delete(GoodsReceiptDetailsModel model)
         {
             return _res.Delete(model);

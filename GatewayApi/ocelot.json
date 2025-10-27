@@ -163,6 +163,18 @@
       ]
     },
     {
+      "UpstreamPathTemplate": "/api-core/purchaseorder/{everything}",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+      "DownstreamPathTemplate": "/api/purchaseorder/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5092
+        }
+      ]
+    },
+    {
       "UpstreamPathTemplate": "/api-core/purchaseorderdetails/{everything}",
       "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
       "DownstreamPathTemplate": "/api/purchaseorderdetails/{everything}",
@@ -214,6 +226,30 @@
       "UpstreamPathTemplate": "/api-core/salesitem/{everything}",
       "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
       "DownstreamPathTemplate": "/api/salesitem/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5092
+        }
+      ]
+    },
+    {
+      "UpstreamPathTemplate": "/api-core/GoodsIssues/{everything}",
+      "UpstreamHttpMethod": [ "GET", "POST" ],
+      "DownstreamPathTemplate": "/api/GoodsIssues/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5092
+        }
+      ]
+    },
+    {
+      "UpstreamPathTemplate": "/api-core/GoodsIssueDetails/{everything}",
+      "UpstreamHttpMethod": [ "GET", "POST" ],
+      "DownstreamPathTemplate": "/api/GoodsIssueDetails/{everything}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {

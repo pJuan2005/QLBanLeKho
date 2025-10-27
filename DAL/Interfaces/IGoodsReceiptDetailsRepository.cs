@@ -10,8 +10,8 @@ namespace DAL.Interfaces
     public interface IGoodsReceiptDetailsRepository
     {
         GoodsReceiptDetailsModel GetDatabyID(int receiptID);
-        bool Create(GoodsReceiptDetailsModel model);
-        bool Update(GoodsReceiptDetailsModel model);
+        bool CreateMultiple(List<GoodsReceiptDetailsModel> models);
+      
         bool Delete(GoodsReceiptDetailsModel model);
     }
 }

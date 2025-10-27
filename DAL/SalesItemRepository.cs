@@ -38,28 +38,34 @@ namespace DAL
             }
         }
 
-        public bool Create(SalesItemModel model)
+        public bool CreateMultiple(List<SalesItemModel> models)
         {
             string msgError = "";
             try
             {
-                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_SalesItem_create",
-                    "@SaleID", model.SaleID,
-                    "@ProductID", model.ProductID,
-                    "@Quantity", model.Quantity);
+                var jsonData = Newtonsoft.Json.JsonConvert.SerializeObject(models);
+
+                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_SalesItem_create_multiple",
+                    "@JsonData", jsonData);
 
                 if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
+                {
                     throw new Exception(Convert.ToString(result) + msgError);
+                }
 
                 return true;
             }
             catch (Exception ex)
             {
-                throw ;
+                throw;
             }
         }
 
       
+
+
+
+
 
         public bool Delete(SalesItemModel model)
         {
