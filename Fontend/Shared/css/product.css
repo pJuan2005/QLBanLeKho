@@ -1,0 +1,284 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", sans-serif;
+}
+
+body {
+    background: #f8fafc;
+    color: #333;
+}
+
+.container {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 250px;
+    background: #1f2937;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px 0;
+}
+
+.logo {
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.logo span {
+    font-size: 12px;
+    color: #9ca3af;
+}
+
+.sidebar ul {
+    list-style: none;
+    margin-top: 20px;
+}
+
+.sidebar ul li {
+    margin: 6px 0;
+}
+
+.sidebar ul li a {
+    color: #d1d5db;
+    text-decoration: none;
+    padding: 10px 20px;
+    display: block;
+    border-left: 4px solid transparent;
+    transition: 0.3s;
+}
+
+.sidebar ul li.active a,
+.sidebar ul li a:hover {
+    background: #374151;
+    color: #fff;
+    border-left: 4px solid #3b82f6;
+}
+
+.user {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    background: #111827;
+}
+
+.user .avatar {
+    width: 35px;
+    height: 35px;
+    background: #3b82f6;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+/* Main */
+.main {
+    flex: 1;
+    padding: 20px 30px;
+}
+
+/* Top bar */
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.topbar input {
+    width: 50%;
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: 1px solid #d1d5db;
+}
+
+.user-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    
+}
+
+.role {
+    background: #e5e7eb;
+    padding: 5px 10px;
+    border-radius: 20px;
+}
+
+.notif {
+    position: relative;
+    font-size: 20px;
+}
+
+.notif .badge {
+    position: absolute;
+    top: -6px;
+    right: -8px;
+    background: #ef4444;
+    color: white;
+    font-size: 10px;
+    padding: 2px 5px;
+    border-radius: 50%;
+}
+
+.user-actions .avatar {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+}
+
+/* Content */
+.content h2 {
+    margin-top: 20px;
+}
+
+.subtitle {
+    color: #6b7280;
+    margin-bottom: 20px;
+}
+
+.controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.controls input, .controls select {
+    padding: 8px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+}
+
+.right-controls {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-outline {
+    border: 1px solid #d1d5db;
+    background: white;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.btn-primary {
+    background: #3b82f6;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+/* Stats */
+.stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.stat-box {
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.stat-box h3 {
+    margin-top: 5px;
+}
+
+/* Table */
+.product-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.product-table th, .product-table td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #e5e7eb;
+    text-align: left;
+}
+
+.product-table th {
+    background: #f9fafb;
+}
+
+.stock.good {
+    background: #3b82f6;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 20px;
+}
+
+.stock.low {
+    background: #ef4444;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 20px;
+}
+
+.status.active {
+    background: #3b82f6;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 20px;
+}
+
+.action-btn {
+    border: 1px solid #d1d5db;
+    background: #f9fafb;
+    padding: 5px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+/* Action icons */
+.actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 19px;
+}
+
+.icon-btn {
+    background: #f9fafb;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 6px 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.2s;
+}
+
+.icon-btn:hover {
+    transform: scale(1.1);
+}
+
+.icon-btn.view {
+    color: #3b82f6; /* xanh */
+}
+
+.icon-btn.edit {
+    color: #f59e0b; /* vàng cam */
+}
+
+.icon-btn.delete {
+    color: #ef4444; /* đỏ */
+}

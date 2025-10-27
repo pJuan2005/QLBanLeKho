@@ -47,17 +47,15 @@ CREATE TABLE Products (
     Barcode VARCHAR(50) UNIQUE, -- Mã barcode
     ProductName NVARCHAR(100) NOT NULL, -- Tên sản phẩm
     CategoryID INT, -- Mã loại hàng
-    SupplierID INT, -- Mã nhà cung cấp
     Unit NVARCHAR(20), -- Đơn vị tính
-    Price DECIMAL(18,2) NOT NULL, -- Giá bán
     MinStock INT DEFAULT 0, -- Tồn kho tối thiểu
     Status NVARCHAR(20) DEFAULT 'Active', -- Trạng thái
 	Image NVARCHAR(255),
 	VATRate DECIMAL(5,2) ,
 	Quantity INT DEFAULT 0,
     FOREIGN KEY (CategoryID) REFERENCES Categories(CategoryID),
-    FOREIGN KEY (SupplierID) REFERENCES Suppliers(SupplierID)
 );
+
 
 select * from Products
 
@@ -425,7 +423,7 @@ VALUES
 
 
 
-
+select * from SystemSettings
 
 
 
@@ -857,9 +855,7 @@ CREATE PROCEDURE [dbo].[sp_product_create]
     @Barcode VARCHAR(50) = NULL,
     @ProductName NVARCHAR(100),
     @CategoryID INT = NULL,
-    @SupplierID INT = NULL,
     @Unit NVARCHAR(20) = NULL,
-    @Price DECIMAL(18,2),
     @MinStock INT = 0,
     @Status NVARCHAR(20) = 'Active',
 	@Image NVARCHAR(255) = NULL , 
@@ -876,9 +872,7 @@ BEGIN
         Barcode,
         ProductName,
         CategoryID,
-        SupplierID,
         Unit,
-        Price,
         MinStock,
         Status,
 		Image,
@@ -891,9 +885,7 @@ BEGIN
         @Barcode,
         @ProductName,
         @CategoryID,
-        @SupplierID,
         @Unit,
-        @Price,
         @MinStock,
         @Status,
 		@Image,
@@ -915,9 +907,7 @@ CREATE PROCEDURE [dbo].[sp_product_update]
     @Barcode     VARCHAR(50) = NULL,
     @ProductName NVARCHAR(100) = NULL,
     @CategoryID  INT = NULL,
-    @SupplierID  INT = NULL,
     @Unit        NVARCHAR(20) = NULL,
-    @Price       DECIMAL(18,2) = NULL,
     @MinStock    INT = NULL,
     @Status      NVARCHAR(20) = NULL,
 	@Image       NVARCHAR(255) = NULL,
@@ -932,9 +922,7 @@ BEGIN
         Barcode     = IIF(@Barcode IS NULL, Barcode, @Barcode),
         ProductName = IIF(@ProductName IS NULL, ProductName, @ProductName),
         CategoryID  = IIF(@CategoryID IS NULL, CategoryID, @CategoryID),
-        SupplierID  = IIF(@SupplierID IS NULL, SupplierID, @SupplierID),
         Unit        = IIF(@Unit IS NULL, Unit, @Unit),
-        Price       = IIF(@Price IS NULL, Price, @Price),
         MinStock    = IIF(@MinStock IS NULL, MinStock, @MinStock),
         Status      = IIF(@Status IS NULL, Status, @Status),
 		Image       = IIF(@Image IS NULL, Image, @Image),
@@ -966,7 +954,6 @@ CREATE PROCEDURE [dbo].[sp_product_search]
     @SKU         VARCHAR(50) = '',
     @ProductName NVARCHAR(100) = '',
     @CategoryID  INT = NULL,
-    @SupplierID  INT = NULL,
     @Status      NVARCHAR(20) = ''
 )
 AS
@@ -984,9 +971,7 @@ BEGIN
                p.Barcode,
                p.ProductName,
                p.CategoryID,
-               p.SupplierID,
                p.Unit,
-               p.Price,
                p.MinStock,
                p.Status,
 			   p.Image,
@@ -998,7 +983,6 @@ BEGIN
           AND (@SKU = '' OR p.SKU LIKE '%' + @SKU + '%')
           AND (@ProductName = '' OR p.ProductName LIKE N'%' + @ProductName + '%')
           AND (@CategoryID IS NULL OR p.CategoryID = @CategoryID)
-          AND (@SupplierID IS NULL OR p.SupplierID = @SupplierID)
           AND (@Status = '' OR p.Status = @Status)
 
 
@@ -1023,9 +1007,7 @@ BEGIN
                p.Barcode,
                p.ProductName,
                p.CategoryID,
-               p.SupplierID,
                p.Unit,
-               p.Price,
                p.MinStock,
                p.Status,
 			   p.Image,
@@ -1037,7 +1019,6 @@ BEGIN
           AND (@SKU = '' OR p.SKU LIKE '%' + @SKU + '%')
           AND (@ProductName = '' OR p.ProductName LIKE N'%' + @ProductName + '%')
           AND (@CategoryID IS NULL OR p.CategoryID = @CategoryID)
-          AND (@SupplierID IS NULL OR p.SupplierID = @SupplierID)
           AND (@Status = '' OR p.Status = @Status);
 
         SELECT @RecordCount = COUNT(*) FROM #Results2;

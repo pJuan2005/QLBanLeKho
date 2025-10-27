@@ -43,9 +43,7 @@ namespace DAL
                     "@Barcode", model.Barcode,
                     "@ProductName", model.ProductName,
                     "@CategoryID", model.CategoryID,
-                    "@SupplierID", model.SupplierID,
                     "@Unit", model.Unit,
-                    "@Price", model.Price,
                     "@MinStock", model.MinStock,
                     "@Status", model.Status,
                     "@Image", model.Image,
@@ -81,9 +79,7 @@ namespace DAL
                     "@Barcode", model.Barcode,
                     "@ProductName", model.ProductName,
                     "@CategoryID", model.CategoryID,
-                    "@SupplierID", model.SupplierID,
                     "@Unit", model.Unit,
-                    "@Price", model.Price,
                     "@MinStock", model.MinStock,
                     "@Status", model.Status,
                     "@Image", model.Image,
@@ -142,7 +138,6 @@ namespace DAL
                     "@SKU", request.SKU,                     // Thay đổi ở đây
                     "@ProductName", request.ProductName,     // Thay đổi ở đây
                     "@CategoryID", request.CategoryID,       // Thay đổi ở đây
-                    "@SupplierID", request.SupplierID,       // Thay đổi ở đây
                     "@Status", request.Status               // ✨ Thêm tham số Status
                 );
 
