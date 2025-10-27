@@ -36,22 +36,23 @@ namespace DAL
             }
         }
 
-        public bool Create(GoodsIssueDetailsModel model)
+        public bool CreateMultiple(List<GoodsIssueDetailsModel> models)
         {
             string msgError = "";
             try
             {
-                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_GoodsIssueDetails_create",
-                    "@IssueID", model.IssueID,
-                    "@ProductID", model.ProductID,
-                    "@Quantity", model.Quantity,
-                    "@UnitPrice", model.UnitPrice,
-                    "@BatchNo", model.BatchNo);
+                // Chuyển danh sách models thành chuỗi JSON
+                var jsonData = Newtonsoft.Json.JsonConvert.SerializeObject(models);
+
+                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_GoodsIssueDetails_create_multiple",
+                    "@JsonData", jsonData
+                );
 
                 if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
                 {
                     throw new Exception(Convert.ToString(result) + msgError);
                 }
+
                 return true;
             }
             catch (Exception ex)
@@ -60,29 +61,8 @@ namespace DAL
             }
         }
 
-        public bool Update(GoodsIssueDetailsModel model)
-        {
-            string msgError = "";
-            try
-            {
-                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_GoodsIssueDetails_update",
-                    "@IssueID", model.IssueID,
-                    "@ProductID", model.ProductID,
-                    "@Quantity", model.Quantity,
-                    "@UnitPrice", model.UnitPrice,
-                    "@BatchNo", model.BatchNo);
 
-                if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
-                {
-                    throw new Exception(Convert.ToString(result) + msgError);
-                }
-                return true;
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
-        }
+     
 
         public bool Delete(GoodsIssueDetailsModel model)
         {

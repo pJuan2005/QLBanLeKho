@@ -35,20 +35,21 @@ namespace DAL
             }
         }
 
-        public bool Create(GoodsReceiptsModel model)
+        public bool CreateMultiple(List<GoodsReceiptsModel> models)
         {
             string msgError = "";
             try
             {
-                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_GoodsReceipts_create",
-                    "@POID", model.POID,
-                    "@ReceiptDate", model.ReceiptDate,
-                    "@USerID", model.UserID);
+                var jsonData = Newtonsoft.Json.JsonConvert.SerializeObject(models);
+
+                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_GoodsReceipts_create_multiple",
+                    "@JsonData", jsonData);
 
                 if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
                 {
                     throw new Exception(Convert.ToString(result) + msgError);
                 }
+
                 return true;
             }
             catch (Exception ex)
@@ -56,6 +57,7 @@ namespace DAL
                 throw;
             }
         }
+
 
         public bool Update(GoodsReceiptsModel model)
         {

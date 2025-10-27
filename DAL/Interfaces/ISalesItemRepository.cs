@@ -10,8 +10,9 @@ namespace DAL.Interfaces
     public interface ISalesItemRepository
     {
         SalesItemModel GetDatabyID(int saleID, int productID);
-        bool Create(SalesItemModel model);
+        bool CreateMultiple(List<SalesItemModel> models);
         
+
         bool Delete(SalesItemModel model);
     }
 }

@@ -9,16 +9,16 @@ using Model;
 
 namespace DAL
 {
-    public partial class DonMuaHangRepository : IDonMuaHangRepository
+    public class PurchaseOrderRepository : IPurchaseOrderRepository
     {
         private IDatabaseHelper _dbHelper;
 
-        public DonMuaHangRepository(IDatabaseHelper dbHelper)
+        public PurchaseOrderRepository(IDatabaseHelper dbHelper)
         {
             _dbHelper = dbHelper;
         }
 
-        public DonMuaHangModel GetDatabyID(int id)
+        public PurchaseOrderModel GetDatabyID(int id)
         {
             string msgError = "";
             try
@@ -27,7 +27,7 @@ namespace DAL
                     "@POID", id);
                 if (!string.IsNullOrEmpty(msgError))
                     throw new Exception(msgError);
-                return dt.ConvertTo<DonMuaHangModel>().FirstOrDefault();
+                return dt.ConvertTo<PurchaseOrderModel>().FirstOrDefault();
             }
             catch (Exception ex)
             {
@@ -35,30 +35,30 @@ namespace DAL
             }
         }
 
-        public bool Create(DonMuaHangModel model)
+        public bool CreateMultiple(List<PurchaseOrderModel> models)
         {
             string msgError = "";
             try
             {
-                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_PurchaseOrders_create",
+                var jsonData = Newtonsoft.Json.JsonConvert.SerializeObject(models);
 
-                    "@SupplierID", model.SupplierID,
-                    "@OrderDate", model.OrderDate,
-                    
-                    "@Status", model.Status);
+                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_PurchaseOrders_create_multiple",
+                    "@JsonData", jsonData);
+
                 if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
                 {
                     throw new Exception(Convert.ToString(result) + msgError);
                 }
+
                 return true;
             }
             catch (Exception ex)
             {
-                throw ;
+                throw;
             }
         }
-        
-        public bool Update(DonMuaHangModel model)
+
+        public bool Update(PurchaseOrderModel model)
         {
             string msgError = "";
             try
@@ -81,7 +81,7 @@ namespace DAL
                 throw ex;
             }
         }
-        public bool Delete(DonMuaHangModel model)
+        public bool Delete(PurchaseOrderModel model)
         {
             string msgError = "";
             try
@@ -101,7 +101,7 @@ namespace DAL
         }
 
 
-        public List<DonMuaHangModel> Search(int pageIndex, int pageSize, out long total, int? SupplierID, DateTime? OrderDate, decimal TotalAmount)
+        public List<PurchaseOrderModel> Search(int pageIndex, int pageSize, out long total, int? SupplierID, DateTime? OrderDate, decimal TotalAmount)
         {
             string msgError = "";
             total = 0;
@@ -133,7 +133,7 @@ namespace DAL
                 if (dt.Rows.Count > 0)
                     total = Convert.ToInt64(dt.Rows[0]["SobanGhi"]);
 
-                return dt.ConvertTo<DonMuaHangModel>().ToList();
+                return dt.ConvertTo<PurchaseOrderModel>().ToList();
             }
             catch (Exception ex)
             {

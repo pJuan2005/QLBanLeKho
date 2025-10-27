@@ -25,12 +25,12 @@ namespace BLL
             return _res.GetDatabyID(saleID, productID);
         }
 
-        public bool Create(SalesItemModel model)
+        public bool CreateMultiple(List<SalesItemModel> models) 
         {
-            return _res.Create(model);
+            return _res.CreateMultiple(models);
         }
 
-
+        
         public bool Delete(SalesItemModel model)
         {
             return _res.Delete(model);

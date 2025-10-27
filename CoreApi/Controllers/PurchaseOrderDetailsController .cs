@@ -20,20 +20,14 @@ namespace CoreApi.Controllers
 
         [Route("create")]
         [HttpPost]
-        public PurchaseOrderDetailsModel Create([FromBody] PurchaseOrderDetailsModel model)
+        public IActionResult Create([FromBody] List<PurchaseOrderDetailsModel> models)
         {
-            _PurchaseOrderDetailsBusiness.Create(model);
-            return model;
+            _PurchaseOrderDetailsBusiness.CreateMultiple(models);
+            return Ok();
         }
 
-        [Route("update")]
-        [HttpPost]
-        public PurchaseOrderDetailsModel Update([FromBody] PurchaseOrderDetailsModel model)
-        {
-            _PurchaseOrderDetailsBusiness.Update(model);
-            return model;
 
-        }
+        
 
         [Route("delete")]
         [HttpPost]

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Model;
 using System.Reflection;
 using BLL.Interfaces;
+using BLL;
 
 
 namespace CoreApi.Controllers
@@ -20,19 +21,13 @@ namespace CoreApi.Controllers
 
         [Route("create")]
         [HttpPost]
-        public GoodsIssueDetailsModel Create([FromBody] GoodsIssueDetailsModel model)
+        public IActionResult Create([FromBody] List<GoodsIssueDetailsModel> models)
         {
-            _goodsIssueDetailsBusiness.Create(model);
-            return model;
+            _goodsIssueDetailsBusiness.CreateMultiple(models);
+            return Ok(models);
         }
 
-        [Route("update")]
-        [HttpPost]
-        public GoodsIssueDetailsModel Update([FromBody] GoodsIssueDetailsModel model)
-        {
-            _goodsIssueDetailsBusiness.Update(model);
-            return model;
-        }
+       
 
         [Route("delete")]
         [HttpPost]

@@ -32,47 +32,47 @@ builder.Services.AddTransient<IApSupplierRepository, ApSupplierRepository>();
 builder.Services.AddTransient<IApSupplierBusiness, ApSupplierBusiness>();
 
 // Đăng ký các lớp xử lý nghiệp vụ và truy cập dữ liệu vào hệ thống DI <PurchaseOrderDetails>
-builder.Services.AddScoped<IPurchaseOrderDetailsBusiness, PurchaseOrderDetailsBusiness>();
-builder.Services.AddScoped<IPurchaseOrderDetailsRepository, PurchaseOrderDetailsRepository>();
+builder.Services.AddTransient<IPurchaseOrderDetailsBusiness, PurchaseOrderDetailsBusiness>();
+builder.Services.AddTransient<IPurchaseOrderDetailsRepository, PurchaseOrderDetailsRepository>();
 
 // Đăng ký các lớp xử lý nghiệp vụ và truy cập dữ liệu vào hệ thống DI <Promotions>
-builder.Services.AddScoped<IPromotionsBusiness, PromotionsBusiness>();
-builder.Services.AddScoped<IPromotionsRepository, PromotionsRepository>();
+builder.Services.AddTransient<IPromotionsBusiness, PromotionsBusiness>();
+builder.Services.AddTransient<IPromotionsRepository, PromotionsRepository>();
 
 // Đăng ký các lớp xử lý nghiệp vụ và truy cập dữ liệu vào hệ thống DI <Sales>
 
-builder.Services.AddScoped<ISalesBusiness, SalesBusiness>();
-builder.Services.AddScoped<ISalesRepository, SalesRepository>();
+builder.Services.AddTransient<ISalesBusiness, SalesBusiness>();
+builder.Services.AddTransient<ISalesRepository, SalesRepository>();
 
 // Đăng ký các lớp xử lý nghiệp vụ và truy cập dữ liệu vào hệ thống DI <SalesItem>
 
-builder.Services.AddScoped<ISalesItemBusiness, SalesItemBusiness>();
-builder.Services.AddScoped<ISalesItemRepository, SalesItemRepository>();
+builder.Services.AddTransient<ISalesItemBusiness, SalesItemBusiness>();
+builder.Services.AddTransient<ISalesItemRepository, SalesItemRepository>();
 
 // Đăng ký các lớp xử lý nghiệp vụ và truy cập dữ liệu vào hệ thống DI <Invoice>
-builder.Services.AddScoped<IInvoiceBusiness, InvoiceBusiness>();
-builder.Services.AddScoped<IInvoiceRepository, InvoiceRepository>();
+builder.Services.AddTransient<IInvoiceBusiness, InvoiceBusiness>();
+builder.Services.AddTransient<IInvoiceRepository, InvoiceRepository>();
 
 // Đăng ký các lớp xử lý nghiệp vụ và truy cập dữ liệu vào hệ thống DI <GoodsReceipts>
-builder.Services.AddScoped<IGoodsReceiptsBusiness, GoodsReceiptsBusiness>();
-builder.Services.AddScoped<IGoodsReceiptsRepository, GoodsReceiptsRepository>();
+builder.Services.AddTransient<IGoodsReceiptsBusiness, GoodsReceiptsBusiness>();
+builder.Services.AddTransient<IGoodsReceiptsRepository, GoodsReceiptsRepository>();
 
 // Đăng ký các lớp xử lý nghiệp vụ và truy cập dữ liệu vào hệ thống DI <GoodsReceiptDetails>
-builder.Services.AddScoped<IGoodsReceiptDetailsBusiness, GoodsReceiptDetailsBusiness>();
-builder.Services.AddScoped<IGoodsReceiptDetailsRepository, GoodsReceiptDetailsRepository>();
+builder.Services.AddTransient<IGoodsReceiptDetailsBusiness, GoodsReceiptDetailsBusiness>();
+builder.Services.AddTransient<IGoodsReceiptDetailsRepository, GoodsReceiptDetailsRepository>();
 
 // Đăng ký các lớp xử lý nghiệp vụ và truy cập dữ liệu vào hệ thống DI <GoodsIssues>
-builder.Services.AddScoped<IGoodsIssuesBusiness, GoodsIssuesBusiness>();
-builder.Services.AddScoped<IGoodsIssuesRepository, GoodsIssuesRepository>();
+builder.Services.AddTransient<IGoodsIssuesBusiness, GoodsIssuesBusiness>();
+builder.Services.AddTransient<IGoodsIssuesRepository, GoodsIssuesRepository>();
 
 // Đăng ký các lớp xử lý nghiệp vụ và truy cập dữ liệu vào hệ thống DI <GoodsIssueDetails>
-builder.Services.AddScoped<IGoodsIssueDetailsBusiness, GoodsIssueDetailsBusiness>();
-builder.Services.AddScoped<IGoodsIssueDetailsRepository, GoodsIssueDetailsRepository>();
+builder.Services.AddTransient<IGoodsIssueDetailsBusiness, GoodsIssueDetailsBusiness>();
+builder.Services.AddTransient<IGoodsIssueDetailsRepository, GoodsIssueDetailsRepository>();
 
-// Đăng ký các lớp xử lý nghiệp vụ và truy cập dữ liệu vào hệ thống DI
+// Đăng ký các lớp xử lý nghiệp vụ và truy cập dữ liệu vào hệ thống DI <PurchaseOrder>
 
-builder.Services.AddScoped<IDonMuaHangBusiness, DonMuaHangBusiness>();
-builder.Services.AddScoped<IDonMuaHangRepository, DonMuaHangRepository>();
+builder.Services.AddTransient<IPurchaseOrderBusiness, PurchaseOrderBusiness>();
+builder.Services.AddScoped<IPurchaseOrderRepository, PurchaseOrderRepository>();
 
 
 

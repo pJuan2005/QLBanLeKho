@@ -24,7 +24,8 @@ namespace DAL
             try
             {
                 var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "sp_PurchaseOrderDetails_get_by_id",
-                    "@POID", poid);
+                    "@POID", poid,
+                    "@ProductID", productId);
                 if (!string.IsNullOrEmpty(msgError))
                     throw new Exception(msgError);
                 return dt.ConvertTo<PurchaseOrderDetailsModel>().FirstOrDefault();
@@ -35,51 +36,34 @@ namespace DAL
             }
         }
 
-        public bool Create(PurchaseOrderDetailsModel model)
+       
+
+        public bool CreateMultiple(List<PurchaseOrderDetailsModel> models)
         {
             string msgError = "";
             try
             {
-                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_PurchaseOrderDetails_create",
-                    "@POID", model.POID,
-                    "@ProductID", model.ProductID,
-                    "@Quantity", model.Quantity,
-                    "@UnitPrice", model.UnitPrice,
-                    "@NameProduct", model.NameProduct);
+                var jsonData = Newtonsoft.Json.JsonConvert.SerializeObject(models);
+
+                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_PurchaseOrderDetails_create_multiple",
+                    "@JsonData", jsonData);
+
                 if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
                 {
                     throw new Exception(Convert.ToString(result) + msgError);
                 }
+
                 return true;
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw ;
             }
         }
 
-        public bool Update(PurchaseOrderDetailsModel model)
-        {
-            string msgError = "";
-            try
-            {
-                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_PurchaseOrderDetails_update",
-                    "@POID", model.POID,
-                    "@ProductID", model.ProductID,
-                    "@Quantity", model.Quantity,
-                    "@UnitPrice", model.UnitPrice,
-                    "@NameProduct", model.NameProduct);
-                if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
-                {
-                    throw new Exception(Convert.ToString(result) + msgError);
-                }
-                return true;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
+
+
+        
 
         public bool Delete(PurchaseOrderDetailsModel model)
         {
@@ -97,7 +81,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw ;
             }
         }
     }
