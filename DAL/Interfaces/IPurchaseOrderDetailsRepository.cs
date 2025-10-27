@@ -7,12 +7,13 @@ using Model;
 
 namespace DAL.Interfaces
 {
-    public  interface IPurchaseOrderDetailsRepository
+    public interface IPurchaseOrderDetailsRepository
     {
         PurchaseOrderDetailsModel GetDatabyID(int poid, int productId);
-        bool Create(PurchaseOrderDetailsModel model);
-        bool Update(PurchaseOrderDetailsModel model);
+        
+        bool CreateMultiple(List<PurchaseOrderDetailsModel> models); 
+        
         bool Delete(PurchaseOrderDetailsModel model);
-
     }
+
 }

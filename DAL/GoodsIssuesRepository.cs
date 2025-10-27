@@ -41,6 +41,7 @@ namespace DAL
             try
             {
                 var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_GoodsIssues_create",
+                    "SaleID", model.SaleID,
                     "@IssueDate", model.IssueDate,
                     "@UserID", model.UserID,
                     "@CustomerID", model.CustomerID,

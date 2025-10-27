@@ -8,45 +8,45 @@ using BLL.Interfaces;
 namespace CoreApi.Controllers
 {
 
-    [Route("api/donmuahang")]
-    public class DonMuaHangController : ControllerBase
+    [Route("api/purchaseorder")]
+    public class PurchaseOrderRepositoryController : ControllerBase
     {
-        private IDonMuaHangBusiness _donMuaHangBusiness;
+        private IPurchaseOrderBusiness _purchaseOrderBusiness;
 
-        public DonMuaHangController(IDonMuaHangBusiness donMuaHangBusiness)
+        public PurchaseOrderRepositoryController(IPurchaseOrderBusiness donMuaHangBusiness)
         {
-            _donMuaHangBusiness = donMuaHangBusiness;
+            _purchaseOrderBusiness = donMuaHangBusiness;
         }
 
         [Route("create")]
         [HttpPost]
-        public DonMuaHangModel Create([FromBody] DonMuaHangModel model)
+        public IActionResult Create([FromBody] List<PurchaseOrderModel> models)
         {
-            _donMuaHangBusiness.Create(model);
-            return model;
+            _purchaseOrderBusiness.CreateMultiple(models);
+            return Ok(models);
         }
 
         [Route("update")]
         [HttpPost]
-        public DonMuaHangModel Update([FromBody] DonMuaHangModel model)
+        public PurchaseOrderModel Update([FromBody] PurchaseOrderModel model)
         {
-            _donMuaHangBusiness.Update(model);
+            _purchaseOrderBusiness.Update(model);
             return model;
         }
 
         [Route("delete")]
         [HttpPost]
-        public IActionResult Delete([FromBody] DonMuaHangModel model)
+        public IActionResult Delete([FromBody] PurchaseOrderModel model)
         {
-            _donMuaHangBusiness.Delete(model);
+            _purchaseOrderBusiness.Delete(model);
             return Ok(new { data = "OK" });
         }
 
         [Route("get-by-id/{id}")]
         [HttpGet]
-        public DonMuaHangModel GetDatabyID(int id)
+        public PurchaseOrderModel GetDatabyID(int id)
         {
-            return _donMuaHangBusiness.GetDatabyID(id);
+            return _purchaseOrderBusiness.GetDatabyID(id);
         }
 
         [Route("search")]
@@ -87,7 +87,7 @@ namespace CoreApi.Controllers
 
 
                 long total = 0;
-                var data = _donMuaHangBusiness.Search(page, pageSize, out total, SupplierID, orderDate, totalAmount);
+                var data = _purchaseOrderBusiness.Search(page, pageSize, out total, SupplierID, orderDate, totalAmount);
                 response.TotalItems = total;
                 response.Data = data;
                 response.Page = page;

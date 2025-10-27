@@ -11,11 +11,10 @@ using Model;
 
 namespace BLL
 {
-    public  class PurchaseOrderDetailsBusiness : IPurchaseOrderDetailsBusiness
+    public class PurchaseOrderDetailsBusiness : IPurchaseOrderDetailsBusiness
     {
         private IPurchaseOrderDetailsRepository _res;
 
-        
         public PurchaseOrderDetailsBusiness(IPurchaseOrderDetailsRepository res)
         {
             _res = res;
@@ -25,18 +24,20 @@ namespace BLL
         {
             return _res.GetDatabyID(poid, productId);
         }
-        public bool Create(PurchaseOrderDetailsModel model)
+
+      
+
+        public bool CreateMultiple(List<PurchaseOrderDetailsModel> models) 
         {
-            return _res.Create(model);
+            return _res.CreateMultiple(models);
         }
 
-        public bool Update(PurchaseOrderDetailsModel model)
-        {
-            return _res.Update(model);
-        }
+       
+
         public bool Delete(PurchaseOrderDetailsModel model)
         {
             return _res.Delete(model);
         }
     }
+
 }

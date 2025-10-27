@@ -10,8 +10,8 @@ namespace BLL.Interfaces
     public interface IGoodsIssueDetailsBusiness
     {
         GoodsIssueDetailsModel GetDatabyID(int issueID, int productID);
-        bool Create(GoodsIssueDetailsModel model);
-        bool Update(GoodsIssueDetailsModel model);
+        bool CreateMultiple(List<GoodsIssueDetailsModel> models);
+       
         bool Delete(GoodsIssueDetailsModel model);
     }
 }

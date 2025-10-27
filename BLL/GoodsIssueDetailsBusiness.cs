@@ -24,15 +24,12 @@ namespace BLL
             return _res.GetDatabyID(issueID, productID);
         }
 
-        public bool Create(GoodsIssueDetailsModel model)
+        public bool CreateMultiple(List<GoodsIssueDetailsModel> models)
         {
-            return _res.Create(model);
+            return _res.CreateMultiple(models);
         }
 
-        public bool Update(GoodsIssueDetailsModel model)
-        {
-            return _res.Update(model);
-        }
+     
 
         public bool Delete(GoodsIssueDetailsModel model)
         {

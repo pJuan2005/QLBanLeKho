@@ -20,13 +20,16 @@ namespace CoreApi.Controllers
 
         [Route("create")]
         [HttpPost]
-        public SalesItemModel Create([FromBody] SalesItemModel model)
+        public IActionResult Create([FromBody] List<SalesItemModel> models)
         {
-            _salesItemBusiness.Create(model);
-            return model;
+            _salesItemBusiness.CreateMultiple(models);
+            return Ok(models);
         }
 
+
       
+
+
         [Route("delete")]
         [HttpPost]
         public IActionResult Delete([FromBody] SalesItemModel model)
