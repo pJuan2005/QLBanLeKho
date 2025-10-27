@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pos & Inventory Login</title>
+
+    <!-- font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <!-- css -->
+    <link rel="stylesheet" href="../Shared/css/login.css" />
+    <script src="../Shared/angular/angular.min.js"></script>
+    <script src="../Shared/angular/global.js"></script>
+    <script src="../Shared/angular/login.js"></script>
+  </head>
+  <body ng-app="AppRetailPos" ng-controller="loginCtrl">
+    <div class="login">
+      <div class="log">
+        <div class="login-customer">
+          <div class="icon">
+            <img src="../Shared/img/login/wheel.png" alt="" class="wheel" />
+          </div>
+          <h1 class="name-store">Retail Store</h1>
+          <p class="desc">Sign in to your account or create a new one</p>
+          <form ng-submit="login()">
+            <label for="account">Account</label><br />
+            <input
+              ng-model="model.username"
+              type="text"
+              id="account"
+              placeholder="Enter your account"
+              required
+            /><br />
+            <br />
+            <label for="password">Password</label><br />
+            <div class="password-container">
+              <input
+                ng-model="model.password"
+                id="password"
+                type="password"
+                placeholder="*******"
+                required
+              />
+              <img
+                src="../Shared/img/login/eye-slash.svg"
+                id="togglePass"
+                alt=""
+              />
+            </div>
+            <br />
+            <p class="error" ng-if="error">{{error}}</p>
+            <input
+              ng-disabled="loading"
+              class="submit"
+              type="submit"
+              name="submit"
+              id="submit"
+              value="Sign In"
+            />
+          </form>
+          <div class="register">
+            <p class="title">Don't have an account?</p>
+            <a href="../AuthFE/register.html">Register now</a>
+          </div>
+        </div>
+      </div>
+      <div class="log-employee">
+        <div class="login-staff">
+          <div class="link-admin">
+            <p class="title">Are you a staff member?</p>
+            <a href="#!">Go to Admin Portal</a>
+          </div>
+        </div>
+        <div class="back-home"><a href="#!">← Back to Home</a></div>
+      </div>
+    </div>
+
+    <script src="../Shared/js/login.js"></script>
+  </body>
+</html>

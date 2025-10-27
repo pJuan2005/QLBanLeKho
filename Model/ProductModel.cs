@@ -20,7 +20,7 @@ namespace Model
         public int MinStock { get; set; }            // Tồn kho tối thiểu (default 0)
         public string Status { get; set; }
         //public string Image { get; set; }
-        public decimal VATRate { get; set; }
+        public decimal? VATRate { get; set; }
 
         [NotMapped] // Báo cho Entity Framework/Dapper biết không map cột này vào DB
         public string Image { get; set; } // Thuộc tính mới để chứa URL đầy đủ

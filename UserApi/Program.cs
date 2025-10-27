@@ -28,12 +28,6 @@ builder.Services.AddSwaggerGen();
 // Đăng ký các lớp xử lý nghiệp vụ và truy cập dữ liệu vào hệ thống DI
 builder.Services.AddScoped<IDatabaseHelper, DatabaseHelper>();
 
-builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddScoped<IUserBusiness, UserBusiness>();
-
-
-
-
 
 // Cấu hình JWT Authentication từ nhánh dev
 IConfiguration configuration = builder.Configuration;
@@ -65,13 +59,6 @@ if (appSettings != null && !string.IsNullOrWhiteSpace(appSettings.Secret))
 
     builder.Services.AddAuthorization();
 }
-
-
-builder.Services.AddTransient<IDatabaseHelper, DatabaseHelper>();
-builder.Services.AddTransient<IDPaymentDAL, PaymentDAL>();
-builder.Services.AddTransient<IDPaymentBLL, PaymentBLL>();
-
-
 
 
 builder.Services.AddControllers();

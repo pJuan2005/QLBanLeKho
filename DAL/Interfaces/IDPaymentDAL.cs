@@ -11,7 +11,7 @@ namespace DAL.Interfaces
         bool Update(PaymentModel model);
         bool Delete(int paymentId);
         List<PaymentModel> Search(int pageIndex, int pageSize, out long total,
-                                  int? CustomerID,int? SupplierID, int? SaleID, string Method,
+                                  int? CustomerID,int? SupplierID,int? ReceiptID, int? SaleID, string Method,
                                   DateTime? FromDate, DateTime? ToDate);
     }
 }
