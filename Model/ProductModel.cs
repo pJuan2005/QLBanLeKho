@@ -14,9 +14,7 @@ namespace Model
         public string Barcode { get; set; }          // Mã barcode (unique, có thể null)
         public string ProductName { get; set; }      // Tên sản phẩm
         public int? CategoryID { get; set; }         // Mã loại hàng (nullable vì có thể chưa gán)
-        public int? SupplierID { get; set; }         // Mã nhà cung cấp (nullable)
         public string Unit { get; set; }             // Đơn vị tính
-        public decimal Price { get; set; }           // Giá bán
         public int MinStock { get; set; }            // Tồn kho tối thiểu (default 0)
         public string Status { get; set; }
         //public string Image { get; set; }
@@ -42,7 +40,6 @@ namespace Model
         public string SKU { get; set; }
         public string ProductName { get; set; }
         public int? CategoryID { get; set; }
-        public int? SupplierID { get; set; }
         public string Status { get; set; }
 
     }

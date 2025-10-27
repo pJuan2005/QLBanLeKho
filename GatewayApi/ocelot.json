@@ -233,6 +233,19 @@
           "Port": 5092
         }
       ]
+    },
+
+    {
+      "UpstreamPathTemplate": "/api-admin/system/{everything}",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+      "DownstreamPathTemplate": "/api/system/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5093
+        }
+      ]
     }
   ]
 }
