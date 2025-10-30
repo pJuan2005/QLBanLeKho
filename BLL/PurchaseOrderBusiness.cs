@@ -34,9 +34,9 @@ namespace BLL
         {
             return _res.Delete(model);
         }
-        public List<PurchaseOrderModel> Search(int pageIndex, int pageSize, out long total, int? SupplierID, DateTime? OrderDate, decimal TotalAmount)
+        public List<PurchaseOrderModel> Search( decimal? minTotalAmount, decimal? maxTotalAmount, string status, DateTime? fromDate, DateTime? toDate)
         {
-            return _res.Search(pageIndex, pageSize, out total, SupplierID, OrderDate, TotalAmount);
+            return _res.Search(minTotalAmount, maxTotalAmount, status, fromDate, toDate);
         }
     }
 }
