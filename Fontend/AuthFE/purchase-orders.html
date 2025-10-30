@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RetailPro - Purchase Orders</title>
+    <link rel="stylesheet" href="../Shared/css/purchase-orders.css">
+</head>
+<body>
+<div class="container">
+    <!-- Sidebar - GIỮ NGUYÊN 100% MẪU -->
+    <aside class="sidebar">
+        <div class="logo">🛒 RetailPro<br><span>Inventory & POS</span></div>
+        <nav>
+            <ul>
+                <li><a href="#">Dashboard</a></li>
+                <li><a href="#">POS</a></li>
+                <li><a href="#">Products</a></li>
+                <li><a href="#">Categories</a></li>
+                <li><a href="#">Customers</a></li>
+                <li><a href="#">Suppliers</a></li>
+                <li class="active"><a href="#">Purchase Orders</a></li>
+                <li><a href="#">Stock Management</a></li>
+                <li><a href="#">Sales & Returns</a></li>
+                <li><a href="#">Payments & Debts</a></li>
+                <li><a href="#">Reports</a></li>
+                <li><a href="#">Settings</a></li>
+            </ul>
+        </nav>
+        <div class="user">
+            <div class="avatar">J</div>
+            <div class="info">
+                <p>John Doe</p>
+                <small>Admin</small>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main -->
+    <main class="main">
+        <header class="topbar">
+            <input type="text" placeholder="🔍 Search products, customers, orders...">
+            <div class="user-actions">
+                <span class="role">admin</span>
+                <span class="notif">🔔<span class="badge">3</span></span>
+                <img src="https://i.pravatar.cc/40" class="avatar">
+            </div>
+        </header>
+
+        <section class="content">
+            <h2>Purchase Orders</h2>
+            <p class="subtitle">Manage purchase orders from suppliers</p>
+
+            <!-- THAY BẰNG 4 Ô LỌC NHƯ TRƯỚC -->
+            <div class="controls">
+                <div class="filter-group">
+                    <input type="number" placeholder="Min Amount" class="amount-input">
+                    <input type="number" placeholder="Max Amount" class="amount-input">
+                    <select class="status-select">
+                        <option>All Status</option>
+                        <option>Pending</option>
+                        <option>Approved</option>
+                        <option>Rejected</option>
+                    </select>
+                    <input type="date" class="date-input">
+                    <input type="date" class="date-input">
+                    <button class="btn-search">Search</button>
+                </div>
+                <div class="right-controls">
+                    <button class="btn-outline">Import</button>
+                    <button class="btn-outline">Export</button>
+                    <button class="btn-primary">+ Add Purchase Order</button>
+                </div>
+            </div>
+
+            <!-- 3 Ô THỐNG KÊ -->
+            <div class="stats">
+                <div class="stat-box">
+                    <p>Total POs</p>
+                    <h3>0</h3>
+                </div>
+                <div class="stat-box">
+                    <p>Pending</p>
+                    <h3>0</h3>
+                </div>
+                <div class="stat-box">
+                    <p>Approved</p>
+                    <h3>0</h3>
+                </div>
+            </div>
+
+            <!-- BẢNG ĐƠN MUA HÀNG -->
+            <table class="product-table">
+                <thead>
+                    <tr>
+                        <th>POID</th>
+                        <th>Supplier</th>
+                        <th>Order Date</th>
+                        <th>Total Amount</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="6" class="empty-state">
+                            <p>No purchase orders found</p>
+                            <small>Try adjusting your filters or add a new PO</small>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+</div>
+</body>
+</html>

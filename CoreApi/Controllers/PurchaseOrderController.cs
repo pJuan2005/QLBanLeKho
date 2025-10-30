@@ -50,54 +50,25 @@ namespace CoreApi.Controllers
         }
 
         [Route("search")]
-        [HttpPost]
-        public ResponseModel Search([FromBody] Dictionary<string, object> formData)
+        [HttpGet]
+        public IActionResult Search(
+            [FromQuery] decimal? minTotalAmount,
+            [FromQuery] decimal? maxTotalAmount,
+            [FromQuery] string status,
+            [FromQuery] DateTime? fromDate,
+            [FromQuery] DateTime? toDate)
         {
-            var response = new ResponseModel();
             try
             {
-                var page = int.Parse(formData["page"].ToString());
-                var pageSize = int.Parse(formData["pageSize"].ToString());
+                var result = _purchaseOrderBusiness.Search(
+                    minTotalAmount, maxTotalAmount, status, fromDate, toDate);
 
-                int? SupplierID = null; // Sử dụng nullable int
-                if (formData.ContainsKey("SupplierID") && !string.IsNullOrEmpty(formData["SupplierID"].ToString()))
-                {
-                    SupplierID = Convert.ToInt32(formData["SupplierID"]);
-                }
-
-                DateTime? orderDate = null; // Sử dụng nullable DateTime, mặc định là null nếu không cung cấp
-                if (formData.ContainsKey("OrderDate") && DateTime.TryParse(formData["OrderDate"].ToString(), out DateTime parsedDate))
-                {
-                    orderDate = parsedDate.Date; // Gán giá trị nếu có
-                }
-
-
-                decimal totalAmount = 0;
-                if (formData.ContainsKey("TotalAmount"))
-                {
-                    try
-                    {
-                        totalAmount = Convert.ToDecimal(formData["TotalAmount"]);
-                    }
-                    catch
-                    {
-                        totalAmount = 0; // hoặc log lỗi nếu cần
-                    }
-                }
-
-
-                long total = 0;
-                var data = _purchaseOrderBusiness.Search(page, pageSize, out total, SupplierID, orderDate, totalAmount);
-                response.TotalItems = total;
-                response.Data = data;
-                response.Page = page;
-                response.PageSize = pageSize;
+                return Ok(result);
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                return StatusCode(500, new { message = ex.Message });
             }
-            return response;
         }
     }
 }
