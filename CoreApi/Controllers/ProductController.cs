@@ -17,9 +17,66 @@ namespace CoreApi.Controllers
         {
             if (product != null && !string.IsNullOrEmpty(product.Image))
             {
-                product.Image = $"{Request.Scheme}://{Request.Host}/{product.Image.Replace('\\', '/')}";
+                product.Image = $"Products/{product.Image}"; // mới
             }
         }
+
+
+
+        [HttpPut("update-product/{id}")]
+        public async Task<IActionResult> UpdateProduct(int id, [FromForm] ProductModel model, IFormFile? imageFile)
+        {
+
+            try
+            {
+                // ✅ Kiểm tra sản phẩm tồn tại
+                var existing = _ProductBusiness.GetDatabyID(id);
+                if (existing == null)
+                    return NotFound("Không tìm thấy sản phẩm.");
+
+                // ✅ Nếu có upload ảnh mới
+                if (imageFile != null && imageFile.Length > 0)
+                {
+                    // Tạo thư mục nếu chưa có
+                    string folderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Products");
+                    if (!Directory.Exists(folderPath))
+                        Directory.CreateDirectory(folderPath);
+
+                    // Tạo tên file mới (tránh trùng)
+                    string fileName = Path.GetFileNameWithoutExtension(imageFile.FileName)
+                                     + "_" + Guid.NewGuid().ToString("N").Substring(0, 6)
+                                     + Path.GetExtension(imageFile.FileName);
+
+                    string fullPath = Path.Combine(folderPath, fileName);
+
+                    // Lưu file
+                    using (var stream = new FileStream(fullPath, FileMode.Create))
+                    {
+                        await imageFile.CopyToAsync(stream);
+                    }
+
+                    // Cập nhật đường dẫn ảnh trong model
+                    model.Image = $"Products/{fileName}";
+                }
+                else
+                {
+                    // Nếu không chọn ảnh mới → giữ ảnh cũ
+                    model.Image = existing.Image;
+                }
+
+                // ✅ Cập nhật thông tin còn lại
+                model.ProductID = id;
+                _ProductBusiness.Update(model);
+
+                return Ok(new { message = "Cập nhật sản phẩm thành công!", image = model.Image });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+
 
 
         public ProductController(IDProductBLL productBLL)
@@ -27,13 +84,61 @@ namespace CoreApi.Controllers
             _ProductBusiness = productBLL;
         }
 
+
         [Route("create-product")]
         [HttpPost]
-        public ProductModel Create([FromBody] ProductModel model)
+        public IActionResult CreateProduct([FromForm] ProductModel product, IFormFile? imageFile)
         {
-            _ProductBusiness.Create(model);
-            return model;
+            ModelState.Remove("Image");
+
+            try
+            {
+                // ✅ Nếu có upload ảnh
+                if (imageFile != null && imageFile.Length > 0)
+                {
+                    // Thư mục lưu ảnh
+                    var folderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Products");
+
+                    // Tạo thư mục nếu chưa tồn tại
+                    if (!Directory.Exists(folderPath))
+                    {
+                        Directory.CreateDirectory(folderPath);
+                    }
+
+                    // Tạo tên file duy nhất tránh trùng lặp
+                    var fileName = $"{Guid.NewGuid()}_{Path.GetFileName(imageFile.FileName)}";
+                    var filePath = Path.Combine(folderPath, fileName);
+
+                    // Lưu file
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        imageFile.CopyTo(stream);
+                    }
+
+                    // Lưu đường dẫn tương đối vào DB
+                    product.Image = $"Products/{fileName}";
+                }
+
+                // ✅ Gọi BLL để thêm vào DB
+                var result = _ProductBusiness.Create(product);
+
+                return Ok(new
+                {
+                    success = true,
+                    message = "Thêm sản phẩm thành công!",
+                    data = result
+                });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new
+                {
+                    success = false,
+                    message = $"Lỗi khi thêm sản phẩm: {ex.Message}"
+                });
+            }
         }
+
 
         [Route("update-product")]
         [HttpPost]

@@ -530,21 +530,21 @@ VALUES
 ('SKU015', 'BC015', N'Giày Lười Nam', 10, 15, N'Đôi', 780000, 8, 'Active', N'Ảnh 1',10.00);
 
 
-UPDATE Products SET Image = N'ImageProducts\Giày Sneaker Trắng.jpg' WHERE SKU = 'SKU001';
-UPDATE Products SET Image = N'ImageProducts\Giày Sneaker Đen.jpg' WHERE SKU = 'SKU002';
-UPDATE Products SET Image = N'ImageProducts\Giày Chạy Bộ Nam.jpg' WHERE SKU = 'SKU003';
-UPDATE Products SET Image = N'ImageProducts\Giày Chạy Bộ Nữ.jpg' WHERE SKU = 'SKU004';
-UPDATE Products SET Image = N'ImageProducts\Giày Tennis Trắng.jpg' WHERE SKU = 'SKU005';
-UPDATE Products SET Image = N'ImageProducts\Giày Bóng Đá Cỏ Tự Nhiên.jpg' WHERE SKU = 'SKU006';
-UPDATE Products SET Image = N'ImageProducts\Giày Bóng Đá Cỏ Nhân Tạo.jpg' WHERE SKU = 'SKU007';
-UPDATE Products SET Image = N'ImageProducts\Giày Bóng Rổ Cao Cổ.jpg' WHERE SKU = 'SKU008';
-UPDATE Products SET Image = N'ImageProducts\Giày Golf Chống Thấm.jpg' WHERE SKU = 'SKU009';
-UPDATE Products SET Image = N'ImageProducts\Giày Tây Nam.jpg' WHERE SKU = 'SKU010';
-UPDATE Products SET Image = N'ImageProducts\Giày Cao Gót Đen.jpg' WHERE SKU = 'SKU011';
-UPDATE Products SET Image = N'ImageProducts\Giày Boot Da.jpg' WHERE SKU = 'SKU012';
-UPDATE Products SET Image = N'ImageProducts\Dép Lê Nam.jpg' WHERE SKU = 'SKU013';
-UPDATE Products SET Image = N'ImageProducts\Sandal Nữ Thời Trang.jpg' WHERE SKU = 'SKU014';
-UPDATE Products SET Image = N'ImageProducts\Giày Lười Nam.jpg' WHERE SKU = 'SKU015';
+UPDATE Products SET Image = N'Products\Giày Sneaker Trắng.jpg' WHERE SKU = 'SKU001';
+UPDATE Products SET Image = N'Products\Giày Sneaker Đen.jpg' WHERE SKU = 'SKU002';
+UPDATE Products SET Image = N'Products\Giày Chạy Bộ Nam.jpg' WHERE SKU = 'SKU003';
+UPDATE Products SET Image = N'Products\Giày Chạy Bộ Nữ.jpg' WHERE SKU = 'SKU004';
+UPDATE Products SET Image = N'Products\Giày Tennis Trắng.jpg' WHERE SKU = 'SKU005';
+UPDATE Products SET Image = N'Products\Giày Bóng Đá Cỏ Tự Nhiên.jpg' WHERE SKU = 'SKU006';
+UPDATE Products SET Image = N'Products\Giày Bóng Đá Cỏ Nhân Tạo.jpg' WHERE SKU = 'SKU007';
+UPDATE Products SET Image = N'Products\Giày Bóng Rổ Cao Cổ.jpg' WHERE SKU = 'SKU008';
+UPDATE Products SET Image = N'Products\Giày Golf Chống Thấm.jpg' WHERE SKU = 'SKU009';
+UPDATE Products SET Image = N'Products\Giày Tây Nam.jpg' WHERE SKU = 'SKU010';
+UPDATE Products SET Image = N'Products\Giày Cao Gót Đen.jpg' WHERE SKU = 'SKU011';
+UPDATE Products SET Image = N'Products\Giày Boot Da.jpg' WHERE SKU = 'SKU012';
+UPDATE Products SET Image = N'Products\Dép Lê Nam.jpg' WHERE SKU = 'SKU013';
+UPDATE Products SET Image = N'Products\Sandal Nữ Thời Trang.jpg' WHERE SKU = 'SKU014';
+UPDATE Products SET Image = N'Products\Giày Lười Nam.jpg' WHERE SKU = 'SKU015';
 
 
 
