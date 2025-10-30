@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Create Product</title>
+  <link rel="stylesheet" href="../Shared/css/create product.css" />
+</head>
+<body>
+  <div class="container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="logo">🛒 RetailPro<br><span>Inventory & POS</span></div>
+        <nav>
+            <ul>
+                <li><a href="#">Dashboard</a></li>
+                <li><a href="#">POS</a></li>
+                <li class="active"><a href="#">Products</a></li>
+                <li><a href="#">Categories</a></li>
+                <li><a href="#">Customers</a></li>
+                <li><a href="#">Suppliers</a></li>
+                <li><a href="#">Purchase Orders</a></li>
+                <li><a href="#">Stock Management</a></li>
+                <li><a href="#">Sales & Returns</a></li>
+                <li><a href="#">Payments & Debts</a></li>
+                <li><a href="#">Reports</a></li>
+                <li><a href="#">Settings</a></li>
+            </ul>
+        </nav>
+        <div class="user">
+            <div class="avatar">J</div>
+            <div class="info">
+                <p>John Doe</p>
+                <small>Admin</small>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main content -->
+    <main class="main-content">
+      <div class="header-bar">
+        <h1>Create Product</h1>
+        <a href="product.html" class="btn-back">← Back to Products</a>
+      </div>
+
+      <section class="form-section">
+        <h2><span>ℹ️</span> Product Information</h2>
+
+        <form id="createProductForm" class="form-grid">
+          <!-- Product Name -->
+          <div class="form-group">
+            <label>Product Name *</label>
+            <input type="text" id="productName" required />
+          </div>
+
+          <!-- Category -->
+          <div class="form-group">
+            <label>Category *</label>
+            <select id="category" required>
+              <option value="">Select</option>
+              <option value="1">Running Shoes</option>
+              <option value="2">Sports Shoes</option>
+            </select>
+          </div>
+
+          <!-- SKU -->
+          <div class="form-group">
+            <label>SKU *</label>
+            <div class="input-with-btn">
+              <input type="text" id="sku" required />
+              <button type="button" id="generateSku">Generate</button>
+            </div>
+          </div>
+
+          <!-- Barcode -->
+          <div class="form-group">
+            <label>Barcode</label>
+            <input type="text" id="barcode" />
+          </div>
+
+          <!-- Unit -->
+          <div class="form-group">
+            <label>Unit</label>
+            <select id="unit">
+              <option value="">Select</option>
+              <option>Đôi</option>
+              <option>Hộp</option>
+            </select>
+          </div>
+
+          <!-- Quantity -->
+          <div class="form-group">
+            <label>Quantity</label>
+            <input type="number" id="quantity" min="0" value="0" />
+          </div>
+
+          <!-- Min Stock -->
+          <div class="form-group">
+            <label>Min Stock</label>
+            <input type="number" id="minStock" min="0" value="0" />
+          </div>
+
+          <!-- VAT Rate -->
+          <div class="form-group">
+            <label>VAT Rate (%)</label>
+            <input type="number" id="vatRate" min="0" step="0.01" placeholder="0.00" />
+          </div>
+
+          <!-- Status -->
+          <div class="form-group">
+            <label>Status</label>
+            <select id="status">
+              <option value="Active">Active</option>
+              <option value="Inactive">Inactive</option>
+            </select>
+          </div>
+
+          <!-- Image -->
+          <div class="form-group full">
+            <label>Product Image</label>
+            <input type="file" id="image" accept="image/*" />
+          </div>
+
+          <!-- Buttons -->
+          <div class="form-actions full">
+            <button type="submit" class="btn-primary">Save Product</button>
+            <button type="button" id="refreshForm" class="btn-refresh">🔄 Refresh</button>
+            <a href="product.html" class="btn-secondary">Cancel</a>
+          </div>
+        </form>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    // Generate SKU
+    document.getElementById("generateSku").addEventListener("click", () => {
+      const sku = "SKU-" + Math.floor(Math.random() * 1000000);
+      document.getElementById("sku").value = sku;
+    });
+
+    // Refresh form
+    document.getElementById("refreshForm").addEventListener("click", () => {
+      const form = document.getElementById("createProductForm");
+      form.reset();
+      alert("Đã làm mới form!");
+    });
+  </script>
+</body>
+
+<script>
+  const apiUrl = "https://localhost:7092/api/Product/create-product";
+
+  // ====== Tạo SKU tự động ======
+  document.getElementById("generateSku").addEventListener("click", () => {
+    const sku = "SKU-" + Math.floor(Math.random() * 1000000);
+    document.getElementById("sku").value = sku;
+  });
+
+  // ====== Làm mới form ======
+  document.getElementById("refreshForm").addEventListener("click", () => {
+    document.getElementById("createProductForm").reset();
+    alert("Đã làm mới form!");
+  });
+
+  // ====== Khi nhấn "Save Product" ======
+  document.getElementById("createProductForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    // 🧩 Lấy giá trị từ form
+    const productName = document.getElementById("productName").value.trim();
+    const categoryID = parseInt(document.getElementById("category").value);
+    const sku = document.getElementById("sku").value.trim();
+    const barcode = document.getElementById("barcode").value.trim();
+    const unit = document.getElementById("unit").value;
+    const quantity = parseInt(document.getElementById("quantity").value) || 0;
+    const minStock = parseInt(document.getElementById("minStock").value) || 0;
+    const vatRate = parseFloat(document.getElementById("vatRate").value) || 0;
+    const status = document.getElementById("status").value;
+    const imageFile = document.getElementById("image").files[0];
+
+    // 🧠 Kiểm tra dữ liệu bắt buộc
+    if (!productName || !categoryID || !sku) {
+      alert("⚠️ Vui lòng nhập đầy đủ Product Name, Category và SKU!");
+      return;
+    }
+
+    // 🗂️ Tạo FormData để gửi file và dữ liệu
+    const formData = new FormData();
+    formData.append("ProductName", productName);
+    formData.append("CategoryID", categoryID);
+    formData.append("SKU", sku);
+    formData.append("Barcode", barcode);
+    formData.append("Unit", unit);
+    formData.append("Quantity", quantity);
+    formData.append("MinStock", minStock);
+    formData.append("VATRate", vatRate);
+    formData.append("Status", status);
+
+    if (imageFile) {
+      formData.append("imageFile", imageFile); // Gửi file thật lên server
+    }
+
+    // 🚀 Gửi dữ liệu lên API
+    try {
+      const response = await fetch(apiUrl, {
+        method: "POST",
+        body: formData
+      });
+
+      if (response.ok) {
+        alert("✅ Thêm sản phẩm thành công!");
+        window.location.href = "product.html";
+      } else {
+        const errorText = await response.text();
+        alert("❌ Lỗi khi thêm sản phẩm: " + errorText);
+      }
+    } catch (error) {
+      alert("⚠️ Không thể kết nối API: " + error.message);
+    }
+  });
+
+
+</script>
+
+
+
+</html>

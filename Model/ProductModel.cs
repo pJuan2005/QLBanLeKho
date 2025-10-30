@@ -20,8 +20,8 @@ namespace Model
         //public string Image { get; set; }
         public decimal? VATRate { get; set; }
 
-        [NotMapped] // Báo cho Entity Framework/Dapper biết không map cột này vào DB
-        public string Image { get; set; } // Thuộc tính mới để chứa URL đầy đủ
+        
+        public string? Image { get; set; } // Thuộc tính mới để chứa URL đầy đủ
         public int Quantity { get; set; }  
 
     }
