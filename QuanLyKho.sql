@@ -849,54 +849,80 @@ GO
 DROP PROCEDURE [dbo].[sp_product_create]
 
 
-CREATE PROCEDURE [dbo].[sp_product_create]
+CREATE OR ALTER PROCEDURE [dbo].[sp_product_create]
 (
-    @SKU VARCHAR(50),
-    @Barcode VARCHAR(50) = NULL,
+    @SKU         VARCHAR(50),
+    @Barcode     VARCHAR(50) = NULL,
     @ProductName NVARCHAR(100),
-    @CategoryID INT = NULL,
-    @Unit NVARCHAR(20) = NULL,
-    @MinStock INT = 0,
-    @Status NVARCHAR(20) = 'Active',
-	@Image NVARCHAR(255) = NULL , 
-	@VATRate decimal(5,2) = NULL,
-	@Quantity INT = 0
+    @CategoryID  INT = NULL,
+    @Unit        NVARCHAR(20) = NULL,
+    @MinStock    INT = 0,
+    @Status      NVARCHAR(20) = 'Active',
+    @Image       NVARCHAR(255) = NULL,
+    @VATRate     DECIMAL(5,2) = NULL,
+    @Quantity    INT = 0
 )
 AS
 BEGIN
     SET NOCOUNT ON;
 
-    INSERT INTO Products
-    (
-        SKU,
-        Barcode,
-        ProductName,
-        CategoryID,
-        Unit,
-        MinStock,
-        Status,
-		Image,
-		VATRate,
-		Quantity 
-    )
-    VALUES
-    (
-        @SKU,
-        @Barcode,
-        @ProductName,
-        @CategoryID,
-        @Unit,
-        @MinStock,
-        @Status,
-		@Image,
-		@VATRate,
-		@Quantity 
-    );
+    BEGIN TRY
+        -- 🔎 Kiểm tra SKU trùng
+        IF EXISTS (SELECT 1 FROM Products WHERE SKU = @SKU)
+        BEGIN
+            RAISERROR(N'SKU "%s" đã tồn tại trong hệ thống.', 16, 1, @SKU);
+            RETURN;
+        END
 
-    -- Trả về ID vừa thêm (giúp frontend/backend biết sản phẩm nào vừa được tạo)
-    SELECT SCOPE_IDENTITY() AS NewProductID;
+        -- 🔎 Kiểm tra Barcode trùng (nếu có nhập)
+        IF (@Barcode IS NOT NULL AND @Barcode <> '')
+            AND EXISTS (SELECT 1 FROM Products WHERE Barcode = @Barcode)
+        BEGIN
+            RAISERROR(N'Barcode "%s" đã tồn tại trong hệ thống.', 16, 1, @Barcode);
+            RETURN;
+        END
+
+        -- ✅ Thêm mới sản phẩm
+        INSERT INTO Products
+        (
+            SKU,
+            Barcode,
+            ProductName,
+            CategoryID,
+            Unit,
+            MinStock,
+            Status,
+            Image,
+            VATRate,
+            Quantity
+        )
+        VALUES
+        (
+            @SKU,
+            @Barcode,
+            @ProductName,
+            @CategoryID,
+            @Unit,
+            ISNULL(@MinStock, 0),
+            ISNULL(@Status, N'Active'),
+            @Image,
+            @VATRate,
+            ISNULL(@Quantity, 0)
+        );
+
+        -- 🔁 Trả về ID sản phẩm mới thêm
+        SELECT SCOPE_IDENTITY() AS NewProductID;
+    END TRY
+
+    BEGIN CATCH
+        DECLARE @ErrMsg NVARCHAR(4000), @ErrSeverity INT;
+        SELECT @ErrMsg = ERROR_MESSAGE(), @ErrSeverity = ERROR_SEVERITY();
+        RAISERROR(@ErrMsg, @ErrSeverity, 1);
+        RETURN;
+    END CATCH
 END;
 GO
+
 
 drop PROCEDURE [dbo].[sp_product_update]
 
@@ -952,6 +978,7 @@ CREATE PROCEDURE [dbo].[sp_product_search]
     @page_size   INT,
     @ProductID   INT = NULL,
     @SKU         VARCHAR(50) = '',
+	@Barcode     VARCHAR(50) = '',
     @ProductName NVARCHAR(100) = '',
     @CategoryID  INT = NULL,
     @Status      NVARCHAR(20) = ''
@@ -981,6 +1008,7 @@ BEGIN
         FROM Products AS p
         WHERE (@ProductID IS NULL OR p.ProductID = @ProductID)
           AND (@SKU = '' OR p.SKU LIKE '%' + @SKU + '%')
+		  OR (@Barcode = '' OR p.Barcode LIKE '%' + @Barcode + '%')
           AND (@ProductName = '' OR p.ProductName LIKE N'%' + @ProductName + '%')
           AND (@CategoryID IS NULL OR p.CategoryID = @CategoryID)
           AND (@Status = '' OR p.Status = @Status)
@@ -1017,6 +1045,7 @@ BEGIN
         FROM Products AS p
         WHERE (@ProductID IS NULL OR p.ProductID = @ProductID)
           AND (@SKU = '' OR p.SKU LIKE '%' + @SKU + '%')
+		  OR (@Barcode = '' OR p.Barcode LIKE '%' + @Barcode + '%')
           AND (@ProductName = '' OR p.ProductName LIKE N'%' + @ProductName + '%')
           AND (@CategoryID IS NULL OR p.CategoryID = @CategoryID)
           AND (@Status = '' OR p.Status = @Status);

@@ -235,14 +235,5 @@ body {
   color: white;
 }
 
-.btn-secondary {
-  background: #e2e8f0;
-  color: #1e293b;
-  padding: 10px 20px;
-  border-radius: 8px;
-  text-decoration: none;
-}
 
-.btn-secondary:hover {
-  background: #cbd5e1;
-}
+

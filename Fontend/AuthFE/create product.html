@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Create Product</title>
   <link rel="stylesheet" href="../Shared/css/create product.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css">
 </head>
 <body>
   <div class="container">
@@ -57,9 +58,6 @@
           <div class="form-group">
             <label>Category *</label>
             <select id="category" required>
-              <option value="">Select</option>
-              <option value="1">Running Shoes</option>
-              <option value="2">Sports Shoes</option>
             </select>
           </div>
 
@@ -81,11 +79,7 @@
           <!-- Unit -->
           <div class="form-group">
             <label>Unit</label>
-            <select id="unit">
-              <option value="">Select</option>
-              <option>Đôi</option>
-              <option>Hộp</option>
-            </select>
+            <input type="text" id="unit" />
           </div>
 
           <!-- Quantity -->
@@ -125,104 +119,221 @@
           <div class="form-actions full">
             <button type="submit" class="btn-primary">Save Product</button>
             <button type="button" id="refreshForm" class="btn-refresh">🔄 Refresh</button>
-            <a href="product.html" class="btn-secondary">Cancel</a>
           </div>
         </form>
       </section>
     </main>
   </div>
-
-  <script>
-    // Generate SKU
-    document.getElementById("generateSku").addEventListener("click", () => {
-      const sku = "SKU-" + Math.floor(Math.random() * 1000000);
-      document.getElementById("sku").value = sku;
-    });
-
-    // Refresh form
-    document.getElementById("refreshForm").addEventListener("click", () => {
-      const form = document.getElementById("createProductForm");
-      form.reset();
-      alert("Đã làm mới form!");
-    });
-  </script>
 </body>
 
+
+<script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+
+
 <script>
-  const apiUrl = "https://localhost:7092/api/Product/create-product";
+// 🔗 API endpoints
+const apiCreate = "https://localhost:7092/api/Product/create-product";
+const apiSearch = "https://localhost:7092/api/Product/search-product";
 
-  // ====== Tạo SKU tự động ======
-  document.getElementById("generateSku").addEventListener("click", () => {
-    const sku = "SKU-" + Math.floor(Math.random() * 1000000);
-    document.getElementById("sku").value = sku;
-  });
 
-  // ====== Làm mới form ======
-  document.getElementById("refreshForm").addEventListener("click", () => {
-    document.getElementById("createProductForm").reset();
-    alert("Đã làm mới form!");
-  });
+// 🧩 Hàm tạo SKU tự động
+document.getElementById("generateSku").addEventListener("click", () => {
+  const sku = "SKU-" + Math.floor(Math.random() * 1000000);
+  document.getElementById("sku").value = sku;
+});
 
-  // ====== Khi nhấn "Save Product" ======
-  document.getElementById("createProductForm").addEventListener("submit", async (e) => {
-    e.preventDefault();
+// 🔁 Làm mới form
+document.getElementById("refreshForm").addEventListener("click", () => {
+  document.getElementById("createProductForm").reset();
+  alert("Đã làm mới form!");
+});
 
-    // 🧩 Lấy giá trị từ form
-    const productName = document.getElementById("productName").value.trim();
-    const categoryID = parseInt(document.getElementById("category").value);
-    const sku = document.getElementById("sku").value.trim();
-    const barcode = document.getElementById("barcode").value.trim();
-    const unit = document.getElementById("unit").value;
-    const quantity = parseInt(document.getElementById("quantity").value) || 0;
-    const minStock = parseInt(document.getElementById("minStock").value) || 0;
-    const vatRate = parseFloat(document.getElementById("vatRate").value) || 0;
-    const status = document.getElementById("status").value;
-    const imageFile = document.getElementById("image").files[0];
-
-    // 🧠 Kiểm tra dữ liệu bắt buộc
-    if (!productName || !categoryID || !sku) {
-      alert("⚠️ Vui lòng nhập đầy đủ Product Name, Category và SKU!");
-      return;
-    }
-
-    // 🗂️ Tạo FormData để gửi file và dữ liệu
-    const formData = new FormData();
-    formData.append("ProductName", productName);
-    formData.append("CategoryID", categoryID);
-    formData.append("SKU", sku);
-    formData.append("Barcode", barcode);
-    formData.append("Unit", unit);
-    formData.append("Quantity", quantity);
-    formData.append("MinStock", minStock);
-    formData.append("VATRate", vatRate);
-    formData.append("Status", status);
-
-    if (imageFile) {
-      formData.append("imageFile", imageFile); // Gửi file thật lên server
-    }
-
-    // 🚀 Gửi dữ liệu lên API
-    try {
-      const response = await fetch(apiUrl, {
+// =====================================================
+// 🔍 Kiểm tra trùng SKU & Barcode trước khi thêm sản phẩm
+// =====================================================
+async function checkDuplicateSKUAndBarcode(sku, barcode) {
+  try {
+    // Gửi song song 2 request để kiểm tra trùng
+    const [resSku, resBarcode] = await Promise.all([
+      fetch(apiSearch, {
         method: "POST",
-        body: formData
-      });
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          page: 1,
+          pageSize: 0, // ✅ lấy toàn bộ dữ liệu
+          productID: null,
+          SKU: sku,
+          Barcode: "",
+          ProductName: "",
+          CategoryID: null,
+          Status: ""
+        }),
+      }),
+      fetch(apiSearch, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          page: 1,
+          pageSize: 0, // ✅ lấy toàn bộ dữ liệu
+          productID: null,
+          SKU: "",
+          Barcode: barcode,
+          ProductName: "",
+          CategoryID: null,
+          Status: ""
+        }),
+      }),
+    ]);
 
-      if (response.ok) {
-        alert("✅ Thêm sản phẩm thành công!");
-        window.location.href = "product.html";
-      } else {
-        const errorText = await response.text();
-        alert("❌ Lỗi khi thêm sản phẩm: " + errorText);
-      }
-    } catch (error) {
-      alert("⚠️ Không thể kết nối API: " + error.message);
+    const [resultSku, resultBarcode] = await Promise.all([
+      resSku.json(),
+      resBarcode.json(),
+    ]);
+
+    // ✅ Kiểm tra SKU trùng
+    const duplicateSku = resultSku.data?.find(
+      p => String(p.SKU ?? p.sku ?? "").trim().toLowerCase() === sku.toLowerCase()
+    );
+
+    // ✅ Kiểm tra Barcode trùng
+    const duplicateBarcode = resultBarcode.data?.find(
+      p => String(p.Barcode ?? p.barcode ?? "").trim().toLowerCase() === barcode.toLowerCase()
+    );
+
+    return { duplicateSku, duplicateBarcode };
+  } catch (error) {
+    console.error("❌ Lỗi khi kiểm tra trùng SKU/Barcode:", error);
+    return { duplicateSku: null, duplicateBarcode: null };
+  }
+}
+
+// =====================================================
+// 🚀 Khi nhấn nút "Save Product"
+// =====================================================
+document.getElementById("createProductForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  // 🧾 Lấy dữ liệu từ form
+  const productName = document.getElementById("productName").value.trim();
+  const categoryID = parseInt(document.getElementById("category").value);
+  const sku = document.getElementById("sku").value.trim();
+  const barcode = document.getElementById("barcode").value.trim();
+  const unit = document.getElementById("unit").value;
+  const quantity = parseInt(document.getElementById("quantity").value) || 0;
+  const minStock = parseInt(document.getElementById("minStock").value) || 0;
+  const vatRate = parseFloat(document.getElementById("vatRate").value) || 0;
+  const status = document.getElementById("status").value;
+  const imageFile = document.getElementById("image").files[0];
+
+  // ⚠️ Kiểm tra bắt buộc
+  if (!productName || !categoryID || !sku) {
+    alert("⚠️ Vui lòng nhập đầy đủ Product Name, Category và SKU!");
+    return;
+  }
+
+  // 🔍 Kiểm tra trùng SKU & Barcode
+  const { duplicateSku, duplicateBarcode } = await checkDuplicateSKUAndBarcode(sku, barcode);
+
+  if (duplicateSku) {
+    alert("❌ SKU này đã tồn tại trong hệ thống!");
+    return;
+  }
+
+  if (duplicateBarcode) {
+    alert("❌ Barcode này đã tồn tại trong hệ thống!");
+    return;
+  }
+
+  // 📦 Tạo FormData gửi lên API
+  const formData = new FormData();
+  formData.append("ProductName", productName);
+  formData.append("CategoryID", categoryID);
+  formData.append("SKU", sku);
+  formData.append("Barcode", barcode);
+  formData.append("Unit", unit);
+  formData.append("Quantity", quantity);
+  formData.append("MinStock", minStock);
+  formData.append("VATRate", vatRate);
+  formData.append("Status", status);
+  if (imageFile) formData.append("imageFile", imageFile);
+
+  // 🚀 Gửi API tạo sản phẩm
+  try {
+    const createResponse = await fetch(apiCreate, {
+      method: "POST",
+      body: formData,
+    });
+
+    if (createResponse.ok) {
+      alert("✅ Thêm sản phẩm thành công!");
+      window.location.href = "product.html"; // Quay lại danh sách
+    } else {
+      const errorText = await createResponse.text();
+      alert("❌ Lỗi khi thêm sản phẩm: " + errorText);
     }
-  });
+  } catch (error) {
+    alert("⚠️ Lỗi khi gửi yêu cầu: " + error.message);
+  }
+});
 
+
+
+
+// =====================================================
+// 🗂️ Load danh sách Category từ SQL qua API
+// =====================================================
+async function loadCategories() {
+  const apiCategory = "https://localhost:7092/api/category/search";
+  const select = document.getElementById("category");
+
+  try {
+    // Gọi API lấy toàn bộ danh mục (pageSize = 0 để lấy hết)
+    const response = await fetch(apiCategory, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        page: 1,
+        pageSize: 9999999,         // ✅ lấy tất cả danh mục
+        CategoryID: null,
+        CategoryName: "",
+        option: ""
+      }),
+    });
+
+    if (!response.ok) throw new Error("Không thể tải danh mục!");
+
+    const result = await response.json();
+    const categories = result.data;
+
+    // Làm sạch dropdown
+    select.innerHTML = '<option value="">Select</option>';
+
+    // Đổ danh sách danh mục vào dropdown
+    categories.forEach(c => {
+      const option = document.createElement("option");
+      option.value = c.categoryID;        // ✅ backend trả "CategoryID"
+      option.textContent = c.categoryName; // ✅ backend trả "CategoryName"
+      select.appendChild(option);
+    });
+
+
+    new Choices(select, {
+        searchEnabled: true,
+        itemSelectText: "",
+        shouldSort: false,
+        allowHTML: true
+    });
+
+
+
+  } catch (error) {
+    console.error("❌ Lỗi khi tải danh mục:", error);
+    select.innerHTML = '<option value="">(Không tải được dữ liệu)</option>';
+  }
+}
+
+// Gọi hàm khi trang load xong
+window.addEventListener("DOMContentLoaded", loadCategories);
 
 </script>
-
-
-
 </html>

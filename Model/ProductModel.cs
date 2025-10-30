@@ -17,10 +17,7 @@ namespace Model
         public string Unit { get; set; }             // Đơn vị tính
         public int MinStock { get; set; }            // Tồn kho tối thiểu (default 0)
         public string Status { get; set; }
-        //public string Image { get; set; }
         public decimal? VATRate { get; set; }
-
-        
         public string? Image { get; set; } // Thuộc tính mới để chứa URL đầy đủ
         public int Quantity { get; set; }  
 
@@ -38,6 +35,7 @@ namespace Model
         public int pageSize { get; set; }
         public int? ProductID { get; set; }
         public string SKU { get; set; }
+        public string Barcode { get; set; }
         public string ProductName { get; set; }
         public int? CategoryID { get; set; }
         public string Status { get; set; }

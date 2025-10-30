@@ -17,6 +17,7 @@ async function loadProducts() {
             pageSize: 50,
             productID: null,
             sku: "",
+            barcode: "",
             productName: "",
             categoryID: null,
             status: ""
@@ -47,16 +48,16 @@ function renderProducts(products) {
 
     tableBody.innerHTML = products.map(p => `
         <tr>
-            <td>${p.productID}</td>
-            <td>${p.sku || ""}</td>
-            <td>${p.barcode || ""}</td>
-            <td>${p.productName || ""}</td>
-            <td>${p.categoryID ?? ""}</td>
-            <td>${p.unit || ""}</td>
-            <td>${p.minStock}</td>
-            <td><span class="stock ${p.quantity < p.minStock ? "low" : "good"}">${p.quantity}</span></td>
-            <td>${p.vatRate ?? 0}</td>
-            <td><span class="status ${p.status === "Active" ? "active" : ""}">${p.status}</span></td>
+            <td><span class="all ">${p.productID}</td>
+            <td><span class="all ">${p.sku || ""}</td>
+            <td><span class="all ">${p.barcode || ""}</td>
+            <td><span class="all ">${p.productName || ""}</td>
+            <td><span class="all ">${p.categoryID ?? ""}</td>
+            <td><span class="all ">${p.unit || ""}</td>
+            <td><span class="all ">${p.minStock}</td>
+            <td><span class="all "><span class="stock ${p.quantity <= p.minStock ? "low" : "good"}">${p.quantity}</span></td>
+            <td><span class="all ">${p.vatRate ?? 0}</td>
+            <td><span class="all "><span class="status ">${p.status}</span></td>
             <td>${p.image ? `<img src="https://localhost:7092/${p.image}" 
      alt="${p.productName || 'Product Image'}" width="50">
 ` : ""}</td>
@@ -119,109 +120,126 @@ function showImageModal(src) {
     });
 }
 
-// // 🔹 6. Thêm sản phẩm
-// addBtn.addEventListener("click", () => {
-//     editingProductId = null;
-//     modalTitle.textContent = "➕ Thêm sản phẩm";
-//     form.reset();
-//     productModal.style.display = "flex";
-// });
-
-// // 🔹 7. Sửa sản phẩm
-// async function openEditModal(id) {
-//     try {
-//         const res = await fetch(`${API_BASE}/get-product/${id}`);
-//         if (!res.ok) throw new Error("Không tìm thấy sản phẩm");
-//         const p = await res.json();
-
-//         editingProductId = id;
-//         modalTitle.textContent = "✏️ Sửa sản phẩm";
-//         form.sku.value = p.sku || "";
-//         form.barcode.value = p.barcode || "";
-//         form.productName.value = p.productName || "";
-//         form.categoryID.value = p.categoryID || "";
-//         form.unit.value = p.unit || "";
-//         form.minStock.value = p.minStock || 0;
-//         form.quantity.value = p.quantity || 0;
-//         form.vatRate.value = p.vatRate || 0;
-//         form.status.value = p.status || "Active";
-//         form.image.value = p.image || "";
-
-//         productModal.style.display = "flex";
-//     } catch {
-//         alert("❌ Không thể tải thông tin sản phẩm!");
-//     }
-// }
 
 
-// // 🔹 8. Đóng modal thêm/sửa
-// closeModalBtn.addEventListener("click", closeProductModal);
-// function closeProductModal() {
-//     productModal.style.display = "none";
-//     form.reset();
-//     editingProductId = null;
-// }
 
 
-// // 🔹 9. Submit form
-// form.addEventListener("submit", async e => {
-//     e.preventDefault();
-//     const product = Object.fromEntries(new FormData(form).entries());
-//     product.categoryID = parseInt(product.categoryID) || null;
-//     product.minStock = parseInt(product.minStock) || 0;
-//     product.quantity = parseInt(product.quantity) || 0;
-//     product.vatRate = parseFloat(product.vatRate) || 0;
 
-//     try {
-//         // 🔍 Bước 1: Kiểm tra trùng SKU hoặc Barcode
-//         const checkResponse = await fetch(`${API_BASE}/search-product`, {
-//             method: "POST",
-//             headers: { "Content-Type": "application/json" },
-//             body: JSON.stringify({
-//                 page: 1,
-//                 pageSize: 1,
-//                 sku: product.sku,
-//                 barcode: product.barcode,
-//                 productName: "",
-//                 categoryID: null,
-//                 status: ""
-//             }),
-//         });
-
-//         const checkResult = await checkResponse.json();
-
-//         // 🔸 Nếu có sản phẩm trùng SKU hoặc Barcode
-//         if (checkResult.data && checkResult.data.length > 0 && !editingProductId) {
-//             const exist = checkResult.data[0];
-//             if (exist.sku === product.sku) {
-//                 alert("❌ SKU này đã tồn tại trong hệ thống!");
-//                 return;
-//             }
-//             if (exist.barcode === product.barcode && product.barcode !== "") {
-//                 alert("❌ Barcode này đã tồn tại trong hệ thống!");
-//                 return;
-//             }
-//         }
-
-//         const url = editingProductId
-//             ? `${API_BASE}/update-product/${editingProductId}`
-//             : `${API_BASE}/create-product`;
-
-//         const method = editingProductId ? "PUT" : "POST";
-//         const res = await fetch(url, {
-//             method,
-//             headers: { "Content-Type": "application/json" },
-//             body: JSON.stringify(product)
-//         });
-
-//         if (!res.ok) throw new Error();
-//         alert("✅ Lưu sản phẩm thành công!");
-//         closeProductModal();
-//         loadProducts();
-//     } catch {
-//         alert("❌ Lỗi khi lưu sản phẩm!");
-//     }
-// })
 
 // 🔹 10. Tải danh sách khi mở trang
 window.addEventListener("DOMContentLoaded", loadProducts);
+
+
+
+// ======================================================
+// 🔍  TÌM KIẾM SẢN PHẨM THEO TÊN, SKU, HOẶC BARCODE
+// ======================================================
+
+const searchInput = document.getElementById("searchInput");
+
+// Gọi API khi người dùng nhập
+searchInput.addEventListener("input", debounce(handleSearch, 400));
+
+async function handleSearch() {
+    const keyword = searchInput.value.trim();
+
+    // Nếu ô tìm kiếm rỗng → tải lại toàn bộ
+    if (keyword === "") {
+        loadProducts();
+        return;
+    }
+
+    tableBody.innerHTML = "<tr><td colspan='12'>🔎 Đang tìm kiếm...</td></tr>";
+
+    try {
+        const response = await fetch(`${API_BASE}/search-product`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                page: 1,
+                pageSize: 50,
+                productID: null,
+                sku: keyword,            // ✅ chỉ tìm theo SKU
+                barcode: keyword,        // ✅ hoặc Barcode
+                productName: "",         // 🚫 KHÔNG tìm theo tên sản phẩm
+                categoryID: null,
+                status: ""
+            }),
+        });
+
+        if (!response.ok) throw new Error("Không thể tìm kiếm sản phẩm!");
+
+        const result = await response.json();
+        renderProducts(result.data);
+    } catch (error) {
+        console.error("❌ Lỗi tìm kiếm:", error);
+        tableBody.innerHTML = "<tr><td colspan='12' style='color:red;'>❌ Lỗi khi tìm kiếm!</td></tr>";
+    }
+}
+
+// ✅ Hàm chống gọi API liên tục khi người dùng gõ nhanh
+function debounce(func, delay) {
+    let timer;
+    return function (...args) {
+        clearTimeout(timer);
+        timer = setTimeout(() => func.apply(this, args), delay);
+    };
+}
+
+
+
+// =====================================================
+// 🗂️ Load danh sách Category từ SQL qua API
+// =====================================================
+async function loadCategories() {
+  const apiCategory = "https://localhost:7092/api/category/search";
+  const select = document.getElementById("searchCategory");
+
+  try {
+    // Gọi API lấy toàn bộ danh mục (pageSize = 0 để lấy hết)
+    const response = await fetch(apiCategory, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        page: 1,
+        pageSize: 9999999,         // ✅ lấy tất cả danh mục
+        CategoryID: null,
+        CategoryName: "",
+        option: ""
+      }),
+    });
+
+    if (!response.ok) throw new Error("Không thể tải danh mục!");
+
+    const result = await response.json();
+    const categories = result.data;
+
+    // Làm sạch dropdown
+    select.innerHTML = '<option value="">Select</option>';
+
+    // Đổ danh sách danh mục vào dropdown
+    categories.forEach(c => {
+      const option = document.createElement("option");
+      option.value = c.categoryID;        // ✅ backend trả "CategoryID"
+      option.textContent = c.categoryName; // ✅ backend trả "CategoryName"
+      select.appendChild(option);
+    });
+
+
+    new Choices(select, {
+        searchEnabled: true,
+        itemSelectText: "",
+        shouldSort: false,
+        allowHTML: true
+    });
+
+
+
+  } catch (error) {
+    console.error("❌ Lỗi khi tải danh mục:", error);
+    select.innerHTML = '<option value="">(Không tải được dữ liệu)</option>';
+  }
+}
+
+// Gọi hàm khi trang load xong
+window.addEventListener("DOMContentLoaded", loadCategories);

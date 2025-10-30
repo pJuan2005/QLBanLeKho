@@ -236,12 +236,19 @@ body {
     border-radius: 20px;
 }
 
-.status.active {
+.status{
     background: #3b82f6;
     color: white;
     padding: 5px 10px;
     border-radius: 20px;
+    
 }
+
+.all{
+    font-weight: 600;
+}
+
+
 
 .action-btn {
     border: 1px solid #d1d5db;
@@ -304,3 +311,38 @@ body {
     border-radius: 8px;
     min-width: 400px;
 }
+
+
+
+#searchCategory,
+.choices {
+  width: 280px !important;  /* hoặc 50%, tùy bố cục */
+  min-width: 200px;
+  max-width: 100%;
+}
+
+
+.category-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;             /* ✅ khoảng cách giữa Select và Input */
+  margin-left: 20px;     /* ✅ dịch sang phải một chút */
+}
+
+.category-group select,
+.category-group input {
+  height: 38px;          /* ✅ cùng chiều cao */
+  padding: 8px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+}
+
+.category-group input {
+  width: 150px;          /* ✅ chiều rộng CategoryID */
+}
+
+.category-group select {
+  width: 250px !important; /* ✅ chiều rộng Select */
+}
+
+
