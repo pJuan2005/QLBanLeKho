@@ -1008,7 +1008,7 @@ BEGIN
         FROM Products AS p
         WHERE (@ProductID IS NULL OR p.ProductID = @ProductID)
           AND (@SKU = '' OR p.SKU LIKE '%' + @SKU + '%')
-		  OR (@Barcode = '' OR p.Barcode LIKE '%' + @Barcode + '%')
+		  AND (@Barcode = '' OR p.Barcode LIKE '%' + @Barcode + '%')
           AND (@ProductName = '' OR p.ProductName LIKE N'%' + @ProductName + '%')
           AND (@CategoryID IS NULL OR p.CategoryID = @CategoryID)
           AND (@Status = '' OR p.Status = @Status)
@@ -1045,7 +1045,7 @@ BEGIN
         FROM Products AS p
         WHERE (@ProductID IS NULL OR p.ProductID = @ProductID)
           AND (@SKU = '' OR p.SKU LIKE '%' + @SKU + '%')
-		  OR (@Barcode = '' OR p.Barcode LIKE '%' + @Barcode + '%')
+		  AND (@Barcode = '' OR p.Barcode LIKE '%' + @Barcode + '%')
           AND (@ProductName = '' OR p.ProductName LIKE N'%' + @ProductName + '%')
           AND (@CategoryID IS NULL OR p.CategoryID = @CategoryID)
           AND (@Status = '' OR p.Status = @Status);

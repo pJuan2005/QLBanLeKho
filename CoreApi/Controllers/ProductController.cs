@@ -13,13 +13,14 @@ namespace CoreApi.Controllers
         private readonly IDProductBLL _ProductBusiness;
 
 
-        private void GenerateImageUrl(ProductModel product)
+        private string GetImageUrl(string imagePath)
         {
-            if (product != null && !string.IsNullOrEmpty(product.Image))
-            {
-                product.Image = $"Products/{product.Image}"; // mới
-            }
+            if (string.IsNullOrEmpty(imagePath)) return null;
+            var gatewayUrl = "http://localhost:5000"; // 👈 đường dẫn Gateway
+            return $"{gatewayUrl}/{imagePath.Replace("\\", "/")}";
         }
+
+
 
 
 
@@ -140,13 +141,13 @@ namespace CoreApi.Controllers
         }
 
 
-        [Route("update-product")]
-        [HttpPost]
-        public ProductModel Update([FromBody] ProductModel model)
-        {
-            _ProductBusiness.Update(model);
-            return model;
-        }
+        //[Route("update-product")]
+        //[HttpPost]
+        //public ProductModel Update([FromBody] ProductModel model)
+        //{
+        //    _ProductBusiness.Update(model);
+        //    return model;
+        //}
 
         [Route("delete-product/{id}")]
         [HttpDelete]
@@ -161,7 +162,8 @@ namespace CoreApi.Controllers
         public ProductModel GetDatabyID(int id)
         {
             var product = _ProductBusiness.GetDatabyID(id);
-            GenerateImageUrl(product); // Tạo URL cho sản phẩm
+            
+            product.Image = GetImageUrl(product.Image);
             return product;
         }
 
@@ -177,6 +179,14 @@ namespace CoreApi.Controllers
                 long total = 0;
                 var data = _ProductBusiness.Search(request, out total);
 
+
+
+                foreach (var p in data)
+                {
+                    if (!string.IsNullOrEmpty(p.Image))
+                        p.Image = GetImageUrl(p.Image);
+                }
+
                 response.TotalItems = total;
                 response.Data = data;
                 response.Page = request.page;
@@ -188,6 +198,9 @@ namespace CoreApi.Controllers
             }
             return response;
         }
+
+
+
 
     }
 }

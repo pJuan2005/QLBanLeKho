@@ -26,6 +26,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+
+// Đặt trước app.UseRouting();
 app.UseRouting();
 app.UseCors("AllowAll");
 

@@ -18,13 +18,19 @@ body {
 
 
 .sidebar {
+    position: fixed;           /* ✅ Giữ cố định khi cuộn */
+    top: 0;
+    left: 0;
     width: 250px;
+    height: 100vh;             /* ✅ Chiều cao toàn màn hình */
     background: #1f2937;
     color: white;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     padding: 20px 0;
+    overflow-y: auto;          /* ✅ Nếu menu dài, cho phép cuộn trong sidebar */
+    z-index: 1000;             /* ✅ Đảm bảo nằm trên các phần khác */
 }
 
 .logo {
@@ -86,6 +92,7 @@ body {
 .main {
     flex: 1;
     padding: 20px 30px;
+    margin-left: 250px;  /* ✅ Chừa khoảng trống cho sidebar cố định */
 }
 
 /* Top bar */

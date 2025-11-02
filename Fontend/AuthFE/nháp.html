@@ -57,7 +57,7 @@
           <!-- Category -->
           <div class="form-group">
             <label>Category *</label>
-            <select id="category" >
+            <select id="category" required>
             </select>
           </div>
 
@@ -78,7 +78,7 @@
 
           <!-- Unit -->
           <div class="form-group">
-            <label>Unit*</label>
+            <label>Unit</label>
             <input type="text" id="unit" />
           </div>
 
@@ -128,12 +128,12 @@
 
 
 <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
-<script src="../Shared/angular/global.js"></script>
+
 
 <script>
 // 🔗 API endpoints
-const apiCreate = `${current_url}/api-core/product/create-product`
-const apiSearch = `${current_url}/api-core/product/search-product`;
+const apiCreate = "https://localhost:7092/api/Product/create-product";
+const apiSearch = "https://localhost:7092/api/Product/search-product";
 
 
 // 🧩 Hàm tạo SKU tự động
@@ -226,7 +226,7 @@ document.getElementById("createProductForm").addEventListener("submit", async (e
   const imageFile = document.getElementById("image").files[0];
 
   // ⚠️ Kiểm tra bắt buộc
-  if (!productName || !categoryID || !sku || !unit ) {
+  if (!productName || !categoryID || !sku) {
     alert("⚠️ Vui lòng nhập đầy đủ Product Name, Category và SKU!");
     return;
   }
@@ -283,7 +283,7 @@ document.getElementById("createProductForm").addEventListener("submit", async (e
 // 🗂️ Load danh sách Category từ SQL qua API
 // =====================================================
 async function loadCategories() {
-  const apiCategory = "http://localhost:5000/api-core/category/search";
+  const apiCategory = "https://localhost:7092/api/category/search";
   const select = document.getElementById("category");
 
   try {

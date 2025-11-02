@@ -53,7 +53,9 @@
             <p class="subtitle">Manage product inventory and pricing</p>
 
             <div class="controls">
-                <input type="text" id="searchInput" placeholder="Search by name, SKU, or barcode">
+                <input type="text" id="searchInput" placeholder="Search by SKU">
+
+                <input type="text" id="searchBarcode" placeholder="Search by barcode">
 
 
                 <div class="category-group">
@@ -63,8 +65,8 @@
                 
 
                 <div class="right-controls">
-                    <button class="btn-outline">Import</button>
-                    <button class="btn-outline">Export</button>
+                    <!-- <button class="btn-outline">Import</button> -->
+                    <button class="btn-outline" id="btnExport">Export</button>
                     <a href="create product.html" id="addBtn" class="btn-primary">➕ Add Product</a>
                     <!-- <button id="addBtn" class="btn-primary">➕ Add Product</button> -->
                 </div>
@@ -73,19 +75,19 @@
             <div class="stats">
                 <div class="stat-box">
                     <p>Total Products</p>
-                    <h3>12</h3>
+                    <h3 id="totalProducts"></h3>
                 </div>
                 <div class="stat-box">
-                    <p>Total Value</p>
-                    <h3>$40216</h3>
+                    <p>In stock</p>
+                    <h3 id="inStock">0</h3>
                 </div>
                 <div class="stat-box">
                     <p>Low Stock</p>
-                    <h3>1</h3>
+                    <h3 id="lowStock">0</h3>
                 </div>
                 <div class="stat-box">
                     <p>Out of Stock</p>
-                    <h3>0</h3>
+                    <h3 id="outOfStock">0</h3>
                 </div>
             </div>
 
@@ -122,7 +124,9 @@
     </main>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+<script src="../Shared/angular/global.js"></script>
 <script src="../Shared/js/product.js"></script>
 
 
