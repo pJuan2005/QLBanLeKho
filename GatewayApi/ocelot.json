@@ -150,6 +150,20 @@
         }
       ]
     },
+
+    {
+      "UpstreamPathTemplate": "/Products/{everything}",
+      "UpstreamHttpMethod": [ "GET" ],
+      "DownstreamPathTemplate": "/Products/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5092
+        }
+      ]
+    },
+
     {
       "UpstreamPathTemplate": "/api-core/promotions/{everything}",
       "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],

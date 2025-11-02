@@ -136,6 +136,7 @@ namespace DAL
                     "@page_size", request.pageSize,           // Thay đổi ở đây
                     "@ProductID", request.ProductID,         // Thay đổi ở đây
                     "@SKU", request.SKU,                     // Thay đổi ở đây
+                    "@Barcode", request.Barcode,
                     "@ProductName", request.ProductName,     // Thay đổi ở đây
                     "@CategoryID", request.CategoryID,       // Thay đổi ở đây
                     "@Status", request.Status               // ✨ Thêm tham số Status

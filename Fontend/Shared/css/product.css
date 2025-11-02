@@ -18,13 +18,19 @@ body {
 
 
 .sidebar {
+    position: fixed;           /* ✅ Giữ cố định khi cuộn */
+    top: 0;
+    left: 0;
     width: 250px;
+    height: 100vh;             /* ✅ Chiều cao toàn màn hình */
     background: #1f2937;
     color: white;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     padding: 20px 0;
+    overflow-y: auto;          /* ✅ Nếu menu dài, cho phép cuộn trong sidebar */
+    z-index: 1000;             /* ✅ Đảm bảo nằm trên các phần khác */
 }
 
 .logo {
@@ -86,6 +92,7 @@ body {
 .main {
     flex: 1;
     padding: 20px 30px;
+    margin-left: 250px;  /* ✅ Chừa khoảng trống cho sidebar cố định */
 }
 
 /* Top bar */
@@ -236,12 +243,19 @@ body {
     border-radius: 20px;
 }
 
-.status.active {
+.status{
     background: #3b82f6;
     color: white;
     padding: 5px 10px;
     border-radius: 20px;
+    
 }
+
+.all{
+    font-weight: 600;
+}
+
+
 
 .action-btn {
     border: 1px solid #d1d5db;
@@ -304,3 +318,38 @@ body {
     border-radius: 8px;
     min-width: 400px;
 }
+
+
+
+#searchCategory,
+.choices {
+  width: 280px !important;  /* hoặc 50%, tùy bố cục */
+  min-width: 200px;
+  max-width: 100%;
+}
+
+
+.category-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;             /* ✅ khoảng cách giữa Select và Input */
+  margin-left: 20px;     /* ✅ dịch sang phải một chút */
+}
+
+.category-group select,
+.category-group input {
+  height: 38px;          /* ✅ cùng chiều cao */
+  padding: 8px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+}
+
+.category-group input {
+  width: 150px;          /* ✅ chiều rộng CategoryID */
+}
+
+.category-group select {
+  width: 250px !important; /* ✅ chiều rộng Select */
+}
+
+
