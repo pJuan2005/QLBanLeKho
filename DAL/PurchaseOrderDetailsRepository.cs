@@ -18,17 +18,19 @@ namespace DAL
             _dbHelper = dbHelper;
         }
 
-        public PurchaseOrderDetailsModel GetDatabyID(int poid, int productId)
+        public List<PurchaseOrderDetailsModel> GetByPOID(int poid)
         {
             string msgError = "";
             try
             {
-                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "sp_PurchaseOrderDetails_get_by_id",
-                    "@POID", poid,
-                    "@ProductID", productId);
+                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "sp_PurchaseOrderDetails_get_by_poid",
+                    "@POID", poid);
+
                 if (!string.IsNullOrEmpty(msgError))
                     throw new Exception(msgError);
-                return dt.ConvertTo<PurchaseOrderDetailsModel>().FirstOrDefault();
+
+                // ÉP KIỂU RÕ RÀNG
+                return dt.ConvertTo<PurchaseOrderDetailsModel>().ToList();
             }
             catch (Exception ex)
             {
@@ -36,7 +38,7 @@ namespace DAL
             }
         }
 
-       
+
 
         public bool CreateMultiple(List<PurchaseOrderDetailsModel> models)
         {

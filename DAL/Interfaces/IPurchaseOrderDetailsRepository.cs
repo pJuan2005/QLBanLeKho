@@ -9,8 +9,8 @@ namespace DAL.Interfaces
 {
     public interface IPurchaseOrderDetailsRepository
     {
-        PurchaseOrderDetailsModel GetDatabyID(int poid, int productId);
-        
+        List<PurchaseOrderDetailsModel> GetByPOID(int poid);
+
         bool CreateMultiple(List<PurchaseOrderDetailsModel> models); 
         
         bool Delete(PurchaseOrderDetailsModel model);

@@ -9,9 +9,9 @@ namespace BLL.Interfaces
 {
     public interface IPurchaseOrderDetailsBusiness
     {
-        PurchaseOrderDetailsModel GetDatabyID(int poid, int productId);
-      
-        bool CreateMultiple(List<PurchaseOrderDetailsModel> models); // 👈 Thêm dòng này
+        List<PurchaseOrderDetailsModel> GetByPOID(int poid);
+
+        bool CreateMultiple(List<PurchaseOrderDetailsModel> models); 
     
         bool Delete(PurchaseOrderDetailsModel model);
     }

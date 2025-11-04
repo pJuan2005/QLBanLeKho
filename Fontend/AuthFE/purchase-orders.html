@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RetailPro - Purchase Orders</title>
     <link rel="stylesheet" href="../Shared/css/purchase-orders.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
 <div class="container">
@@ -54,22 +55,24 @@
             <!-- THAY BẰNG 4 Ô LỌC NHƯ TRƯỚC -->
             <div class="controls">
                 <div class="filter-group">
-                    <input type="number" placeholder="Min Amount" class="amount-input">
-                    <input type="number" placeholder="Max Amount" class="amount-input">
-                    <select class="status-select">
+                    <input type="number" placeholder="Min Amount" class="amount-input" id="minAmount">
+                    <input type="number" placeholder="Max Amount" class="amount-input" id="maxAmount">
+                    <select class="status-select" id="statusSelect"  >
                         <option>All Status</option>
                         <option>Pending</option>
                         <option>Approved</option>
                         <option>Rejected</option>
                     </select>
-                    <input type="date" class="date-input">
-                    <input type="date" class="date-input">
-                    <button class="btn-search">Search</button>
+                    <input type="date" class="date-input" id="fromDate">
+                    <input type="date" class="date-input" id="toDate">
+                    <button class="btn-search" id="searchBtn">Search</button>
                 </div>
                 <div class="right-controls">
-                    <button class="btn-outline">Import</button>
+                
                     <button class="btn-outline">Export</button>
-                    <button class="btn-primary">+ Add Purchase Order</button>
+                    <button class="btn-primary" id="addPOBtn" onclick="openAddModal()">
+  + Add Purchase Order
+</button>
                 </div>
             </div>
 
@@ -77,15 +80,15 @@
             <div class="stats">
                 <div class="stat-box">
                     <p>Total POs</p>
-                    <h3>0</h3>
+                    <h3 id="totalPOs">0</h3>
                 </div>
                 <div class="stat-box">
                     <p>Pending</p>
-                    <h3>0</h3>
+                    <h3 id="pendingPOs">0</h3>
                 </div>
                 <div class="stat-box">
                     <p>Approved</p>
-                    <h3>0</h3>
+                    <h3 id="approvedPOs">0</h3>
                 </div>
             </div>
 
@@ -113,5 +116,11 @@
         </section>
     </main>
 </div>
+<script src="../Shared/angular/global.js"></script>
+<script src="../Shared/angular/purchase-orders.js"></script>
+
+
 </body>
+
+
 </html>

@@ -15,4 +15,4 @@ namespace Model
         public decimal UnitPrice { get; set; }
         public string NameProduct { get; set; }
     }
-}
+}   
