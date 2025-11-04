@@ -9,11 +9,11 @@ namespace CoreApi.Controllers
 {
 
     [Route("api/purchaseorder")]
-    public class PurchaseOrderRepositoryController : ControllerBase
+    public class PurchaseOrderController : ControllerBase
     {
         private IPurchaseOrderBusiness _purchaseOrderBusiness;
 
-        public PurchaseOrderRepositoryController(IPurchaseOrderBusiness donMuaHangBusiness)
+        public PurchaseOrderController(IPurchaseOrderBusiness donMuaHangBusiness)
         {
             _purchaseOrderBusiness = donMuaHangBusiness;
         }

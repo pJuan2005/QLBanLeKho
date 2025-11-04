@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cập nhật đơn mua hàng</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <!-- LOAD FILE GLOBAL TRƯỚC -->
+  <script src="../Shared/angular/global.js"></script>
+
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: Arial, sans-serif; }
+    body { background: rgba(0,0,0,0.5); display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
+    .container {
+      background: white; width: 100%; max-width: 500px; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.2); overflow: hidden;
+    }
+    .header {
+      padding: 16px 20px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center;
+      background: #f8f9fa;
+    }
+    .header h3 { margin: 0; font-size: 18px; color: #333; }
+    .close { font-size: 24px; cursor: pointer; color: #aaa; }
+    .close:hover { color: #000; }
+    .body { padding: 20px; }
+    .form-group {
+      margin-bottom: 16px;
+    }
+    .form-group label {
+      display: block; font-size: 13px; color: #555; margin-bottom: 6px; font-weight: 600;
+    }
+    .form-group input,
+    .form-group select {
+      width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px;
+    }
+    .form-group input[readonly] {
+      background: #f5f5f5; color: #666;
+    }
+    .footer {
+      padding: 16px 20px; border-top: 1px solid #eee; text-align: right;
+    }
+    .btn {
+      padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; font-size: 14px;
+    }
+    .btn-primary { background: #007bff; color: white; }
+    .btn-outline { background: #f1f1f1; color: #333; margin-right: 8px; }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="header">
+      <h3>Cập nhật đơn mua hàng</h3>
+      <span class="close">X</span>
+    </div>
+    <div class="body">
+      <div class="form-group">
+        <label>POID</label>
+        <input type="text" id="inputPOID" readonly>
+      </div>
+      <div class="form-group">
+        <label>Supplier ID</label>
+        <input type="text" id="inputSupplierID">
+      </div>
+      <div class="form-group">
+        <label>Ngày đặt hàng</label>
+        <input type="text" id="inputOrderDate" readonly>
+      </div>
+      <div class="form-group">
+        <label>Tổng tiền</label>
+        <input type="text" id="inputTotalAmount" readonly>
+      </div>
+      <div class="form-group">
+        <label>Trạng thái</label>
+        <select id="inputStatus">
+          <option value="Pending">Pending</option>
+          <option value="Approved">Approved</option>
+          <option value="Rejected">Rejected</option>
+        </select>
+      </div>
+    </div>
+    <div class="footer">
+      <button class="btn btn-outline close">Hủy</button>
+      <button class="btn btn-primary" id="btnSave">Xong</button>
+    </div>
+  </div>
+
+  <script>
+    // DỰA TRÊN current_url → QUA GATEWAY
+    const API_BASE = `${current_url}/api-core/purchaseorder`;
+    const urlParams = new URLSearchParams(window.location.search);
+    const poid = urlParams.get('poid');
+
+    document.addEventListener("DOMContentLoaded", () => {
+      loadPOData();
+      setupCloseButtons();
+      document.getElementById("btnSave").onclick = saveUpdate;
+    });
+
+    async function loadPOData() {
+      try {
+        const response = await fetch(`${API_BASE}/get-by-id/${poid}`);
+        if (!response.ok) throw new Error("Không tải được dữ liệu");
+        const po = await response.json();
+
+        document.getElementById("inputPOID").value = po.poid;
+        document.getElementById("inputSupplierID").value = po.supplierID;
+        document.getElementById("inputOrderDate").value = new Date(po.orderDate).toLocaleDateString("vi-VN");
+        document.getElementById("inputTotalAmount").value = `$${parseFloat(po.totalAmount).toFixed(2)}`;
+        document.getElementById("inputStatus").value = po.status;
+
+      } catch (error) {
+        alert("Lỗi: " + error.message);
+      }
+    }
+
+    async function saveUpdate() {
+      const updatedPO = {
+        POID: parseInt(poid),
+        SupplierID: document.getElementById("inputSupplierID").value.trim(),
+        Status: document.getElementById("inputStatus").value
+      };
+
+      if (!updatedPO.SupplierID) {
+        alert("Vui lòng nhập Supplier ID!");
+        return;
+      }
+
+      try {
+        const response = await fetch(`${API_BASE}/update`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(updatedPO)
+        });
+
+        if (!response.ok) {
+          const err = await response.text();
+          throw new Error(err || "Cập nhật thất bại");
+        }
+
+        alert("Cập nhật thành công!");
+        if (window.opener && window.opener.refreshPOTable) {
+          window.opener.refreshPOTable();
+        }
+        window.close();
+
+      } catch (error) {
+        alert("Lỗi: " + error.message);
+      }
+    }
+
+    function setupCloseButtons() {
+      document.querySelectorAll(".close").forEach(btn => {
+        btn.onclick = () => window.close();
+      });
+    }
+  </script>
+
+</body>
+</html>

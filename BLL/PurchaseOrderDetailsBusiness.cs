@@ -20,12 +20,11 @@ namespace BLL
             _res = res;
         }
 
-        public PurchaseOrderDetailsModel GetDatabyID(int poid, int productId)
+        public List<PurchaseOrderDetailsModel> GetByPOID(int poid)
         {
-            return _res.GetDatabyID(poid, productId);
+            return _res.GetByPOID(poid); // ← DAL trả List → BLL nhận List → OK
         }
 
-      
 
         public bool CreateMultiple(List<PurchaseOrderDetailsModel> models) 
         {

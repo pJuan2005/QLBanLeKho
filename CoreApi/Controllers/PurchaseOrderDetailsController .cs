@@ -36,12 +36,11 @@ namespace CoreApi.Controllers
             _PurchaseOrderDetailsBusiness.Delete(model);
             return Ok(new { data = "ok" });
         }
-
-        [Route("get-by-id/{poid}")]
+        [Route("get-by-poid/{poid}")]
         [HttpGet]
-        public PurchaseOrderDetailsModel GetDatabyID(int poid, int productId)
+        public List<PurchaseOrderDetailsModel> GetByPOID(int poid)
         {
-            return _PurchaseOrderDetailsBusiness.GetDatabyID(poid, productId);
+            return _PurchaseOrderDetailsBusiness.GetByPOID(poid);
         }
     }
 }
