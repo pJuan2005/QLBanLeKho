@@ -13,6 +13,26 @@ namespace BLL
         bool Create(CategoryModel model);
         bool Update(CategoryModel model);
         bool Delete(int id);
-        List<CategoryModel> Search(int pageIndex, int pageSize, out long total, int? categoryId, string categoryName, string option);
+        [Obsolete("Use the overload with VAT filters.")]
+        List<CategoryModel> Search(
+            int pageIndex,
+            int pageSize,
+            out long total,
+            int? categoryId,
+            string categoryName,
+            string option
+        );
+
+        List<CategoryModel> Search(
+            int pageIndex,
+            int pageSize,
+            out long total,
+            int? categoryId,
+            string categoryName,
+            string option,
+            decimal? vatExact,
+            decimal? vatFrom,
+            decimal? vatTo
+        );
     }
 }

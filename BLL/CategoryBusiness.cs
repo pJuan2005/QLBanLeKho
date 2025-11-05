@@ -39,5 +39,22 @@ namespace BLL
         {
             return _res.Search(pageIndex,pageSize,out total,categoryId,categoryName,option);
         }
+
+        // Overload mới có thêm bộ lọc VAT
+        public List<CategoryModel> Search(
+            int pageIndex,
+            int pageSize,
+            out long total,
+            int? categoryId,
+            string categoryName,
+            string option,
+            decimal? vatExact,
+            decimal? vatFrom,
+            decimal? vatTo
+        )
+        {
+            // Nếu repo chưa có overload riêng cho VAT, bạn có thể viết tạm redirect về cùng SP.
+            return _res.Search(pageIndex, pageSize, out total, categoryId, categoryName, option, vatExact, vatFrom, vatTo);
+        }
     }
 }
