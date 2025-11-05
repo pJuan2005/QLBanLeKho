@@ -108,5 +108,47 @@ namespace DAL
             }
         }
 
+        public List<CategoryModel> Search(
+            int pageIndex, int pageSize, out long total,
+            int? CategoryID, string CategoryName, string option,
+            decimal? vatExact, decimal? vatFrom, decimal? vatTo)
+        {
+            string msgError = "";
+            total = 0;
+
+            try
+            {
+                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(
+                    out msgError,
+                    "sp_category_search",
+                    "@page_index", pageIndex,
+                    "@page_size", pageSize,
+                    "@CategoryName", CategoryName ?? string.Empty,
+                    "@option", option ?? string.Empty,
+                    "@CategoryID", CategoryID,
+                    "@vat_exact", vatExact,   // NULL nếu không lọc exact
+                    "@vat_from", vatFrom,    // NULL nếu không lọc khoảng
+                    "@vat_to", vatTo       // NULL nếu không lọc khoảng
+                );
+
+                if (!string.IsNullOrEmpty(msgError))
+                    throw new Exception(msgError);
+
+                if (dt.Rows.Count > 0)
+                {
+                    var rc = dt.Rows[0]["RecordCount"];
+                    if (rc != null && rc != DBNull.Value)
+                        total = Convert.ToInt64(rc);
+                }
+
+                return dt.ConvertTo<CategoryModel>().ToList();
+            }
+            catch (Exception)
+            {
+                // có thể log ở đây nếu cần
+                throw;
+            }
+        }
+
     }
 }

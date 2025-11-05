@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- css -->
+    <link rel="stylesheet" href="../Shared/css/categories.css" />
+    <script src="../Shared/angular/angular.min.js"></script>
+    <script src="../Shared/angular/global.js"></script>
+    <script src="../Shared/angular/categories.js"></script>
+    <title>Categories</title>
+  </head>
+  <body ng-app="AppRetailPos" ng-controller="categoriesCtrl">
+    <div class="app-content">
+      <div class="slide-bar">
+        <div class="slide-bar__header">
+          <div class="app-slideBar">
+            <div class="app-slideBar__left">
+              <img
+                src="../Shared/img/categories/wheel.svg"
+                alt=""
+                class="icon"
+              />
+            </div>
+            <div class="app-slideBar__right">
+              <h1 class="name-app">RetailPro</h1>
+              <p class="title-nameApp">Inventory & POS</p>
+            </div>
+          </div>
+        </div>
+        <div class="slide-bar__Content">
+          <p class="slide-bar__label">Navigation</p>
+          <!-- menu button 1 -->
+          <a href="#!">
+            <div class="slide-bar__MenuButton">
+              <div class="MenuButton-left">
+                <img
+                  src="../Shared/img/categories/dashboard.svg"
+                  alt=""
+                  class="icon"
+                />
+              </div>
+              <div class="MenuButton-right">
+                <p class="name-menu">Dashboard</p>
+              </div>
+            </div>
+          </a>
+          <!-- menu button 2 -->
+          <a href="#!"
+            ><div class="slide-bar__MenuButton">
+              <div class="MenuButton-left">
+                <img
+                  src="../Shared/img/categories/pos.svg"
+                  alt=""
+                  class="icon"
+                />
+              </div>
+              <div class="MenuButton-right">
+                <p class="name-menu">POS</p>
+              </div>
+            </div>
+          </a>
+          <!-- menu button 3 -->
+          <a href="#!">
+            <div class="slide-bar__MenuButton">
+              <div class="MenuButton-left">
+                <img
+                  src="../Shared/img/categories/product.svg"
+                  alt=""
+                  class="icon"
+                />
+              </div>
+              <div class="MenuButton-right">
+                <p class="name-menu">Products</p>
+              </div>
+            </div>
+          </a>
+          <!-- menu button 4 -->
+          <a href="#!">
+            <div class="slide-bar__MenuButton slide-bar__MenuButton--active">
+              <div class="MenuButton-left">
+                <img
+                  src="../Shared/img/categories/category.svg"
+                  alt=""
+                  class="icon"
+                />
+              </div>
+              <div class="MenuButton-right">
+                <p class="name-menu-active">Categories</p>
+              </div>
+            </div>
+          </a>
+          <!-- menu button 5 -->
+          <a href="#!">
+            <div class="slide-bar__MenuButton">
+              <div class="MenuButton-left">
+                <img
+                  src="../Shared/img/categories/customer.svg"
+                  alt=""
+                  class="icon"
+                />
+              </div>
+              <div class="MenuButton-right">
+                <p class="name-menu">Customers</p>
+              </div>
+            </div>
+          </a>
+          <!-- menu button 6 -->
+          <a href="#!">
+            <div class="slide-bar__MenuButton">
+              <div class="MenuButton-left">
+                <img
+                  src="../Shared/img/categories/supplier.svg"
+                  alt=""
+                  class="icon"
+                />
+              </div>
+              <div class="MenuButton-right">
+                <p class="name-menu">Suppliers</p>
+              </div>
+            </div>
+          </a>
+          <!-- menu button 7 -->
+          <a href="#!">
+            <div class="slide-bar__MenuButton">
+              <div class="MenuButton-left">
+                <img
+                  src="../Shared/img/categories/purchaseorder.svg"
+                  alt=""
+                  class="icon"
+                />
+              </div>
+              <div class="MenuButton-right">
+                <p class="name-menu">Purchase Orders</p>
+              </div>
+            </div>
+          </a>
+          <!-- menu button 8 -->
+          <a href="#!">
+            <div class="slide-bar__MenuButton">
+              <div class="MenuButton-left">
+                <img
+                  src="../Shared/img/categories/stock.svg"
+                  alt=""
+                  class="icon"
+                />
+              </div>
+              <div class="MenuButton-right">
+                <p class="name-menu">Stock Management</p>
+              </div>
+            </div>
+          </a>
+          <!-- menu button 9 -->
+          <a href="#!">
+            <div class="slide-bar__MenuButton">
+              <div class="MenuButton-left">
+                <img
+                  src="../Shared/img/categories/sales.svg"
+                  alt=""
+                  class="icon"
+                />
+              </div>
+              <div class="MenuButton-right">
+                <p class="name-menu">Sales & Returns</p>
+              </div>
+            </div>
+          </a>
+          <!-- menu button 10 -->
+          <a href="#!">
+            <div class="slide-bar__MenuButton">
+              <div class="MenuButton-left">
+                <img
+                  src="../Shared/img/categories/payments.svg"
+                  alt=""
+                  class="icon"
+                />
+              </div>
+              <div class="MenuButton-right">
+                <p class="name-menu">Payments & Debts</p>
+              </div>
+            </div>
+          </a>
+          <!-- menu button 11 -->
+          <a href="#!">
+            <div class="slide-bar__MenuButton">
+              <div class="MenuButton-left">
+                <img
+                  src="../Shared/img/categories/report.svg"
+                  alt=""
+                  class="icon"
+                />
+              </div>
+              <div class="MenuButton-right">
+                <p class="name-menu">Reports</p>
+              </div>
+            </div>
+          </a>
+          <!-- menu button 12 -->
+          <a href="#!">
+            <div class="slide-bar__MenuButton">
+              <div class="MenuButton-left">
+                <img
+                  src="../Shared/img/categories/user.svg"
+                  alt=""
+                  class="icon"
+                />
+              </div>
+              <div class="MenuButton-right">
+                <p class="name-menu">Users</p>
+              </div>
+            </div>
+          </a>
+          <!-- menu button 13 -->
+          <a href="#!">
+            <div class="slide-bar__MenuButton">
+              <div class="MenuButton-left">
+                <img
+                  src="../Shared/img/categories/setting.svg"
+                  alt=""
+                  class="icon"
+                />
+              </div>
+              <div class="MenuButton-right">
+                <p class="name-menu">Settings</p>
+              </div>
+            </div>
+          </a>
+        </div>
+        <div class="slide-bar__footer">
+          <div class="app-slide-bar">
+            <div class="ava">
+              <img class="ava" src="../Shared/img/categories/ava.svg" alt="" />
+            </div>
+            <div class="info">
+              <p class="name">John Doe</p>
+              <p class="role">admin</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="app-layout">
+        <div class="top-bar">
+          <div class="top-bar__content">
+            <div class="top-bar__left">
+              <img
+                src="../Shared/img/categories/search.svg"
+                alt=""
+                class="icon"
+              />
+              <input
+                class="search"
+                type="text"
+                placeholder="Search by categories name"
+                ng-model="searchCategories"
+              />
+            </div>
+            <div class="top-bar__right">
+              <p class="role">admin</p>
+              <img
+                src="../Shared/img/categories/ava.svg"
+                alt=""
+                class="ava"
+                id="avatar"
+              />
+            </div>
+          </div>
+          <div class="top-bar__info" id="information">
+            <div class="info-top">
+              <p class="name">John Doe</p>
+              <p class="email">john@company.com</p>
+            </div>
+            <div class="info-mid">
+              <a href="#!"><p class="set">Profile Settings</p></a>
+            </div>
+            <div class="info-bottom">
+              <img
+                src="../Shared/img/categories/logout.svg"
+                alt=""
+                class="icon"
+              />
+              <a href="../AuthFE/login.html"><p class="logout">Logout</p></a>
+            </div>
+          </div>
+        </div>
+        <div class="app-layout-content">
+          <h1 class="name-menu">Product Categories</h1>
+          <p class="desc">
+            Manage and organize product categories with descriptions and VAT
+            rates
+          </p>
+          <div class="display-container">
+            <div class="total farme">
+              <p class="name-display">Total Categories</p>
+              <p class="data">{{stats.total}}</p>
+            </div>
+            <div class="avg farme">
+              <p class="name-display">Average VAT</p>
+              <p class="data">{{stats.avgVat|number:2}}%</p>
+            </div>
+            <div class="most-common farme">
+              <p class="name-display">Most Common Category</p>
+              <p class="data">{{stats.mostCommon}}</p>
+            </div>
+          </div>
+          <div class="control">
+            <div class="control-left">
+              <img
+                src="../Shared/img/categories/search.svg"
+                alt=""
+                class="icon"
+              />
+              <input
+                class="search"
+                type="text"
+                placeholder="Search by VAT..."
+                ng-model="searchVAT"
+              />
+            </div>
+            <!-- phân trang -->
+            <div class="pager" ng-if="pager.total>0">
+              <div class="pager-info">
+                Showing
+                {{((pager.page-1)*pager.size)+1}}-{{Math.min(pager.page*pager.size,pager.total)}}
+                of {{pager.total}} items
+              </div>
+              <div class="page-nav">
+                <label>
+                  Page size:
+                  <select ng-model="pager.size" ng-change="changeSize()">
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                    <option value="30">30</option>
+                  </select>
+                </label>
+                <button
+                  class="btn ghost"
+                  ng-disable="pager.page === 1"
+                  ng-click="go(1)"
+                >
+                  «
+                </button>
+                <button
+                  class="btn ghost"
+                  ng-disable="pager.page === 1"
+                  ng-click="go(pager.page-1)"
+                >
+                  Prev
+                </button>
+                <span class="page-no"></span>
+                <button
+                  class="btn ghost"
+                  ng-disable="pager.page >= pager.pages"
+                  ng-click="go(pager.page+1)"
+                >
+                  Next
+                </button>
+                <button
+                  class="btn ghost"
+                  ng-disable="pager.page >= pager.pages"
+                  ng-click="go(pager.pages)"
+                >
+                  »
+                </button>
+              </div>
+            </div>
+            <div class="control-right">
+              <div class="import" ng-click="openImportDialog()">
+                <img
+                  src="../Shared/img/categories/import.svg"
+                  alt=""
+                  class="icon"
+                />
+              </div>
+              <div class="export" ng-click="exportExcel()">
+                <img
+                  src="../Shared/img/categories/export.svg"
+                  alt=""
+                  class="icon"
+                />
+              </div>
+              <div class="add" id="btnOpenAdd">
+                <img
+                  src="../Shared/img/categories/plus.svg"
+                  alt=""
+                  class="plus"
+                />
+                <p class="add-cate">Add Category</p>
+              </div>
+              <input
+                type="file"
+                id="fileImport"
+                accept=".xlsx"
+                style="display: none"
+                onchange="angular.element(this).scope().onImportFileChange(this)"
+              />
+            </div>
+          </div>
+          <!-- table -->
+          <div class="card">
+            <div class="table-responsive">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th class="id">Category ID</th>
+                    <th class="name">Category Name</th>
+                    <th class="descript">Description</th>
+                    <th class="vat">VAT Rate (%)</th>
+                    <th class="action txt-right">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="c in categories">
+                    <td>{{c.categoryID}}</td>
+                    <td>{{c.categoryName}}</td>
+                    <td>{{c.description}}</td>
+                    <td>{{c.vatRate}}%</td>
+                    <td class="txt-right">
+                      <button class="link" ng-click="edit(c)">✎ Edit</button>
+                      <button class="link danger" ng-click="remove(c)">
+                        🗑 Delete
+                      </button>
+                    </td>
+                  </tr>
+                  <tr
+                    ng-if="(categories | filter:searchCategories | filter:searchVAT).length == 0"
+                  >
+                    <td colspan="5" class="empty">No Data</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <!-- form -->
+          <div class="form">
+            <!-- add -->
+            <div class="form-add">
+              <div class="form-add__content">
+                <h3 class="title">Add Category</h3>
+                <p class="desc">Create a new product category</p>
+                <form name="frmAdd" ng-submit="add()">
+                  <label for="name-add">Category Name *</label>
+                  <br />
+                  <input
+                    type="text"
+                    id="name-add"
+                    required
+                    placeholder="Enter category name"
+                    ng-model="newCategory.CategoryName"
+                  />
+                  <br />
+                  <label for="desc-add">Description *</label>
+                  <br />
+                  <textarea
+                    rows="3"
+                    id="desc-add"
+                    placeholder="Enter category description"
+                    required
+                    ng-model="newCategory.Description"
+                  ></textarea>
+                  <br />
+                  <label for="vat-add">VAT Rate (%) *</label>
+                  <br />
+                  <input
+                    type="text"
+                    id="vat-add"
+                    placeholder="10"
+                    ng-model="newCategory.VATRate"
+                  />
+                  <br />
+                  <label class="standard"
+                    >Standard VAT rates: 10% (most products), 9% (special
+                    items)</label
+                  >
+                  <div class="dialog-footer">
+                    <!-- để type button tránh submit -->
+                    <button type="button" class="cancel">Cancel</button>
+                    <input
+                      class="submit"
+                      type="submit"
+                      value="Add Category"
+                      ng-disable="frmAdd.$invalid||savingAdd"
+                    />
+                  </div>
+                </form>
+              </div>
+            </div>
+            <!-- edit -->
+            <div class="form-edit">
+              <div class="form-edit__content">
+                <h3 class="title">Edit Category</h3>
+                <p class="desc">Update category information</p>
+                <form name="frmEdit" ng-submit="updateCategory()">
+                  <label for="name-edit">Category Name *</label>
+                  <br />
+                  <input
+                    type="text"
+                    id="name-edit"
+                    ng-model="editingCategory.CategoryName"
+                    required
+                  />
+                  <br />
+                  <label for="desc-edit">Description *</label>
+                  <br />
+                  <textarea
+                    rows="3"
+                    id="desc-edit"
+                    ng-model="editingCategory.Description"
+                    required
+                  ></textarea>
+                  <br />
+                  <label for="vat-edit">VAT Rate (%) *</label>
+                  <br />
+                  <input
+                    type="number"
+                    id="vat-edit"
+                    ng-model="editingCategory.VATRate"
+                    min="0"
+                    max="100"
+                    step="1"
+                  />
+                  <br />
+                  <label class="standard"
+                    >Standard VAT rates: 10% (most products), 9% (special
+                    items)</label
+                  >
+                  <div class="dialog-footer">
+                    <button type="button" class="cancel">Cancel</button>
+                    <input
+                      class="submit"
+                      type="submit"
+                      value="Update Category"
+                      ng-disable="frmEdit.$invalid||savingEdit"
+                    />
+                  </div>
+                </form>
+              </div>
+            </div>
+            <!-- delete -->
+            <div
+              class="form-delete"
+              ng-class="{open:showDelete}"
+              ng-click="closeDeleteOnOverlay($event)"
+            >
+              <div class="form-delete__content">
+                <h3 class="title">Delete Category</h3>
+                <p class="desc">
+                  Are you sure you want to delete the category
+                  "{{deleting.categoryName}}"? This action cannot be undone.
+                </p>
+                <div class="dialog-footer">
+                  <button class="cancel" ng-click="cancelDelete($event)">
+                    Cancel
+                  </button>
+                  <button class="submit danger" ng-click="confirmDelete()">
+                    Delete Category
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="../Shared/js/categories.js"></script>
+  </body>
+</html>
