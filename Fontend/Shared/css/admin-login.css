@@ -1,0 +1,142 @@
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+/* khôi phục cỡ chữ mặc định*/
+body {
+  font-size: 1.6rem;
+  font-family: "Inter", sans-serif;
+  margin: 0;
+}
+
+/* ====================common================= */
+a {
+  text-decoration: none;
+}
+
+input,
+textarea,
+button,
+select {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+input:focus {
+  outline: none;
+  border: 1px solid #0ea5e9;
+  box-shadow: 0 0 0 2px rgba(14, 165, 233, 0.3);
+}
+
+/* ======================main=================== */
+.login {
+  width: 447px;
+  margin: 0 auto;
+}
+
+.login-top {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.logo {
+  margin: 0 auto;
+  display: flex;
+  width: 64px;
+  height: 64px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 16px;
+  background: #0ea5e9;
+}
+
+.name-system {
+  color: #0f172a;
+  font-size: 1.6rem;
+  margin-bottom: 0;
+}
+
+.desc-system {
+  color: #64748b;
+  margin: 8px 0 0 0;
+  text-align: center;
+  font-size: 1.6rem;
+}
+
+.login-mid {
+  margin-top: 35px;
+  display: flex;
+  width: 448px;
+  height: 330px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
+  border-radius: 16px;
+  border: 0.889px solid #e2e8f0;
+  background: #fff;
+  padding: 24px;
+}
+
+.card-title {
+  color: #0f172a;
+  font-size: 1.6rem;
+  font-weight: 500;
+}
+
+.card-desc {
+  color: #64748b;
+  font-size: 1.6rem;
+  margin-top: 6px;
+}
+
+label {
+  color: #0f172a;
+  font-size: 1.4rem;
+  font-weight: 500;
+}
+
+input {
+  margin-top: 8px;
+  display: flex;
+  width: 398.222px;
+  height: 36px;
+  padding: 4px 12px 4px 5px;
+  align-items: center;
+  border-radius: 10px;
+  border: 0.889px solid #e2e8f0;
+  background: #fff;
+  font-size: 1.4rem;
+}
+
+.password-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.password-container img {
+  cursor: pointer;
+  position: absolute;
+  right: 5px;
+  top: 18px;
+  width: 16px;
+  height: 16px;
+}
+
+.submit {
+  color: #fff;
+  cursor: pointer;
+  background: #0ea5e9;
+}
+
+.paragraph{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}

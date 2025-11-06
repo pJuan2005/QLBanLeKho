@@ -7,9 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Controllers\NewFolder\**" />
     <Compile Remove="NewFolder\**" />
+    <Content Remove="Controllers\NewFolder\**" />
     <Content Remove="NewFolder\**" />
+    <EmbeddedResource Remove="Controllers\NewFolder\**" />
     <EmbeddedResource Remove="NewFolder\**" />
+    <None Remove="Controllers\NewFolder\**" />
     <None Remove="NewFolder\**" />
   </ItemGroup>
 
@@ -23,10 +27,6 @@
   <ItemGroup>
     <ProjectReference Include="..\BLL\BLL.csproj" />
     <ProjectReference Include="..\Model\Model.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Controllers\NewFolder\" />
   </ItemGroup>
 
 </Project>

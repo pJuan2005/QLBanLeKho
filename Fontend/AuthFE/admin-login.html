@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign In Retail Pro</title>
+    <!-- font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <!-- css -->
+    <link rel="stylesheet" href="../Shared/css/admin-login.css" />
+    <script src="../Shared/angular/angular.min.js"></script>
+    <script src="../Shared/angular/global.js"></script>
+    <script src="../Shared/angular/admin-login.js"></script>
+  </head>
+  <body ng-app="AppRetailPos" ng-controller="QuanTriLoginCtrl">
+    <div class="login">
+      <div class="login-content">
+        <div class="login-top">
+          <div class="logo">
+            <img src="../Shared/img/login/wheel_1.svg" alt="" class="icon" />
+          </div>
+          <h1 class="name-system">RetailPro</h1>
+          <p class="desc-system">Retail & Inventory Management System</p>
+        </div>
+        <div class="login-mid">
+          <div class="card-header">
+            <div class="card-title">Sign In</div>
+            <div class="card-desc">
+              Enter your credentials to access your account
+            </div>
+          </div>
+          <div class="card-content">
+            <form>
+              <label for="account">Account</label>
+              <br />
+              <input type="text" placeholder="Enter Your Account" required />
+              <br />
+              <label for="password">Password</label>
+              <br />
+              <div class="password-container">
+                <input
+                  id="password"
+                  type="password"
+                  placeholder="********************"
+                  required
+                />
+                <img
+                  id="toggle-password"
+                  src="../Shared/img/login/eye-slash.svg"
+                  alt=""
+                  class="toggle-password"
+                />
+              </div>
+              <br />
+              <input class="submit" type="submit" value="Sign In" />
+            </form>
+          </div>
+        </div>
+        <div class="login-footer">
+          <div class="paragraph">
+            <p class="text">Are you a customer?</p>
+            <a href="../UserFE/homecustomer.html" class="link">Go to Store!</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="../Shared/js/admin-login.js"></script>
+  </body>
+</html>
