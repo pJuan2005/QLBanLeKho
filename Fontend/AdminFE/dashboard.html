@@ -12,13 +12,278 @@
     />
 
     <!-- css -->
-    <link rel="stylesheet" href="#!" />
+    <link rel="stylesheet" href="../Shared/css/dashboard.css" />
     <script src="../Shared/angular/angular.min.js"></script>
     <script src="../Shared/angular/global.js"></script>
-    <script src="#!"></script>
+    <script src="../Shared/angular/dashboard.js"></script>
     <title>DashBoard</title>
   </head>
-  <body>
-    
+  <body ng-app="AppRetailPos" ng-controller="dashboardCtrl">
+    <div class="slide-bar">
+      <div class="slide-bar__header">
+        <div class="app-slideBar">
+          <div class="app-slideBar__left">
+            <img src="../Shared/img/common/wheel.svg" alt="" class="icon" />
+          </div>
+          <div class="app-slideBar__right">
+            <h1 class="name-app">RetailPro</h1>
+            <p class="title-nameApp">Inventory & POS</p>
+          </div>
+        </div>
+      </div>
+      <div class="slide-bar__Content">
+        <p class="slide-bar__label">Navigation</p>
+        <!-- menu button 1 -->
+        <a href="../AdminFE/dashboard.html" ng-if="canShow('dashboard')">
+          <div class="slide-bar__MenuButton slide-bar__MenuButton--active">
+            <div class="MenuButton-left">
+              <img
+                src="../Shared/img/common/dashboard.svg"
+                alt=""
+                class="icon"
+              />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu-active">Dashboard</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button 2 -->
+        <a href="../AdminFE/pos.html" ng-if="canShow('pos')"
+          ><div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img src="../Shared/img/common/pos.svg" alt="" class="icon" />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">POS</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button 3 -->
+        <a href="../AdminFE/products.html" ng-if="canShow('products')">
+          <div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img src="../Shared/img/common/product.svg" alt="" class="icon" />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">Products</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button 4 -->
+        <a href="../AdminFE/categories.html" ng-if="canShow('categories')">
+          <div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img
+                src="../Shared/img/common/category.svg"
+                alt=""
+                class="icon"
+              />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">Categories</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button 5 -->
+        <a href="../AdminFE/customers.html" ng-if="canShow('customers')">
+          <div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img
+                src="../Shared/img/common/customer.svg"
+                alt=""
+                class="icon"
+              />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">Customers</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button 6 -->
+        <a href="../AdminFE/suppliers.html" ng-if="canShow('suppliers')">
+          <div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img
+                src="../Shared/img/common/supplier.svg"
+                alt=""
+                class="icon"
+              />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">Suppliers</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button 7 -->
+        <a
+          href="../AdminFE/purchaseorders.html"
+          ng-if="canShow('purchaseOrders')"
+        >
+          <div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img
+                src="../Shared/img/common/purchaseorder.svg"
+                alt=""
+                class="icon"
+              />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">Purchase Orders</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button 8 -->
+        <a href="../AdminFE/stockcard.html" ng-if="canShow('stock')">
+          <div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img src="../Shared/img/common/stock.svg" alt="" class="icon" />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">Stock Management</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button 9 -->
+        <a href="../AdminFE/sales.html" ng-if="canShow('sales')">
+          <div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img src="../Shared/img/common/sales.svg" alt="" class="icon" />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">Sales</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button 10 -->
+        <a href="../AdminFE/returns.html" ng-if="canShow('returns')">
+          <div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img src="../Shared/img/common/return.svg" alt="" class="icon" />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">Returns</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button 11 -->
+        <a href="../AdminFE/payments.html" ng-if="canShow('payments')">
+          <div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img
+                src="../Shared/img/common/payments.svg"
+                alt=""
+                class="icon"
+              />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">Payments & Debts</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button 12 -->
+        <a href="../AdminFE/reports.html" ng-if="canShow('reports')">
+          <div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img src="../Shared/img/common/report.svg" alt="" class="icon" />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">Reports</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button 13 -->
+        <a href="../AdminFE/auditlog.html" ng-if="canShow('auditLog')">
+          <div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img
+                src="../Shared/img/common/auditlog.svg"
+                alt=""
+                class="icon"
+              />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">Audit Log</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button 14 -->
+        <a href="../AdminFE/users.html" ng-if="canShow('users')">
+          <div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img src="../Shared/img/common/user.svg" alt="" class="icon" />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">Users</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button 15 -->
+        <a href="../AdminFE/settings.html" ng-if="canShow('settings')">
+          <div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img src="../Shared/img/common/setting.svg" alt="" class="icon" />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">Settings</p>
+            </div>
+          </div>
+        </a>
+      </div>
+      <div class="slide-bar__footer">
+        <div class="app-slide-bar">
+          <div class="ava">
+            <img class="ava" src="../Shared/img/common/ava.svg" alt="" />
+          </div>
+          <div class="info">
+            <p class="name">{{currentUser.fullname}}</p>
+            <p class="role">{{currentUser.role}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="app-layout">
+      <div class="top-bar">
+        <div class="top-bar__content">
+          <div class="top-bar__left" style="visibility: hidden">
+            <img src="../Shared/img/common/search.svg" alt="" class="icon" />
+            <input
+              class="search"
+              type="text"
+              placeholder="Search by categories name"
+              ng-model="searchCategories"
+            />
+          </div>
+          <div class="top-bar__right">
+            <p class="role">admin</p>
+            <img
+              src="../Shared/img/common/ava.svg"
+              alt=""
+              class="ava"
+              id="avatar"
+            />
+          </div>
+        </div>
+        <div class="top-bar__info" id="information">
+          <div class="info-top">
+            <p class="name">John Doe</p>
+            <p class="email">john@company.com</p>
+          </div>
+          <div class="info-mid">
+            <a href="#!"><p class="set">Profile Settings</p></a>
+          </div>
+          <div class="info-bottom">
+            <img
+              src="../Shared/img/categories/logout.svg"
+              alt=""
+              class="icon"
+            />
+            <a href="../AuthFE/login.html"><p class="logout">Logout</p></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="../Shared/js/dashboard.js"></script>
   </body>
 </html>

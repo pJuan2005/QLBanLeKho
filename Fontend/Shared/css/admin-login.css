@@ -134,9 +134,15 @@ input {
   background: #0ea5e9;
 }
 
-.paragraph{
+.paragraph {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 5px;
+}
+
+.error {
+  color: red;
+  font-size: 1.4rem;
+  font-style: italic;
 }

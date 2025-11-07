@@ -26,7 +26,7 @@ namespace UserApi.Controllers
 
             if (user == null)
                 return BadRequest(new { message = "Username or password is incorrect!" });
-            return Ok(new { userID = user.UserID, fullname = user.FullName, username = user.Username, token = user.Token });
+            return Ok(new { userID = user.UserID, fullname = user.FullName, username = user.Username, token = user.Token, role = user.Role, email = user.Email, phone= user.Phone });
         }
 
         [HttpPost("register")]

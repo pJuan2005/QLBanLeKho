@@ -27,6 +27,8 @@ builder.Services.AddSwaggerGen();
 
 // Đăng ký các lớp xử lý nghiệp vụ và truy cập dữ liệu vào hệ thống DI
 builder.Services.AddScoped<IDatabaseHelper, DatabaseHelper>();
+builder.Services.AddScoped<IUserBusiness, UserBusiness>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 
 // Cấu hình JWT Authentication từ nhánh dev
