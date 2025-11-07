@@ -35,16 +35,17 @@
             </div>
           </div>
           <div class="card-content">
-            <form>
+            <form ng-submit="login()">
               <label for="account">Account</label>
               <br />
-              <input type="text" placeholder="Enter Your Account" required />
+              <input type="text" ng-model="model.username" placeholder="Enter Your Account" required />
               <br />
               <label for="password">Password</label>
               <br />
               <div class="password-container">
                 <input
                   id="password"
+                  ng-model="model.password"
                   type="password"
                   placeholder="********************"
                   required
@@ -59,6 +60,8 @@
               <br />
               <input class="submit" type="submit" value="Sign In" />
             </form>
+            <!-- hiển thị lỗi -->
+             <p class="error" ng-if="error">{{error}}</p>
           </div>
         </div>
         <div class="login-footer">
