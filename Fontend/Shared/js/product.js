@@ -11,6 +11,7 @@ document.addEventListener("click", function (e) {
   }
 });
 
+
 // ==================form add================
 const modal = document.querySelector(".form-add");
 const btnOpen = document.getElementById("btnOpenAdd");
@@ -53,23 +54,10 @@ btnCancelEdit.addEventListener("click", (e) => {
 
 
 
-// ============== form delete =========================
-const formDelete = document.querySelector(".form-delete");
-const btnCancelDelete = formDelete.querySelector(".cancel");
 
-function openDeleteModal() {
-  formDelete.classList.add("open");
-  document.body.classList.add("modal-open");
-}
 
-function closeDeleteModal() {
-  formDelete.classList.remove("open");
-  document.body.classList.remove("modal-open");
-}
+  
 
-// Khi nhấn Cancel trong popup
-btnCancelDelete.addEventListener("click", (e) => {
-  e.preventDefault();
-  closeDeleteModal();
-});
 
+
+ 

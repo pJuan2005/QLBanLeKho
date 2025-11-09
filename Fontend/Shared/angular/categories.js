@@ -267,6 +267,8 @@ app.controller(
       $scope.pager.page = 1;
       $scope.LoadCategories();
     };
+
+    
     $scope.CalculateStats = function () {
       if (!$scope.categories || $scope.categories.length === 0) {
         $scope.stats = { total: 0, avgVat: 0, mostCommon: "" };

@@ -94,33 +94,51 @@ namespace CoreApi.Controllers
 
             try
             {
-                // ✅ Nếu có upload ảnh
                 if (imageFile != null && imageFile.Length > 0)
                 {
-                    // Thư mục lưu ảnh
-                    var folderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Products");
+                    // 🗂 1️⃣ Đường dẫn cũ (backend)
+                    string oldPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Products");
 
-                    // Tạo thư mục nếu chưa tồn tại
-                    if (!Directory.Exists(folderPath))
-                    {
-                        Directory.CreateDirectory(folderPath);
-                    }
+                    // 🗂 2️⃣ Đường dẫn mới (frontend)
+                    string newPath = @"C:\Users\ADMIN\OneDrive\Desktop\QuanLyKho\bách\QLBanLeKho\Fontend\Shared\img\Products";
 
-                    // Tạo tên file duy nhất tránh trùng lặp
-                    var fileName = $"{Guid.NewGuid()}_{Path.GetFileName(imageFile.FileName)}";
-                    var filePath = Path.Combine(folderPath, fileName);
+                    // ✅ Tạo 2 thư mục nếu chưa có
+                    if (!Directory.Exists(oldPath))
+                        Directory.CreateDirectory(oldPath);
+                    if (!Directory.Exists(newPath))
+                        Directory.CreateDirectory(newPath);
 
-                    // Lưu file
-                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    // ✅ Làm sạch tên file và thêm GUID tránh trùng
+                    string safeFileName = Path.GetFileNameWithoutExtension(imageFile.FileName)
+                        .Replace(" ", "_")
+                        .Replace("đ", "d").Replace("Đ", "D")
+                        .Replace("á", "a").Replace("à", "a").Replace("ạ", "a").Replace("ã", "a").Replace("ả", "a")
+                        .Replace("é", "e").Replace("è", "e").Replace("ẹ", "e").Replace("ẽ", "e").Replace("ẻ", "e")
+                        .Replace("ó", "o").Replace("ò", "o").Replace("ọ", "o").Replace("õ", "o").Replace("ỏ", "o")
+                        .Replace("ú", "u").Replace("ù", "u").Replace("ụ", "u").Replace("ũ", "u").Replace("ủ", "u")
+                        .Replace("í", "i").Replace("ì", "i").Replace("ị", "i").Replace("ĩ", "i").Replace("ỉ", "i")
+                        .Replace("ý", "y").Replace("ỳ", "y").Replace("ỵ", "y").Replace("ỹ", "y").Replace("ỷ", "y");
+
+                    string fileName = $"{Guid.NewGuid()}_{safeFileName}{Path.GetExtension(imageFile.FileName)}";
+
+                    // ✅ Lưu file vào thư mục cũ
+                    string oldFile = Path.Combine(oldPath, fileName);
+                    using (var stream = new FileStream(oldFile, FileMode.Create))
                     {
                         imageFile.CopyTo(stream);
                     }
 
-                    // Lưu đường dẫn tương đối vào DB
+                    // ✅ Lưu file vào thư mục mới
+                    string newFile = Path.Combine(newPath, fileName);
+                    using (var stream = new FileStream(newFile, FileMode.Create))
+                    {
+                        imageFile.CopyTo(stream);
+                    }
+
+                    // ✅ Lưu đường dẫn tương đối vào DB (vẫn dùng link backend)
                     product.Image = $"Products/{fileName}";
                 }
 
-                // ✅ Gọi BLL để thêm vào DB
                 var result = _ProductBusiness.Create(product);
 
                 return Ok(new
@@ -141,13 +159,7 @@ namespace CoreApi.Controllers
         }
 
 
-        //[Route("update-product")]
-        //[HttpPost]
-        //public ProductModel Update([FromBody] ProductModel model)
-        //{
-        //    _ProductBusiness.Update(model);
-        //    return model;
-        //}
+
 
         [Route("delete-product/{id}")]
         [HttpDelete]
@@ -167,7 +179,6 @@ namespace CoreApi.Controllers
             return product;
         }
 
-        //[Route("search-product")][HttpPost] public ResponseModel Search([FromBody] Dictionary<string, object> formData) { var response = new ResponseModel(); try { var page = int.Parse(formData["page"].ToString()); var pageSize = int.Parse(formData["pageSize"].ToString()); int? IDProduct = null; if (formData.Keys.Contains("IDProduct") && !string.IsNullOrEmpty(Convert.ToString(formData["IDProduct"]))) { IDProduct = Convert.ToInt32(formData["IDProduct"]); } string ProductName = ""; if (formData.Keys.Contains("ProductName") && !string.IsNullOrEmpty(Convert.ToString(formData["ProductName"]))) { ProductName = Convert.ToString(formData["ProductName"]); } string option = ""; if (formData.Keys.Contains("option") && !string.IsNullOrEmpty(Convert.ToString(formData["option"]))) { option = Convert.ToString(formData["option"]); } long total = 0; var data = _ProductBusiness.Search(page, pageSize, out total, IDProduct, ProductName, option); response.TotalItems = total; response.Data = data; response.Page = page; response.PageSize = pageSize; } catch (Exception ex) { throw new Exception(ex.Message); } return response; }
 
         [Route("search-product")]
         [HttpPost]

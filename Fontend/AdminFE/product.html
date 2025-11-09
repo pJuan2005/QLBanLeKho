@@ -12,13 +12,13 @@
     />
 
     <!-- css -->
-    <link rel="stylesheet" href="../Shared/css/categories.css" />
+    <link rel="stylesheet" href="../Shared/css/product.css" />
     <script src="../Shared/angular/angular.min.js"></script>
     <script src="../Shared/angular/global.js"></script>
-    <script src="../Shared/angular/categories.js"></script>
-    <title>Categories</title>
+    <script src="../Shared/angular/product.js"></script>
+    <title>Products</title>
   </head>
-  <body ng-app="AppRetailPos" ng-controller="categoriesCtrl">
+  <body ng-app="AppRetailPos" ng-controller="productCtrl">
     <div class="app-content">
       <div class="slide-bar">
         <div class="slide-bar__header">
@@ -35,7 +35,7 @@
         <div class="slide-bar__Content">
           <p class="slide-bar__label">Navigation</p>
           <!-- menu button 1 -->
-          <a href="../AdminFE/dashboard.html" ng-if="canShow('dashboard')">
+          <a href="../AdminFE/dashboard.html" ng-if="canShow('dashboard')"></a>
             <div class="slide-bar__MenuButton">
               <div class="MenuButton-left">
                 <img
@@ -62,7 +62,7 @@
           </a>
           <!-- menu button 3 -->
           <a href="../AdminFE/product.html" ng-if="canShow('products')">
-            <div class="slide-bar__MenuButton">
+            <div class="slide-bar__MenuButton slide-bar__MenuButton--active">
               <div class="MenuButton-left">
                 <img
                   src="../Shared/img/common/product.svg"
@@ -71,13 +71,13 @@
                 />
               </div>
               <div class="MenuButton-right">
-                <p class="name-menu">Products</p>
+                <p class="name-menu-active">Products</p>
               </div>
             </div>
           </a>
           <!-- menu button 4 -->
           <a href="../AdminFE/categories.html" ng-if="canShow('categories')">
-            <div class="slide-bar__MenuButton slide-bar__MenuButton--active">
+            <div class="slide-bar__MenuButton ">
               <div class="MenuButton-left">
                 <img
                   src="../Shared/img/common/category.svg"
@@ -86,7 +86,7 @@
                 />
               </div>
               <div class="MenuButton-right">
-                <p class="name-menu-active">Categories</p>
+                <p class="name-menu">Categories</p>
               </div>
             </div>
           </a>
@@ -106,7 +106,7 @@
             </div>
           </a>
           <!-- menu button 6 -->
-          <a href="../AdminFE/suppliers.html" ng-if="canShow('suppliers')">
+          <a href="../AdminFE/suppliers.html" ng-if="canShow('suppliers')"></a>
             <div class="slide-bar__MenuButton">
               <div class="MenuButton-left">
                 <img
@@ -121,10 +121,7 @@
             </div>
           </a>
           <!-- menu button 7 -->
-          <a
-            href="../AdminFE/purchaseorders.html"
-            ng-if="canShow('purchaseOrders')"
-          >
+          <a href="../AdminFE/purchaseorders.html" ng-if="canShow('purchaseOrders')">
             <div class="slide-bar__MenuButton">
               <div class="MenuButton-left">
                 <img
@@ -176,7 +173,7 @@
             </div>
           </a>
           <!-- menu button 11 -->
-          <a href="../AdminFE/payments.html" ng-if="canShow('payments')">
+          <a href="../AdminFE/returns.html" ng-if="canShow('returns')">
             <div class="slide-bar__MenuButton">
               <div class="MenuButton-left">
                 <img
@@ -206,7 +203,7 @@
             </div>
           </a>
           <!-- menu button 13 -->
-          <a href="../AdminFE/auditlog.html" ng-if="canShow('auditLog')">
+          <a href="../AdminFE/auditlog.html" ng-if="canShow('auditLog')"></a>
             <div class="slide-bar__MenuButton">
               <div class="MenuButton-left">
                 <img
@@ -267,8 +264,8 @@
               <input
                 class="search"
                 type="text"
-                placeholder="Search by categories name"
-                ng-model="searchCategories"
+                placeholder="Search by product name"
+                ng-model="searchProduct"
               />
             </div>
             <div class="top-bar__right">
@@ -291,7 +288,7 @@
             </div>
             <div class="info-bottom">
               <img
-                src="../Shared/img/categories/logout.svg"
+                src=""
                 alt=""
                 class="icon"
               />
@@ -299,24 +296,25 @@
             </div>
           </div>
         </div>
+
+        
         <div class="app-layout-content">
-          <h1 class="name-menu">Product Categories</h1>
+          <h1 class="name-menu">Product </h1>
           <p class="desc">
-            Manage and organize product categories with descriptions and VAT
-            rates
+            Manage product inventory and pricing
           </p>
           <div class="display-container">
             <div class="total farme">
-              <p class="name-display">Total Categories</p>
+              <p class="name-display">Total Products</p>
               <p class="data">{{stats.total}}</p>
             </div>
             <div class="avg farme">
-              <p class="name-display">Average VAT</p>
-              <p class="data">{{stats.avgVat|number:2}}%</p>
+              <p class="name-display">In stock</p>
+              <p class="data">{{stats.instock}}</p>
             </div>
             <div class="most-common farme">
-              <p class="name-display">Most Common Category</p>
-              <p class="data">{{stats.mostCommon}}</p>
+              <p class="name-display">Out of Stock</p>
+              <p class="data">{{stats.outstock}}</p>
             </div>
           </div>
           <div class="control">
@@ -325,8 +323,8 @@
               <input
                 class="search"
                 type="text"
-                placeholder="Search by VAT..."
-                ng-model="searchVAT"
+                placeholder="Search by SKU"
+                ng-model="searchSKU"
               />
             </div>
             <!-- phân trang -->
@@ -340,6 +338,7 @@
                 <label>
                   Page size:
                   <select ng-model="pager.size" ng-change="changeSize()">
+                    <option value="0">ALL</option>
                     <option value="10">10</option>
                     <option value="20">20</option>
                     <option value="30">30</option>
@@ -347,14 +346,14 @@
                 </label>
                 <button
                   class="btn ghost"
-                  ng-disable="pager.page === 1"
+                  ng-disabled="pager.page === 1"
                   ng-click="go(1)"
                 >
                   «
                 </button>
                 <button
                   class="btn ghost"
-                  ng-disable="pager.page === 1"
+                  ng-disabled="pager.page === 1"
                   ng-click="go(pager.page-1)"
                 >
                   Prev
@@ -362,28 +361,39 @@
                 <span class="page-no"></span>
                 <button
                   class="btn ghost"
-                  ng-disable="pager.page >= pager.pages"
+                  ng-disabled="pager.page >= pager.pages"
                   ng-click="go(pager.page+1)"
                 >
                   Next
                 </button>
                 <button
                   class="btn ghost"
-                  ng-disable="pager.page >= pager.pages"
+                  ng-disabled="pager.page >= pager.pages"
                   ng-click="go(pager.pages)"
                 >
                   »
                 </button>
               </div>
             </div>
-            <div class="control-right">
-              <div class="import" ng-click="openImportDialog()">
+            <div class="control-right" >
+              <div class="import" ng-click="triggerImportFile()">
                 <img
                   src="../Shared/img/common/import.svg"
                   alt=""
                   class="icon"
                 />
               </div>
+
+
+              <input 
+                type="file" 
+                id="fileImport" 
+                accept=".xlsx,.xls"
+                style="display: none"
+                onchange="angular.element(this).scope().handleImportFile(this)"
+              />
+
+
               <div class="export" ng-click="exportExcel()">
                 <img
                   src="../Shared/img/common/export.svg"
@@ -393,15 +403,15 @@
               </div>
               <div class="add" id="btnOpenAdd">
                 <img src="../Shared/img/common/plus.svg" alt="" class="plus" />
-                <p class="add-cate">Add Category</p>
+                <p class="add-product">Add Product</p>
               </div>
-              <input
+              <!-- <input
                 type="file"
                 id="fileImport"
                 accept=".xlsx"
                 style="display: none"
                 onchange="angular.element(this).scope().onImportFileChange(this)"
-              />
+              /> -->
             </div>
           </div>
           <!-- table -->
@@ -409,147 +419,265 @@
             <div class="table-responsive">
               <table class="table">
                 <thead>
-                  <tr>
-                    <th class="id">Category ID</th>
-                    <th class="name">Category Name</th>
-                    <th class="descript">Description</th>
-                    <th class="vat">VAT Rate (%)</th>
-                    <th class="action txt-right">Actions</th>
-                  </tr>
+                  <tr> 
+                  <th class="id">Product ID</th> 
+                  <th class="name">Product Name</th> 
+                  <th class="sku">SKU</th> 
+                  <th class="barcode">Barcode</th>
+                  <th class="categoryid">CategoryID</th> 
+                  <th class="unit">Unit</th> 
+                  <th class="minstock">MinStock</th> 
+                  <th class="qty">Quantity</th> 
+                  <th class="vat">VAT Rate (%)</th> 
+                  <th class="status">Status</th> 
+                  <th class="img">Image</th> 
+                  <th class="action txt-right">Actions</th> </tr>
                 </thead>
                 <tbody>
-                  <tr ng-repeat="c in categories">
-                    <td>{{c.categoryID}}</td>
-                    <td>{{c.categoryName}}</td>
-                    <td>{{c.description}}</td>
-                    <td>{{c.vatRate}}%</td>
+                  <tr ng-repeat="p in products" style="font-weight: 600;">
+                    <td>{{p.productID}}</td>
+                    <td>{{p.productName}}</td>
+                    <td>{{p.sku}}</td>
+                    <td>{{p.barcode}}</td>
+                    <td><span class="stock">{{p.categoryID}}</span></td>
+                    <td>{{p.unit}}</td>
+                    <td>{{p.minStock}}</td>
+                    <td><span class="stock" ng-class="p.quantity > p.minStock ? 'good' : 'low'">{{p.quantity}}</span></td>
+                    <td>{{p.vatRate}}%</td>
+                    <td><Span class="stock" ng-class="p.status === 'Active' ? 'good' : 'low'">{{p.status}}</Span></td>
+                    <td><img 
+                        ng-if="p.image" 
+                        ng-src="{{p.image}}" 
+                        alt="Product Image" 
+                        ng-click="openImageModal(p.image)"
+                        style="width: 60px; height: 60px; border-radius: 6px; object-fit: contain; border: 1px solid #ddd; background-color: #f8f8f8; padding: 2px; cursor: zoom-in;"
+                      />
+                      <span ng-if="!p.image" style="color:#999;">No image</span>
+                    </td>
+
+
+
                     <td class="txt-right">
-                      <button class="link" ng-click="edit(c)">✎ Edit</button>
-                      <button class="link danger" ng-click="remove(c)">
-                        🗑 Delete
-                      </button>
+                      <button class="link" ng-click="edit(p)">✎ Edit</button>
+                      <button class="link danger" ng-click="remove(p)"> 🗑 Delete</button>
                     </td>
                   </tr>
-                  <tr
+                  
+                  <!-- <tr
                     ng-if="(categories | filter:searchCategories | filter:searchVAT).length == 0"
                   >
                     <td colspan="5" class="empty">No Data</td>
+                  </tr> -->
+
+                  <tr ng-if="!products || products.length === 0">
+                    <td colspan="11" class="empty">No Data</td>
                   </tr>
+
                 </tbody>
               </table>
             </div>
           </div>
           <!-- form -->
           <div class="form">
-            <!-- =============== IMAGE PREVIEW MODAL =============== -->
+            <!-- add -->
+             <!-- ========== IMAGE VIEWER MODAL ========== -->
             <div class="image-viewer" ng-if="showImageModal" ng-click="closeImageModal($event)">
               <div class="image-viewer__content">
-                <img ng-src="{{selectedImage}}" alt="Full view">
+                <img ng-src="{{selectedImage}}" alt="Full Image">
               </div>
             </div>
-            <!-- add -->
+
             <div class="form-add">
               <div class="form-add__content">
-                <h3 class="title">Add Category</h3>
-                <p class="desc">Create a new product category</p>
+                <h3 class="title">Add Product</h3>
+                <p class="desc">Create a new product </p>
                 <form name="frmAdd" ng-submit="add()">
-                  <label for="name-add">Category Name *</label>
-                  <br />
-                  <input
-                    type="text"
-                    id="name-add"
-                    required
-                    placeholder="Enter category name"
-                    ng-model="newCategory.CategoryName"
-                  />
-                  <br />
-                  <label for="desc-add">Description *</label>
-                  <br />
-                  <textarea
-                    rows="3"
-                    id="desc-add"
-                    placeholder="Enter category description"
-                    required
-                    ng-model="newCategory.Description"
-                  ></textarea>
-                  <br />
-                  <label for="vat-add">VAT Rate (%) *</label>
-                  <br />
-                  <input
-                    type="text"
-                    id="vat-add"
-                    placeholder="10"
-                    ng-model="newCategory.VATRate"
-                  />
-                  <br />
-                  <label class="standard"
-                    >Standard VAT rates: 10% (most products), 9% (special
-                    items)</label
-                  >
+
+                  <!-- Cột trái -->
+                  <div>
+                    <label for="name-add">Product Name *</label>
+                    <input type="text" id="name-add" required placeholder="Enter product name"
+                          ng-model="newProduct.productName" />
+
+                    <label for="sku-add">SKU*</label>
+                    <input type="text" id="sku-add" required placeholder="Enter SKU"
+                          ng-model="newProduct.sku" />
+
+                    <label for="barcode-add">Barcode*</label>
+                    <input type="text" id="barcode-add" required placeholder="Enter Barcode"
+                          ng-model="newProduct.barcode" />
+
+                    <label for="unit-add">Unit</label>
+                    <input type="text" id="unit-add" placeholder="Enter Unit"
+                          ng-model="newProduct.unit" />
+
+                    <label for="vat-add">VAT Rate(%)</label>
+                    <input type="number" id="vat-add" placeholder="0.00"
+                          ng-model="newProduct.vatRate" min="0" step="0.01" />
+                    <label class="standard">
+                      Standard VAT rates: 10% (most products), 9% (special items)
+                    </label>
+                  </div>
+
+                  <!-- Cột phải -->
+                  <div>
+                    <label for="categoryid-add">CategoryName*</label>
+                    <select id="categoryid-add" required ng-model="newProduct.categoryID"
+                    ng-options="c.categoryID as c.categoryName for c in categories">
+                      <option value="">Select Category</option>
+                      <option value="1">Category 1</option>
+                      <option value="2">Category 2</option>
+                    </select>
+
+                    <label for="minstock-add">MinStock</label>
+                    <input type="number" id="minstock-add" placeholder="Enter MinStock"
+                          ng-model="newProduct.minStock" min="0" step="1" />
+
+                    <label for="quantity-add">Quantity</label>
+                    <input type="number" id="quantity-add" placeholder="Enter Quantity"
+                          ng-model="newProduct.quantity" min="0" step="1" />
+
+                    <label for="status-add">Status</label>
+                    <select id="status-add" ng-model="newProduct.status">
+                      <option value="Active">Active</option>
+                      <option value="Inactive">Inactive</option>
+                    </select>
+
+                    <label for="imageInputAdd">Image</label>
+                    <input type="file" id="imageInputAdd" accept="image/*" onchange="angular.element(this).scope().previewImageAdd(this)">
+                    <img id="previewAdd" style="width:60px;height:60px;margin-top:5px;border-radius:6px;" ng-if="newProduct.image" ng-src="{{newProduct.image}}" />
+
+                  </div>
+
+                  <!-- Footer -->
                   <div class="dialog-footer">
-                    <!-- để type button tránh submit -->
                     <button type="button" class="cancel">Cancel</button>
-                    <input
-                      class="submit"
-                      type="submit"
-                      value="Add Category"
-                      ng-disable="frmAdd.$invalid||savingAdd"
-                    />
+                    <input class="submit" type="submit"
+                          value="Add Product" ng-disabled="frmAdd.$invalid||savingAdd" />
                   </div>
                 </form>
+
               </div>
             </div>
             <!-- edit -->
+            
+            <!-- =================== FORM EDIT =================== -->
             <div class="form-edit">
               <div class="form-edit__content">
-                <h3 class="title">Edit Category</h3>
-                <p class="desc">Update category information</p>
-                <form name="frmEdit" ng-submit="updateCategory()">
-                  <label for="name-edit">Category Name *</label>
-                  <br />
-                  <input
-                    type="text"
-                    id="name-edit"
-                    ng-model="editingCategory.CategoryName"
-                    required
-                  />
-                  <br />
-                  <label for="desc-edit">Description *</label>
-                  <br />
-                  <textarea
-                    rows="3"
-                    id="desc-edit"
-                    ng-model="editingCategory.Description"
-                    required
-                  ></textarea>
-                  <br />
-                  <label for="vat-edit">VAT Rate (%) *</label>
-                  <br />
-                  <input
-                    type="number"
-                    id="vat-edit"
-                    ng-model="editingCategory.VATRate"
-                    min="0"
-                    max="100"
-                    step="1"
-                  />
-                  <br />
-                  <label class="standard"
-                    >Standard VAT rates: 10% (most products), 9% (special
-                    items)</label
-                  >
+                <h3 class="title">Edit Product</h3>
+                <p class="desc">Update product information</p>
+
+                <form name="frmEdit" ng-submit="updateProduct()">
+                  <!-- ===== Cột trái ===== -->
+                  <div>
+                    <label for="name-edit">Product Name *</label>
+                    <input
+                      type="text"
+                      id="name-edit"
+                      required
+                      placeholder="Enter product name"
+                      ng-model="editingProduct.productName"
+                    />
+
+                    <label for="sku-edit">SKU*</label>
+                    <input
+                      type="text"
+                      id="sku-edit"
+                      required
+                      placeholder="Enter SKU"
+                      ng-model="editingProduct.sku"
+                    />
+
+                    <label for="barcode-edit">Barcode*</label>
+                    <input
+                      type="text"
+                      id="barcode-edit"
+                      required
+                      placeholder="Enter Barcode"
+                      ng-model="editingProduct.barcode"
+                    />
+
+                    <label for="unit-edit">Unit</label>
+                    <input
+                      type="text"
+                      id="unit-edit"
+                      placeholder="Enter Unit"
+                      ng-model="editingProduct.unit"
+                    />
+
+                    <label for="vat-edit">VAT Rate(%)</label>
+                    <input
+                      type="number"
+                      id="vat-edit"
+                      placeholder="0.00"
+                      ng-model="editingProduct.vatRate"
+                      min="0"
+                      step="0.01"
+                    />
+                    <label class="standard">
+                      Standard VAT rates: 10% (most products), 9% (special items)
+                    </label>
+                  </div>
+
+                  <!-- ===== Cột phải ===== -->
+                  <div>
+                    <label for="categoryid-edit">CategoryName*</label>
+                    <select id="categoryid-edit"
+                            ng-model="editingProduct.categoryID"
+                            ng-options="c.categoryID as c.categoryName for c in categories"
+                            required>
+                      <option value="">Select Category</option>
+                    </select>
+
+
+
+                    <label for="minstock-edit">MinStock</label>
+                    <input
+                      type="number"
+                      id="minstock-edit"
+                      placeholder="Enter MinStock"
+                      ng-model="editingProduct.minStock"
+                      min="0"
+                      step="1"
+                    />
+
+                    <label for="quantity-edit">Quantity</label>
+                    <input
+                      type="number"
+                      id="quantity-edit"
+                      placeholder="Enter Quantity"
+                      ng-model="editingProduct.quantity"
+                      min="0"
+                      step="1"
+                    />
+
+                    <label for="status-edit">Status</label>
+                    <select id="status-edit" ng-model="editingProduct.status">
+                      <option value="Active">Active</option>
+                      <option value="Inactive">Inactive</option>
+                    </select>
+
+
+                    <label for="imageInputEdit">Image</label>
+                    <input type="file" id="imageInputEdit" accept="image/*" onchange="angular.element(this).scope().previewImageEdit(this)">
+                    <img id="previewEdit" style="width:60px;height:60px;margin-top:5px;border-radius:6px;" ng-if="editingProduct.image" ng-src="{{editingProduct.image}}" />
+
+                  </div>
+
+                  <!-- ===== Footer ===== -->
                   <div class="dialog-footer">
                     <button type="button" class="cancel">Cancel</button>
                     <input
                       class="submit"
                       type="submit"
-                      value="Update Category"
-                      ng-disable="frmEdit.$invalid||savingEdit"
+                      value="Update Product"
+                      ng-disabled="frmEdit.$invalid || savingEdit"
                     />
                   </div>
                 </form>
               </div>
             </div>
+
             <!-- delete -->
             <div
               class="form-delete"
@@ -557,17 +685,21 @@
               ng-click="closeDeleteOnOverlay($event)"
             >
               <div class="form-delete__content">
-                <h3 class="title">Delete Category</h3>
+                <h3 class="title">Delete Product</h3>
                 <p class="desc">
-                  Are you sure you want to delete the category
-                  "{{deleting.categoryName}}"? This action cannot be undone.
+                  Are you sure you want to delete the Product
+                  "{{deleting.productName}}"? This action cannot be undone.
                 </p>
                 <div class="dialog-footer">
                   <button class="cancel" ng-click="cancelDelete($event)">
                     Cancel
                   </button>
-                  <button class="submit danger" ng-click="confirmDelete()">
-                    Delete Category
+                  <button 
+                    type="button" 
+                    class="submit danger" 
+                    ng-click="confirmDelete()"
+                    ng-disabled="deletingBusy">
+                    Delete Product
                   </button>
                 </div>
               </div>
@@ -577,6 +709,12 @@
       </div>
     </div>
 
-    <script src="../Shared/js/categories.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="../Shared/js/product.js"></script>\
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
   </body>
 </html>
