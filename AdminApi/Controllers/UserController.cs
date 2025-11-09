@@ -1,11 +1,9 @@
-﻿using BLL;
-using Model;
-using Microsoft.AspNetCore.Http;
+﻿using Model;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Configuration;
 using BLL.Interfaces;
+using System.Text.Json;
+using AdminApi.Services.Interface;
 
 namespace AdminApi.Controllers
 {
@@ -15,10 +13,12 @@ namespace AdminApi.Controllers
     public class UserController : ControllerBase
     {
         private IUserBusiness _userBusiness;
+        private IAuditLogger _auditLogger;
 
-        public UserController(IUserBusiness userBusiness)
+        public UserController(IUserBusiness userBusiness, IAuditLogger auditLogger)
         {
             _userBusiness = userBusiness;
+            _auditLogger = auditLogger;
         }
 
         [Route("create-user")]
@@ -26,6 +26,13 @@ namespace AdminApi.Controllers
         public UserModel Create(UserModel model)
         {
             _userBusiness.Create(model);
+            _auditLogger.Log(
+                action: $"Create user {model.Username}",
+                entityName: "Users",
+                entityId:model.UserID,
+                operation: "CREATE",
+                details: JsonSerializer.Serialize(model)
+                );
             return model;
         }
 
@@ -36,6 +43,12 @@ namespace AdminApi.Controllers
             var ok = _userBusiness.Delete(id);
             if(ok)
             {
+                _auditLogger.Log(
+                    action: $"Delete user Id: {id}",
+                    entityName: "Users",
+                    entityId: id,
+                    operation: "DELETE",
+                    details: null);
                 return Ok(new { message = "Đã xoá thành công", id });
             }
             else
@@ -56,6 +69,12 @@ namespace AdminApi.Controllers
         public UserModel UpdateUser(UserModel model)
         {
              _userBusiness.Update(model);
+            _auditLogger.Log(
+                action:$"Update user {model.Username}",
+                entityName:"Users",
+                entityId:model.UserID,
+                operation:"UPDATE",
+                details:JsonSerializer.Serialize(model));
             return model;
         }
 
