@@ -13,6 +13,6 @@ namespace DAL.Interfaces
         bool CreateMultiple(List<PurchaseOrderModel> models);
         bool Update(PurchaseOrderModel model);
         bool Delete(PurchaseOrderModel model);
-        List<PurchaseOrderModel> Search(decimal? minTotalAmount, decimal? maxTotalAmount, string status, DateTime? fromDate, DateTime? toDate );
+        List<PurchaseOrderModel> Search(int pageIndex, int pageSize, out long total, decimal? minTotalAmount, decimal? maxTotalAmount, string status, DateTime? fromDate, DateTime? toDate);
     }
 }

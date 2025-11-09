@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+        rel="stylesheet" />
+
+    <!-- css -->
+    <link rel="stylesheet" href="../Shared/css/purchaseorder.css" />
+    <script src="../Shared/angular/angular.min.js"></script>
+    <script src="../Shared/angular/global.js"></script>
+    <script src="../Shared/angular/purchaseorder.js"></script>
+    <title>Purchase Orders</title>
+</head>
+
+<body ng-app="AppRetailPos" ng-controller="purchaseorderCtrl">
+    <div class="app-content">
+        <div class="slide-bar">
+            <div class="slide-bar__header">
+                <div class="app-slideBar">
+                    <div class="app-slideBar__left">
+                        <img src="../Shared/img/common/wheel.svg" alt="" class="icon" />
+                    </div>
+                    <div class="app-slideBar__right">
+                        <h1 class="name-app">RetailPro</h1>
+                        <p class="title-nameApp">Inventory & POS</p>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-bar__Content">
+                <p class="slide-bar__label">Navigation</p>
+                <!-- menu button 1 -->
+                <a href="../AdminFE/dashboard.html" ng-if="canShow('dashboard')">
+                    <div class="slide-bar__MenuButton">
+                        <div class="MenuButton-left">
+                            <img src="../Shared/img/common/dashboard.svg" alt="" class="icon" />
+                        </div>
+                        <div class="MenuButton-right">
+                            <p class="name-menu">Dashboard</p>
+                        </div>
+                    </div>
+                </a>
+                <!-- menu button 2 -->
+                <a href="../AdminFE/pos.html" ng-if="canShow('pos')">
+                    <div class="slide-bar__MenuButton">
+                        <div class="MenuButton-left">
+                            <img src="../Shared/img/common/pos.svg" alt="" class="icon" />
+                        </div>
+                        <div class="MenuButton-right">
+                            <p class="name-menu">POS</p>
+                        </div>
+                    </div>
+                </a>
+                <!-- menu button 3 -->
+                <a href="../AdminFE/products.html" ng-if="canShow('products')">
+                    <div class="slide-bar__MenuButton">
+                        <div class="MenuButton-left">
+                            <img src="../Shared/img/common/product.svg" alt="" class="icon" />
+                        </div>
+                        <div class="MenuButton-right">
+                            <p class="name-menu">Products</p>
+                        </div>
+                    </div>
+                </a>
+                <!-- menu button 4 -->
+                <a href="../AdminFE/categories.html" ng-if="canShow('categories')">
+                    <div class="slide-bar__MenuButton ">
+                        <div class="MenuButton-left">
+                            <img src="../Shared/img/common/category.svg" alt="" class="icon" />
+                        </div>
+                        <div class="MenuButton-right">
+                            <p class="name-menu">Categories</p>
+                        </div>
+                    </div>
+                </a>
+                <!-- menu button 5 -->
+                <a href="../AdminFE/customers.html" ng-if="canShow('customers')">
+                    <div class="slide-bar__MenuButton">
+                        <div class="MenuButton-left">
+                            <img src="../Shared/img/common/customer.svg" alt="" class="icon" />
+                        </div>
+                        <div class="MenuButton-right">
+                            <p class="name-menu">Customers</p>
+                        </div>
+                    </div>
+                </a>
+                <!-- menu button 6 -->
+                <a href="../AdminFE/suppliers.html" ng-if="canShow('suppliers')">
+                    <div class="slide-bar__MenuButton">
+                        <div class="MenuButton-left">
+                            <img src="../Shared/img/common/supplier.svg" alt="" class="icon" />
+                        </div>
+                        <div class="MenuButton-right">
+                            <p class="name-menu">Suppliers</p>
+                        </div>
+                    </div>
+                </a>
+                <!-- menu button 7 -->
+                <a href="../AdminFE/purchaseorders.html" ng-if="canShow('purchaseOrders')">
+                    <div class="slide-bar__MenuButton slide-bar__MenuButton--active">
+                        <div class="MenuButton-left ">
+                            <img src="../Shared/img/common/purchaseorder.svg" alt="" class="icon" />
+                        </div>
+                        <div class="MenuButton-right">
+                            <p class="name-menu-active">Purchase Orders</p>
+                        </div>
+                    </div>
+                </a>
+                <!-- menu button 8 -->
+                <a href="../AdminFE/stockcard.html" ng-if="canShow('stock')">
+                    <div class="slide-bar__MenuButton">
+                        <div class="MenuButton-left">
+                            <img src="../Shared/img/common/stock.svg" alt="" class="icon" />
+                        </div>
+                        <div class="MenuButton-right">
+                            <p class="name-menu">Stock Management</p>
+                        </div>
+                    </div>
+                </a>
+                <!-- menu button 9 -->
+                <a href="../AdminFE/sales.html" ng-if="canShow('sales')">
+                    <div class="slide-bar__MenuButton">
+                        <div class="MenuButton-left">
+                            <img src="../Shared/img/common/sales.svg" alt="" class="icon" />
+                        </div>
+                        <div class="MenuButton-right">
+                            <p class="name-menu">Sales</p>
+                        </div>
+                    </div>
+                </a>
+                <!-- menu button 10 -->
+                <a href="../AdminFE/returns.html" ng-if="canShow('returns')">
+                    <div class="slide-bar__MenuButton">
+                        <div class="MenuButton-left">
+                            <img src="../Shared/img/common/return.svg" alt="" class="icon" />
+                        </div>
+                        <div class="MenuButton-right">
+                            <p class="name-menu">Returns</p>
+                        </div>
+                    </div>
+                </a>
+                <!-- menu button 11 -->
+                <a href="../AdminFE/payments.html" ng-if="canShow('payments')">
+                    <div class="slide-bar__MenuButton">
+                        <div class="MenuButton-left">
+                            <img src="../Shared/img/common/payments.svg" alt="" class="icon" />
+                        </div>
+                        <div class="MenuButton-right">
+                            <p class="name-menu">Payments & Debts</p>
+                        </div>
+                    </div>
+                </a>
+                <!-- menu button 12 -->
+                <a href="../AdminFE/reports.html" ng-if="canShow('reports')">
+                    <div class="slide-bar__MenuButton">
+                        <div class="MenuButton-left">
+                            <img src="../Shared/img/common/report.svg" alt="" class="icon" />
+                        </div>
+                        <div class="MenuButton-right">
+                            <p class="name-menu">Reports</p>
+                        </div>
+                    </div>
+                </a>
+                <!-- menu button 13 -->
+                <a href="../AdminFE/auditlog.html" ng-if="canShow('auditLog')">
+                    <div class="slide-bar__MenuButton">
+                        <div class="MenuButton-left">
+                            <img src="../Shared/img/common/auditlog.svg" alt="" class="icon" />
+                        </div>
+                        <div class="MenuButton-right">
+                            <p class="name-menu">Audit Log</p>
+                        </div>
+                    </div>
+                </a>
+                <!-- menu button 14 -->
+                <a href="../AdminFE/users.html" ng-if="canShow('users')">
+                    <div class="slide-bar__MenuButton">
+                        <div class="MenuButton-left">
+                            <img src="../Shared/img/common/user.svg" alt="" class="icon" />
+                        </div>
+                        <div class="MenuButton-right">
+                            <p class="name-menu">Users</p>
+                        </div>
+                    </div>
+                </a>
+                <!-- menu button 15 -->
+                <a href="../AdminFE/settings.html" ng-if="canShow('settings')">
+                    <div class="slide-bar__MenuButton">
+                        <div class="MenuButton-left">
+                            <img src="../Shared/img/common/setting.svg" alt="" class="icon" />
+                        </div>
+                        <div class="MenuButton-right">
+                            <p class="name-menu">Settings</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="slide-bar__footer">
+                <div class="app-slide-bar">
+                    <div class="ava">
+                        <img class="ava" src="../Shared/img/common/ava.svg" alt="" />
+                    </div>
+                    <div class="info">
+                        <p class="name">{{currentUser.fullname}}</p>
+                        <p class="role">{{currentUser.role}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="app-layout">
+            <div class="top-bar">
+                <div class="top-bar__content">
+                    <div class="top-bar__left">
+                        <img src="../Shared/img/common/search.svg" alt="" class="icon" />
+                        <input class="search" type="text" placeholder="Search by purchaseorder name"
+                            ng-model="searchPurchaseOrder" />
+                    </div>
+                    <div class="top-bar__right">
+                        <p class="role">admin</p>
+                        <img src="../Shared/img/common/ava.svg" alt="" class="ava" id="avatar" />
+                    </div>
+                </div>
+                <div class="top-bar__info" id="information">
+                    <div class="info-top">
+                        <p class="name">John Doe</p>
+                        <p class="email">john@company.com</p>
+                    </div>
+
+                    <div class="info-mid">
+                        <a href="#!">
+                            <p class="set">Profile Settings</p>
+                        </a>
+                    </div>
+                    <div class="info-bottom">
+                        <img src="../Shared/img/categories/logout.svg" alt="" class="icon" />
+                        <a href="../AuthFE/login.html">
+                            <p class="logout">Logout</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="app-layout-content">
+                <h1 class="name-menu">Purchase Orders</h1>
+                <p class="desc">
+                    Manage and organize Purchase Orders
+                </p>
+                <div class="display-container">
+                    <div class="total farme">
+                        <p class="name-display">Total PO</p>
+                        <p class="data">{{stats.total}}</p>
+                    </div>
+                    <div class="Amount-Approved farme">
+                        <p class="name-display">Amount Approved</p>
+                        <p class="data">{{stats.countApproved}}</p>
+                    </div>
+                    <div class="Amount-Pending farme">
+                        <p class="name-display">Amount Pending</p>
+                        <p class="data">{{stats.countPending}}</p>
+                    </div>
+                    <div class="Amount-Processing farme">
+                        <p class="name-display">Amount Processing</p>
+                        <p class="data">{{stats.countProcessing}}</p>
+                    </div>
+                </div>
+                <div class="control">
+                    <!-- Toàn bộ chỉ 1 div control-left, giống categories -->
+                    <div class="control-left">
+                        <!-- 1. Từ ngày (dùng placeholder giả vì type=date không hỗ trợ placeholder) -->
+                        <img src="../Shared/img/common/search.svg" alt="" class="icon" />
+                        <input type="date" class="search date-input" ng-model="searchFromDate" id="fromDate" />
+                        <label for="fromDate" class="placeholder-label">From Date</label>
+                    </div>
+
+                    <div class="control-left">
+                        <img src="../Shared/img/common/search.svg" alt="" class="icon" />
+                        <input type="date" class="search date-input" ng-model="searchToDate" id="toDate" />
+                        <label for="toDate" class="placeholder-label">To Date</label>
+                    </div>
+
+                    <div class="control-left">
+                        <img src="../Shared/img/common/search.svg" alt="" class="icon" />
+                        <input type="number" class="search money-input" placeholder="Min Amount"
+                            ng-model="searchMinAmount" />
+                    </div>
+
+                    <div class="control-left">
+                        <img src="../Shared/img/common/search.svg" alt="" class="icon" />
+                        <input type="number" class="search money-input" placeholder="Max Amount"
+                            ng-model="searchMaxAmount" />
+                    </div>
+
+                    <div class="control-left">
+                        <img src="../Shared/img/common/search.svg" alt="" class="icon" />
+                        <select class="search status-select" ng-model="searchStatus">
+                            <option value="">All Status</option>
+                            <option value="Pending">Pending</option>
+                            <option value="Processing">Processing</option>
+                            <option value="Approved">Approved</option>
+
+
+                        </select>
+                    </div>
+
+
+                </div>
+                <!-- ======================== PHẦN DƯỚI CONTROL: PHÂN TRANG + EXPORT + ADD PO ======================== -->
+                <div class="bottom-control">
+                    <!-- Phân trang  -->
+                    <div class="pager" ng-if="pager.total > 0">
+                        <div class="pager-info">
+                            Showing
+                            {{((pager.page-1)*pager.size)+1}}-{{Math.min(pager.page*pager.size, pager.total)}}
+                            of {{pager.total}} items
+                        </div>
+                        <div class="page-nav">
+                            <label>
+                                Page size:
+                                <select ng-model="pager.size" ng-change="changeSize()">
+                                    <option value="10">10</option>
+                                    <option value="20">20</option>
+                                    <option value="30">30</option>
+                                    <option value="50">50</option>
+                                </select>
+                            </label>
+                            <button class="btn ghost " ng-disabled="pager.page === 1" ng-click="go(1)">«</button>
+                            <button class="btn ghost " ng-disabled="pager.page === 1"
+                                ng-click="go(pager.page-1)">Prev</button>
+                            <span class="page-no">
+                                Page {{pager.page}} of {{pager.pages}}
+                            </span>
+                            <button class="btn ghost " ng-disabled="pager.page >= pager.pages"
+                                ng-click="go(pager.page+1)">Next</button>
+                            <button class="btn ghost " ng-disabled="pager.page >= pager.pages"
+                                ng-click="go(pager.pages)">»</button>
+                        </div>
+                    </div>
+                    <!-- Thêm flex: 1 để chiếm chỗ trái, đẩy pager giữa và control-right sang phải -->
+                    <div style="flex: 1;"></div>
+
+
+                    <div class="control-right">
+
+
+                        <!-- Add Purchase Order -->
+                        <div class="add" id="btnOpenAdd" ng-click="openAddModal()">
+                            <img src="../Shared/img/common/plus.svg" alt="Add" class="plus" />
+                            <p class="add-po">Add Purchase Order</p>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- table -->
+                <div class="card">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th class="id">POID</th>
+                                    <th class="id">SupplierID</th>
+                                    <th class="Date">OrderDate</th>
+                                    <th class="Total">TotalAmount</th>
+                                    <th class="Status">Status</th>
+                                    <th class="action txt-right">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="po in purchaseOrders">
+                                    <td>{{po.poid}}</td>
+                                    <td>{{po.supplierID}}</td>
+                                    <td>{{formatDate(po.orderDate)}}</td>
+                                    <td>{{(po.totalAmount || 0) | number:0}} ₫</td>
+                                    <td>{{po.status}}</td>
+
+                                    <td class="txt-right">
+                                        <button class="link" ng-click="viewDetail(po)">🔍 Detail</button>
+                                        <button class="link" ng-click="edit(po)">✎ Edit</button>
+                                        <button class="link danger" ng-click="remove(po)">🗑 Delete</button>
+                                        <button class="link" ng-click="exportPO(po)">🖨 Export</button>
+                                    </td>
+                                </tr>
+
+                                <tr ng-if="(purchaseOrders 
+                                    | filter:searchPurchaseOrder 
+                                    | filter:searchFromDate 
+                                    | filter:searchToDate 
+                                    | filter:searchMinAmount 
+                                    | filter:searchMaxAmount 
+                                    | filter:searchStatus).length == 0">
+                                    <td colspan="6" class="empty">No Purchase Orders Found</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                </div>
+                <!-- form -->
+                <div class="form">
+                    <!-- add -->
+                    <div class="form-add" ng-class="{open:showAdd}">
+                        <div class="form-add__content">
+                            <h3 class="title">Add Purchase Order</h3>
+                            <p class="desc">Create a new purchase order</p>
+                            <form name="frmAddPO" ng-submit="addPurchaseOrder()">
+
+                                <label for="supplier-add">Supplier ID *</label>
+                                <input type="number" id="supplier-add" ng-model="newPurchaseOrder.SupplierID"
+                                    required />
+
+                                <label for="status-add">Status *</label>
+                                <select id="status-add" ng-model="newPurchaseOrder.Status" required>
+                                    <option value="Pending">Pending</option>
+                                    <option value="Processing">Processing</option>
+                                    <option value="Approved">Approved</option>
+                                </select>
+
+                                <div class="dialog-footer">
+                                    <button type="button" class="cancel" ng-click="closeAddModal()">Cancel</button>
+                                    <input class="submit" type="submit" value="Add Purchase Order"
+                                        ng-disabled="frmAddPO.$invalid||savingAdd" />
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Edit -->
+                    <div class="form-edit-po">
+                        <div class="form-edit-po__content">
+                            <h3 class="title">Edit Purchase Order</h3>
+                            <p class="desc">Update supplier and status</p>
+                            <form name="frmEditPO" ng-submit="updatePurchaseOrder()">
+
+                                <!-- SupplierID -->
+                                <label for="supplier-edit">Supplier ID *</label>
+                                <input type="number" id="supplier-edit" ng-model="editingPO.SupplierID" required
+                                    min="1" />
+
+                                <!-- Status -->
+                                <!-- Status -->
+                                <label for="status-edit">Status *</label>
+                                <select id="status-edit" ng-model="editingPO.Status" required>
+                                    <option value="Pending">Pending</option>
+                                    <option value="Processing">Processing</option>
+                                    <option value="Approved">Approved</option>
+                                </select>
+
+
+                                <!-- Footer -->
+                                <div class="dialog-footer">
+                                    <button type="button" class="cancel">Cancel</button>
+                                    <input class="submit" type="submit" value="Update Purchase Order"
+                                        ng-disabled="frmEditPO.$invalid || savingEditPO" />
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- delete -->
+                    <div class="form-delete" ng-class="{open:showDelete}" ng-click="closeDeleteOnOverlay($event)">
+                        <div class="form-delete__content">
+                            <h3 class="title">Delete Purchase Order</h3>
+                            <p class="desc">
+                                Are you sure you want to delete the purchase order with POID "{{deleting.POID}}"?
+                                This action cannot be undone.
+                            </p>
+                            <div class="dialog-footer">
+                                <button class="cancel" ng-click="cancelDelete($event)">Cancel</button>
+                                <button class="submit danger" ng-click="confirmDelete()">Delete Purchase Order</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Detail (Purchase Order Details) -->
+    <div class="form-detail-po" ng-class="{open:showDetail}">
+        <div class="form-detail-po__content">
+            <h3 class="title">Purchase Order Details</h3>
+            <p class="desc">Chi tiết đơn hàng cho POID {{detailPO.POID}}</p>
+
+            <!-- Bảng hiển thị chi tiết -->
+            <div class="card">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>POID</th>
+                                <th>ProductID</th>
+                                <th>NameProduct</th>
+                                <th>Quantity</th>
+                                <th>Unit Price</th>
+                                <th>Tổng Tiền</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="d in purchaseOrderDetails">
+                                <td>{{d.POID}}</td>
+                                <td>{{d.ProductID}}</td>
+                                <td>{{d.NameProduct}}</td>
+                                <td>{{d.Quantity}}</td>
+                                <td>{{d.UnitPrice | number:0}} ₫</td>
+                                <td>{{d.TongTien | number:0}} ₫</td>
+                            </tr>
+                            <tr ng-if="purchaseOrderDetails.length === 0">
+                                <td colspan="6" class="empty">No details found</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="dialog-footer">
+                <button type="button" class="cancel" ng-click="closeDetailModal()">Close</button>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script src="../Shared/js/purchaseorder.js"></script>
+</body>
+
+</html>
