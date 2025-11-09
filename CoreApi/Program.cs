@@ -7,8 +7,9 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using DAL.Interfaces;
-
-
+using AdminApi.Services;
+using AdminApi.Services.Interface;
+using CoreApi.Services;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -30,6 +31,10 @@ builder.Services.AddTransient<IArCustomerBusiness, ArCustomerBusiness>();
 builder.Services.AddTransient<IArCustomerRepository,ArCustomerRepository>();
 builder.Services.AddTransient<IApSupplierRepository, ApSupplierRepository>();
 builder.Services.AddTransient<IApSupplierBusiness, ApSupplierBusiness>();
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddTransient<IAuditLogger, AuditLogger>();
+builder.Services.AddTransient<IAuditLogRepository, AuditLogRepository>();
+builder.Services.AddTransient<IAuditLogBusiness, AuditLogBusiness>();
 
 // Đăng ký các lớp xử lý nghiệp vụ và truy cập dữ liệu vào hệ thống DI <PurchaseOrderDetails>
 builder.Services.AddTransient<IPurchaseOrderDetailsBusiness, PurchaseOrderDetailsBusiness>();
