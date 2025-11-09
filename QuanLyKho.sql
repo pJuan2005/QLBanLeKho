@@ -2193,48 +2193,91 @@ GO
 
 
 
+USE [QLBanLeKho]
+GO
 
-CREATE PROCEDURE [dbo].[sp_category_search]
+/****** Object:  StoredProcedure [dbo].[sp_category_search]    Script Date: 11/6/2025 3:56:25 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- CREATE OR ALTER cho tiện cập nhật nhiều lần
+CREATE   PROCEDURE [dbo].[sp_category_search]
     @page_index   INT,
     @page_size    INT,
+
+    -- Lọc theo tên/mô tả (để trống = không lọc)
     @CategoryName NVARCHAR(100) = N'',
-    @option       NVARCHAR(50)  = N'',   -- 'name_desc' hoặc rỗng/mặc định
+
+    -- Lọc theo VAT:
+    --  - nếu truyền @vat_exact thì ưu tiên lọc đúng bằng
+    --  - nếu không, có thể truyền @vat_from / @vat_to để lọc theo khoảng
+    @vat_exact    DECIMAL(5,2) = NULL,
+    @vat_from     DECIMAL(5,2) = NULL,
+    @vat_to       DECIMAL(5,2) = NULL,
+
+    -- Tuỳ chọn sắp xếp ('' | 'name_desc')
+    @option       NVARCHAR(50)  = N'',
+
+    -- Lọc chính xác theo ID (null = bỏ qua)
     @CategoryID   INT           = NULL
 AS
 BEGIN
     SET NOCOUNT ON;
 
-    IF (@option = N'name_desc')
-    BEGIN
-        SELECT CAST(COUNT(1) OVER() AS BIGINT) AS RecordCount,
-               src.CategoryID, src.CategoryName, src.[Description]
-        FROM (
-            SELECT c.CategoryID, c.CategoryName, c.[Description]
-            FROM dbo.Categories AS c
-            WHERE (@CategoryID IS NULL OR c.CategoryID = @CategoryID)
-              AND (@CategoryName = N'' OR c.CategoryName LIKE N'%' + @CategoryName + N'%')
-        ) AS src
-        ORDER BY src.CategoryName DESC
-        OFFSET (@page_index - 1) * @page_size ROWS
-        FETCH NEXT @page_size ROWS ONLY;
-    END
-    ELSE
-    BEGIN
-        SELECT CAST(COUNT(1) OVER() AS BIGINT) AS RecordCount,
-               src.CategoryID, src.CategoryName, src.[Description]
-        FROM (
-            SELECT c.CategoryID, c.CategoryName, c.[Description]
-            FROM dbo.Categories AS c
-            WHERE (@CategoryID IS NULL OR c.CategoryID = @CategoryID)
-              AND (@CategoryName = N'' OR c.CategoryName LIKE N'%' + @CategoryName + N'%')
-        ) AS src
-        ORDER BY src.CategoryName ASC
-        OFFSET (@page_index - 1) * @page_size ROWS
-        FETCH NEXT @page_size ROWS ONLY;
-    END
+    -- Chuẩn hoá tham số trang
+    IF (@page_index IS NULL OR @page_index < 1) SET @page_index = 1;
+    IF (@page_size  IS NULL OR @page_size  < 1) SET @page_size  = 10;
+
+    ;WITH src AS
+    (
+        SELECT
+            c.CategoryID,
+            c.CategoryName,
+            c.[Description],
+            c.VATRate
+        FROM dbo.Categories AS c
+        WHERE
+            -- lọc theo ID (nếu có)
+            (@CategoryID IS NULL OR c.CategoryID = @CategoryID)
+            -- lọc theo tên/mô tả (nếu có)
+            AND (
+                  @CategoryName = N''
+               OR c.CategoryName LIKE N'%'+@CategoryName+N'%'
+               OR c.[Description] LIKE N'%'+@CategoryName+N'%'
+            )
+            -- lọc theo VAT: ưu tiên @vat_exact, nếu không dùng khoảng
+            AND (
+                  @vat_exact IS NULL
+                  OR c.VATRate = @vat_exact
+                )
+            AND (
+                  @vat_exact IS NOT NULL
+                  OR @vat_from IS NULL OR c.VATRate >= @vat_from
+                )
+            AND (
+                  @vat_exact IS NOT NULL
+                  OR @vat_to   IS NULL OR c.VATRate <= @vat_to
+                )
+    )
+    SELECT
+        CAST(COUNT(1) OVER() AS BIGINT) AS RecordCount,
+        CategoryID,
+        CategoryName,
+        [Description],
+        VATRate
+    FROM src
+    ORDER BY
+        -- nếu option = 'name_desc' thì sắp xếp theo tên giảm dần
+        CASE WHEN @option = N'name_desc' THEN NULL ELSE CategoryID END ASC,
+        CASE WHEN @option = N'name_desc' THEN CategoryName END DESC,
+        CategoryID ASC
+    OFFSET (@page_index - 1) * @page_size ROWS
+    FETCH NEXT @page_size ROWS ONLY;
 END
 GO
-
 
 USE [QLBanLeKho]
 GO
