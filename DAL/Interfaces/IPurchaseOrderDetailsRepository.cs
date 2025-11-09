@@ -14,6 +14,8 @@ namespace DAL.Interfaces
         bool CreateMultiple(List<PurchaseOrderDetailsModel> models); 
         
         bool Delete(PurchaseOrderDetailsModel model);
+       
+
     }
 
 }

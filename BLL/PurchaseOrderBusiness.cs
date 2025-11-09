@@ -34,9 +34,20 @@ namespace BLL
         {
             return _res.Delete(model);
         }
-        public List<PurchaseOrderModel> Search( decimal? minTotalAmount, decimal? maxTotalAmount, string status, DateTime? fromDate, DateTime? toDate)
+        public List<PurchaseOrderModel> Search( int pageIndex, int pageSize, out long total, decimal? minTotalAmount, decimal? maxTotalAmount, string status, DateTime? fromDate, DateTime? toDate)
         {
-            return _res.Search(minTotalAmount, maxTotalAmount, status, fromDate, toDate);
+            total = 0;
+            try
+            {
+                // Gọi DAL (đã sửa ở tin nhắn trước – có out total + page_index + page_size)
+                return _res.Search(pageIndex, pageSize, out total,
+                    minTotalAmount, maxTotalAmount, status, fromDate, toDate);
+            }
+            catch (Exception ex)
+            {
+                // Log nếu cần (giống category)
+                throw new Exception("Lỗi khi tìm kiếm Purchase Order: " + ex.Message);
+            }
         }
     }
 }

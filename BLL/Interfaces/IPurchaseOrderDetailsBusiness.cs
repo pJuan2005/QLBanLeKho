@@ -14,6 +14,7 @@ namespace BLL.Interfaces
         bool CreateMultiple(List<PurchaseOrderDetailsModel> models); 
     
         bool Delete(PurchaseOrderDetailsModel model);
+        
     }
 
 }
