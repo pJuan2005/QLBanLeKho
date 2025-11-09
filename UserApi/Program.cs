@@ -8,6 +8,9 @@ using Helper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using AdminApi.Services;
+using AdminApi.Services.Interface;
+using CoreApi.Services;
 
 
 
@@ -29,6 +32,10 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IDatabaseHelper, DatabaseHelper>();
 builder.Services.AddScoped<IUserBusiness, UserBusiness>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<IAuditLogger, AuditLogger>();
+builder.Services.AddScoped<IAuditLogBusiness, AuditLogBusiness>();
+builder.Services.AddScoped<IAuditLogRepository, AuditLogRepository>();
 
 
 // Cấu hình JWT Authentication từ nhánh dev

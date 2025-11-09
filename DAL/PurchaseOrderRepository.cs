@@ -101,12 +101,15 @@ namespace DAL
         }
 
 
-        public List<PurchaseOrderModel> Search(decimal? minTotalAmount, decimal? maxTotalAmount, string status, DateTime? fromDate, DateTime? toDate)
+        public List<PurchaseOrderModel> Search( int pageIndex, int pageSize, out long total, decimal? minTotalAmount, decimal? maxTotalAmount, string status, DateTime? fromDate, DateTime? toDate)
         {
             string msgError = "";
+            total = 0;
             try
             {
                 var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "sp_PurchaseOrders_search",
+                    "@page_index", pageIndex,
+                    "@page_size", pageSize,
                     "@MinTotalAmount", minTotalAmount,
                     "@MaxTotalAmount", maxTotalAmount,
                     "@Status", status,
@@ -115,6 +118,11 @@ namespace DAL
 
                 if (!string.IsNullOrEmpty(msgError))
                     throw new Exception(msgError);
+
+                if (dt.Rows.Count > 0)
+                {
+                    total = Convert.ToInt64(dt.Rows[0]["RecordCount"]);  // ← LẤY TỪ DÒNG ĐẦU TIÊN
+                }
 
                 return dt.ConvertTo<PurchaseOrderModel>().ToList();
             }

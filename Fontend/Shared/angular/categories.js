@@ -25,6 +25,7 @@ app.controller(
     $scope.deleting = null;
 
     // ------Kiểm tra đăng nhập, logout và chia màn hình theo quyền---------
+    
     if (!$scope.currentUser) {
       $window.location.href = "../AuthFE/login.html";
       return;
