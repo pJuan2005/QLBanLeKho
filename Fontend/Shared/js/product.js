@@ -11,6 +11,7 @@ document.addEventListener("click", function (e) {
   }
 });
 
+
 // ==================form add================
 const modal = document.querySelector(".form-add");
 const btnOpen = document.getElementById("btnOpenAdd");
@@ -50,3 +51,13 @@ btnCancelEdit.addEventListener("click", (e) => {
   formEdit.classList.remove("open");
   document.body.classList.remove("modal-open");
 });
+
+
+
+
+
+  
+
+
+
+ 

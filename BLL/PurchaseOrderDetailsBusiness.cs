@@ -37,6 +37,8 @@ namespace BLL
         {
             return _res.Delete(model);
         }
+        
+
     }
 
 }
