@@ -145,3 +145,16 @@ app.factory("PermissionService", function (AuthService) {
     },
   };
 });
+
+app.run([
+  "$http",
+  "AuthService",
+  function ($http, AuthService) {
+    var token = AuthService.getToken(); // đọc từ localStorage
+    if (token) {
+      // KHÔNG được gán đè $http.defaults.headers
+      // Chỉ set thêm thuộc tính Authorization
+      $http.defaults.headers.common["Authorization"] = "Bearer " + token;
+    }
+  },
+]);
