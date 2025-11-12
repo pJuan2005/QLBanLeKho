@@ -1,10 +1,12 @@
-﻿using BLL.Interfaces;
+using System;
+using System.IO;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using BLL.Interfaces;
 using Model;
-using System.Text.Json;
-using CoreApi.Services;
 using AdminApi.Services.Interface;
+using System.Text.Json;
 
 namespace CoreApi.Controllers
 {
@@ -15,67 +17,54 @@ namespace CoreApi.Controllers
         private readonly IDProductBLL _ProductBusiness;
         private readonly IAuditLogger _auditLogger;
 
-
-        private string GetImageUrl(string imagePath)
+        public ProductController(IDProductBLL productBLL, IAuditLogger auditLogger)
         {
-            if (string.IsNullOrEmpty(imagePath)) return null;
-            var gatewayUrl = "http://localhost:5000"; // 👈 đường dẫn Gateway
-            return $"{gatewayUrl}/{imagePath.Replace("\\", "/")}";
+            _ProductBusiness = productBLL;
+            _auditLogger = auditLogger;
         }
 
+        // PUT /api/product/update-product/{id}
         [HttpPut("update-product/{id}")]
         public async Task<IActionResult> UpdateProduct(int id, [FromForm] ProductModel model, IFormFile? imageFile)
         {
-
             try
             {
-                // ✅ Kiểm tra sản phẩm tồn tại
                 var existing = _ProductBusiness.GetDatabyID(id);
                 if (existing == null)
                     return NotFound("Không tìm thấy sản phẩm.");
 
-                // ✅ Nếu có upload ảnh mới
+                // ảnh nhị phân (bach2.0)
                 if (imageFile != null && imageFile.Length > 0)
                 {
-                    // Tạo thư mục nếu chưa có
-                    string folderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Products");
-                    if (!Directory.Exists(folderPath))
-                        Directory.CreateDirectory(folderPath);
-
-                    // Tạo tên file mới (tránh trùng)
-                    string fileName = Path.GetFileNameWithoutExtension(imageFile.FileName)
-                                     + "_" + Guid.NewGuid().ToString("N").Substring(0, 6)
-                                     + Path.GetExtension(imageFile.FileName);
-
-                    string fullPath = Path.Combine(folderPath, fileName);
-
-                    // Lưu file
-                    using (var stream = new FileStream(fullPath, FileMode.Create))
-                    {
-                        await imageFile.CopyToAsync(stream);
-                    }
-
-                    // Cập nhật đường dẫn ảnh trong model
-                    model.Image = $"Products/{fileName}";
+                    using var ms = new MemoryStream();
+                    await imageFile.CopyToAsync(ms);
+                    model.ImageData = ms.ToArray();
                 }
                 else
                 {
-                    // Nếu không chọn ảnh mới → giữ ảnh cũ
-                    model.Image = existing.Image;
+                    // giữ ảnh cũ
+                    model.ImageData = existing.ImageData;
                 }
 
-                // ✅ Cập nhật thông tin còn lại
                 model.ProductID = id;
+
                 _ProductBusiness.Update(model);
+
+                // Audit log (giữ từ dev, chi tiết serialize)
                 _auditLogger.Log(
-                    action: $"Update product {model.ProductName}",
+                    action: "Update",
                     entityName: "Products",
                     entityId: model.ProductID,
                     operation: "UPDATE",
-                    details: JsonSerializer.Serialize(model)
-                    );
+                    details: JsonSerializer.Serialize(new
+                    {
+                        ProductID = model.ProductID,
+                        Old = new { existing.ProductName, existing.UnitPrice },
+                        New = new { model.ProductName, model.UnitPrice }
+                    })
+                );
 
-                return Ok(new { message = "Cập nhật sản phẩm thành công!", image = model.Image });
+                return Ok(new { message = "Cập nhật sản phẩm thành công!" });
             }
             catch (Exception ex)
             {
@@ -83,75 +72,34 @@ namespace CoreApi.Controllers
             }
         }
 
-
-        public ProductController(IDProductBLL productBLL, IAuditLogger auditLogger)
+        // POST /api/product/create-product
+        [HttpPost("create-product")]
+        public async Task<IActionResult> CreateProduct([FromForm] ProductModel product, IFormFile? imageFile)
         {
-            _ProductBusiness = productBLL;
-            _auditLogger = auditLogger;
-        }
-
-
-        [Route("create-product")]
-        [HttpPost]
-        public IActionResult CreateProduct([FromForm] ProductModel product, IFormFile? imageFile)
-        {
-            ModelState.Remove("Image");
-
             try
             {
                 if (imageFile != null && imageFile.Length > 0)
                 {
-                    // 🗂 1️⃣ Đường dẫn cũ (backend)
-                    string oldPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Products");
-
-                    // 🗂 2️⃣ Đường dẫn mới (frontend)
-                    string newPath = @"C:\Users\ADMIN\OneDrive\Desktop\QuanLyKho\bách\QLBanLeKho\Fontend\Shared\img\Products";
-
-                    // ✅ Tạo 2 thư mục nếu chưa có
-                    if (!Directory.Exists(oldPath))
-                        Directory.CreateDirectory(oldPath);
-                    if (!Directory.Exists(newPath))
-                        Directory.CreateDirectory(newPath);
-
-                    // ✅ Làm sạch tên file và thêm GUID tránh trùng
-                    string safeFileName = Path.GetFileNameWithoutExtension(imageFile.FileName)
-                        .Replace(" ", "_")
-                        .Replace("đ", "d").Replace("Đ", "D")
-                        .Replace("á", "a").Replace("à", "a").Replace("ạ", "a").Replace("ã", "a").Replace("ả", "a")
-                        .Replace("é", "e").Replace("è", "e").Replace("ẹ", "e").Replace("ẽ", "e").Replace("ẻ", "e")
-                        .Replace("ó", "o").Replace("ò", "o").Replace("ọ", "o").Replace("õ", "o").Replace("ỏ", "o")
-                        .Replace("ú", "u").Replace("ù", "u").Replace("ụ", "u").Replace("ũ", "u").Replace("ủ", "u")
-                        .Replace("í", "i").Replace("ì", "i").Replace("ị", "i").Replace("ĩ", "i").Replace("ỉ", "i")
-                        .Replace("ý", "y").Replace("ỳ", "y").Replace("ỵ", "y").Replace("ỹ", "y").Replace("ỷ", "y");
-
-                    string fileName = $"{Guid.NewGuid()}_{safeFileName}{Path.GetExtension(imageFile.FileName)}";
-
-                    // ✅ Lưu file vào thư mục cũ
-                    string oldFile = Path.Combine(oldPath, fileName);
-                    using (var stream = new FileStream(oldFile, FileMode.Create))
-                    {
-                        imageFile.CopyTo(stream);
-                    }
-
-                    // ✅ Lưu file vào thư mục mới
-                    string newFile = Path.Combine(newPath, fileName);
-                    using (var stream = new FileStream(newFile, FileMode.Create))
-                    {
-                        imageFile.CopyTo(stream);
-                    }
-
-                    // ✅ Lưu đường dẫn tương đối vào DB (vẫn dùng link backend)
-                    product.Image = $"Products/{fileName}";
+                    using var ms = new MemoryStream();
+                    await imageFile.CopyToAsync(ms);
+                    product.ImageData = ms.ToArray(); // lưu ảnh dạng nhị phân (bach2.0)
                 }
 
-                var result = _ProductBusiness.Create(product);
+                // BUG cũ: gọi Create 2 lần → đã sửa còn 1 lần
+                var result = _ProductBusiness.Create(product); // nếu Create trả về ID hoặc model, dùng result theo signature thực tế
+
                 _auditLogger.Log(
-                    action: $"Create product {product.ProductName}",
+                    action: "Create",
                     entityName: "Products",
-                    entityId: product.ProductID,
+                    entityId: product.ProductID, // hoặc result.ProductID / result (nếu Create trả về ID)
                     operation: "CREATE",
-                    details: JsonSerializer.Serialize(product)
-                    );
+                    details: JsonSerializer.Serialize(new
+                    {
+                        product.ProductName,
+                        product.SKU,
+                        product.UnitPrice
+                    })
+                );
 
                 return Ok(new
                 {
@@ -162,43 +110,64 @@ namespace CoreApi.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(new
-                {
-                    success = false,
-                    message = $"Lỗi khi thêm sản phẩm: {ex.Message}"
-                });
+                return BadRequest(new { success = false, message = ex.Message });
             }
         }
 
-
-
-
-        [Route("delete-product/{id}")]
-        [HttpDelete]
+        // DELETE /api/product/delete-product/{id}
+        [HttpDelete("delete-product/{id}")]
         public IActionResult Delete(int id)
         {
-            _ProductBusiness.Delete(id);
-            _auditLogger.Log(
-                action: $"Delete product Id: {id}",
-                entityName: "Products",
-                entityId: id,
-                operation: "DELETE",
-                details: null
+            try
+            {
+                var ok = _ProductBusiness.Delete(id);
+
+                // Audit sau khi xóa
+                _auditLogger.Log(
+                    action: "Delete",
+                    entityName: "Products",
+                    entityId: id,
+                    operation: "DELETE",
+                    details: null
                 );
-            return Ok(new { data = "OK" });
+
+                return Ok(new { success = ok });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { success = false, message = ex.Message });
+            }
         }
 
-        [Route("get-by-id/{id}")]
-        [HttpGet]
-        public ProductModel GetDatabyID(int id)
+        // GET /api/product/get-by-id/{id}
+        [HttpGet("get-by-id/{id}")]
+        public IActionResult GetDatabyID(int id)
         {
             var product = _ProductBusiness.GetDatabyID(id);
-            
-            product.Image = GetImageUrl(product.Image);
-            return product;
+            if (product == null) return NotFound();
+
+            string? base64 = product.ImageData != null && product.ImageData.Length > 0
+                ? $"data:image/png;base64,{Convert.ToBase64String(product.ImageData)}"
+                : null;
+
+            return Ok(new
+            {
+                product.ProductID,
+                product.ProductName,
+                product.SKU,
+                product.Barcode,
+                product.CategoryID,
+                product.UnitPrice,
+                product.Unit,
+                product.MinStock,
+                product.Quantity,
+                product.VATRate,
+                product.Status,
+                ImageBase64 = base64
+            });
         }
 
-
+        // POST /api/product/search-product
         [Route("search-product")]
         [HttpPost]
         public ResponseModel Search([FromBody] ProductSearchRequest request)
@@ -209,12 +178,13 @@ namespace CoreApi.Controllers
                 long total = 0;
                 var data = _ProductBusiness.Search(request, out total);
 
-
-
+                // bơm base64 cho FE (bach2.0)
                 foreach (var p in data)
                 {
-                    if (!string.IsNullOrEmpty(p.Image))
-                        p.Image = GetImageUrl(p.Image);
+                    if (p.ImageData != null && p.ImageData.Length > 0)
+                    {
+                        p.ImageBase64 = $"data:image/png;base64,{Convert.ToBase64String(p.ImageData)}";
+                    }
                 }
 
                 response.TotalItems = total;
@@ -226,9 +196,8 @@ namespace CoreApi.Controllers
             {
                 throw new Exception(ex.Message);
             }
+
             return response;
         }
-
     }
 }
-

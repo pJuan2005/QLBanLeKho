@@ -40,10 +40,12 @@ namespace BLL
             return _res.Delete(id);
         }
         public List<PaymentModel> Search(int pageIndex, int pageSize, out long total,
-                                         int? CustomerID,int? SupplierID, int? SaleID, int? ReceiptID, string Method,
-                                         DateTime? FromDate, DateTime? ToDate)
+                                 int? CustomerID, int? SupplierID, int? SaleID, int? ReceiptID, string Method,
+                                 DateTime? FromDate, DateTime? ToDate)
         {
-            return _res.Search(pageIndex, pageSize, out total, CustomerID, SaleID, SupplierID, ReceiptID, Method, FromDate, ToDate);
+            return _res.Search(pageIndex, pageSize, out total,
+                               CustomerID, SupplierID, SaleID, ReceiptID, Method, FromDate, ToDate);
         }
+
     }
 }

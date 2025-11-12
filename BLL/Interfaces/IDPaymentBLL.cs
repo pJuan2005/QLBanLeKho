@@ -4,6 +4,7 @@ using System.Collections.Generic;
 namespace BLL.Interfaces
 {
 
+    // BLL.Interfaces
     public interface IDPaymentBLL
     {
         PaymentModel GetByID(int paymentId);
@@ -12,7 +13,7 @@ namespace BLL.Interfaces
         bool Update(PaymentModel model);
         bool Delete(int paymentId);
         List<PaymentModel> Search(int pageIndex, int pageSize, out long total,
-                                  int? CustomerID,int? SupplierID, int? SaleID, int? ReceiptID, string Method,
+                                  int? CustomerID, int? SupplierID, int? SaleID, int? ReceiptID, string Method,
                                   DateTime? FromDate, DateTime? ToDate);
     }
 }
