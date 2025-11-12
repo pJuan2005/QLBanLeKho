@@ -4,6 +4,31 @@ use QLBanLeKho
 
 drop database QLBanLeKho
 
+
+
+CREATE TABLE AuditLogs (
+    AuditID INT IDENTITY(1,1) PRIMARY KEY,  -- Khóa chính
+
+    UserID INT NULL,                        -- Id người thực hiện
+    Username VARCHAR(50) NULL,              -- Tên đăng nhập tại thời điểm thao tác
+    FullName NVARCHAR(100) NULL,            -- Họ tên tại thời điểm thao tác
+
+    Action NVARCHAR(200) NOT NULL,          -- Hành động: "Create Product", "Update Invoice"...
+    EntityName NVARCHAR(100) NULL,          -- Tên bảng: "Products", "Invoices"...
+    EntityID INT NULL,                      -- ID bản ghi bị tác động
+    Operation NVARCHAR(20) NOT NULL,        -- CREATE / UPDATE / DELETE / LOGIN...
+
+    Details NVARCHAR(MAX) NULL,             -- JSON chi tiết
+    CreatedAt DATETIME2 NOT NULL 
+        DEFAULT SYSDATETIME(),              -- Thời điểm ghi log
+
+    CONSTRAINT FK_AuditLogs_Users 
+        FOREIGN KEY (UserID) REFERENCES Users(UserID)
+);
+
+
+
+
 CREATE TABLE Users (
     UserID INT IDENTITY(1,1) PRIMARY KEY, -- Mã người dùng
     Username VARCHAR(50) UNIQUE NOT NULL, -- Tên đăng nhập
@@ -13,6 +38,8 @@ CREATE TABLE Users (
     Email NVARCHAR(100), -- Email
     Phone VARCHAR(20) -- Số điện thoại
 );
+
+
 
 CREATE TABLE Categories (
     CategoryID INT IDENTITY(1,1) PRIMARY KEY, -- Mã loại hàng
@@ -31,6 +58,9 @@ CREATE TABLE Suppliers (
     Email NVARCHAR(100) -- Email
 );
 
+
+
+
 CREATE TABLE Customers (
     CustomerID INT IDENTITY(1,1) PRIMARY KEY, -- Mã khách hàng
     CustomerName NVARCHAR(100) NOT NULL, -- Tên khách hàng
@@ -41,19 +71,21 @@ CREATE TABLE Customers (
 
 );
 
+
 CREATE TABLE Products (
-    ProductID INT IDENTITY(1,1) PRIMARY KEY, -- Mã sản phẩm
-    SKU VARCHAR(50) UNIQUE NOT NULL, -- Mã SKU
-    Barcode VARCHAR(50) UNIQUE, -- Mã barcode
-    ProductName NVARCHAR(100) NOT NULL, -- Tên sản phẩm
-    CategoryID INT, -- Mã loại hàng
-    Unit NVARCHAR(20), -- Đơn vị tính
-    MinStock INT DEFAULT 0, -- Tồn kho tối thiểu
-    Status NVARCHAR(20) DEFAULT 'Active', -- Trạng thái
-	Image NVARCHAR(255),
-	VATRate DECIMAL(5,2) ,
-	Quantity INT DEFAULT 0,
-    FOREIGN KEY (CategoryID) REFERENCES Categories(CategoryID),
+    ProductID INT IDENTITY(1,1) PRIMARY KEY,          -- Mã sản phẩm tự tăng
+    SKU VARCHAR(50) NOT NULL UNIQUE,                  -- Mã SKU (bắt buộc, duy nhất)
+    Barcode VARCHAR(50) NOT NULL UNIQUE,              -- Mã barcode (bắt buộc, duy nhất)
+    ProductName NVARCHAR(100) NOT NULL,               -- Tên sản phẩm (bắt buộc)
+    CategoryID INT NOT NULL,                          -- Mã loại hàng (bắt buộc)
+    UnitPrice DECIMAL(18,2) DEFAULT 0,                          -- Giá
+    Unit NVARCHAR(20) NULL,                                -- Đơn vị tính
+    MinStock INT DEFAULT 0,                           -- Tồn kho tối thiểu
+    Status NVARCHAR(20) DEFAULT 'Active',             -- Trạng thái
+    ImageData VARBINARY(MAX) NULL,                    -- Hình ảnh
+    VATRate DECIMAL(5,2) NULL,                             -- Thuế VAT
+    Quantity INT DEFAULT 0,                           -- Số lượng tồn
+    FOREIGN KEY (CategoryID) REFERENCES Categories(CategoryID)
 );
 
 
@@ -82,29 +114,33 @@ CREATE TABLE PurchaseOrderDetails (
     FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
 );
 
+
 CREATE TABLE GoodsReceipts (
     ReceiptID INT IDENTITY(1,1) PRIMARY KEY, -- Mã phiếu nhập kho
     POID INT, -- Mã đơn mua hàng
-	ReceiptDate DATE NOT NULL, -- Ngày nhập kho
-    TotalAmount DECIMAL(18,2), -- Tổng tiền
-    UserID INT NOT NULL, -- Thêm cột mã nhân viên
-    FOREIGN KEY (POID) REFERENCES PurchaseOrders(POID),
-    FOREIGN KEY (UserID) REFERENCES Users(UserID) -- Thiết lập khóa ngoại
+    ReceiptDate DATE NOT NULL, -- Ngày nhập kho
+    TotalAmount DECIMAL(18,2) DEFAULT 0, -- Tổng tiền
+	UserID INT NOT NULL, -- Thêm cột mã nhân viên
+	 BatchNo VARCHAR(50), -- Số lô
+    FOREIGN KEY (POID) REFERENCES PurchaseOrders(POID) ON DELETE CASCADE,
+	FOREIGN KEY (UserID) REFERENCES Users(UserID) -- Thiết lập khóa ngoại
 );
-
 
 
 CREATE TABLE GoodsReceiptDetails (
     ReceiptID INT, -- Mã phiếu nhập kho
     ProductID INT, -- Mã sản phẩm
+	ProductName NVARCHAR(100) NOT NULL, -- Tên sản phẩm
     Quantity INT NOT NULL, -- Số lượng
     UnitPrice DECIMAL(18,2) NOT NULL, -- Đơn giá
-    BatchNo VARCHAR(50), -- Số lô
-    ExpiryDate DATE, -- Hạn dùng
+    ExpiryDate DATETIME  NULL , -- Hạn dùng
     PRIMARY KEY (ReceiptID, ProductID),
-    FOREIGN KEY (ReceiptID) REFERENCES GoodsReceipts(ReceiptID),
+    FOREIGN KEY (ReceiptID) REFERENCES GoodsReceipts(ReceiptID) ON DELETE CASCADE,
     FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
 );
+
+
+
 
 CREATE TABLE Promotions (
     PromotionID INT IDENTITY(1,1) PRIMARY KEY, -- Mã khuyến mãi
@@ -140,6 +176,8 @@ CREATE TABLE GoodsIssueDetails (
     FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
 );
 
+ALTER TABLE GoodsIssueDetails
+DROP COLUMN BatchNo;
 
 
 CREATE TABLE Sales (
@@ -154,6 +192,9 @@ CREATE TABLE Sales (
     FOREIGN KEY (UserID) REFERENCES Users(UserID)
    
 );
+
+
+
 
 
 CREATE TABLE SalesItems (
@@ -451,23 +492,23 @@ VALUES
 ('user8', '123456', 'Admin', N'Tạ Văn O', 'user8@shop.com', '0901111015');
 
 -- CATEGORIES (15 bản ghi)
-INSERT INTO Categories (CategoryName, Description)
+INSERT INTO Categories (CategoryName, Description,VATRate)
 VALUES
-(N'Giày Thể Thao', N'Các loại giày thể thao nam nữ'),
-(N'Sandal', N'Sandal thời trang'),
-(N'Dép', N'Dép đi trong nhà và ngoài trời'),
-(N'Giày Tây', N'Giày công sở nam'),
-(N'Giày Cao Gót', N'Giày cho nữ giới'),
-(N'Giày Boot', N'Giày mùa đông'),
-(N'Giày Sneaker', N'Giày phong cách trẻ trung'),
-(N'Giày Chạy Bộ', N'Giày cho vận động viên'),
-(N'Giày Leo Núi', N'Giày chuyên dụng leo núi'),
-(N'Giày Lười', N'Giày không cần buộc dây'),
-(N'Giày Tennis', N'Giày đánh tennis'),
-(N'Giày Golf', N'Giày chơi golf'),
-(N'Giày Bóng Đá', N'Giày đá bóng'),
-(N'Giày Bóng Rổ', N'Giày chơi bóng rổ'),
-(N'Giày Thời Trang', N'Giày phong cách cá nhân');
+(N'Giày Thể Thao', N'Các loại giày thể thao nam nữ',10),
+(N'Sandal', N'Sandal thời trang',12),
+(N'Dép', N'Dép đi trong nhà và ngoài trời',4),
+(N'Giày Tây', N'Giày công sở nam',0),
+(N'Giày Cao Gót', N'Giày cho nữ giới',10),
+(N'Giày Boot', N'Giày mùa đông',17),
+(N'Giày Sneaker', N'Giày phong cách trẻ trung',34),
+(N'Giày Chạy Bộ', N'Giày cho vận động viên',22),
+(N'Giày Leo Núi', N'Giày chuyên dụng leo núi',19),
+(N'Giày Lười', N'Giày không cần buộc dây',6),
+(N'Giày Tennis', N'Giày đánh tennis',2),
+(N'Giày Golf', N'Giày chơi golf',40),
+(N'Giày Bóng Đá', N'Giày đá bóng',0),
+(N'Giày Bóng Rổ', N'Giày chơi bóng rổ',10),
+(N'Giày Thời Trang', N'Giày phong cách cá nhân',10);
 
 
 select * from Categories
@@ -513,327 +554,311 @@ VALUES
 
 
 
-INSERT INTO Products (SKU, Barcode, ProductName, CategoryID, Unit, MinStock, Status, Image, VATRate,)
+INSERT INTO Products (SKU, Barcode, ProductName, CategoryID,Quantity,UnitPrice, Unit, MinStock, Status, ImageData, VATRate)
 VALUES
-('SKU001', 'BC001', N'Giày Sneaker Trắng', 1,  N'Đôi', 10, 'Active', N'Products\Giày Sneaker Trắng.jpg', 15.00),
-('SKU002', 'BC002', N'Giày Sneaker Đen', 1,  N'Đôi', 10, 'Active', N'Products\Giày Sneaker Đen.jpg', 10.00),
-('SKU003', 'BC003', N'Giày Chạy Bộ Nam', 8,  N'Đôi',  5, 'Active', N'Products\Giày Chạy Bộ Nam.jpg', 20.00),
-('SKU004', 'BC004', N'Giày Chạy Bộ Nữ', 8,  N'Đôi',  5, 'Active', N'Products\Giày Chạy Bộ Nữ.jpg', 10.00),
-('SKU005', 'BC005', N'Giày Tennis Trắng', 11, N'Đôi',  3, 'Active', N'Products\Giày Tennis Trắng.jpg', 10.00),
-('SKU006', 'BC006', N'Giày Bóng Đá Cỏ Tự Nhiên', 13,  N'Đôi',  7, 'Active', N'Products\Giày Bóng Đá Cỏ Tự Nhiên.jpg', 10.00),
-('SKU007', 'BC007', N'Giày Bóng Đá Cỏ Nhân Tạo', 13,  N'Đôi',  7, 'Active', N'Products\Giày Bóng Đá Cỏ Nhân Tạo.jpg', 20.00),
-('SKU008', 'BC008', N'Giày Bóng Rổ Cao Cổ', 14,  N'Đôi', 6, 'Active', N'Products\Giày Bóng Rổ Cao Cổ.jpg', 0),
-('SKU009', 'BC009', N'Giày Golf Chống Thấm', 12,  N'Đôi',2, 'Active', N'Products\Giày Golf Chống Thấm.jpg', 10.00),
-('SKU010', 'BC010', N'Giày Tây Nam', 4,  N'Đôi', 4, 'Active', N'Products\Giày Tây Nam.jpg', 10.00),
-('SKU011', 'BC011', N'Giày Cao Gót Đen', 5,  N'Đôi',3, 'Active', N'Products\Giày Cao Gót Đen.jpg', 0),
-('SKU012', 'BC012', N'Giày Boot Da', 6,  N'Đôi',2, 'Active', N'Products\Giày Boot Da.jpg', 20.00),
-('SKU013', 'BC013', N'Dép Lê Nam', 3,  N'Đôi',20, 'Active', N'Products\Dép Lê Nam.jpg', 15.00),
-('SKU014', 'BC014', N'Sandal Nữ Thời Trang', 2, N'Đôi',15, 'Active', N'Products\Sandal Nữ Thời Trang.jpg', 15.00),
-('SKU015', 'BC015', N'Giày Lười Nam', 10,  N'Đôi', 8, 'Active', N'Products\Giày Lười Nam.jpg', 0);
+('SKU001', 'BC001', N'Giày Sneaker Trắng', 1,4,0,  N'Đôi', 10, 'Active',NULL , 15.00),
+('SKU002', 'BC002', N'Giày Sneaker Đen', 1,9,0,  N'Đôi', 10, 'Active',NULL , 10.00),
+('SKU003', 'BC003', N'Giày Chạy Bộ Nam', 8,6,0,  N'Đôi',  5, 'Active',NULL , 20.00),
+('SKU004', 'BC004', N'Giày Chạy Bộ Nữ', 8,1,0,  N'Đôi',  5, 'Active', NULL, 10.00),
+('SKU005', 'BC005', N'Giày Tennis Trắng', 11,0,0, N'Đôi',  3, 'Active', NULL, 10.00),
+('SKU006', 'BC006', N'Giày Bóng Đá Cỏ Tự Nhiên', 13,25,0,  N'Đôi',  7, 'Active',NULL, 10.00),
+('SKU007', 'BC007', N'Giày Bóng Đá Cỏ Nhân Tạo', 13,6,0,  N'Đôi',  7, 'Active', NULL, 20.00),
+('SKU008', 'BC008', N'Giày Bóng Rổ Cao Cổ', 14,18,0,  N'Đôi', 6, 'Active',NULL, 0),
+('SKU009', 'BC009', N'Giày Golf Chống Thấm', 12,6,0,  N'Đôi',2, 'Active', NULL, 10.00),
+('SKU010', 'BC010', N'Giày Tây Nam', 4, 25 ,0, N'Đôi', 4, 'Active', NULL, 10.00),
+('SKU011', 'BC011', N'Giày Cao Gót Đen', 5, 16,0,  N'Đôi',3, 'Active', NULL, 0),
+('SKU012', 'BC012', N'Giày Boot Da', 6,0,0,  N'Đôi',2, 'Active',NULL, 20.00),
+('SKU013', 'BC013', N'Dép Lê Nam', 3,1,0,  N'Đôi',20, 'Active', NULL, 15.00),
+('SKU014', 'BC014', N'Sandal Nữ Thời Trang', 2,40,0, N'Đôi',15, 'Active', NULL, 15.00),
+('SKU015', 'BC015', N'Giày Lười Nam', 10, 21,0, N'Đôi', 8, 'Active', NULL, 0);
 
 
-
-INSERT INTO PurchaseOrders (SupplierID, OrderDate, TotalAmount, Status)
-VALUES
-(1, '2025-01-22', 5000000, 'Completed'),
-(2, '2025-02-25', 4500000, 'Completed'),
-(3, '2025-03-23', 7000000, 'Pending'),
-(4, '2025-03-26', 3200000, 'Completed'),
-(5, '2025-04-21', 2500000, 'Pending'),
-(6, '2025-05-22', 6000000, 'Completed'),
-(7, '2025-06-28', 4000000, 'Pending'),
-(8, '2025-07-27', 5500000, 'Completed'),
-(9, '2025-07-25', 4200000, 'Completed'),
-(10, '2025-08-26', 3800000, 'Pending'),
-(11, '2025-09-29', 4900000, 'Completed'),
-(12, '2025-10-30', 5200000, 'Pending'),
-(13, '2025-11-20', 6100000, 'Completed'),
-(14, '2025-11-27', 3000000, 'Completed'),
-(15, '2025-12-23', 4500000, 'Pending');
-
-
-
+/* =========================
+   1) PURCHASE ORDERS (15)
+   ========================= */
+INSERT INTO PurchaseOrders (SupplierID, OrderDate, TotalAmount, Status) VALUES
+(1,  '2025-01-05', 0, N'Pending'),
+(2,  '2025-01-06', 0, N'Completed'),
+(3,  '2025-01-07', 0, N'Pending'),
+(4,  '2025-01-08', 0, N'Completed'),
+(5,  '2025-01-09', 0, N'Pending'),
+(6,  '2025-01-10', 0, N'Completed'),
+(7,  '2025-01-11', 0, N'Pending'),
+(8,  '2025-01-12', 0, N'Completed'),
+(9,  '2025-01-13', 0, N'Pending'),
+(10, '2025-01-14', 0, N'Completed'),
+(11, '2025-01-15', 0, N'Pending'),
+(12, '2025-01-16', 0, N'Completed'),
+(13, '2025-01-17', 0, N'Pending'),
+(14, '2025-01-18', 0, N'Completed'),
+(15, '2025-01-19', 0, N'Pending');
 
 
-INSERT INTO PurchaseOrderDetails (POID, ProductID, NameProduct, Quantity, UnitPrice)
-VALUES
-(1, 1, N'Giày Sneaker Trắng', 50, 600000),
-(1, 2, N'Giày Sneaker Đen', 40, 650000),
-(2, 3, N'Giày Chạy Bộ Nam', 30, 900000),
-(2, 4, N'Giày Chạy Bộ Nữ', 25, 880000),
-(3, 5, N'Giày Tennis Trắng', 20, 700000),
-(3, 6, N'Giày Bóng Đá Cỏ Tự Nhiên', 15, 1100000),
-(4, 7, N'Giày Bóng Đá Cỏ Nhân Tạo', 20, 900000),
-(5, 8, N'Giày Bóng Rổ Cao Cổ', 15, 1200000),
-(6, 9, N'Giày Golf Chống Thấm', 10, 2000000),
-(7, 10, N'Giày Tây Nam', 20, 1300000),
-(8, 11, N'Giày Cao Gót Đen', 25, 700000),
-(9, 12, N'Giày Boot Da', 12, 1800000),
-(10, 13, N'Dép Lê Nam', 40, 100000),
-(11, 14, N'Sandal Nữ Thời Trang', 35, 250000),
-(12, 15, N'Giày Lười Nam', 30, 600000);
-
-
-select * from PurchaseOrderDetails
-
-
-INSERT INTO GoodsReceipts (UserID,POID, ReceiptDate, TotalAmount)
-VALUES
-(1,1, '2025-01-12', 5000000),
-(2,2, '2025-01-04', 4500000),
-(3,3, '2025-01-18', 7000000),
-(4,4, '2025-01-11', 3200000),
-(5,5, '2025-01-18', 2500000),
-(6,6, '2025-01-03', 6000000),
-(7,7, '2025-01-17', 4000000),
-(8, 8,'2025-01-04', 5500000),
-(9, 9,'2025-01-12', 4200000),
-(10,10, '2025-01-01', 3800000),
-(11, 11,'2025-01-06', 4900000),
-(12, 12,'2025-01-14', 5200000),
-(13, 13,'2025-01-19', 6100000),
-(14, 14,'2025-01-05', 3000000),
-(15,15 ,'2025-01-09', 4500000);
+select *from PurchaseOrders
 
 
 
 
 
-INSERT INTO GoodsReceiptDetails (ReceiptID, ProductID, Quantity, UnitPrice, BatchNo, ExpiryDate)
-VALUES
-(1, 1, 50, 600000, 'B001', '2026-01-01'),
-(2, 2, 40, 650000, 'B002', '2026-01-02'),
-(3, 3, 30, 900000, 'B003', '2026-01-03'),
-(4, 4, 25, 880000, 'B004', '2026-01-04'),
-(5, 5, 20, 700000, 'B005', '2026-01-05'),
-(6, 6, 15, 1100000, 'B006', '2026-01-06'),
-(7, 7, 20, 900000, 'B007', '2026-01-07'),
-(8, 8, 15, 1200000, 'B008', '2026-01-08'),
-(9, 9, 10, 2000000, 'B009', '2026-01-09'),
-(10, 10, 20, 1300000, 'B010', '2026-01-10'),
-(11, 11, 25, 700000, 'B011', '2026-01-11'),
-(12, 12, 12, 1800000, 'B012', '2026-01-12'),
-(13, 13, 40, 100000, 'B013', '2026-01-13'),
-(14, 14, 35, 250000, 'B014', '2026-01-14'),
-(15, 15, 30, 600000, 'B015', '2026-01-15');
-
-
-
-
-
-INSERT INTO Promotions (CategoryID, PromotionName, Type, Value, StartDate, EndDate)
-VALUES
-(1,N'Giảm 10% Toàn Bộ Sneaker', 'Percent', 10, '2025-02-01', '2025-02-15'),
-(2,N'Giảm 200K Giày Tây', 'Value', 200000, '2025-02-05', '2025-02-20'),
-(3,N'Mua 1 Tặng 1 Sandal', 'Percent', 50, '2025-02-10', '2025-02-25'),
-(4,N'Giảm 15% Giày Bóng Đá', 'Percent', 15, '2025-03-01', '2025-03-15'),
-(5,N'Giảm 100K Giày Cao Gót', 'Value', 100000, '2025-03-05', '2025-03-20'),
-(6,N'Giảm 20% Giày Boot', 'Percent', 20, '2025-03-10', '2025-03-25'),
-(7,N'Giảm 10% Giày Chạy Bộ', 'Percent', 10, '2025-04-01', '2025-04-15'),
-(8,N'Giảm 15% Giày Golf', 'Percent', 15, '2025-04-05', '2025-04-20'),
-(9,N'Giảm 50K Dép', 'Value', 50000, '2025-04-10', '2025-04-25'),
-(10,N'Giảm 5% Toàn Bộ', 'Percent', 5, '2025-05-01', '2025-05-15'),
-(11,N'Giảm 10% Giày Tennis', 'Percent', 10, '2025-05-05', '2025-05-20'),
-(12,N'Giảm 7% Giày Bóng Rổ', 'Percent', 7, '2025-05-10', '2025-05-25'),
-(13,N'Giảm 300K Giày Lười', 'Value', 300000, '2025-06-01', '2025-06-15'),
-(14,'Giảm 8% Giày Thể Thao', 'Percent', 8, '2025-06-05', '2025-06-20'),
-(15,N'Giảm 20% Clearance', 'Percent', 20, '2025-06-10', '2025-06-30');
-
-
-
-
-INSERT INTO GoodsIssues (UserID, IssueDate, TotalAmount)
-VALUES
-(2, '2025-02-01', 1600000),
-(3, '2025-02-02', 850000),
-(4, '2025-02-03', 2400000),
-(5, '2025-02-04', 1150000),
-(6, '2025-02-05', 950000),
-(7, '2025-02-06', 2700000),
-(8, '2025-02-07', 2200000),
-(9, '2025-02-08', 2800000),
-(10, '2025-02-09', 3500000),
-(11, '2025-02-10', 4000000),
-(12, '2025-02-11', 2700000),
-(13, '2025-02-12', 5000000),
-(14, '2025-02-13', 3200000),
-(15, '2025-02-14', 1500000),
-(1, '2025-02-15', 1800000);
-
-select *from 
-
-
-
-INSERT INTO GoodsIssueDetails (IssueID, ProductID, ProductName, Quantity, UnitPrice, BatchNo)
-VALUES
-(1, 1, N'Giày Sneaker Trắng', 2, 800000, 'B001'),
-(2, 2, N'Giày Sneaker Đen', 1, 850000, 'B002'),
-(3, 3, N'Giày Chạy Bộ Nam', 2, 1200000, 'B003'),
-(4, 4, N'Giày Chạy Bộ Nữ', 1, 1150000, 'B004'),
-(5, 5, N'Giày Tennis Trắng', 1, 950000, 'B005'),
-(6, 6, N'Giày Bóng Đá Cỏ Tự Nhiên', 2, 1350000, 'B006'),
-(7, 7, N'Giày Bóng Đá Cỏ Nhân Tạo', 1, 1100000, 'B007'),
-(8, 8, N'Giày Bóng Rổ Cao Cổ', 1, 1400000, 'B008'),
-(9, 9, N'Giày Golf Chống Thấm', 1, 2500000, 'B009'),
-(10, 10, N'Giày Tây Nam', 2, 1600000, 'B010'),
-(11, 11, N'Giày Cao Gót Đen', 1, 900000, 'B011'),
-(12, 12, N'Giày Boot Da', 1, 2200000, 'B012'),
-(13, 13, N'Dép Lê Nam', 3, 150000, 'B013'),
-(14, 14, N'Sandal Nữ Thời Trang', 2, 350000, 'B014'),
-(15, 15, N'Giày Lười Nam', 1, 780000, 'B015');
+INSERT INTO PurchaseOrderDetails (POID, ProductID, NameProduct, Quantity, UnitPrice) VALUES
+(1, 1,  N'Giày Sneaker Trắng',           20, 450000),
+(2, 2,  N'Giày Sneaker Đen',             30, 470000),
+(3, 3,  N'Giày Chạy Bộ Nam',             25, 520000),
+(4, 4,  N'Giày Chạy Bộ Nữ',              18, 500000),
+(5, 5,  N'Giày Tennis Trắng',            15, 530000),
+(6, 6,  N'Giày Bóng Đá Cỏ Tự Nhiên',     40, 410000),
+(7, 7,  N'Giày Bóng Đá Cỏ Nhân Tạo',     35, 420000),
+(8, 8,  N'Giày Bóng Rổ Cao Cổ',          22, 650000),
+(9, 9,  N'Giày Golf Chống Thấm',         12, 980000),
+(10,10, N'Giày Tây Nam',                  30, 590000),
+(11,11, N'Giày Cao Gót Đen',              28, 480000),
+(12,12, N'Giày Boot Da',                  16, 880000),
+(13,13, N'Dép Lê Nam',                    50, 120000),
+(14,14, N'Sandal Nữ Thời Trang',          40, 220000),
+(15,15, N'Giày Lười Nam',                 26, 540000);
 
 
 
 
 
 
-INSERT INTO Sales (CustomerID, UserID, SaleDate, TotalAmount, VATAmount, PaymentStatus)
-VALUES
-(1, 2, '2025-02-01', 2000000, 200000,  'Paid'),
-(2, 3, '2025-02-02', 1500000, 150000,  'Unpaid'),
-(3, 4, '2025-02-03', 2500000, 250000,  'Paid'),
-(4, 5, '2025-02-04', 1800000, 180000, 'Paid'),
-(5, 6, '2025-02-05', 1200000, 120000,  'Unpaid'),
-(6, 7, '2025-02-06', 3000000, 300000,  'Paid'),
-(7, 8, '2025-02-07', 2200000, 220000,  'Paid'),
-(8, 9, '2025-02-08', 2800000, 280000,  'Unpaid'),
-(9, 10, '2025-02-09', 3500000, 350000,  'Paid'),
-(10, 11, '2025-02-10', 4000000, 400000, 'Paid'),
-(11, 12, '2025-02-11', 2700000, 270000, 'Unpaid'),
-(12, 13, '2025-02-12', 5000000, 500000,'Paid'),
-(13, 14, '2025-02-13', 3200000, 320000, 'Paid'),
-(14, 15, '2025-02-14', 1500000, 150000 , 'Unpaid'),
-(15, 1, '2025-02-15', 1800000, 180000,  'Paid');
+
+INSERT INTO GoodsReceipts (POID, ReceiptDate, TotalAmount, UserID, BatchNo) VALUES
+(1,  '2025-01-20', 0,  1,  'BCH001'),
+(2,  '2025-01-21', 0,  2,  'BCH002'),
+(3,  '2025-01-22', 0,  3,  'BCH003'),
+(4,  '2025-01-23', 0,  4,  'BCH004'),
+(5,  '2025-01-24', 0,  5,  'BCH005'),
+(6,  '2025-01-25', 0,  6,  'BCH006'),
+(7,  '2025-01-26', 0,  7,  'BCH007'),
+(8,  '2025-01-27', 0,  8,  'BCH008'),
+(9,  '2025-01-28', 0,  9,  'BCH009'),
+(10, '2025-01-29', 0, 10,  'BCH010'),
+(11, '2025-01-30', 0, 11,  'BCH011'),
+(12, '2025-01-31', 0, 12,  'BCH012'),
+(13, '2025-02-01', 0, 13,  'BCH013'),
+(14, '2025-02-02', 0, 14,  'BCH014'),
+(15, '2025-02-03', 0, 15,  'BCH015');
 
 
 
 
 
-INSERT INTO SalesItems (SaleID, ProductID, ProductName, Quantity, UnitPrice, Discount)
-VALUES
-(1, 1, N'Giày Sneaker Trắng', 2, 800000, 0),
-(2, 2, N'Giày Sneaker Đen', 1, 850000, 50000),
-(3, 3, N'Giày Chạy Bộ Nam', 2, 1200000, 0),
-(4, 4, N'Giày Chạy Bộ Nữ', 1, 1150000, 150000),
-(5, 5, N'Giày Tennis Trắng', 1, 950000, 0),
-(6, 6, N'Giày Bóng Đá Cỏ Tự Nhiên', 2, 1350000, 200000),
-(7, 7, N'Giày Bóng Đá Cỏ Nhân Tạo', 1, 1100000, 0),
-(8, 8, N'Giày Bóng Rổ Cao Cổ', 1, 1400000, 100000),
-(9, 9, N'Giày Golf Chống Thấm', 1, 2500000, 0),
-(10, 10, N'Giày Tây Nam', 2, 1600000, 0),
-(11, 11, N'Giày Cao Gót Đen', 1, 900000, 50000),
-(12, 12, N'Giày Boot Da', 1, 2200000, 0),
-(13, 13, N'Dép Lê Nam', 3, 150000, 0),
-(14, 14, N'Sandal Nữ Thời Trang', 2, 350000, 50000),
-(15, 15, N'Giày Lười Nam', 1, 780000, 0);
+
+INSERT INTO GoodsReceiptDetails (ReceiptID, ProductID, ProductName, Quantity, UnitPrice, ExpiryDate) VALUES
+(1,  1,  N'Giày Sneaker Trắng',           20, 450000, NULL),
+(2,  2,  N'Giày Sneaker Đen',             30, 470000, NULL),
+(3,  3,  N'Giày Chạy Bộ Nam',             25, 520000, NULL),
+(4,  4,  N'Giày Chạy Bộ Nữ',              18, 500000, NULL),
+(5,  5,  N'Giày Tennis Trắng',            15, 530000, NULL),
+(6,  6,  N'Giày Bóng Đá Cỏ Tự Nhiên',     40, 410000, NULL),
+(7,  7,  N'Giày Bóng Đá Cỏ Nhân Tạo',     35, 420000, NULL),
+(8,  8,  N'Giày Bóng Rổ Cao Cổ',          22, 650000, NULL),
+(9,  9,  N'Giày Golf Chống Thấm',         12, 980000, NULL),
+(10, 10, N'Giày Tây Nam',                  30, 590000, NULL),
+(11, 11, N'Giày Cao Gót Đen',              28, 480000, NULL),
+(12, 12, N'Giày Boot Da',                  16, 880000, NULL),
+(13, 13, N'Dép Lê Nam',                    50, 120000, NULL),
+(14, 14, N'Sandal Nữ Thời Trang',          40, 220000, NULL),
+(15, 15, N'Giày Lười Nam',                 26, 540000, NULL);
 
 
 
 
-INSERT INTO Returns (SaleID, CustomerID, ReturnDate, Reason)
-VALUES
-(1, 1, '2025-02-16', N'Lỗi sản phẩm'),
-(2, 2, '2025-02-17', N'Không vừa size'),
-(3, 3, '2025-02-18', N'Giao nhầm mẫu'),
-(4, 4, '2025-02-19', N'Sản phẩm trầy xước'),
-(5, 5, '2025-02-20', N'Khách đổi ý'),
-(6, 6, '2025-02-21', N'Không hài lòng'),
-(7, 7, '2025-02-22', N'Lỗi keo dán'),
-(8, 8, '2025-02-23', N'Hết nhu cầu'),
-(9, 9, '2025-02-24', N'Không hợp màu'),
-(10, 10, '2025-02-25', N'Không đúng chất liệu'),
-(11, 11, '2025-02-26', N'Khách hủy đơn'),
-(12, 12, '2025-02-27', N'Sản phẩm quá chật'),
-(13, 13, '2025-02-28', N'Sản phẩm quá rộng'),
-(14, 14, '2025-03-01', N'Lỗi đế giày'),
-(15, 15, '2025-03-02', N'Khách không thích');
 
 
 
-INSERT INTO Invoices (SaleID, InvoiceNo, InvoiceDate, TotalAmount, VATAmount) 
-VALUES (1, 'INV001', '2025-02-16', 2000000, 200000), 
-(2, 'INV002', '2025-02-17', 1500000, 150000), 
-(3, 'INV003', '2025-02-18', 2500000, 250000), 
-(4, 'INV004', '2025-02-19', 1800000, 180000), 
-(5, 'INV005', '2025-02-20', 1200000, 120000), 
-(6, 'INV006', '2025-02-21', 3000000, 300000), 
-(7, 'INV007', '2025-02-22', 2200000, 220000), 
-(8, 'INV008', '2025-02-23', 2800000, 280000), 
-(9, 'INV009', '2025-02-24', 3500000, 350000), 
-(10, 'INV010', '2025-02-25', 4000000, 400000), 
-(11, 'INV011', '2025-02-26', 2700000, 270000), 
-(12, 'INV012', '2025-02-27', 5000000, 500000), 
-(13, 'INV013', '2025-02-28', 3200000, 320000), 
-(14, 'INV014', '2025-03-01', 1500000, 150000), 
-(15, 'INV015', '2025-03-02', 1800000, 180000);
+INSERT INTO Promotions (CategoryID, PromotionName, Type, Value, StartDate, EndDate) VALUES
+(1,  N'Flash Sale Sneaker',           N'Percent', 10, '2025-02-05', '2025-02-10'),
+(2,  N'Sandal 8/3',                   N'Percent', 15, '2025-03-01', '2025-03-10'),
+(3,  N'Dép Cuối Tuần',                N'Value',   20000, '2025-02-15', '2025-02-20'),
+(4,  N'Giày Tây Deal Tết',            N'Percent', 12, '2025-01-25', '2025-02-05'),
+(5,  N'Cao Gót Vip',                  N'Percent', 20, '2025-02-14', '2025-02-20'),
+(6,  N'Boot Đông Ấm',                 N'Value',   50000, '2025-01-01', '2025-01-31'),
+(7,  N'Sneaker Trẻ',                  N'Percent', 5,  '2025-04-01', '2025-04-15'),
+(8,  N'Running Day',                  N'Percent', 18, '2025-05-01', '2025-05-07'),
+(9,  N'Leo Núi Pro',                  N'Value',   80000, '2025-06-01', '2025-06-15'),
+(10, N'Lười Mà Sang',                 N'Percent', 7,  '2025-02-01', '2025-02-07'),
+(11, N'Tennis Tháng 5',               N'Value',   30000, '2025-05-10', '2025-05-20'),
+(12, N'Golf VIP',                     N'Percent', 10, '2025-07-01', '2025-07-10'),
+(13, N'Bóng Đá Quốc Tế',              N'Percent', 12, '2025-06-05', '2025-06-12'),
+(14, N'Bóng Rổ Rực Lửa',              N'Value',   40000, '2025-08-01', '2025-08-15'),
+(NULL, N'Toàn Cửa Hàng - Sinh Nhật',  N'Percent', 5,  '2025-09-01', '2025-09-07');
+
+/* =================
+   6) GOODS ISSUES (15)
+   ================= */
+INSERT INTO GoodsIssues (IssueDate, UserID, TotalAmount) VALUES
+('2025-02-10 10:00:00', 1,  0),
+('2025-02-11 11:00:00', 2,  0),
+('2025-02-12 12:00:00', 3,  0),
+('2025-02-13 13:00:00', 4,  0),
+('2025-02-14 14:00:00', 5,  0),
+('2025-02-15 15:00:00', 6,  0),
+('2025-02-16 16:00:00', 7,  0),
+('2025-02-17 17:00:00', 8,  0),
+('2025-02-18 18:00:00', 9,  0),
+('2025-02-19 19:00:00',10,  0),
+('2025-02-20 10:30:00',11,  0),
+('2025-02-21 11:30:00',12,  0),
+('2025-02-22 12:30:00',13,  0),
+('2025-02-23 13:30:00',14,  0),
+('2025-02-24 14:30:00',15,  0);
+
+/* ==========================
+   7) GOODS ISSUE DETAILS (15)
+   (IssueID 1..15; ProductID 1..15)
+   ========================== */
+INSERT INTO GoodsIssueDetails (IssueID, ProductID, ProductName, Quantity, UnitPrice) VALUES
+(1,  1,  N'Giày Sneaker Trắng',           2, 480000),
+(2,  2,  N'Giày Sneaker Đen',             3, 495000),
+(3,  3,  N'Giày Chạy Bộ Nam',             1, 560000),
+(4,  4,  N'Giày Chạy Bộ Nữ',              2, 540000),
+(5,  5,  N'Giày Tennis Trắng',            1, 560000),
+(6,  6,  N'Giày Bóng Đá Cỏ Tự Nhiên',     4, 450000),
+(7,  7,  N'Giày Bóng Đá Cỏ Nhân Tạo',     3, 460000),
+(8,  8,  N'Giày Bóng Rổ Cao Cổ',          2, 700000),
+(9,  9,  N'Giày Golf Chống Thấm',         1, 1050000),
+(10, 10, N'Giày Tây Nam',                  3, 630000),
+(11, 11, N'Giày Cao Gót Đen',              2, 520000),
+(12, 12, N'Giày Boot Da',                  1, 920000),
+(13, 13, N'Dép Lê Nam',                    5, 150000),
+(14, 14, N'Sandal Nữ Thời Trang',          4, 250000),
+(15, 15, N'Giày Lười Nam',                 2, 580000);
+
+/* =========
+   8) SALES (15)
+   ========= */
+INSERT INTO Sales (CustomerID, UserID, SaleDate, TotalAmount, VATAmount, PaymentStatus) VALUES
+(1,  1,  '2025-03-01 09:00:00', 960000,   96000,  N'Paid'),
+(2,  2,  '2025-03-01 10:00:00', 495000,   49500,  N'Paid'),
+(3,  3,  '2025-03-02 11:00:00', 560000,   56000,  N'Unpaid'),
+(4,  4,  '2025-03-02 12:00:00', 540000,   54000,  N'Paid'),
+(5,  5,  '2025-03-03 13:00:00', 560000,   56000,  N'Unpaid'),
+(6,  6,  '2025-03-03 14:00:00', 1800000, 180000,  N'Paid'),
+(7,  7,  '2025-03-04 15:00:00', 1380000, 138000,  N'Partial'),
+(8,  8,  '2025-03-04 16:00:00', 1400000, 140000,  N'Paid'),
+(9,  9,  '2025-03-05 17:00:00', 1050000, 105000,  N'Paid'),
+(10, 10, '2025-03-05 18:00:00', 1890000, 189000,  N'Partial'),
+(11, 11, '2025-03-06 10:30:00', 1040000, 104000,  N'Paid'),
+(12, 12, '2025-03-06 11:30:00', 920000,   92000,  N'Unpaid'),
+(13, 13, '2025-03-07 12:30:00', 750000,   75000,  N'Paid'),
+(14, 14, '2025-03-07 13:30:00', 1000000, 100000,  N'Paid'),
+(15, 15, '2025-03-08 14:30:00', 1160000, 116000,  N'Unpaid');
+
+/* ==================
+   9) SALES ITEMS (15)
+   (1 item mỗi đơn)
+   ================== */
+INSERT INTO SalesItems (SaleID, ProductID, ProductName, Quantity, UnitPrice, Discount) VALUES
+(1,  1,  N'Giày Sneaker Trắng',           2, 480000, 0),
+(2,  2,  N'Giày Sneaker Đen',             1, 495000, 0),
+(3,  3,  N'Giày Chạy Bộ Nam',             1, 560000, 0),
+(4,  4,  N'Giày Chạy Bộ Nữ',              1, 540000, 0),
+(5,  5,  N'Giày Tennis Trắng',            1, 560000, 0),
+(6,  6,  N'Giày Bóng Đá Cỏ Tự Nhiên',     4, 450000, 0),
+(7,  7,  N'Giày Bóng Đá Cỏ Nhân Tạo',     3, 460000, 0),
+(8,  8,  N'Giày Bóng Rổ Cao Cổ',          2, 700000, 0),
+(9,  9,  N'Giày Golf Chống Thấm',         1, 1050000, 0),
+(10, 10, N'Giày Tây Nam',                  3, 630000, 0),
+(11, 11, N'Giày Cao Gót Đen',              2, 520000, 0),
+(12, 12, N'Giày Boot Da',                  1, 920000, 0),
+(13, 13, N'Dép Lê Nam',                    5, 150000, 0),
+(14, 14, N'Sandal Nữ Thời Trang',          4, 250000, 0),
+(15, 15, N'Giày Lười Nam',                 2, 580000, 0);
+
+/* ==============
+   10) RETURNS (15)
+   (Một số trả từ Sales, một số trả NCC theo Receipt)
+   ============== */
+INSERT INTO Returns (SaleID, CustomerID, ReturnDate, Reason, SupplierID, ReceiptID) VALUES
+(1,  1,  '2025-03-02', N'Không vừa size',                 NULL, NULL),
+(2,  2,  '2025-03-02', N'Lỗi keo nhẹ',                    NULL, NULL),
+(3,  3,  '2025-03-03', N'Đổi mẫu',                        NULL, NULL),
+(4,  4,  '2025-03-03', N'Màu không hợp',                  NULL, NULL),
+(5,  5,  '2025-03-04', N'Đế trơn',                        NULL, NULL),
+(6,  6,  '2025-03-04', N'Hàng lỗi đường may',            NULL, NULL),
+(7,  7,  '2025-03-05', N'Khách đổi size',                 NULL, NULL),
+(8,  8,  '2025-03-05', N'Gót cứng',                       NULL, NULL),
+(9,  9,  '2025-03-06', N'Trái kỳ vọng',                   NULL, NULL),
+(10, 10, '2025-03-06', N'Giao nhầm mẫu',                  NULL, NULL),
+(NULL, NULL, '2025-02-02', N'Trả nhà cung cấp - lỗi lô',  1, 1),
+(NULL, NULL, '2025-02-03', N'Trả NCC - giày tróc da',     2, 2),
+(NULL, NULL, '2025-02-04', N'Trả NCC - lỗi keo',          3, 3),
+(NULL, NULL, '2025-02-05', N'Trả NCC - hư form',          4, 4),
+(NULL, NULL, '2025-02-06', N'Trả NCC - sai nhãn',         5, 5);
+
+/* =============
+   11) INVOICES (15)
+   (mỗi Sale có 1 Invoice)
+   ============= */
+INSERT INTO Invoices (SaleID, InvoiceNo, InvoiceDate, TotalAmount, VATAmount) VALUES
+(1,  'INV0001', '2025-03-01', 960000,   96000),
+(2,  'INV0002', '2025-03-01', 495000,   49500),
+(3,  'INV0003', '2025-03-02', 560000,   56000),
+(4,  'INV0004', '2025-03-02', 540000,   54000),
+(5,  'INV0005', '2025-03-03', 560000,   56000),
+(6,  'INV0006', '2025-03-03', 1800000, 180000),
+(7,  'INV0007', '2025-03-04', 1380000, 138000),
+(8,  'INV0008', '2025-03-04', 1400000, 140000),
+(9,  'INV0009', '2025-03-05', 1050000, 105000),
+(10, 'INV0010', '2025-03-05', 1890000, 189000),
+(11, 'INV0011', '2025-03-06', 1040000, 104000),
+(12, 'INV0012', '2025-03-06', 920000,   92000),
+(13, 'INV0013', '2025-03-07', 750000,   75000),
+(14, 'INV0014', '2025-03-07', 1000000, 100000),
+(15, 'INV0015', '2025-03-08', 1160000, 116000);
+
+/* =============
+   12) PAYMENTS (15)
+   (10 bản ghi cho Sales, 5 bản ghi thanh toán NCC theo Receipt)
+   ============= */
+INSERT INTO Payments (SaleID, CustomerID, SupplierID, ReceiptID, Amount, PaymentDate, Method, Description) VALUES
+(1,  1,  NULL, NULL, 960000,  '2025-03-01', N'Tiền mặt',     N'Thanh toán đủ'),
+(2,  2,  NULL, NULL, 495000,  '2025-03-01', N'Chuyển khoản', N'Thanh toán đủ'),
+(3,  3,  NULL, NULL, 200000,  '2025-03-02', N'Tiền mặt',     N'Trả lần 1'),
+(4,  4,  NULL, NULL, 540000,  '2025-03-02', N'QR',           N'Thanh toán đủ'),
+(5,  5,  NULL, NULL, 200000,  '2025-03-03', N'Chuyển khoản', N'Trả lần 1'),
+(6,  6,  NULL, NULL, 1800000, '2025-03-03', N'Chuyển khoản', N'Thanh toán đủ'),
+(7,  7,  NULL, NULL, 800000,  '2025-03-04', N'QR',           N'Trả lần 1'),
+(8,  8,  NULL, NULL, 1400000, '2025-03-04', N'Tiền mặt',     N'Thanh toán đủ'),
+(9,  9,  NULL, NULL, 1050000, '2025-03-05', N'Chuyển khoản', N'Thanh toán đủ'),
+(10, 10, NULL, NULL, 900000,  '2025-03-05', N'QR',           N'Trả lần 1'),
+(NULL, NULL, 1, 1,  5000000, '2025-02-05', N'Chuyển khoản', N'Thanh toán NCC lô 1'),
+(NULL, NULL, 2, 2,  7000000, '2025-02-06', N'Chuyển khoản', N'Thanh toán NCC lô 2'),
+(NULL, NULL, 3, 3,  6000000, '2025-02-07', N'Tiền mặt',     N'Thanh toán NCC lô 3'),
+(NULL, NULL, 4, 4,  4500000, '2025-02-08', N'QR',           N'Thanh toán NCC lô 4'),
+(NULL, NULL, 5, 5,  5200000, '2025-02-09', N'Chuyển khoản', N'Thanh toán NCC lô 5');
+
+/* =================
+   13) STOCK CARDS (15)
+   (tham chiếu ReceiptID 1..8 cho IN và IssueID 1..7 cho OUT)
+   ================= */
+INSERT INTO StockCards (ProductID, ProductName, TransactionType, Quantity, Balance, ReceiptID, IssueID, TransactionDate, SupplierID, BatchNo) VALUES
+(1,  N'Giày Sneaker Trắng',           N'IN',  20,  24, 1, NULL, '2025-01-20 10:00:00', 1,  'BCH001'),
+(2,  N'Giày Sneaker Đen',             N'IN',  30,  39, 2, NULL, '2025-01-21 10:00:00', 2,  'BCH002'),
+(3,  N'Giày Chạy Bộ Nam',             N'IN',  25,  31, 3, NULL, '2025-01-22 10:00:00', 3,  'BCH003'),
+(4,  N'Giày Chạy Bộ Nữ',              N'IN',  18,  19, 4, NULL, '2025-01-23 10:00:00', 4,  'BCH004'),
+(5,  N'Giày Tennis Trắng',            N'IN',  15,  15, 5, NULL, '2025-01-24 10:00:00', 5,  'BCH005'),
+(6,  N'Giày Bóng Đá Cỏ Tự Nhiên',     N'IN',  40,  65, 6, NULL, '2025-01-25 10:00:00', 6,  'BCH006'),
+(7,  N'Giày Bóng Đá Cỏ Nhân Tạo',     N'IN',  35,  41, 7, NULL, '2025-01-26 10:00:00', 7,  'BCH007'),
+(8,  N'Giày Bóng Rổ Cao Cổ',          N'IN',  22,  40, 8, NULL, '2025-01-27 10:00:00', 8,  'BCH008'),
+(1,  N'Giày Sneaker Trắng',           N'OUT',  2,  22, NULL, 1,  '2025-02-10 10:00:00', NULL, NULL),
+(2,  N'Giày Sneaker Đen',             N'OUT',  3,  36, NULL, 2,  '2025-02-11 11:00:00', NULL, NULL),
+(3,  N'Giày Chạy Bộ Nam',             N'OUT',  1,  30, NULL, 3,  '2025-02-12 12:00:00', NULL, NULL),
+(4,  N'Giày Chạy Bộ Nữ',              N'OUT',  2,  17, NULL, 4,  '2025-02-13 13:00:00', NULL, NULL),
+(8,  N'Giày Bóng Rổ Cao Cổ',          N'OUT',  2,  38, NULL, 8,  '2025-02-17 17:00:00', NULL, NULL),
+(10, N'Giày Tây Nam',                 N'OUT',  3,  22, NULL, 10, '2025-02-19 19:00:00', NULL, NULL),
+(13, N'Dép Lê Nam',                    N'OUT',  5,  46, NULL, 13, '2025-02-22 12:30:00', NULL, NULL);
 
 
 
 
--- PAYMENTS (đồng bộ với bảng Sales & Customers)
-INSERT INTO Payments (SaleID, CustomerID,SupplierID, Amount, PaymentDate, Method, Description)
-VALUES
--- Các hóa đơn đã thanh toán đầy đủ (Paid)
-(1, 1,1, 2200000, '2025-02-01', N'Tiền mặt', N'Thanh toán đủ đơn #1'),
-(3, 3,3, 2750000, '2025-02-03', N'Chuyển khoản', N'Thanh toán đủ đơn #3'),
-(4, 4,4, 1980000, '2025-02-04', N'QR', N'Thanh toán đủ đơn #4'),
-(6, 6,6, 3300000, '2025-02-06', N'Tiền mặt', N'Thanh toán đủ đơn #6'),
-(7, 7,7, 2420000, '2025-02-07', N'Chuyển khoản', N'Thanh toán đủ đơn #7'),
-(9, 9,9, 3850000, '2025-02-09', N'Tiền mặt', N'Thanh toán đủ đơn #9'),
-(10, 10,10, 4400000, '2025-02-10', N'QR', N'Thanh toán đủ đơn #10'),
-(12, 12,12, 5500000, '2025-02-12', N'Chuyển khoản', N'Thanh toán đủ đơn #12'),
-(13, 13,13, 3520000, '2025-02-13', N'Tiền mặt', N'Thanh toán đủ đơn #13'),
-(15, 15,15, 1980000, '2025-02-15', N'QR', N'Thanh toán đủ đơn #15'),
-(2, 2,2, 800000, '2025-02-02', N'Tiền mặt', N'Thanh toán lần 1 (còn nợ)'),
-(5, 5,5, 600000, '2025-02-05', N'Chuyển khoản', N'Thanh toán lần 1 (còn nợ)'),
-(8, 8,8, 1500000, '2025-02-08', N'QR', N'Thanh toán lần 1 (còn nợ)'),
-(11, 11,11, 2000000,'2025-02-11', N'Tiền mặt', N'Thanh toán lần 1 (còn nợ)'),
-(14, 14,15, 1000000, '2025-02-14', N'Chuyển khoản', N'Thanh toán lần 1 (còn nợ)');
-
-
-delete  Payments
-
-
-
-
-INSERT INTO StockCards (ProductID, ProductName, TransactionType, Quantity, Balance, ReceiptID, IssueID, SupplierID, BatchNo, TransactionDate)
-VALUES
--- Nhập kho (IN)
-(1, N'Giày Sneaker Trắng', 'IN', 50, 50, 1, NULL, 1, 'B001', '2025-01-20'),
-(2, N'Giày Sneaker Đen', 'IN', 40, 40, 2, NULL, 2, 'B002', '2025-01-21'),
-(3, N'Giày Chạy Bộ Nam', 'IN', 30, 30, 3, NULL, 3, 'B003', '2025-01-22'),
-(4, N'Giày Chạy Bộ Nữ', 'IN', 25, 25, 4, NULL, 4, 'B004', '2025-01-23'),
-(5, N'Giày Tennis Trắng', 'IN', 20, 20, 5, NULL, 5, 'B005', '2025-01-24'),
-(6, N'Giày Bóng Đá Cỏ Tự Nhiên', 'IN', 15, 15, 6, NULL, 6, 'B006', '2025-01-25'),
-(7, N'Giày Bóng Đá Cỏ Nhân Tạo', 'IN', 20, 20, 7, NULL, 7, 'B007', '2025-01-26'),
-(8, N'Giày Bóng Rổ Cao Cổ', 'IN', 15, 15, 8, NULL, 8, 'B008', '2025-01-27'),
-(9, N'Giày Golf Chống Thấm', 'IN', 10, 10, 9, NULL, 9, 'B009', '2025-01-28'),
-(10, N'Giày Tây Nam', 'IN', 20, 20, 10, NULL, 10, 'B010', '2025-01-29'),
-(11, N'Giày Cao Gót Đen', 'IN', 25, 25, 11, NULL, 11, 'B011', '2025-01-30'),
-(12, N'Giày Boot Da', 'IN', 12, 12, 12, NULL, 12, 'B012', '2025-01-31'),
-(13, N'Dép Lê Nam', 'IN', 40, 40, 13, NULL, 13, 'B013', '2025-02-01'),
-(14, N'Sandal Nữ Thời Trang', 'IN', 35, 35, 14, NULL, 14, 'B014', '2025-02-02'),
-(15, N'Giày Lười Nam', 'IN', 30, 30, 15, NULL, 15, 'B015', '2025-02-03'),
-
--- Xuất kho (OUT)
-(1, N'Giày Sneaker Trắng', 'OUT', 2, 48, NULL, 1, NULL, 'B001', '2025-02-01'),
-(2, N'Giày Sneaker Đen', 'OUT', 1, 39, NULL, 2, NULL, 'B002', '2025-02-02'),
-(3, N'Giày Chạy Bộ Nam', 'OUT', 2, 28, NULL, 3, NULL, 'B003', '2025-02-03'),
-(4, N'Giày Chạy Bộ Nữ', 'OUT', 1, 24, NULL, 4, NULL, 'B004', '2025-02-04'),
-(5, N'Giày Tennis Trắng', 'OUT', 1, 19, NULL, 5, NULL, 'B005', '2025-02-05'),
-(6, N'Giày Bóng Đá Cỏ Tự Nhiên', 'OUT', 2, 13, NULL, 6, NULL, 'B006', '2025-02-06'),
-(7, N'Giày Bóng Đá Cỏ Nhân Tạo', 'OUT', 1, 19, NULL, 7, NULL, 'B007', '2025-02-07'),
-(8, N'Giày Bóng Rổ Cao Cổ', 'OUT', 1, 14, NULL, 8, NULL, 'B008', '2025-02-08'),
-(9, N'Giày Golf Chống Thấm', 'OUT', 1, 9, NULL, 9, NULL, 'B009', '2025-02-09'),
-(10, N'Giày Tây Nam', 'OUT', 2, 18, NULL, 10, NULL, 'B010', '2025-02-10'),
-(11, N'Giày Cao Gót Đen', 'OUT', 1, 24, NULL, 11, NULL, 'B011', '2025-02-11'),
-(12, N'Giày Boot Da', 'OUT', 1, 11, NULL, 12, NULL, 'B012', '2025-02-12'),
-(13, N'Dép Lê Nam', 'OUT', 3, 37, NULL, 13, NULL, 'B013', '2025-02-13'),
-(14, N'Sandal Nữ Thời Trang', 'OUT', 2, 33, NULL, 14, NULL, 'B014', '2025-02-14'),
-(15, N'Giày Lười Nam', 'OUT', 1, 29, NULL, 15, NULL, 'B015', '2025-02-15');
-
-
-
+EXEC sp_product_create 
+  @SKU='gggg', 
+  @Barcode='gggg', 
+  @ProductName=N'Giày test', 
+  @CategoryID=5
 
 
 
@@ -850,12 +875,15 @@ SELECT * FROM GoodsReceiptDetails;
 SELECT * FROM Promotions;
 SELECT * FROM Sales;
 SELECT * FROM SalesItems;
+SELECT * FROM GoodsIssues;
+SELECT * FROM GoodsIssueDetails
 SELECT * FROM Returns;
 SELECT * FROM Invoices;
 SELECT * FROM Payments;
 SELECT * FROM StockCards;
 select * from SystemSettings
 
+DELETE FROM products;
 
 -- 1. Xóa chi tiết bán hàng trước
 DELETE FROM SalesItems;
@@ -902,50 +930,78 @@ GO
 DROP PROCEDURE [dbo].[sp_product_create]
 
 
-CREATE OR ALTER PROCEDURE [dbo].[sp_product_create]
+CREATE PROCEDURE [dbo].[sp_product_create]
 (
     @SKU         VARCHAR(50),
     @Barcode     VARCHAR(50) = NULL,
     @ProductName NVARCHAR(100),
     @CategoryID  INT = NULL,
+    @UnitPrice   DECIMAL(18,2) = 0,
     @Unit        NVARCHAR(20) = NULL,
     @MinStock    INT = 0,
     @Status      NVARCHAR(20) = 'Active',
-    @Image       NVARCHAR(255) = NULL,
     @VATRate     DECIMAL(5,2) = NULL,
-    @Quantity    INT = 0
+    @Quantity    INT = 0,
+    @ImageData   VARBINARY(MAX) = NULL
 )
 AS
 BEGIN
     SET NOCOUNT ON;
 
     BEGIN TRY
-        -- 🔎 Kiểm tra SKU trùng
+        -- 🧩 Kiểm tra SKU trùng
         IF EXISTS (SELECT 1 FROM Products WHERE SKU = @SKU)
         BEGIN
             RAISERROR(N'SKU "%s" đã tồn tại trong hệ thống.', 16, 1, @SKU);
             RETURN;
         END
 
-        -- 🔎 Kiểm tra Barcode trùng (nếu có nhập)
+        -- 🧩 Kiểm tra Barcode trùng
         IF (@Barcode IS NOT NULL AND @Barcode <> '')
-            AND EXISTS (SELECT 1 FROM Products WHERE Barcode = @Barcode)
+           AND EXISTS (SELECT 1 FROM Products WHERE Barcode = @Barcode)
         BEGIN
             RAISERROR(N'Barcode "%s" đã tồn tại trong hệ thống.', 16, 1, @Barcode);
             RETURN;
         END
 
-        -- ✅ Thêm mới sản phẩm
+        -- 🧩 Đảm bảo ProductName, SKU, CategoryID có giá trị
+        IF (@ProductName IS NULL OR LTRIM(RTRIM(@ProductName)) = '')
+        BEGIN
+            RAISERROR(N'ProductName không được để trống.', 16, 1);
+            RETURN;
+        END
+
+        IF (@SKU IS NULL OR LTRIM(RTRIM(@SKU)) = '')
+        BEGIN
+            RAISERROR(N'SKU không được để trống.', 16, 1);
+            RETURN;
+        END
+
+        IF (@CategoryID IS NULL)
+        BEGIN
+            RAISERROR(N'CategoryID không được để trống.', 16, 1);
+            RETURN;
+        END
+
+        -- ✅ Gán giá trị mặc định nếu rỗng
+        SET @UnitPrice = ISNULL(@UnitPrice, 0);
+        SET @Unit = ISNULL(@Unit, N'');
+        SET @MinStock = ISNULL(@MinStock, 0);
+        SET @Status = ISNULL(@Status, N'Active');
+        SET @Quantity = ISNULL(@Quantity, 0);
+
+        -- ✅ Thêm dữ liệu
         INSERT INTO Products
         (
             SKU,
             Barcode,
             ProductName,
             CategoryID,
+            UnitPrice,
             Unit,
             MinStock,
             Status,
-            Image,
+            ImageData,
             VATRate,
             Quantity
         )
@@ -955,63 +1011,92 @@ BEGIN
             @Barcode,
             @ProductName,
             @CategoryID,
+            @UnitPrice,
             @Unit,
-            ISNULL(@MinStock, 0),
-            ISNULL(@Status, N'Active'),
-            @Image,
+            @MinStock,
+            @Status,
+            @ImageData,
             @VATRate,
-            ISNULL(@Quantity, 0)
+            @Quantity
         );
 
-        -- 🔁 Trả về ID sản phẩm mới thêm
+        -- Trả về ID sản phẩm mới
         SELECT SCOPE_IDENTITY() AS NewProductID;
     END TRY
-
     BEGIN CATCH
-        DECLARE @ErrMsg NVARCHAR(4000), @ErrSeverity INT;
-        SELECT @ErrMsg = ERROR_MESSAGE(), @ErrSeverity = ERROR_SEVERITY();
-        RAISERROR(@ErrMsg, @ErrSeverity, 1);
-        RETURN;
+        DECLARE @Err NVARCHAR(4000);
+        SELECT @Err = ERROR_MESSAGE();
+        RAISERROR(@Err, 16, 1);
     END CATCH
 END;
 GO
 
 
+
+
 drop PROCEDURE [dbo].[sp_product_update]
 
-CREATE PROCEDURE [dbo].[sp_product_update]
+CREATE OR ALTER PROCEDURE [dbo].[sp_product_update]
 (
     @ProductID   INT,
     @SKU         VARCHAR(50) = NULL,
     @Barcode     VARCHAR(50) = NULL,
     @ProductName NVARCHAR(100) = NULL,
     @CategoryID  INT = NULL,
+    @UnitPrice   DECIMAL(18,2) = NULL,
     @Unit        NVARCHAR(20) = NULL,
     @MinStock    INT = NULL,
     @Status      NVARCHAR(20) = NULL,
-	@Image       NVARCHAR(255) = NULL,
-	@VATRate     Decimal(5,2) =NULL,
-	@Quantity	 INT = NULL
+    @ImageData   VARBINARY(MAX) = NULL,
+    @VATRate     DECIMAL(5,2) = NULL,
+    @Quantity    INT = NULL
 )
 AS
 BEGIN
-    UPDATE Products
-    SET
-        SKU         = IIF(@SKU IS NULL, SKU, @SKU),
-        Barcode     = IIF(@Barcode IS NULL, Barcode, @Barcode),
-        ProductName = IIF(@ProductName IS NULL, ProductName, @ProductName),
-        CategoryID  = IIF(@CategoryID IS NULL, CategoryID, @CategoryID),
-        Unit        = IIF(@Unit IS NULL, Unit, @Unit),
-        MinStock    = IIF(@MinStock IS NULL, MinStock, @MinStock),
-        Status      = IIF(@Status IS NULL, Status, @Status),
-		Image       = IIF(@Image IS NULL, Image, @Image),
-		VATRate		= IIF(@VATRate IS NULL, VATRate, @VATRate),
-		Quantity 		= IIF(@Quantity  IS NULL, Quantity , @Quantity)	
-    WHERE ProductID = @ProductID;
+    SET NOCOUNT ON;
+    BEGIN TRY
+        IF NOT EXISTS (SELECT 1 FROM Products WHERE ProductID = @ProductID)
+            THROW 50010, N'ProductID không tồn tại.', 1;
 
-    SELECT '';
+        IF @CategoryID IS NOT NULL
+            IF NOT EXISTS (SELECT 1 FROM Categories WHERE CategoryID = @CategoryID)
+                THROW 50011, N'CategoryID không tồn tại.', 1;
+
+        IF @SKU IS NOT NULL AND EXISTS (SELECT 1 FROM Products WHERE SKU = @SKU AND ProductID <> @ProductID)
+            THROW 50012, N'SKU đã tồn tại cho sản phẩm khác.', 1;
+
+        IF @Barcode IS NOT NULL AND EXISTS (SELECT 1 FROM Products WHERE Barcode = @Barcode AND ProductID <> @ProductID)
+            THROW 50013, N'Barcode đã tồn tại cho sản phẩm khác.', 1;
+
+        IF @UnitPrice IS NOT NULL AND @UnitPrice < 0  THROW 50014, N'UnitPrice không được âm.', 1;
+        IF @MinStock IS NOT NULL AND @MinStock < 0    THROW 50015, N'MinStock không được âm.', 1;
+        IF @Quantity IS NOT NULL AND @Quantity < 0    THROW 50016, N'Quantity không được âm.', 1;
+        IF @VATRate IS NOT NULL AND (@VATRate < 0 OR @VATRate > 100)
+            THROW 50017, N'VATRate phải trong khoảng 0–100.', 1;
+
+        UPDATE Products
+        SET
+            SKU         = COALESCE(@SKU,        SKU),
+            Barcode     = COALESCE(@Barcode,    Barcode),
+            ProductName = COALESCE(@ProductName,ProductName),
+            CategoryID  = COALESCE(@CategoryID, CategoryID),
+            UnitPrice   = COALESCE(@UnitPrice,  UnitPrice),
+            Unit        = COALESCE(@Unit,       Unit),
+            MinStock    = COALESCE(@MinStock,   MinStock),
+            Status      = COALESCE(@Status,     Status),
+            ImageData   = COALESCE(@ImageData,  ImageData),
+            VATRate     = COALESCE(@VATRate,    VATRate),
+            Quantity    = COALESCE(@Quantity,   Quantity)
+        WHERE ProductID = @ProductID;
+
+        SELECT 'OK' AS Message;
+    END TRY
+    BEGIN CATCH
+        THROW;
+    END CATCH
 END;
 GO
+
 
 select * from Products
 
@@ -1051,10 +1136,11 @@ BEGIN
                p.Barcode,
                p.ProductName,
                p.CategoryID,
+			   p.UnitPrice,
                p.Unit,
                p.MinStock,
                p.Status,
-			   p.Image,
+			   p.ImageData,
 			   p.VATRate,
 			   p.Quantity 
         INTO #Results1
@@ -1088,10 +1174,11 @@ BEGIN
                p.Barcode,
                p.ProductName,
                p.CategoryID,
+			   p.UnitPrice,
                p.Unit,
                p.MinStock,
                p.Status,
-			   p.Image,
+			   p.ImageData,
 			   p.VATRate,
 			   p.Quantity 
         INTO #Results2
@@ -1129,6 +1216,7 @@ BEGIN
     DELETE FROM StockCards WHERE ProductID = @ProductID;
     DELETE FROM GoodsReceiptDetails WHERE ProductID = @ProductID;
     DELETE FROM PurchaseOrderDetails WHERE ProductID = @ProductID;
+	DELETE FROM GoodsIssueDetails WHERE ProductID = @ProductID;
 
     -- Cuối cùng xóa trong bảng Products
     DELETE FROM Products
@@ -1146,22 +1234,22 @@ DROP PROCEDURE [dbo].[sp_product_delete];
 
 
 
-CREATE TRIGGER trg_Products_Insert_VATRate
-ON Products
+CREATE TRIGGER dbo.trg_Products_Insert_VATRate
+ON dbo.Products
 AFTER INSERT
 AS
 BEGIN
     SET NOCOUNT ON;
 
-    -- Cập nhật lại VATRate cho những sản phẩm mới mà chưa có giá trị VATRate (NULL)
     UPDATE p
     SET p.VATRate = c.VATRate
-    FROM Products p
-    INNER JOIN inserted i ON p.ProductID = i.ProductID
-    INNER JOIN Categories c ON i.CategoryID = c.CategoryID
-    WHERE i.VATRate IS NULL;  -- Chỉ cập nhật nếu người dùng không nhập VATRate
+    FROM dbo.Products   AS p
+    JOIN inserted       AS i ON p.ProductID = i.ProductID
+    JOIN dbo.Categories AS c ON i.CategoryID = c.CategoryID
+    WHERE p.VATRate IS NULL; -- ✅ cập nhật khi giá trị trên bảng Products đang NULL
 END;
 GO
+
 
 
 ---------------------------------------------------------------------------------------------
@@ -1274,7 +1362,7 @@ CREATE PROCEDURE [dbo].[sp_payment_search]
 	@FromDate    DATETIME = NULL,
     @ToDate      DATETIME = NULL,
     @Method      NVARCHAR(20) = '',
-	@saleID		 INT
+	@SaleID		 INT
 )
 AS
 BEGIN
@@ -2194,44 +2282,89 @@ GO
 
 
 
-CREATE PROCEDURE [dbo].[sp_category_search]
+USE [QLBanLeKho]
+GO
+
+/****** Object:  StoredProcedure [dbo].[sp_category_search]    Script Date: 11/9/2025 9:43:05 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- CREATE OR ALTER cho tiện cập nhật nhiều lần
+CREATE   PROCEDURE [dbo].[sp_category_search]
     @page_index   INT,
     @page_size    INT,
+
+    -- Lọc theo tên/mô tả (để trống = không lọc)
     @CategoryName NVARCHAR(100) = N'',
-    @option       NVARCHAR(50)  = N'',   -- 'name_desc' hoặc rỗng/mặc định
+
+    -- Lọc theo VAT:
+    --  - nếu truyền @vat_exact thì ưu tiên lọc đúng bằng
+    --  - nếu không, có thể truyền @vat_from / @vat_to để lọc theo khoảng
+    @vat_exact    DECIMAL(5,2) = NULL,
+    @vat_from     DECIMAL(5,2) = NULL,
+    @vat_to       DECIMAL(5,2) = NULL,
+
+    -- Tuỳ chọn sắp xếp ('' | 'name_desc')
+    @option       NVARCHAR(50)  = N'',
+
+    -- Lọc chính xác theo ID (null = bỏ qua)
     @CategoryID   INT           = NULL
 AS
 BEGIN
     SET NOCOUNT ON;
 
-    IF (@option = N'name_desc')
-    BEGIN
-        SELECT CAST(COUNT(1) OVER() AS BIGINT) AS RecordCount,
-               src.CategoryID, src.CategoryName, src.[Description]
-        FROM (
-            SELECT c.CategoryID, c.CategoryName, c.[Description]
-            FROM dbo.Categories AS c
-            WHERE (@CategoryID IS NULL OR c.CategoryID = @CategoryID)
-              AND (@CategoryName = N'' OR c.CategoryName LIKE N'%' + @CategoryName + N'%')
-        ) AS src
-        ORDER BY src.CategoryName DESC
-        OFFSET (@page_index - 1) * @page_size ROWS
-        FETCH NEXT @page_size ROWS ONLY;
-    END
-    ELSE
-    BEGIN
-        SELECT CAST(COUNT(1) OVER() AS BIGINT) AS RecordCount,
-               src.CategoryID, src.CategoryName, src.[Description]
-        FROM (
-            SELECT c.CategoryID, c.CategoryName, c.[Description]
-            FROM dbo.Categories AS c
-            WHERE (@CategoryID IS NULL OR c.CategoryID = @CategoryID)
-              AND (@CategoryName = N'' OR c.CategoryName LIKE N'%' + @CategoryName + N'%')
-        ) AS src
-        ORDER BY src.CategoryName ASC
-        OFFSET (@page_index - 1) * @page_size ROWS
-        FETCH NEXT @page_size ROWS ONLY;
-    END
+    -- Chuẩn hoá tham số trang
+    IF (@page_index IS NULL OR @page_index < 1) SET @page_index = 1;
+    IF (@page_size  IS NULL OR @page_size  < 1) SET @page_size  = 10;
+
+    ;WITH src AS
+    (
+        SELECT
+            c.CategoryID,
+            c.CategoryName,
+            c.[Description],
+            c.VATRate
+        FROM dbo.Categories AS c
+        WHERE
+            -- lọc theo ID (nếu có)
+            (@CategoryID IS NULL OR c.CategoryID = @CategoryID)
+            -- lọc theo tên/mô tả (nếu có)
+            AND (
+                  @CategoryName = N''
+               OR c.CategoryName LIKE N'%'+@CategoryName+N'%'
+               OR c.[Description] LIKE N'%'+@CategoryName+N'%'
+            )
+            -- lọc theo VAT: ưu tiên @vat_exact, nếu không dùng khoảng
+            AND (
+                  @vat_exact IS NULL
+                  OR c.VATRate = @vat_exact
+                )
+            AND (
+                  @vat_exact IS NOT NULL
+                  OR @vat_from IS NULL OR c.VATRate >= @vat_from
+                )
+            AND (
+                  @vat_exact IS NOT NULL
+                  OR @vat_to   IS NULL OR c.VATRate <= @vat_to
+                )
+    )
+    SELECT
+        CAST(COUNT(1) OVER() AS BIGINT) AS RecordCount,
+        CategoryID,
+        CategoryName,
+        [Description],
+        VATRate
+    FROM src
+    ORDER BY
+        -- nếu option = 'name_desc' thì sắp xếp theo tên giảm dần
+        CASE WHEN @option = N'name_desc' THEN NULL ELSE CategoryID END ASC,
+        CASE WHEN @option = N'name_desc' THEN CategoryName END DESC,
+        CategoryID ASC
+    OFFSET (@page_index - 1) * @page_size ROWS
+    FETCH NEXT @page_size ROWS ONLY;
 END
 GO
 
