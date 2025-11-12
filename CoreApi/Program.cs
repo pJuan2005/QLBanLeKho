@@ -81,6 +81,7 @@ builder.Services.AddScoped<IPurchaseOrderRepository, PurchaseOrderRepository>();
 
 
 
+
 builder.Services.AddScoped<IDReturnBLL, ReturnBLL>();
 builder.Services.AddScoped<IDReturnDAL, ReturnDAL>();
 

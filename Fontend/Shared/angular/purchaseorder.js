@@ -51,40 +51,37 @@ app.controller(
 
     // load dữ liệu từ api search
     $scope.LoadPurchaseOrders = function () {
+      // nếu searchPurchaseOrder có giá trị → dùng làm status
+      var statusFilter = $scope.searchPurchaseOrder?.trim() || $scope.searchStatus || "";
+
       $http({
         method: "POST",
         url: current_url + "/api-core/purchaseorder/search",
         data: {
           page: $scope.pager.page,
           pageSize: $scope.pager.size,
-          // 5 trường tìm kiếm
           fromDate: $scope.searchFromDate || null,
           toDate: $scope.searchToDate || null,
           minTotalAmount: $scope.searchMinAmount || null,
           maxTotalAmount: $scope.searchMaxAmount || null,
-          status: $scope.searchStatus || ""
+          status: statusFilter
         },
         headers: { "Content-Type": "application/json" }
-      }).then(
-        function (res) {
-          var body = res.data || {};
-          $scope.purchaseOrders = body.data || [];
-          var total = body.totalItems || 0;
-          $scope.pager.total = total;
-          $scope.pager.pages = Math.max(1, Math.ceil(total / $scope.pager.size));
-
-
-          // cập nhật thống kê hiển thị ở display-container
-          $scope.CalculateStats();
-        },
-        function (err) {
-          console.error(err);
-          $scope.purchaseOrders = [];
-          $scope.pager.total = 0;
-          $scope.pager.pages = 1;
-        }
-      );
+      }).then(function (res) {
+        var body = res.data || {};
+        $scope.purchaseOrders = body.data || [];
+        var total = body.totalItems || 0;
+        $scope.pager.total = total;
+        $scope.pager.pages = Math.max(1, Math.ceil(total / $scope.pager.size));
+        $scope.CalculateStats();
+      }, function (err) {
+        console.error(err);
+        $scope.purchaseOrders = [];
+        $scope.pager.total = 0;
+        $scope.pager.pages = 1;
+      });
     };
+
 
     // tối ưu khi search
     var typingTimer;
@@ -100,6 +97,11 @@ app.controller(
     $scope.$watch("searchMinAmount", triggerSearch);
     $scope.$watch("searchMaxAmount", triggerSearch);
     $scope.$watch("searchStatus", triggerSearch);
+
+    $scope.searchPurchaseOrder = "";
+
+    $scope.$watch("searchPurchaseOrder", triggerSearch);
+
 
     // phân trang
     $scope.go = function (p) {
@@ -305,6 +307,42 @@ app.controller(
         }
       );
     };
+
+
+    //Export Excel
+    $scope.exportPO = function (po) {
+      var id = po.POID || po.poid; // lấy giá trị dù là hoa hay thường
+
+      if (!id) {
+        alert("Không xác định được POID.");
+        console.log("Export PO object:", po);
+        return;
+      }
+
+      $http({
+        method: "GET",
+        url: current_url + "/api-core/purchaseorder/export-excel/" + id,
+        responseType: "arraybuffer"
+      }).then(function (res) {
+        var blob = new Blob([res.data], {
+          type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        });
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement("a");
+        a.href = url;
+        a.download = "purchaseorder_" + id + ".xlsx";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      }).catch(function (err) {
+        console.error(err);
+        alert("Export thất bại");
+      });
+    };
+
+
+
     // ================== PURCHASE ORDER DETAIL ==================
     $scope.showDetail = false;
     $scope.detailPO = {};
@@ -319,7 +357,7 @@ app.controller(
       // gọi API GET để lấy danh sách chi tiết theo POID
       $http({
         method: "GET",
-        url: current_url + "/api-core/purchaseorderdetail/get-by-poid/" + $scope.detailPO.POID
+        url: current_url + "/api-core/purchaseorderdetails/get-by-poid/" + $scope.detailPO.POID
       }).then(function (res) {
         var body = res.data || [];
         $scope.purchaseOrderDetails = body; // API trả List<PurchaseOrderDetailsModel>
@@ -337,6 +375,116 @@ app.controller(
       document.body.classList.remove("modal-open");
     };
 
+
+    // Thêm mới chi tiết đơn hàng
+    $scope.newDetail = {
+      ProductID: "",
+      Quantity: "",
+      UnitPrice: ""
+    };
+    $scope.savingDetail = false;
+
+    // Thêm mới chi tiết đơn hàng
+    $scope.addDetail = function () {
+      var poid = $scope.detailPO.POID;
+      if (!poid) {
+        alert("Không xác định được POID.");
+        return;
+      }
+
+      var model = {
+        POID: poid,
+        ProductID: parseInt($scope.newDetail.ProductID),
+        Quantity: parseInt($scope.newDetail.Quantity),
+        UnitPrice: parseFloat($scope.newDetail.UnitPrice)
+      };
+
+      if (!model.ProductID || !model.Quantity || isNaN(model.UnitPrice)) {
+        alert("Vui lòng nhập đầy đủ thông tin.");
+        return;
+      }
+
+      $scope.savingDetail = true;
+
+      $http({
+        method: "POST",
+        url: current_url + "/api-core/purchaseorderdetails/create",
+        data: [model],
+        headers: { "Content-Type": "application/json" }
+      }).then(function (res) {
+        $scope.savingDetail = false;
+        alert("Thêm chi tiết đơn hàng thành công!");
+
+        // reset form
+        $scope.resetAddDetail();
+
+        // ✅ tự động reload lại toàn bộ trang
+        $window.location.reload();
+
+      }).catch(function (err) {
+        $scope.savingDetail = false;
+        console.error("❌ Add detail error:", err);
+        alert("Thêm không thành công!");
+      });
+    };
+
+    //chọn dữ liệu hiển thị ra các trường nhạp
+    $scope.selectDetail = function (detail) {
+      $scope.newDetail = {
+        ProductID: detail.productID,
+        Quantity: detail.quantity,
+        UnitPrice: detail.unitPrice
+      };
+    };
+
+    //delete
+    $scope.deleteDetail = function () {
+      var poid = $scope.detailPO.POID;
+      var productID = $scope.newDetail.ProductID;
+
+      if (!poid || !productID) {
+        alert("Vui lòng chọn bản ghi cần xoá.");
+        return;
+      }
+
+      if (!confirm("Bạn có chắc muốn xoá chi tiết này?")) return;
+
+      var model = {
+        POID: poid,
+        ProductID: parseInt(productID)
+      };
+
+      $http({
+        method: "POST",
+        url: current_url + "/api-core/purchaseorderdetails/delete",
+        data: model,
+        headers: { "Content-Type": "application/json" }
+      }).then(function (res) {
+        alert("Xoá chi tiết thành công!");
+        $scope.resetAddDetail();
+        $scope.viewDetail({ POID: poid }); // reload lại bảng chi tiết
+        // ✅ tự động reload lại toàn bộ trang
+        $window.location.reload();
+      }).catch(function (err) {
+        console.error("❌ Delete detail error:", err);
+        alert("Xoá không thành công!");
+      });
+    };
+
+
+
+    // Reset form thêm chi tiết
+    $scope.resetAddDetail = function () {
+      $scope.newDetail = {
+        ProductID: "",
+        Quantity: "",
+        UnitPrice: ""
+      };
+      if ($scope.frmAddDetail) {
+        $scope.frmAddDetail.$setPristine();
+        $scope.frmAddDetail.$setUntouched();
+      }
+    };
 
 
     // khởi tạo

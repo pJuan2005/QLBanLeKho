@@ -5,6 +5,7 @@ using Model;
 using System.Reflection;
 using BLL.Interfaces;
 using System.Globalization;
+using ClosedXML.Excel;
 
 namespace CoreApi.Controllers
 {
@@ -13,10 +14,13 @@ namespace CoreApi.Controllers
     public class PurchaseOrderController : ControllerBase
     {
         private IPurchaseOrderBusiness _purchaseOrderBusiness;
+        private IPurchaseOrderDetailsBusiness _purchaseOrderDetailsBusiness;
 
-        public PurchaseOrderController(IPurchaseOrderBusiness donMuaHangBusiness)
+
+        public PurchaseOrderController(IPurchaseOrderBusiness donMuaHangBusiness , IPurchaseOrderDetailsBusiness chiTietDonMuaHangBusiness)
         {
             _purchaseOrderBusiness = donMuaHangBusiness;
+            _purchaseOrderDetailsBusiness = chiTietDonMuaHangBusiness;
         }
 
         [Route("create")]
@@ -120,5 +124,75 @@ namespace CoreApi.Controllers
                 throw new Exception(ex.Message);
             }
         }
+
+        [Route("export-excel/{poid}")]
+        [HttpGet]
+        public IActionResult ExportExcel(int poid)
+        {
+            try
+            {
+                // Lấy dữ liệu đơn hàng
+                var po = _purchaseOrderBusiness.GetDatabyID(poid);
+
+                if (po == null) return NotFound("Không tìm thấy đơn hàng");
+
+                // Lấy dữ liệu chi tiết đơn hàng
+                var details = _purchaseOrderDetailsBusiness.GetByPOID(poid);
+
+                using var workbook = new XLWorkbook();
+
+                // Sheet 1: Thông tin đơn hàng
+                var wsPO = workbook.Worksheets.Add("PurchaseOrder");
+                wsPO.Cell(1, 1).Value = "POID";
+                wsPO.Cell(1, 2).Value = "SupplierID";
+                wsPO.Cell(1, 3).Value = "OrderDate";
+                wsPO.Cell(1, 4).Value = "TotalAmount";
+                wsPO.Cell(1, 5).Value = "Status";
+
+                wsPO.Cell(2, 1).Value = po.POID;
+                wsPO.Cell(2, 2).Value = po.SupplierID;
+                wsPO.Cell(2, 3).Value = po.OrderDate;
+                wsPO.Cell(2, 4).Value = po.TotalAmount;
+                wsPO.Cell(2, 5).Value = po.Status;
+
+                wsPO.Columns().AdjustToContents();
+
+                // Sheet 2: Chi tiết đơn hàng
+                var wsDetail = workbook.Worksheets.Add("Details");
+                wsDetail.Cell(1, 1).Value = "POID";
+                wsDetail.Cell(1, 2).Value = "ProductID";
+                wsDetail.Cell(1, 3).Value = "NameProduct";
+                wsDetail.Cell(1, 4).Value = "Quantity";
+                wsDetail.Cell(1, 5).Value = "UnitPrice";
+
+                int row = 2;
+                foreach (var d in details)
+                {
+                    wsDetail.Cell(row, 1).Value = d.POID;
+                    wsDetail.Cell(row, 2).Value = d.ProductID;
+                    wsDetail.Cell(row, 3).Value = d.NameProduct ?? "";
+                    wsDetail.Cell(row, 4).Value = d.Quantity;
+                    wsDetail.Cell(row, 5).Value = d.UnitPrice;
+                    row++;
+                }
+
+                wsDetail.Columns().AdjustToContents();
+
+                // Xuất file
+                using var stream = new MemoryStream();
+                workbook.SaveAs(stream);
+                stream.Position = 0;
+
+                var fileName = $"purchaseorder_{poid}_{DateTime.UtcNow:yyyyMMdd_HHmmss}.xlsx";
+                const string contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+
+                return File(stream.ToArray(), contentType, fileName);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
     }
 }
