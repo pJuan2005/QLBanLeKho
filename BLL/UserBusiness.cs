@@ -42,6 +42,9 @@ namespace BLL
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
+                    new Claim("UserId",user.UserID.ToString()),
+                    new Claim("Username",user.Username),
+                    new Claim("FullName",user.FullName??""),
                     new Claim(ClaimTypes.Name, user.FullName.ToString()),
                     new Claim(ClaimTypes.Email,user.Email),
                     new Claim(ClaimTypes.Role,user.Role)

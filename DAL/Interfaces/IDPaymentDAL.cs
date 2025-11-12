@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace DAL.Interfaces
 {
+    // DAL.Interfaces
     public partial interface IDPaymentDAL
     {
         PaymentModel GetByID(int paymentId);
@@ -11,7 +12,7 @@ namespace DAL.Interfaces
         bool Update(PaymentModel model);
         bool Delete(int paymentId);
         List<PaymentModel> Search(int pageIndex, int pageSize, out long total,
-                                  int? CustomerID,int? SupplierID,int? ReceiptID, int? SaleID, string Method,
+                                  int? CustomerID, int? SupplierID, int? SaleID, int? ReceiptID, string Method,
                                   DateTime? FromDate, DateTime? ToDate);
     }
 }

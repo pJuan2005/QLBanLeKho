@@ -16,6 +16,18 @@
       ]
     },
     {
+      "UpstreamPathTemplate": "/api-admin/auditlogs/{everything}",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+      "DownstreamPathTemplate": "/api/auditlogs/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5093
+        }
+      ]
+    },
+    {
       "UpstreamPathTemplate": "/api-admin/user/{everything}",
       "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
       "DownstreamPathTemplate": "/api/user/{everything}",

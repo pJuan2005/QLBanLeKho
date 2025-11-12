@@ -14,12 +14,15 @@ namespace Model
         public string Barcode { get; set; }          // Mã barcode (unique, có thể null)
         public string ProductName { get; set; }      // Tên sản phẩm
         public int? CategoryID { get; set; }         // Mã loại hàng (nullable vì có thể chưa gán)
+        public decimal UnitPrice { get; set; }
         public string Unit { get; set; }             // Đơn vị tính
         public int MinStock { get; set; }            // Tồn kho tối thiểu (default 0)
         public string Status { get; set; }
         public decimal? VATRate { get; set; }
-        public string? Image { get; set; } // Thuộc tính mới để chứa URL đầy đủ
-        public int Quantity { get; set; }  
+        public byte[]? ImageData { get; set; } // ảnh lưu dạng nhị phân
+        public int Quantity { get; set; }
+        [NotMapped]
+        public string? ImageBase64 { get; set; }
 
     }
 

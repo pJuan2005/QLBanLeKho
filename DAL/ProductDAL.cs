@@ -29,7 +29,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw;
             }
         }
 
@@ -43,13 +43,13 @@ namespace DAL
                     "@Barcode", model.Barcode,
                     "@ProductName", model.ProductName,
                     "@CategoryID", model.CategoryID,
+                    "@UnitPrice", model.UnitPrice,
                     "@Unit", model.Unit,
                     "@MinStock", model.MinStock,
                     "@Status", model.Status,
-                    "@Image", model.Image,
+                    "@ImageData", model.ImageData,
                     "@VATRate", model.VATRate,
-                    "@Quantity ", model.Quantity
-
+                    "@Quantity", model.Quantity
                 );
 
                 if (!string.IsNullOrEmpty(msgError))
@@ -62,11 +62,11 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw;
             }
         }
 
-        
+
 
         public bool Update(ProductModel model)
         {
@@ -75,53 +75,51 @@ namespace DAL
             {
                 var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_product_update",
                     "@ProductID", model.ProductID,
-                    "@SKU", model.SKU,
-                    "@Barcode", model.Barcode,
-                    "@ProductName", model.ProductName,
-                    "@CategoryID", model.CategoryID,
-                    "@Unit", model.Unit,
-                    "@MinStock", model.MinStock,
-                    "@Status", model.Status,
-                    "@Image", model.Image,
-                    "@VATRate", model.VATRate,
-                    "@Quantity ", model.Quantity
+                    "@SKU", (object?)model.SKU ?? DBNull.Value,
+                    "@Barcode", (object?)model.Barcode ?? DBNull.Value,
+                    "@ProductName", (object?)model.ProductName ?? DBNull.Value,
+                    "@CategoryID", (object?)model.CategoryID ?? DBNull.Value,
+                    "@UnitPrice", model.UnitPrice,
+                    "@Unit", (object?)model.Unit ?? DBNull.Value,
+                    "@MinStock", (object?)model.MinStock ?? DBNull.Value,
+                    "@Status", (object?)model.Status ?? DBNull.Value,
+                    "@ImageData", (object?)model.ImageData ?? DBNull.Value,
+                    "@VATRate", (object?)model.VATRate ?? DBNull.Value,
+                    "@Quantity", (object?)model.Quantity ?? DBNull.Value
                 );
-                if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
-                {
-                    throw new Exception(Convert.ToString(result) + msgError);
-                }
+
+                // ✅ Chỉ bắn lỗi khi msgError có nội dung
+                if (!string.IsNullOrEmpty(msgError))
+                    throw new Exception(msgError);
+
+                // (tuỳ chọn) bạn có thể log result nếu muốn
                 return true;
             }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            catch { throw; }
         }
+
 
         public bool Delete(int productId)
         {
             string msgError = "";
             try
             {
-                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_product_delete",
-                    "@ProductID", productId
-                );
+                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(
+                    out msgError, "sp_product_delete",
+                    "@ProductID", productId);
 
                 if (!string.IsNullOrEmpty(msgError))
-                {
-                    Console.WriteLine("Lỗi: " + msgError);
-                    return false;
-                }
+                    throw new Exception(msgError); // <-- bắn lỗi thay vì return false
 
-                Console.WriteLine("Thành công: " + Convert.ToString(result));
                 return true;
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Exception: " + ex.Message);
-                return false;
+                // log nếu muốn, nhưng nên bắn tiếp
+                throw; // <-- đừng return false
             }
         }
+
 
 
 
@@ -149,7 +147,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw ;
             }
         }
     }

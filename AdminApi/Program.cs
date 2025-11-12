@@ -7,6 +7,9 @@ using Helper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using AdminApi.Services;
+using AdminApi.Services.Interface;
+using CoreApi.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddMemoryCache();
@@ -21,7 +24,10 @@ builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddTransient<IUserBusiness, UserBusiness>();
 builder.Services.AddTransient<ISupplierRepository, SupplierRepository>();
 builder.Services.AddTransient<ISupplierBusiness,SupplierBusiness>();
-
+builder.Services.AddTransient<IAuditLogBusiness, AuditLogBusiness>();
+builder.Services.AddTransient<IAuditLogRepository, AuditLogRepository>();
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddTransient<IAuditLogger, AuditLogger>();
 builder.Services.AddTransient<ISystemDAL, SystemDAL>();
 builder.Services.AddTransient<ISystemBLL, SystemBLL>();
 // Đăng ký cho System

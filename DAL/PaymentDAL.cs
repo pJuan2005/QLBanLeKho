@@ -149,7 +149,7 @@ namespace DAL
                     "@CustomerID", CustomerID,
                     "@SaleID", SaleID,
                     "@ReceiptID", ReceiptID,
-                    "SupplierID", SupplierID,
+                    "@SupplierID", SupplierID,
                     "@Method", Method,
                     "@FromDate", FromDate,
                     "@ToDate", ToDate
