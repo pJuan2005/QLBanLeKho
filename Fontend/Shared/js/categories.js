@@ -50,4 +50,3 @@ btnCancelEdit.addEventListener("click", (e) => {
   formEdit.classList.remove("open");
   document.body.classList.remove("modal-open");
 });
-
