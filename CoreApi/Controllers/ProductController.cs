@@ -2,7 +2,9 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Model;
-using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json;
+using CoreApi.Services;
+using AdminApi.Services.Interface;
 
 namespace CoreApi.Controllers
 {
@@ -11,6 +13,7 @@ namespace CoreApi.Controllers
     public class ProductController : ControllerBase
     {
         private readonly IDProductBLL _ProductBusiness;
+        private readonly IAuditLogger _auditLogger;
 
 
         private string GetImageUrl(string imagePath)
@@ -19,10 +22,6 @@ namespace CoreApi.Controllers
             var gatewayUrl = "http://localhost:5000"; // 👈 đường dẫn Gateway
             return $"{gatewayUrl}/{imagePath.Replace("\\", "/")}";
         }
-
-
-
-
 
         [HttpPut("update-product/{id}")]
         public async Task<IActionResult> UpdateProduct(int id, [FromForm] ProductModel model, IFormFile? imageFile)
@@ -68,6 +67,13 @@ namespace CoreApi.Controllers
                 // ✅ Cập nhật thông tin còn lại
                 model.ProductID = id;
                 _ProductBusiness.Update(model);
+                _auditLogger.Log(
+                    action: $"Update product {model.ProductName}",
+                    entityName: "Products",
+                    entityId: model.ProductID,
+                    operation: "UPDATE",
+                    details: JsonSerializer.Serialize(model)
+                    );
 
                 return Ok(new { message = "Cập nhật sản phẩm thành công!", image = model.Image });
             }
@@ -78,11 +84,10 @@ namespace CoreApi.Controllers
         }
 
 
-
-
-        public ProductController(IDProductBLL productBLL)
+        public ProductController(IDProductBLL productBLL, IAuditLogger auditLogger)
         {
             _ProductBusiness = productBLL;
+            _auditLogger = auditLogger;
         }
 
 
@@ -140,6 +145,13 @@ namespace CoreApi.Controllers
                 }
 
                 var result = _ProductBusiness.Create(product);
+                _auditLogger.Log(
+                    action: $"Create product {product.ProductName}",
+                    entityName: "Products",
+                    entityId: product.ProductID,
+                    operation: "CREATE",
+                    details: JsonSerializer.Serialize(product)
+                    );
 
                 return Ok(new
                 {
@@ -166,6 +178,13 @@ namespace CoreApi.Controllers
         public IActionResult Delete(int id)
         {
             _ProductBusiness.Delete(id);
+            _auditLogger.Log(
+                action: $"Delete product Id: {id}",
+                entityName: "Products",
+                entityId: id,
+                operation: "DELETE",
+                details: null
+                );
             return Ok(new { data = "OK" });
         }
 
@@ -209,9 +228,6 @@ namespace CoreApi.Controllers
             }
             return response;
         }
-
-
-
 
     }
 }

@@ -4,6 +4,8 @@ using BLL;
 using System.Reflection;
 using BLL.Interfaces;
 using Model;
+using AdminApi.Services.Interface;
+using System.Text.Json;
 
 namespace CoreApi.Controllers
 {
@@ -11,10 +13,12 @@ namespace CoreApi.Controllers
     public class PromotionsController : ControllerBase
     {
         private IPromotionsBusiness _promotionsBusiness;
+        private IAuditLogger _auditLogger;
 
-        public PromotionsController(IPromotionsBusiness promotionsBusiness)
+        public PromotionsController(IPromotionsBusiness promotionsBusiness, IAuditLogger auditLogger)
         {
             _promotionsBusiness = promotionsBusiness;
+            _auditLogger = auditLogger;
         }
 
         [Route("create")]
@@ -22,6 +26,13 @@ namespace CoreApi.Controllers
         public PromotionsModel Create([FromBody] PromotionsModel model)
         {
             _promotionsBusiness.Create(model);
+            _auditLogger.Log(
+                action:$"Create promotion: {model.PromotionName}",
+                entityName: "Promotions",
+                entityId: model.PromotionID,
+                operation: "CREATE",
+                details: JsonSerializer.Serialize(model)
+                );
             return (model);
         }
 
@@ -30,6 +41,13 @@ namespace CoreApi.Controllers
         public PromotionsModel Update([FromBody] PromotionsModel model)
         {
             _promotionsBusiness.Update(model);
+            _auditLogger.Log(
+                action:$"Update promotion {model.PromotionName}",
+                entityName: "Promotions",
+                entityId: model.PromotionID,
+                operation:"UPDATE",
+                details: JsonSerializer.Serialize(model)
+                );
             return model;
         }
 
@@ -38,6 +56,13 @@ namespace CoreApi.Controllers
         public IActionResult Delete([FromBody] PromotionsModel model)
         {
             _promotionsBusiness.Delete(model);
+            _auditLogger.Log(
+                action: $"Delete promotion {model.PromotionName}",
+                entityName:"Promotions",
+                entityId: model.PromotionID,
+                operation:"DELETE",
+                details: null
+                );
             return Ok(new { data = "ok" });
         }
 

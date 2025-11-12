@@ -4,6 +4,8 @@ using BLL;
 using System.Reflection;
 using BLL.Interfaces;
 using Model;
+using AdminApi.Services.Interface;
+using System.Text.Json;
 
 namespace CoreApi.Controllers
 {
@@ -12,10 +14,12 @@ namespace CoreApi.Controllers
     public class SalesController : ControllerBase
     {
         private ISalesBusiness _salesBusiness;
+        private IAuditLogger _auditLogger;
 
-        public SalesController(ISalesBusiness salesBusiness)
+        public SalesController(ISalesBusiness salesBusiness, IAuditLogger auditLogger)
         {
             _salesBusiness = salesBusiness;
+            _auditLogger = auditLogger;
         }
 
         [Route("create")]
@@ -23,6 +27,13 @@ namespace CoreApi.Controllers
         public SalesModel Create([FromBody] SalesModel model)
         {
             _salesBusiness.Create(model);
+            _auditLogger.Log(
+                action: $"Create sales Id: {model.SaleID}",
+                entityName: "Sales",
+                entityId: model.SaleID,
+                operation: "CREATE",
+                details: JsonSerializer.Serialize(model)
+                );
             return model;
         }
 
@@ -31,6 +42,13 @@ namespace CoreApi.Controllers
         public SalesModel Update([FromBody] SalesModel model)
         {
             _salesBusiness.Update(model);
+            _auditLogger.Log(
+                action: $"Update sales Id: {model.SaleID}",
+                entityName:"Sales",
+                entityId: model.SaleID,
+                operation: "UPDATE",
+                details: JsonSerializer.Serialize(model)
+                );
             return model;
         }
 
@@ -39,6 +57,13 @@ namespace CoreApi.Controllers
         public IActionResult Delete([FromBody] SalesModel model)
         {
             _salesBusiness.Delete(model);
+            _auditLogger.Log(
+                action: $"Delete sales Id: {model.SaleID}",
+                entityName:"Sales",
+                entityId: model.SaleID,
+                operation: "DELETE",
+                details: null
+                );
             return Ok(new { data = "ok" });
         }
 

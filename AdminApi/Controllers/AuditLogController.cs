@@ -49,7 +49,7 @@ namespace AdminApi.Controllers
         {
             var log = _bus.GetDataByID(id);
             if (log == null)
-                return NotFound(new { message = $"Không tìm thấy àudit log với ID  ={id}" });
+                return NotFound(new { message = $"Không tìm thấy audit log với ID  ={id}" });
             return Ok(log);
         }
     }
