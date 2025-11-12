@@ -1091,3 +1091,126 @@ body.modal-open {
 .dialog-footer .cancel:hover {
   background: #e2e8f0;
 }
+
+/* Khung form thêm chi tiết */
+.form-add-detail {
+  margin-top: 20px;
+  padding: 16px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  background: #f9fafb;
+}
+
+.form-add-detail .sub-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: #0f172a;
+}
+
+/* Các dòng nhập liệu */
+.form-add-detail .form-row {
+  margin-bottom: 12px;
+}
+
+.form-add-detail label {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 6px;
+  color: #334155;
+}
+
+.form-add-detail input[type="number"] {
+  width: 100%;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  padding: 8px 10px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-add-detail input[type="number"]:focus {
+  border-color: #0ea5e9;
+  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.18);
+}
+
+/* Footer nút bấm */
+.form-add-detail .dialog-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.form-add-detail .cancel {
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  padding: 8px 14px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #475569;
+  transition: background 0.2s;
+}
+
+.form-add-detail .cancel:hover {
+  background: #e2e8f0;
+}
+
+.form-add-detail .submit {
+  background: #0ea5e9;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 14px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #fff;
+  font-weight: 500;
+  transition: background 0.2s;
+}
+
+.form-add-detail .submit:hover {
+  background: #0284c7;
+}
+
+/* Nút Delete trong form hoặc bảng */
+button.danger {
+  background: #ef4444;       /* đỏ nổi bật */
+  border: none;
+  border-radius: 6px;
+  padding: 8px 14px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #fff;
+  font-weight: 500;
+  transition: background 0.2s, transform 0.1s;
+}
+
+button.danger:hover {
+  background: #dc2626;       /* đỏ đậm hơn khi hover */
+  transform: scale(1.05);    /* hơi phóng to nhẹ */
+}
+
+button.danger:disabled {
+  background: #fca5a5;       /* đỏ nhạt khi disabled */
+  cursor: not-allowed;
+}
+
+/* Nếu Delete nằm trong bảng dưới dạng link */
+button.link.danger {
+  background: transparent;
+  border: none;
+  color: #ef4444;
+  font-size: 14px;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0;
+}
+
+button.link.danger:hover {
+  color: #dc2626;
+}
+
+

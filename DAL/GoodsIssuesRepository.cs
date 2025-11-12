@@ -41,11 +41,11 @@ namespace DAL
             try
             {
                 var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_GoodsIssues_create",
-                    "SaleID", model.SaleID,
-                    "@IssueDate", model.IssueDate,
-                    "@UserID", model.UserID,
-                    "@CustomerID", model.CustomerID,
-                    "@Reason", model.Reason);
+                    
+                    
+                    "@UserID", model.UserID
+                    
+                    );
 
                 if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
                 {
@@ -66,10 +66,10 @@ namespace DAL
             {
                 var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_GoodsIssues_update",
                     "@IssueID", model.IssueID,
-                    "@IssueDate", model.IssueDate,
-                    "@UserID", model.UserID,
-                    "@CustomerID", model.CustomerID,
-                    "@Reason", model.Reason);
+                    "@IssueDate", model.IssueDate
+                   
+                    
+                    );
 
                 if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
                 {

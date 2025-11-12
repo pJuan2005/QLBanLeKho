@@ -81,6 +81,7 @@ builder.Services.AddScoped<IPurchaseOrderRepository, PurchaseOrderRepository>();
 
 
 
+
 builder.Services.AddScoped<IDReturnBLL, ReturnBLL>();
 builder.Services.AddScoped<IDReturnDAL, ReturnDAL>();
 
@@ -148,7 +149,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 app.UseStaticFiles();
 

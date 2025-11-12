@@ -262,15 +262,15 @@
       <div class="app-layout">
         <div class="top-bar">
           <div class="top-bar__content">
-            <div class="top-bar__left">
-              <img src="../Shared/img/common/search.svg" alt="" class="icon" />
-              <input
-                class="search"
-                type="text"
-                placeholder="Search by categories name"
-                ng-model="searchCategories"
-              />
-            </div>
+              <div class="top-bar__left">
+                <img src="../Shared/img/common/search.svg" alt="" class="icon" />
+                <input
+                  class="search"
+                  type="text"
+                  placeholder="Search by categories name"
+                  ng-model="searchCategories"
+                />
+              </div>
             <div class="top-bar__right">
               <p class="role">admin</p>
               <img
@@ -493,7 +493,7 @@
                       class="submit"
                       type="submit"
                       value="Add Category"
-                      ng-disable="frmAdd.$invalid||savingAdd"
+                      ng-disabled="frmAdd.$invalid||savingAdd"
                     />
                   </div>
                 </form>

@@ -1,7 +1,9 @@
-﻿using BLL.Interfaces;
+﻿using AdminApi.Services.Interface;
+using BLL.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Model;
 using System;
+using System.Text.Json;
 
 namespace CoreApi.Controllers
 {
@@ -10,10 +12,12 @@ namespace CoreApi.Controllers
     public class PaymentController : ControllerBase
     {
         private readonly IDPaymentBLL _paymentBLL;
+        private readonly IAuditLogger _auditLogger;
 
-        public PaymentController(IDPaymentBLL paymentBLL)
+        public PaymentController(IDPaymentBLL paymentBLL, IAuditLogger auditLogger)
         {
             _paymentBLL = paymentBLL;
+            _auditLogger = auditLogger;
         }
 
         [Route("create-payment-customer")]
@@ -21,6 +25,13 @@ namespace CoreApi.Controllers
         public PaymentCustomerModel CreateCustomer([FromBody] PaymentCustomerModel model)
         {
             _paymentBLL.CreateCustomer(model);
+            _auditLogger.Log(
+                action:$"Create payment for customer by Id: {model.PaymentID}",
+                entityName:"Payments",
+                entityId: model.PaymentID,
+                operation:"CREATE",
+                details: JsonSerializer.Serialize(model)
+                );
             return model;
         }
         [Route("create-payment-supplier")]
@@ -28,6 +39,13 @@ namespace CoreApi.Controllers
         public PaymentSupplierModel CreateSupplier([FromBody] PaymentSupplierModel model)
         {
             _paymentBLL.CreateSupplier(model);
+            _auditLogger.Log(
+                action: $"Create payment for supplier by Id: {model.PaymentID}",
+                entityName: "Payments",
+                entityId: model.PaymentID,
+                operation: "CREATE",
+                details: JsonSerializer.Serialize(model)
+                );
             return model;
         }
 
@@ -36,6 +54,13 @@ namespace CoreApi.Controllers
         public PaymentModel Update([FromBody] PaymentModel model)
         {
             _paymentBLL.Update(model);
+            _auditLogger.Log(
+                action:$"Update payment Id: {model.PaymentID}",
+                entityName:"Payments",
+                entityId: model.PaymentID,
+                operation: "UPDATE",
+                details: JsonSerializer.Serialize(model)
+                );
             return model;
         }
 
@@ -44,6 +69,13 @@ namespace CoreApi.Controllers
         public IActionResult Delete(int id)
         {
             _paymentBLL.Delete(id);
+            _auditLogger.Log(
+                action:$"Delete payment Id: {id}",
+                entityName: "Payments",
+                entityId: id,
+                operation:"DELETE",
+                details: null
+                );
             return Ok(new { data = "OK" });
         }
 
