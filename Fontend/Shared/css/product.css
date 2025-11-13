@@ -496,9 +496,9 @@ input:focus {
 
 /* ----- Đặt độ rộng từng cột (theo thứ tự thực tế trong <thead>) ----- */
 .table th:nth-child(1),
-.table td:nth-child(1) { width: 40px; text-align: center; }   /* Product ID */
+.table td:nth-child(1) { width: 50px; text-align: center; }   /* Product ID */
 .table th:nth-child(2),
-.table td:nth-child(2) { width: 180px; }                      /* Product Name */
+.table td:nth-child(2) { width: 170px; }                      /* Product Name */
 .table th:nth-child(3),
 .table td:nth-child(3) { width: 82px; }                      /* SKU */
 .table th:nth-child(4),
