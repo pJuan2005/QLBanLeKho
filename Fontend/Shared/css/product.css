@@ -476,76 +476,82 @@ input:focus {
 
 /* ==============table============= */
 .table {
-  border: 1px solid #e2e8f0;
   width: 100%;
-  table-layout: fixed; /* giữ độ rộng cột ổn định */
   border-collapse: collapse;
-  color: #0f172a;
+  border: 1px solid #e2e8f0;
   font-size: 1.4rem;
-  line-height: 1.4;
+  color: #0f172a;
+  table-layout: fixed; /* Giữ tỷ lệ cột ổn định */
 }
 
-/* cell chung */
 .table th,
 .table td {
-  padding: 12px 14px;
-  vertical-align: middle;
+  padding: 10px 12px;
+  text-align: left;
   overflow: hidden;
   text-overflow: ellipsis;
-}
-
-/* --- CHIA CỘT: khớp class hiện có --- */
-
-/* ID nhỏ gọn */
-.table thead th.id,
-.table tbody td:nth-child(1) {
-  width: 120px; /* tăng nhẹ cho đẹp */
-  text-align: center;
   white-space: nowrap;
-}
-
-/* Name ~22% */
-.table thead th.name,
-.table tbody td:nth-child(2) {
-  width: 22%;
-  white-space: nowrap;
-}
-
-/* VAT: cho đủ chữ tiêu đề, căn phải số */
-.table thead th.vat,
-.table tbody td:nth-child(4) {
-  width: 136px; /* tăng để không bị 'VAT Rat...' */
-  text-align: center;
-  white-space: nowrap;
-}
-
-/* Actions: đủ cho 2 nút */
-.table thead th.action,
-.table tbody td:nth-child(5) {
-  width: 180px; /* nới rộng để nút không dồn */
-  text-align: right;
-  white-space: nowrap;
-}
-
-/* viền nhẹ */
-.table thead th {
-  border: 1px solid #e2e8f0;
-  font-weight: 600;
-  color: #0f172a;
-}
-.table tbody tr + tr td {
   border-top: 1px solid #f1f5f9;
 }
 
+/* ----- Đặt độ rộng từng cột (theo thứ tự thực tế trong <thead>) ----- */
+.table th:nth-child(1),
+.table td:nth-child(1) { width: 50px; text-align: center; }   /* Product ID */
+.table th:nth-child(2),
+.table td:nth-child(2) { width: 170px; }                      /* Product Name */
+.table th:nth-child(3),
+.table td:nth-child(3) { width: 82px; }                      /* SKU */
+.table th:nth-child(4),
+.table td:nth-child(4) { width: 82px; }                      /* Barcode */
+.table th:nth-child(5),
+.table td:nth-child(5) { width: 70px; text-align: center; }  /* CategoryID */
+.table th:nth-child(6),
+.table td:nth-child(6) { width: 90px; text-align: right; }   /* Price */
+.table th:nth-child(7),
+.table td:nth-child(7) { width: 70px; text-align: center; }   /* Unit */
+.table th:nth-child(8),
+.table td:nth-child(8) { width: 85px; text-align: center; }   /* MinStock */
+.table th:nth-child(9),
+.table td:nth-child(9) { width: 85px; text-align: center; }   /* Quantity */
+.table th:nth-child(10),
+.table td:nth-child(10) { width: 85px; text-align: center; } /* VAT Rate (%) */
+.table th:nth-child(11),
+.table td:nth-child(11) { width: 100px; text-align: center; } /* Status */
+.table th:nth-child(12),
+.table td:nth-child(12) { width: 90px; text-align: center; } /* Image */
+.table th:nth-child(13),
+.table td:nth-child(13) { width: 85px; text-align: right; }  /* Actions */
+
+/* Cho phép cột Product Name tự xuống dòng khi quá dài */
+.table td:nth-child(2),
+.table th:nth-child(2) {
+  white-space: normal !important;  /* Cho phép xuống dòng */
+  word-break: break-word;          /* Tự ngắt khi gặp chữ dài */
+
+}
+
+
+/* ----- Style header ----- */
+.table thead th {
+  background-color: #f8fafc;
+  border-bottom: 2px solid #e2e8f0;
+  font-weight: 600;
+}
+
+
+/* ----- Nút hành động ----- */
 .txt-right button {
   cursor: pointer;
   border: none;
   background: none;
+  font-weight: 500;
+  margin-left: 6px;
 }
 
 .txt-right button:hover {
   color: #0ea5e9;
 }
+
 
 /* =========================add category================== */
 
@@ -1008,18 +1014,8 @@ body.modal-open {
   box-shadow: 0 2px 4px rgba(0,0,0,0.08);
 }
 
-/* Select2: danh sách có thanh cuộn */
-.select2-container--default .select2-results > .select2-results__options {
-  max-height: 240px;
-  overflow-y: auto;
-}
 
-/* Đảm bảo dropdown nằm trên lớp mờ của modal */
-.select2-container .select2-dropdown {
-  z-index: 1001; /* modal form đang ~1000 */
-}
 
-/* Cho đẹp: chiều rộng ô đã chọn khớp input */
-.select2-container {
-  width: 100% !important;
-}
+
+
+
