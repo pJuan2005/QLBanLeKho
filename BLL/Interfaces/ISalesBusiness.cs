@@ -13,5 +13,6 @@ namespace BLL.Interfaces
         bool Create(SalesModel model);
         bool Update(SalesModel model);
         bool Delete(SalesModel model);
+        List<SalesModel> Search(int pageIndex, int pageSize, out long total, decimal? minTotalAmount, decimal? maxTotalAmount, string status, DateTime? fromDate, DateTime? toDate);
     }
 }

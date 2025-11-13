@@ -106,5 +106,37 @@ namespace DAL
                 throw ex;
             }
         }
+
+        public List<SalesModel> Search(int pageIndex, int pageSize, out long total, decimal? minTotalAmount, decimal? maxTotalAmount, string status, DateTime? fromDate, DateTime? toDate)
+        {
+            string msgError = "";
+            total = 0;
+            try
+            {
+                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "sp_Sales_search",
+                    "@page_index", pageIndex,
+                    "@page_size", pageSize,
+                    "@MinTotalAmount", minTotalAmount,
+                    "@MaxTotalAmount", maxTotalAmount,
+                    "@Status", status,
+                    "@FromDate", fromDate,
+                    "@ToDate", toDate);
+
+                if (!string.IsNullOrEmpty(msgError))
+                    throw new Exception(msgError);
+
+                if (dt.Rows.Count > 0)
+                {
+                    total = Convert.ToInt64(dt.Rows[0]["RecordCount"]);
+                }
+
+                return dt.ConvertTo<SalesModel>().ToList();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
     }
 }

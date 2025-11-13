@@ -102,5 +102,37 @@ namespace DAL
                 throw ex;
             }
         }
+
+        public List<GoodsReceiptsModel> Search(int pageIndex, int pageSize, out long total, decimal? minTotalAmount, decimal? maxTotalAmount, int? poid, DateTime? fromDate, DateTime? toDate)
+        {
+            string msgError = "";
+            total = 0;
+            try
+            {
+                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "sp_GoodsReceipts_search",
+                    "@page_index", pageIndex,
+                    "@page_size", pageSize,
+                    "@MinTotalAmount", minTotalAmount,
+                    "@MaxTotalAmount", maxTotalAmount,
+                    "@POID", poid,
+                    "@FromDate", fromDate,
+                    "@ToDate", toDate);
+
+                if (!string.IsNullOrEmpty(msgError))
+                    throw new Exception(msgError);
+
+                if (dt.Rows.Count > 0)
+                {
+                    total = Convert.ToInt64(dt.Rows[0]["RecordCount"]);
+                }
+
+                return dt.ConvertTo<GoodsReceiptsModel>().ToList();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
     }
 }
