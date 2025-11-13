@@ -13,5 +13,7 @@ namespace DAL.Interfaces
         bool Create(GoodsIssuesModel model);
         bool Update(GoodsIssuesModel model);
         bool Delete(GoodsIssuesModel model);
-    }
+        List<GoodsIssuesModel> Search(int pageIndex, int pageSize, out long total, decimal? minTotalAmount, decimal? maxTotalAmount, int? userId, DateTime? fromDate, DateTime? toDate);
+        
+        }
 }

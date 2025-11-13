@@ -39,5 +39,10 @@ namespace BLL
         {
             return _res.Delete(model);
         }
+        public List<SalesModel> Search(int pageIndex, int pageSize, out long total, decimal? minTotalAmount, decimal? maxTotalAmount, string status, DateTime? fromDate, DateTime? toDate)
+        {
+            return _res.Search(pageIndex, pageSize, out total,
+                minTotalAmount, maxTotalAmount, status, fromDate, toDate);
+        }
     }
 }

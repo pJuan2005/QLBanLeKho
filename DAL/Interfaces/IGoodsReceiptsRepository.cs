@@ -14,5 +14,6 @@ namespace DAL.Interfaces
 
         bool Update(GoodsReceiptsModel model);
         bool Delete(GoodsReceiptsModel model);
+        List<GoodsReceiptsModel> Search(int pageIndex, int pageSize, out long total, decimal? minTotalAmount, decimal? maxTotalAmount, int? poid, DateTime? fromDate, DateTime? toDate);
     }
 }
