@@ -13,5 +13,6 @@ namespace DAL.Interfaces
         bool Create(PromotionsModel model);
         bool Update(PromotionsModel model);
         bool Delete(PromotionsModel model);
+        List<PromotionsModel> Search(int pageIndex, int pageSize, out long total, decimal? minValue, decimal? maxValue, string type, int? categoryId, DateTime? fromDate, DateTime? toDate);
     }
 }
