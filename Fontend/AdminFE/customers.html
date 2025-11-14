@@ -432,7 +432,7 @@
             class="form-add"
             ng-class="{open: showAdd}"
             ng-click="closeAddOnOverlay($event)"
-          >
+            >
             <div class="form-add__content" ng-click="$event.stopPropagation()">
               <h3 class="title">Add New Customer</h3>
               <p class="desc">Enter customer details</p>
@@ -501,7 +501,7 @@
             ng-class="{open: showEdit}"
             ng-click="closeEditOnOverlay($event)"
           >
-            <div class="form-edit__content" ng-click="$event.stopPropagation()>
+            <div class="form-edit__content" ng-click="$event.stopPropagation()">
               <h3 class="title">Edit Customer</h3>
               <form name="frmEdit" ng-submit="updateCustomer()">
                 <label for="name-edit">Full Name</label>
