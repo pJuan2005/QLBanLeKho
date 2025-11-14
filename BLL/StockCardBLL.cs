@@ -37,13 +37,9 @@ namespace BLL
             return _res.Delete(id);
         }
 
-        public List<StockCardModel> Search(int pageIndex, int pageSize, out long total,
-                                           int? StockID,
-                                           int? ProductID,
-                                           string TransactionType,
-                                           int? RefID)
+        public List<StockCardModel> Search(StockCardSearchRequest request, out long total)
         {
-            return _res.Search(pageIndex, pageSize, out total, StockID, ProductID, TransactionType, RefID);
+            return _res.Search(request, out total);
         }
     }
 }
