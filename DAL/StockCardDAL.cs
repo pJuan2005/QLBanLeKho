@@ -33,6 +33,8 @@ namespace DAL
             }
         }
 
+
+
         public bool Create(StockCardModel model)
         {
             string msgError = "";
@@ -43,7 +45,10 @@ namespace DAL
                     "@TransactionType", model.TransactionType,
                     "@Quantity", model.Quantity,
                     "@Balance", model.Balance,
-                    "@RefID", model.RefID,
+                    "@ReceiptID", model.ReceiptID,
+                    "@IssueID", model.IssueID,
+                    "@SupplierID", model.SupplierID,
+                    "@BatchNo", model.BatchNo,
                     "@TransactionDate", model.TransactionDate
                 );
 
@@ -76,7 +81,10 @@ namespace DAL
                     "@TransactionType", model.TransactionType,
                     "@Quantity", model.Quantity,
                     "@Balance", model.Balance,
-                    "@RefID", model.RefID,
+                    "@ReceiptID", model.ReceiptID,
+                    "@IssueID", model.IssueID,
+                    "@SupplierID", model.SupplierID,
+                    "@BatchNo", model.BatchNo,
                     "@TransactionDate", model.TransactionDate
                 );
 
@@ -93,23 +101,38 @@ namespace DAL
             }
         }
 
+
+
+
+
         public bool Delete(int id)
         {
             string msgError = "";
+
             try
             {
-                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_stockcard_delete",
+                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(
+                    out msgError,
+                    "sp_stockcard_delete",
                     "@StockID", id
                 );
 
                 if (!string.IsNullOrEmpty(msgError))
                 {
-                    Console.WriteLine("Lỗi: " + msgError);
+                    Console.WriteLine("Error: " + msgError);
                     return false;
                 }
 
-                Console.WriteLine("Thành công: " + Convert.ToString(result));
-                return true;
+                int rs = Convert.ToInt32(result);
+
+                if (rs == 1)
+                {
+                    Console.WriteLine("Delete success");
+                    return true;
+                }
+
+                Console.WriteLine("Delete failed - ID not found");
+                return false;
             }
             catch (Exception ex)
             {
@@ -118,24 +141,32 @@ namespace DAL
             }
         }
 
-        public List<StockCardModel> Search(int pageIndex, int pageSize, out long total,
-                                           int? StockID,
-                                           int? ProductID,
-                                           string TransactionType,
-                                           int? RefID)
+
+
+
+
+        public List<StockCardModel> Search(StockCardSearchRequest request, out long total)
         {
             string msgError = "";
             total = 0;
             try
             {
                 var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "sp_stockcard_search",
-                    "@page_index", pageIndex,
-                    "@page_size", pageSize,
-                    "@StockID", StockID,
-                    "@ProductID", ProductID,
-                    "@TransactionType", TransactionType,
-                    "@RefID", RefID
+                    "@page_index", request.page,
+                    "@page_size", request.pageSize,
+                    "@StockID", request.StockID,
+                    "@ProductID", request.ProductID,
+                    "@ProductName", request.ProductName,
+                    "@TransactionType", request.TransactionType,
+                    "@Balance", request.Balance,
+                    "@ReceiptID", request.ReceiptID,
+                    "@IssueID", request.IssueID,
+                    "@SupplierID", request.SupplierID,
+                    "@BatchNo", request.BatchNo,
+                    "@FromDate", request.FromDate,
+                    "@ToDate", request.ToDate
                 );
+
 
                 if (!string.IsNullOrEmpty(msgError))
                     throw new Exception(msgError);

@@ -9,10 +9,6 @@ namespace DAL.Interfaces
         bool Create(StockCardModel model);
         bool Update(StockCardModel model);
         bool Delete(int id);
-        List<StockCardModel> Search(int pageIndex, int pageSize, out long total,
-                            int? StockID,
-                            int? ProductID,
-                            string TransactionType,
-                            int? RefID);
+        List<StockCardModel> Search(StockCardSearchRequest request, out long total);
     }
 }

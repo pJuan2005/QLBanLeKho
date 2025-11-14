@@ -277,7 +277,7 @@ CREATE TABLE StockCards (
 );
 
 
-
+select * from StockCards
 ---------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -1492,40 +1492,64 @@ DROP PROCEDURE [sp_stockcard_get_by_id]
 CREATE PROCEDURE [dbo].[sp_stockcard_create]
 (
     @ProductID       INT,
-    @TransactionType NVARCHAR(10),  -- IN/OUT
+    @TransactionType NVARCHAR(10),
     @Quantity        INT,
     @Balance         INT,
-    @RefID           INT = NULL,
+    @ReceiptID       INT = NULL,
+    @IssueID         INT = NULL,
+    @SupplierID      INT = NULL,
+    @BatchNo         VARCHAR(50) = NULL,
     @TransactionDate DATETIME
 )
 AS
 BEGIN
     SET NOCOUNT ON;
 
+    DECLARE @ProductName NVARCHAR(100);
+
+    -- Lấy ProductName từ bảng Products
+    SELECT @ProductName = ProductName
+    FROM Products
+    WHERE ProductID = @ProductID;
+
+    IF (@ProductName IS NULL)
+    BEGIN
+        RAISERROR('ProductID không tồn tại trong bảng Products', 16, 1);
+        RETURN;
+    END
+
     INSERT INTO StockCards
     (
         ProductID,
+        ProductName,
         TransactionType,
         Quantity,
         Balance,
-        RefID,
+        ReceiptID,
+        IssueID,
+        SupplierID,
+        BatchNo,
         TransactionDate
     )
     VALUES
     (
         @ProductID,
+        @ProductName,
         @TransactionType,
         @Quantity,
         @Balance,
-        @RefID,
+        @ReceiptID,
+        @IssueID,
+        @SupplierID,
+        @BatchNo,
         @TransactionDate
     );
 
     SELECT SCOPE_IDENTITY() AS NewStockID;
 END;
 GO
-
-
+SELECT * FROM Products;
+SELECT * FROM Payments;
 SELECT * FROM StockCards;
 -- =============================================
 -- Cập nhật thẻ kho
@@ -1537,25 +1561,48 @@ CREATE PROCEDURE [dbo].[sp_stockcard_update]
     @TransactionType NVARCHAR(10) = NULL,
     @Quantity        INT = NULL,
     @Balance         INT = NULL,
-    @RefID           INT = NULL,
+    @ReceiptID       INT = NULL,
+    @IssueID         INT = NULL,
+    @SupplierID      INT = NULL,
+    @BatchNo         VARCHAR(50) = NULL,
     @TransactionDate DATETIME = NULL
 )
 AS
 BEGIN
+    SET NOCOUNT ON;
+
+    DECLARE @ProductName NVARCHAR(100);
+
+    IF (@ProductID IS NOT NULL)
+    BEGIN
+        SELECT @ProductName = ProductName FROM Products WHERE ProductID = @ProductID;
+
+        IF (@ProductName IS NULL)
+        BEGIN
+            RAISERROR('ProductID không tồn tại trong bảng Products', 16, 1);
+            RETURN;
+        END
+    END
+
     UPDATE StockCards
     SET
         ProductID       = ISNULL(@ProductID, ProductID),
+        ProductName     = ISNULL(@ProductName, ProductName),
         TransactionType = ISNULL(@TransactionType, TransactionType),
         Quantity        = ISNULL(@Quantity, Quantity),
         Balance         = ISNULL(@Balance, Balance),
-        RefID           = ISNULL(@RefID, RefID),
+        ReceiptID       = ISNULL(@ReceiptID, ReceiptID),
+        IssueID         = ISNULL(@IssueID, IssueID),
+        SupplierID      = ISNULL(@SupplierID, SupplierID),
+        BatchNo         = ISNULL(@BatchNo, BatchNo),
         TransactionDate = ISNULL(@TransactionDate, TransactionDate)
-        
     WHERE StockID = @StockID;
 
-    SELECT '' ;
+    -- ✔ TRẢ VỀ RECORD ĐÃ UPDATE
+    SELECT '';
 END;
 GO
+
 
 
 
@@ -1573,12 +1620,20 @@ AS
 BEGIN
     SET NOCOUNT ON;
 
-    DELETE FROM StockCards
-    WHERE StockID = @StockID;
+    -- Kiểm tra ID có tồn tại không
+    IF NOT EXISTS (SELECT 1 FROM StockCards WHERE StockID = @StockID)
+    BEGIN
+        SELECT 0 AS Result; -- Không tồn tại
+        RETURN;
+    END
 
-    SELECT 'Xóa thẻ kho thành công' AS Message;
+    -- Xóa
+    DELETE FROM StockCards WHERE StockID = @StockID;
+
+    SELECT 1 AS Result; -- Thành công
 END;
 GO
+
 
 
 
@@ -1595,59 +1650,52 @@ CREATE PROCEDURE [dbo].[sp_stockcard_search]
     @page_size       INT,
     @StockID         INT = NULL,
     @ProductID       INT = NULL,
+	@ProductName     NVARCHAR(100) = '',
     @TransactionType NVARCHAR(10) = '',
-    @RefID           INT = NULL,
-    @Status          NVARCHAR(20) = ''
+    @Balance         INT = NULL,
+    @ReceiptID       INT = NULL,
+    @IssueID         INT = NULL,
+    @SupplierID      INT = NULL,
+    @BatchNo         VARCHAR(50) = '',
+    @FromDate        DATETIME = NULL,
+    @ToDate          DATETIME = NULL
 )
 AS
 BEGIN
+    SET NOCOUNT ON;
+
     DECLARE @RecordCount BIGINT;
 
-    IF(@page_size <> 0)
-    BEGIN
-        SET NOCOUNT ON;
+    SELECT 
+        ROW_NUMBER() OVER (ORDER BY sc.StockID DESC) AS RowNumber,
+        sc.*
+    INTO #Temp
+    FROM StockCards sc
+    WHERE (@StockID IS NULL OR sc.StockID = @StockID)
+      AND (@ProductID IS NULL OR sc.ProductID = @ProductID)
+	  AND (@ProductName = '' OR sc.ProductName LIKE '%' + @ProductName + '%')
+      AND (@TransactionType = '' OR sc.TransactionType LIKE '%' + @TransactionType + '%')
+      AND (@ReceiptID IS NULL OR sc.ReceiptID = @ReceiptID)
+      AND (@IssueID IS NULL OR sc.IssueID = @IssueID)
+      AND (@SupplierID IS NULL OR sc.SupplierID = @SupplierID)
+      AND (@BatchNo = '' OR sc.BatchNo LIKE '%' + @BatchNo + '%')
+      AND (@Balance IS NULL OR sc.Balance = @Balance)
+      AND (@FromDate IS NULL OR sc.TransactionDate >= @FromDate)
+      AND (@ToDate IS NULL OR sc.TransactionDate <= @ToDate)
 
-        SELECT ROW_NUMBER() OVER (ORDER BY sc.StockID ASC) AS RowNumber,
-               sc.*
-        INTO #Results1
-        FROM StockCards AS sc
-        WHERE (@StockID IS NULL OR sc.StockID = @StockID)
-          AND (@ProductID IS NULL OR sc.ProductID = @ProductID)
-          AND (@TransactionType = '' OR sc.TransactionType = @TransactionType)
-          AND (@RefID IS NULL OR sc.RefID = @RefID)
+    SELECT @RecordCount = COUNT(*) FROM #Temp;
 
-        SELECT @RecordCount = COUNT(*) FROM #Results1;
+    SELECT *, @RecordCount AS RecordCount
+    FROM #Temp
+    WHERE RowNumber BETWEEN (@page_index - 1) * @page_size + 1
+                        AND (@page_index * @page_size)
+       OR @page_size = -1;
 
-        SELECT *, @RecordCount AS RecordCount
-        FROM #Results1
-        WHERE RowNumber BETWEEN(@page_index - 1) * @page_size + 1 
-                            AND (@page_index * @page_size)
-           OR @page_index = -1;
-
-        DROP TABLE #Results1;
-    END
-    ELSE
-    BEGIN
-        SET NOCOUNT ON;
-
-        SELECT ROW_NUMBER() OVER (ORDER BY sc.StockID ASC) AS RowNumber,
-               sc.*
-        INTO #Results2
-        FROM StockCards AS sc
-        WHERE (@StockID IS NULL OR sc.StockID = @StockID)
-          AND (@ProductID IS NULL OR sc.ProductID = @ProductID)
-          AND (@TransactionType = '' OR sc.TransactionType = @TransactionType)
-          AND (@RefID IS NULL OR sc.RefID = @RefID)
-
-        SELECT @RecordCount = COUNT(*) FROM #Results2;
-
-        SELECT *, @RecordCount AS RecordCount
-        FROM #Results2;
-
-        DROP TABLE #Results2;
-    END;
+    DROP TABLE #Temp;
 END;
 GO
+
+
 
 
 
