@@ -1,0 +1,1033 @@
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+/* khôi phục font chữ */
+body {
+  font-size: 1.6rem;
+  font-family: "Inter", sans-serif;
+  margin: 0;
+}
+
+/* =====================common==================== */
+a {
+  text-decoration: none;
+}
+
+input,
+textarea,
+select,
+button {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+input:focus {
+  outline: none;
+  border: 1px solid #0ea5e9;
+  border-bottom: none;
+  box-shadow: 0 0 0 2px rgba(14, 165, 233, 0.3);
+}
+
+/* ====================main====================== */
+.app-content {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* ====================slide-bar===================== */
+.slide-bar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  width: 255px;
+  border-right: 1px solid #000;
+  background: #fff;
+}
+
+.slide-bar__header {
+  padding: 16px;
+  border: 1px solid #ccc;
+  border-right: none;
+}
+
+.slide-bar__header .app-slideBar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.app-slideBar__left {
+  width: 40px;
+  height: 40px;
+  border-radius: 16px;
+  background: #0ea5e9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.app-slideBar__right .name-app {
+  color: #0f172a;
+  font-size: 2rem;
+  font-weight: 500;
+  margin: 0;
+}
+
+.app-slideBar__right .title-nameApp {
+  color: #64748b;
+  font-family: Inter;
+  font-size: 1.2rem;
+  margin: 0;
+  margin-top: 2px;
+}
+
+.slide-bar__Content {
+  padding: 8px;
+  flex: 1 1 auto;
+  overflow-y: auto;
+}
+
+.slide-bar__label {
+  padding: 0 8px;
+  color: rgba(15, 23, 42, 0.7);
+  font-size: 1.2rem;
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+.slide-bar__MenuButton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-left: 8px;
+}
+
+.MenuButton-right {
+  color: #0f172a;
+  font-size: 1.4rem;
+  line-height: 1.43;
+}
+
+.name-menu-active {
+  font-weight: 500;
+}
+
+.slide-bar__MenuButton--active {
+  border-radius: 10px;
+  background: #f8fafc;
+}
+
+.slide-bar__MenuButton:hover {
+  border-radius: 10px;
+  background: #f8fafc;
+}
+.slide-bar__footer {
+  border-top: 1px solid #ccc;
+  padding: 16px;
+}
+
+.slide-bar__footer .app-slide-bar {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  gap: 12px;
+}
+
+.app-slide-bar .ava {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.app-slide-bar .info .name {
+  color: #0f172a;
+  font-size: 1.4rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.app-slide-bar .info .role {
+  color: #64748b;
+  font-size: 1.2rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.app-slide-bar {
+  border-radius: 12px;
+  background: #f8fafc;
+}
+
+/* ====================app-layout================== */
+.app-layout {
+  margin-left: 255px;
+  height: 100vh;
+  width: calc(100vw - 255px);
+  overflow: auto;
+  min-width: 0;
+}
+
+.top-bar {
+  position: relative;
+  padding: 8px 0px;
+  border-bottom: 1px solid #ccc;
+}
+
+.top-bar__content {
+  padding: 0 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.top-bar__left {
+  position: relative;
+}
+
+.top-bar__left .search {
+  width: 448px;
+  height: 36px;
+  padding: 4px 12px 4px 40px;
+  border-radius: 10px;
+  border: 0.889px solid #e2e8f0;
+  background: rgba(248, 250, 252, 0.5);
+}
+
+.top-bar__left .icon {
+  position: absolute;
+  top: 10px;
+  bottom: 10px;
+  left: 12px;
+  right: 12px;
+}
+
+.top-bar__right {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
+
+.top-bar__right .role {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 21px;
+  padding: 2px 8px;
+  border-radius: 10px;
+  border: 0.889px solid rgba(14, 165, 233, 0.2);
+  background: rgba(14, 165, 233, 0.1);
+  color: #0ea5e9;
+  font-size: 1.2rem;
+  font-weight: 500;
+  line-height: 1.3;
+  cursor: default;
+}
+
+.top-bar__right .ava {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.top-bar__info {
+  display: none;
+  position: absolute;
+  z-index: 1;
+  right: 32px;
+  width: 224px;
+  height: 130px;
+  border-radius: 10px;
+  border: 0.889px solid #e2e8f0;
+  background: #fff;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -2px rgba(0, 0, 0, 0.1);
+}
+
+.info-top {
+  padding: 10px 12px;
+  border-bottom: 1px solid #ccc;
+}
+
+.info-top .name {
+  color: #0f172a;
+  font-size: 1.6rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.info-top .email {
+  color: #64748b;
+  font-size: 1.4rem;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.info-mid {
+  padding: 4px;
+}
+
+.set {
+  color: #0f172a;
+  font-size: 1.4rem;
+  line-height: 1.43;
+  padding-left: 8px;
+  padding-right: 8px;
+  margin: 0;
+}
+
+.info-bottom {
+  display: flex;
+  align-items: center;
+  padding-top: 7px;
+  padding-bottom: 7px;
+  padding-left: 8px;
+  gap: 16px;
+  border-top: 1px solid #ccc;
+}
+
+.info-bottom .icon {
+  margin: 0;
+}
+
+.logout {
+  margin: 0;
+  color: #ef4444;
+  font-size: 1.4rem;
+  line-height: 1.43;
+}
+
+.top-bar__info.active {
+  display: block;
+}
+
+/* ==============================app-layout-content============================= */
+.app-layout-content {
+  padding: 30px;
+}
+
+/* container-top */
+.container-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.name-system {
+  margin: 0;
+  color: #0f172a;
+  font-size: 2.4rem;
+  font-weight: 500;
+}
+
+.desc-system {
+  color: #64748b;
+  font-size: 1.6rem;
+  margin: 0;
+}
+
+.container-top--right {
+  display: flex;
+  gap: 8px;
+}
+
+.icon-control {
+  width: 16px;
+  height: 16px;
+  margin: 0;
+}
+
+.name-control {
+  margin: 0;
+}
+
+.control {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  padding: 7px;
+  align-items: center;
+  border-radius: 10px;
+  border: 0.889px solid #e2e8f0;
+  background: #fff;
+  cursor: pointer;
+  color: #0f172a;
+  font-size: 1.4rem;
+  font-weight: 500;
+}
+
+.add-goodsreceipts {
+  background-color: #0ea5e9;
+  color: #fff;
+}
+
+.container-card {
+  display: flex;
+  flex-wrap: wrap;        /* cho phép xuống dòng nếu nhiều ô */
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 26px;
+}
+
+.card {
+  flex: 1 1 calc(25% - 12px); /* 4 ô trên 1 hàng, tự co giãn */
+  min-width: 180px;           /* đảm bảo không quá nhỏ khi màn hình hẹp */
+  padding: 16px;
+  border-radius: 16px;
+  border: 0.889px solid #e2e8f0;
+  background: #fff;
+}
+
+.name-card {
+  margin: 0;
+  color: #64748b;
+  font-size: 1.4rem;
+}
+
+.data-card {
+  color: #0f172a;
+  margin: 0;
+  font-size: 2.4rem;
+  font-weight: 600;
+}
+
+
+.search-goodreceipts {
+  margin-top: 24px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+}
+
+.search-goodreceipts .search-field {
+  display: flex;
+  flex-direction: column;
+}
+
+.search-goodreceipts label {
+  font-size: 1.2rem;
+  color: #64748b;
+  margin-bottom: 4px;
+}
+
+.search-goodreceipts .search {
+  height: 32px;
+  padding: 4px 8px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+}
+
+.search-btn {
+  background: #0ea5e9;
+  color: #fff;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.search-btn:hover {
+  background: #0284c7;
+}
+
+/* =====phân trang===== */
+.pager-info {
+  display: flex;
+  justify-content: center;
+  margin-top: 12px;
+  color: #0f172a;
+  font-size: 1.4rem;
+  line-height: 1.4;
+}
+
+.pager label {
+  color: #0f172a;
+  font-family: Inter;
+  font-size: 1.4rem;
+  line-height: 1.4;
+}
+
+.page-nav{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn {
+  background: rgba(248, 250, 252, 0.5);
+  border: 1px solid #ccc;
+  border-radius: 2px;
+  color: #0f172a;
+  font-family: Inter;
+  font-size: 1.4rem;
+  line-height: 1.4;
+}
+
+.search-phone-customer {
+  margin-top: 24px;
+  position: relative;
+}
+
+.search-phone-customer .search {
+  width: 100%;
+  height: 36px;
+  padding: 4px 12px 4px 40px;
+  border-radius: 10px;
+  border: 0.889px solid #e2e8f0;
+  background: rgba(248, 250, 252, 0.5);
+}
+
+.search-phone-customer .icon {
+  position: absolute;
+  top: 10px;
+  bottom: 10px;
+  left: 12px;
+  right: 12px;
+}
+/* ==============table============= */
+.table {
+  margin-top: 24px;
+  border: 1px solid #e2e8f0;
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+  color: #0f172a;
+  font-size: 1.4rem;
+  line-height: 1.4;
+}
+
+.table th,
+.table td {
+  padding: 12px 14px;
+  vertical-align: middle;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Cột 1: Receipt ID */
+.table thead th.id,
+.table tbody td:nth-child(1) {
+  width: 100px;
+  text-align: center;
+}
+
+/* Cột 2: POID */
+.table thead th.poid,
+.table tbody td:nth-child(2) {
+  width: 100px;
+  text-align: center;
+}
+
+/* Cột 3: Receipt Date */
+.table thead th.date,
+.table tbody td:nth-child(3) {
+  width: 140px;
+  text-align: center;
+}
+
+/* Cột 4: Total Amount */
+.table thead th.amount,
+.table tbody td:nth-child(4) {
+  width: 140px;
+  text-align: right;
+}
+
+/* Cột 5: User ID */
+.table thead th.user,
+.table tbody td:nth-child(5) {
+  width: 100px;
+  text-align: center;
+}
+
+/* Cột 6: Batch No */
+.table thead th.batch,
+.table tbody td:nth-child(6) {
+  width: 160px;
+  text-align: center;
+}
+
+/* Cột 7: Status */
+.table thead th.status,
+.table tbody td:nth-child(7) {
+  width: 120px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* Cột 8: Actions */
+.table thead th.action,
+.table tbody td:nth-child(8) {
+  width: 220px; /* giảm lại vì bỏ nút Payment */
+  text-align: right;
+  white-space: nowrap;
+}
+
+
+/* Viền và font */
+.table thead th {
+  border: 1px solid #e2e8f0;
+  font-weight: 600;
+  color: #0f172a;
+}
+.table tbody tr + tr td {
+  border-top: 1px solid #f1f5f9;
+}
+
+/* Nút */
+.txt-right button {
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+.txt-right button:hover {
+  color: #0ea5e9;
+}
+
+/* ========== FORM ADD GOODS RECEIPT ========== */
+.form-add {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.3);
+  display: none;
+  z-index: 999;
+}
+.form-add.open {
+  display: block;
+}
+.form-add__content {
+  background: #fff;
+  width: 600px;
+  max-height: 90vh;
+  overflow-y: auto;
+  margin: 40px auto;
+  padding: 24px;
+  border-radius: 8px;
+  box-shadow: 0 0 0 4px #e2e8f0;
+}
+.form-add__content h3.title {
+  font-size: 1.8rem;
+  margin-bottom: 4px;
+}
+.form-add__content p.desc {
+  font-size: 1.3rem;
+  margin-bottom: 16px;
+  color: #475569;
+}
+
+/* Input fields */
+.form-add__content label {
+  display: block;
+  margin-top: 12px;
+  font-weight: 500;
+  color: #334155;
+}
+.form-add__content input {
+  width: 100%;
+  padding: 10px 12px;
+  margin-top: 4px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  font-size: 1.4rem;
+  color: #0f172a;
+}
+.form-add__content input:focus {
+  outline: none;
+  border-color: #0ea5e9;
+}
+
+/* Chi tiết sản phẩm */
+.detail-row {
+  border: 1px solid #e2e8f0;
+  padding: 12px;
+  margin-top: 16px;
+  border-radius: 6px;
+  background: #f8fafc;
+}
+.detail-row label {
+  margin-top: 8px;
+}
+.detail-row input {
+  margin-bottom: 8px;
+}
+.detail-row .remove {
+  margin-top: 8px;
+  background: none;
+  border: none;
+  color: #ef4444;
+  font-size: 1.3rem;
+  cursor: pointer;
+}
+.detail-row .remove:hover {
+  text-decoration: underline;
+}
+
+/* Add product button */
+.add-detail {
+  margin-top: 16px;
+  background: #0ea5e9;
+  color: white;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 6px;
+  font-size: 1.3rem;
+  cursor: pointer;
+}
+.add-detail:hover {
+  background: #0284c7;
+}
+
+/* Footer buttons */
+.dialog-footer {
+  margin-top: 24px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+.dialog-footer .cancel {
+  background: none;
+  border: 1px solid #cbd5e1;
+  padding: 10px 14px;
+  border-radius: 6px;
+  font-size: 1.3rem;
+  cursor: pointer;
+}
+.dialog-footer .cancel:hover {
+  background: #f1f5f9;
+}
+.dialog-footer .submit {
+  background: #10b981;
+  color: white;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 6px;
+  font-size: 1.3rem;
+  cursor: pointer;
+}
+.dialog-footer .submit:disabled {
+  background: #94a3b8;
+  cursor: not-allowed;
+}
+.dialog-footer .submit:hover:not(:disabled) {
+  background: #059669;
+}
+
+/* ========== Form Edit Overlay ========== */
+
+.form-edit {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(30, 30, 30, 0.6);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.form-edit.open {
+  display: flex;
+}
+
+/* Form Content */
+.form-edit__content {
+  background: #fff;
+  padding: 25px 30px;
+  border-radius: 8px;
+  width: 400px;
+  max-width: 90%;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+}
+
+.form-edit__content h3.title {
+  margin-bottom: 15px;
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+}
+
+.form-edit__content label {
+  display: block;
+  margin-top: 12px;
+  font-weight: 600;
+  color: #444;
+}
+
+.form-edit__content input[type="text"],
+.form-edit__content input[type="number"],
+.form-edit__content input[type="date"] {
+  width: 100%;
+  padding: 8px 10px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Footer buttons */
+.dialog-footer {
+  margin-top: 20px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.dialog-footer .cancel {
+  background: #ccc;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.dialog-footer .submit {
+  background: #007bff;
+  color: #fff;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.dialog-footer .submit:disabled {
+  background: #aaa;
+  cursor: not-allowed;
+}
+
+/* Overlay delete */
+.form-delete {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(30, 30, 30, 0.6);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.form-delete.open {
+  display: flex;
+}
+
+/* Content box */
+.form-delete__content {
+  background: #fff;
+  padding: 25px 30px;
+  border-radius: 8px;
+  width: 400px;
+  max-width: 90%;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+  text-align: center;
+}
+
+.form-delete__content h3.title {
+  margin-bottom: 15px;
+  font-size: 20px;
+  font-weight: bold;
+  color: #c0392b;
+}
+
+.form-delete__content p {
+  font-size: 16px;
+  color: #444;
+  margin-bottom: 20px;
+}
+
+.form-delete__content strong {
+  color: #e74c3c;
+}
+
+/* Footer buttons */
+.dialog-footer {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.dialog-footer .cancel {
+  background: #ccc;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.dialog-footer .submit {
+  background: #e74c3c;
+  color: #fff;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.dialog-footer .submit:hover {
+  background: #c0392b;
+}
+
+/* ========== Form Detail ========== */
+.form-detail {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(30,30,30,0.6);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.form-detail.open {
+  display: flex;
+}
+
+.form-detail__content {
+  background: #fff;
+  padding: 25px 30px;
+  border-radius: 8px;
+  width: 900px; /* tăng từ 600px lên 900px */
+  max-width: 95%;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+  overflow-y: auto; /* nếu nội dung dài thì scroll */
+  max-height: 90vh; /* tránh tràn màn hình */
+}
+
+
+.form-detail__content h3.title {
+  margin-bottom: 15px;
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+}
+
+.detail-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+  table-layout: fixed; /* giúp cột đều nhau */
+}
+
+.detail-table th,
+.detail-table td {
+  border: 1px solid #ccc;
+  padding: 10px 12px; /* tăng padding cho dễ đọc */
+  text-align: center;
+  word-wrap: break-word; /* tránh chữ tràn cột */
+}
+
+.detail-table th {
+  background: #f5f5f5;
+  font-weight: bold;
+}
+
+
+.dialog-footer {
+  margin-top: 20px;
+  text-align: right;
+}
+
+.dialog-footer .cancel {
+  background: #ccc;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.detail-add-form {
+  margin-bottom: 20px;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: #f9f9f9;
+}
+
+.detail-add-form h4 {
+  margin-bottom: 10px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+.detail-add-form .form-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.detail-add-form .form-row label {
+  width: 120px;
+  font-weight: 500;
+  color: #333;
+}
+
+.detail-add-form .form-row input {
+  flex: 1;
+  padding: 6px 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.add-btn {
+  margin-top: 10px;
+  padding: 8px 16px;
+  background: #27ae60;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.add-btn:hover {
+  background: #219150;
+}
+
+.remove-btn {
+  background: #e74c3c;
+  color: #fff;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.remove-btn:hover {
+  background: #c0392b;
+}
+
+.selected-row {
+  background-color: #e0f7fa;
+}
+
+.menu-list li {
+  cursor: pointer;
+  padding: 6px 12px;
+  transition: background 0.2s ease;
+}
+
+.menu-list li:hover {
+  background: #f0f0f0;
+}
+
+
+
