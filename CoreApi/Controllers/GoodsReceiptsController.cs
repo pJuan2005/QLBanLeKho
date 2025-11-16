@@ -5,27 +5,31 @@ using System.Reflection;
 using BLL.Interfaces;
 using BLL;
 using System.Globalization;
+using ClosedXML.Excel;
 
 namespace CoreApi.Controllers
 {
-    [Route("api/GoodsReceipts")]
+    [Route("api/goodsreceipts")]
     [ApiController]
     public class GoodsReceiptsController : ControllerBase
     {
         private IGoodsReceiptsBusiness _goodsReceiptsBusiness;
+        private IGoodsReceiptDetailsBusiness _goodsReceiptDetailsBusiness;
 
-        public GoodsReceiptsController(IGoodsReceiptsBusiness goodsReceiptsBusiness)
+        public GoodsReceiptsController(IGoodsReceiptsBusiness goodsReceiptsBusiness, IGoodsReceiptDetailsBusiness goodsReceiptDetailsBusiness)
         {
             _goodsReceiptsBusiness = goodsReceiptsBusiness;
+            _goodsReceiptDetailsBusiness = goodsReceiptDetailsBusiness;
         }
 
         [Route("create")]
         [HttpPost]
-        public IActionResult Create([FromBody] List<GoodsReceiptsModel> models)
+        public IActionResult Create([FromBody] GoodsReceiptsModel model)
         {
-            _goodsReceiptsBusiness.CreateMultiple(models);
-            return Ok(models);
+            var receiptID = _goodsReceiptsBusiness.Create(model);
+            return Ok(new { ReceiptID = receiptID });
         }
+
 
 
         [Route("update")]
@@ -59,76 +63,143 @@ namespace CoreApi.Controllers
             try
             {
                 // --- PAGING ---
-                int page = 1, pageSize = 10;
-                if (formData != null)
-                {
-                    if (formData.ContainsKey("page") && int.TryParse(Convert.ToString(formData["page"]), out var p) && p > 0)
-                        page = p;
-                    if (formData.ContainsKey("pageSize") && int.TryParse(Convert.ToString(formData["pageSize"]), out var ps) && ps > 0)
-                        pageSize = ps;
-                }
+                var pageIndex = int.Parse(formData["pageIndex"].ToString());
+                var pageSize = int.Parse(formData["pageSize"].ToString());
 
                 // --- FILTERS ---
-                decimal? minTotalAmount = null, maxTotalAmount = null;
+                decimal? minTotalAmount = null;
+                decimal? maxTotalAmount = null;
                 int? poid = null;
-                DateTime? fromDate = null, toDate = null;
+                DateTime? fromDate = null;
+                DateTime? toDate = null;
 
-                if (formData != null)
+                if (formData.Keys.Contains("minTotalAmount") &&
+                    !string.IsNullOrEmpty(Convert.ToString(formData["minTotalAmount"])) &&
+                    decimal.TryParse(Convert.ToString(formData["minTotalAmount"]), out var minAmt))
                 {
-                    if (formData.ContainsKey("minTotalAmount"))
-                    {
-                        var val = Convert.ToString(formData["minTotalAmount"])?.Trim();
-                        if (decimal.TryParse(val, NumberStyles.Any, CultureInfo.InvariantCulture, out var d))
-                            minTotalAmount = d;
-                    }
-
-                    if (formData.ContainsKey("maxTotalAmount"))
-                    {
-                        var val = Convert.ToString(formData["maxTotalAmount"])?.Trim();
-                        if (decimal.TryParse(val, NumberStyles.Any, CultureInfo.InvariantCulture, out var d))
-                            maxTotalAmount = d;
-                    }
-
-                    if (formData.ContainsKey("poid"))
-                    {
-                        var val = Convert.ToString(formData["poid"])?.Trim();
-                        if (int.TryParse(val, out var pid))
-                            poid = pid;
-                    }
-
-                    if (formData.ContainsKey("fromDate"))
-                    {
-                        var val = Convert.ToString(formData["fromDate"]);
-                        if (DateTime.TryParse(val, out var d))
-                            fromDate = d;
-                    }
-
-                    if (formData.ContainsKey("toDate"))
-                    {
-                        var val = Convert.ToString(formData["toDate"]);
-                        if (DateTime.TryParse(val, out var d))
-                            toDate = d;
-                    }
+                    minTotalAmount = minAmt;
                 }
 
+                if (formData.Keys.Contains("maxTotalAmount") &&
+                    !string.IsNullOrEmpty(Convert.ToString(formData["maxTotalAmount"])) &&
+                    decimal.TryParse(Convert.ToString(formData["maxTotalAmount"]), out var maxAmt))
+                {
+                    maxTotalAmount = maxAmt;
+                }
+
+                if (formData.Keys.Contains("POID") &&
+                    !string.IsNullOrEmpty(Convert.ToString(formData["POID"])) &&
+                    int.TryParse(Convert.ToString(formData["POID"]), out var pid))
+                {
+                    poid = pid;
+                }
+
+                if (formData.Keys.Contains("fromDate") &&
+                    DateTime.TryParse(Convert.ToString(formData["fromDate"]), out var fd))
+                {
+                    fromDate = fd;
+                }
+
+                if (formData.Keys.Contains("toDate") &&
+                    DateTime.TryParse(Convert.ToString(formData["toDate"]), out var td))
+                {
+                    toDate = td;
+                }
 
                 // --- CALL BLL ---
-                long total = 0;
                 var data = _goodsReceiptsBusiness.Search(
-                    page, pageSize, out total,
+                    pageIndex, pageSize, out long total,
                     minTotalAmount, maxTotalAmount, poid, fromDate, toDate);
 
                 response.TotalItems = total;
                 response.Data = data;
-                response.Page = page;
+                response.Page = pageIndex;
                 response.PageSize = pageSize;
-                return response;
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                throw ex;   
+            }
+            return response;
+        }
+        [Route("export-excel/{receiptID}")]
+        [HttpGet]
+        public IActionResult ExportGoodsReceiptExcel(int receiptID)
+        {
+            try
+            {
+                // Lấy dữ liệu phiếu nhập
+                var receipt = _goodsReceiptsBusiness.GetDatabyID(receiptID);
+                if (receipt == null)
+                    return NotFound("Không tìm thấy phiếu nhập");
+
+                // Lấy dữ liệu chi tiết phiếu nhập
+                var details = _goodsReceiptDetailsBusiness.GetDatabyID(receiptID);
+
+
+
+                using var workbook = new XLWorkbook();
+
+                // Sheet 1: Thông tin phiếu nhập
+                var wsReceipt = workbook.Worksheets.Add("GoodsReceipt");
+                wsReceipt.Cell(1, 1).Value = "ReceiptID";
+                wsReceipt.Cell(1, 2).Value = "POID";
+                wsReceipt.Cell(1, 3).Value = "ReceiptDate";
+                wsReceipt.Cell(1, 4).Value = "TotalAmount";
+                wsReceipt.Cell(1, 5).Value = "UserID";
+                wsReceipt.Cell(1, 6).Value = "BatchNo";
+                wsReceipt.Cell(1, 7).Value = "Status";
+
+                wsReceipt.Cell(2, 1).Value = receipt.ReceiptID;
+                wsReceipt.Cell(2, 2).Value = receipt.POID;
+                wsReceipt.Cell(2, 3).Value = receipt.ReceiptDate;
+                wsReceipt.Cell(2, 4).Value = receipt.TotalAmount;
+                wsReceipt.Cell(2, 5).Value = receipt.UserID;
+                wsReceipt.Cell(2, 6).Value = receipt.BatchNo ?? "";
+                wsReceipt.Cell(2, 7).Value = receipt.Status ?? "";
+
+                wsReceipt.Columns().AdjustToContents();
+
+                // Sheet 2: Chi tiết phiếu nhập
+                var wsDetail = workbook.Worksheets.Add("Details");
+                wsDetail.Cell(1, 1).Value = "ReceiptID";
+                wsDetail.Cell(1, 2).Value = "ProductID";
+                wsDetail.Cell(1, 3).Value = "ProductName";
+                wsDetail.Cell(1, 4).Value = "Quantity";
+                wsDetail.Cell(1, 5).Value = "UnitPrice";
+                wsDetail.Cell(1, 6).Value = "ExpiryDate";
+
+                int row = 2;
+                foreach (var d in details)
+                {
+                    wsDetail.Cell(row, 1).Value = d.ReceiptID;
+                    wsDetail.Cell(row, 2).Value = d.ProductID;
+                    wsDetail.Cell(row, 3).Value = d.ProductName ?? "";
+                    wsDetail.Cell(row, 4).Value = d.Quantity;
+                    wsDetail.Cell(row, 5).Value = d.UnitPrice;
+                    wsDetail.Cell(row, 6).Value = d.ExpiryDate?.ToString("yyyy-MM-dd") ?? "";
+                    row++;
+                }
+
+                wsDetail.Columns().AdjustToContents();
+
+                // Xuất file
+                using var stream = new MemoryStream();
+                workbook.SaveAs(stream);
+                stream.Position = 0;
+
+                var fileName = $"goodsreceipt_{receiptID}_{DateTime.UtcNow:yyyyMMdd_HHmmss}.xlsx";
+                const string contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+
+                return File(stream.ToArray(), contentType, fileName);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+
+
 
     }
 }

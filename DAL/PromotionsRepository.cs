@@ -45,7 +45,8 @@ namespace DAL
                     "@Value", model.Value,
                     "@StartDate", model.StartDate,
                     "@EndDate", model.EndDate,
-                    "@CategoryID", model.CategoryID);
+                    "@CategoryID", model.CategoryID
+                    );
                 if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
                 {
                     throw new Exception(Convert.ToString(result) + msgError);
@@ -70,7 +71,8 @@ namespace DAL
                     "@Value", model.Value,
                     "@StartDate", model.StartDate,
                     "@EndDate", model.EndDate,
-                    "@CategoryID", model.CategoryID);
+                    "@CategoryID", model.CategoryID,
+                    "Status", model.Status);
                 if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
                 {
                     throw new Exception(Convert.ToString(result) + msgError);
@@ -101,7 +103,7 @@ namespace DAL
                 throw ex;
             }
         }
-        public List<PromotionsModel> Search(int pageIndex, int pageSize, out long total, decimal? minValue, decimal? maxValue, string type, int? categoryId, DateTime? fromDate, DateTime? toDate)
+        public List<PromotionsModel> Search(int pageIndex, int pageSize, out long total, DateTime? fromDate, DateTime? toDate, string status)
         {
             string msgError = "";
             total = 0;
@@ -110,20 +112,16 @@ namespace DAL
                 var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "sp_Promotions_search",
                     "@page_index", pageIndex,
                     "@page_size", pageSize,
-                    "@MinValue", minValue,
-                    "@MaxValue", maxValue,
-                    "@Type", type,
-                    "@CategoryID", categoryId,
-                    "@FromDate", fromDate,
-                    "@ToDate", toDate);
+                    "@FromDate", fromDate ?? (object)DBNull.Value,
+                    "@ToDate", toDate ?? (object)DBNull.Value,
+                    "@Status", string.IsNullOrEmpty(status) ? (object)DBNull.Value : status);
+
 
                 if (!string.IsNullOrEmpty(msgError))
                     throw new Exception(msgError);
 
                 if (dt.Rows.Count > 0)
-                {
                     total = Convert.ToInt64(dt.Rows[0]["RecordCount"]);
-                }
 
                 return dt.ConvertTo<PromotionsModel>().ToList();
             }
@@ -132,6 +130,8 @@ namespace DAL
                 throw ex;
             }
         }
+
+
 
 
     }

@@ -9,10 +9,13 @@ namespace Model
 {
     public class GoodsReceiptsModel
     {
-        public int ReceiptID { get; set; }           
-        public int POID { get; set; }            
-        public DateTime ReceiptDate { get; set; }    
+        public int ReceiptID { get; set; }
+        public int POID { get; set; }
+        public DateTime ReceiptDate { get; set; }
         public decimal TotalAmount { get; set; }
         public int UserID { get; set; }
+        public string? BatchNo { get; set; } 
+        public string? Status { get; set; }
     }
+
 }

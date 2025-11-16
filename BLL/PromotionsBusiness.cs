@@ -39,11 +39,11 @@ namespace BLL
             return _res.Delete(model);
         }
 
-        public List<PromotionsModel> Search(int pageIndex, int pageSize, out long total, decimal? minValue, decimal? maxValue, string type, int? categoryId, DateTime? fromDate, DateTime? toDate)
+        public List<PromotionsModel> Search(int pageIndex, int pageSize, out long total, DateTime? fromDate, DateTime? toDate, string status)
         {
-            return _res.Search(pageIndex, pageSize, out total,
-                minValue, maxValue, type, categoryId, fromDate, toDate);
+            return _res.Search(pageIndex, pageSize, out total, fromDate, toDate, status);
         }
+
 
 
     }
