@@ -18,7 +18,7 @@ namespace DAL
             _dbHelper = dbHelper;
         }
 
-        public GoodsReceiptDetailsModel GetDatabyID(int receiptID)
+        public List<GoodsReceiptDetailsModel> GetDatabyID(int receiptID)
         {
             string msgError = "";
             try
@@ -27,13 +27,16 @@ namespace DAL
                     "@ReceiptID", receiptID);
                 if (!string.IsNullOrEmpty(msgError))
                     throw new Exception(msgError);
-                return dt.ConvertTo<GoodsReceiptDetailsModel>().FirstOrDefault();
+
+                return dt.ConvertTo<GoodsReceiptDetailsModel>().ToList();
             }
             catch (Exception ex)
             {
                 throw ex;
             }
         }
+
+
 
         public bool CreateMultiple(List<GoodsReceiptDetailsModel> models)
         {
