@@ -916,6 +916,53 @@ namespace DAL.Helper
             return result;
         }
         #endregion
+
+
+
+
+        public object ExecuteScalarSProcedureWithTransaction2(
+            out string msgError,
+            string procName,
+            params object[] param)
+        {
+            msgError = "";
+
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(StrConnection))
+                {
+                    conn.Open();
+
+                    using (SqlCommand cmd = new SqlCommand(procName, conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        for (int i = 0; i < param.Length; i += 2)
+                        {
+                            cmd.Parameters.AddWithValue(param[i].ToString(), param[i + 1] ?? DBNull.Value);
+                        }
+
+                        return cmd.ExecuteScalar();
+                    }
+                }
+            }
+            catch (SqlException sqlEx)
+            {
+                // ❗ Đây là lỗi từ RAISERROR trong SQL
+                msgError = sqlEx.Message;
+                return null;
+            }
+            catch (Exception ex)
+            {
+                // ❗ Lỗi .NET bình thường
+                msgError = ex.Message;
+                return null;
+            }
+        }
+
+
+
+
     }
 
 }

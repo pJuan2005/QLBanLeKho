@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+    rel="stylesheet" />
+
+  <!-- css -->
+  <link rel="stylesheet" href="../Shared/css/return.css" />
+  <script src="../Shared/angular/angular.min.js"></script>
+  <script src="../Shared/angular/global.js"></script>
+  <script src="../Shared/angular/return.js"></script>
+  <!-- Thư viện ExcelJS và FileSaver -->
+<script src="https://cdn.jsdelivr.net/npm/exceljs@4.3.0/dist/exceljs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+
+
+
+
+  <title>Returns</title>
+</head>
+
+<body ng-app="AppRetailPos" ng-controller="returnCtrl">
+  <div class="app-content">
+    <div class="slide-bar">
+      <div class="slide-bar__header">
+        <div class="app-slideBar">
+          <div class="app-slideBar__left">
+            <img src="../Shared/img/common/wheel.svg" alt="" class="icon" />
+          </div>
+          <div class="app-slideBar__right">
+            <h1 class="name-app">RetailPro</h1>
+            <p class="title-nameApp">Inventory & POS</p>
+          </div>
+        </div>
+      </div>
+      <div class="slide-bar__Content">
+        <p class="slide-bar__label">Navigation</p>
+        <!-- menu button 1 -->
+        <a href="../AdminFE/dashboard.html" ng-if="canShow('dashboard')"></a>
+        <div class="slide-bar__MenuButton">
+          <div class="MenuButton-left">
+            <img src="../Shared/img/common/dashboard.svg" alt="" class="icon" />
+          </div>
+          <div class="MenuButton-right">
+            <p class="name-menu">Dashboard</p>
+          </div>
+        </div>
+        </a>
+        <!-- menu button 2 -->
+        <a href="../AdminFE/pos.html" ng-if="canShow('pos')">
+          <div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img src="../Shared/img/common/pos.svg" alt="" class="icon" />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">POS</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button 3 -->
+        <a href="../AdminFE/product.html" ng-if="canShow('products')">
+          <div class="slide-bar__MenuButton ">
+            <div class="MenuButton-left">
+              <img src="../Shared/img/common/product.svg" alt="" class="icon" />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">Products</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button 4 -->
+        <a href="../AdminFE/categories.html" ng-if="canShow('categories')">
+          <div class="slide-bar__MenuButton ">
+            <div class="MenuButton-left">
+              <img src="../Shared/img/common/category.svg" alt="" class="icon" />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">Categories</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button 5 -->
+        <a href="../AdminFE/customers.html" ng-if="canShow('customers')">
+          <div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img src="../Shared/img/common/customer.svg" alt="" class="icon" />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">Customers</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button 6 -->
+        <a href="../AdminFE/suppliers.html" ng-if="canShow('suppliers')"></a>
+        <div class="slide-bar__MenuButton">
+          <div class="MenuButton-left">
+            <img src="../Shared/img/common/supplier.svg" alt="" class="icon" />
+          </div>
+          <div class="MenuButton-right">
+            <p class="name-menu">Suppliers</p>
+          </div>
+        </div>
+        </a>
+        <!-- menu button 7 -->
+        <a href="../AdminFE/purchaseorders.html" ng-if="canShow('purchaseOrders')">
+          <div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img src="../Shared/img/common/purchaseorder.svg" alt="" class="icon" />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">Purchase Orders</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button 8 -->
+        <a href="../AdminFE/stockcard.html" ng-if="canShow('stock')">
+          <div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img src="../Shared/img/common/stock.svg" alt="" class="icon" />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">Stock Management</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button 9 -->
+        <a href="../AdminFE/sales.html" ng-if="canShow('sales')">
+          <div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img src="../Shared/img/common/sales.svg" alt="" class="icon" />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">Sales</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button 10 -->
+        <a href="../AdminFE/returns.html" ng-if="canShow('returns')">
+          <div class="slide-bar__MenuButton slide-bar__MenuButton--active">
+            <div class="MenuButton-left">
+              <img src="../Shared/img/common/return.svg" alt="" class="icon" />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu-active">Returns</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button 11 -->
+        <a href="../AdminFE/payments.html" ng-if="canShow('returns')">
+          <div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img src="../Shared/img/common/payments.svg" alt="" class="icon" />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">Payments & Debts</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button 12 -->
+        <a href="../AdminFE/reports.html" ng-if="canShow('reports')">
+          <div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img src="../Shared/img/common/report.svg" alt="" class="icon" />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">Reports</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button 13 -->
+        <a href="../AdminFE/auditlog.html" ng-if="canShow('auditLog')"></a>
+        <div class="slide-bar__MenuButton">
+          <div class="MenuButton-left">
+            <img src="../Shared/img/common/auditlog.svg" alt="" class="icon" />
+          </div>
+          <div class="MenuButton-right">
+            <p class="name-menu">Audit Log</p>
+          </div>
+        </div>
+        </a>
+        <!-- menu button 14 -->
+        <a href="../AdminFE/users.html" ng-if="canShow('users')">
+          <div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img src="../Shared/img/common/user.svg" alt="" class="icon" />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">Users</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button 15 -->
+        <a href="../AdminFE/settings.html" ng-if="canShow('settings')">
+          <div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img src="../Shared/img/common/setting.svg" alt="" class="icon" />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">Settings</p>
+            </div>
+          </div>
+        </a>
+      </div>
+      <div class="slide-bar__footer">
+        <div class="app-slide-bar">
+          <div class="ava">
+            <img class="ava" src="../Shared/img/common/ava.svg" alt="" />
+          </div>
+          <div class="info">
+            <p class="name">{{currentUser.fullname}}</p>
+            <p class="role">{{currentUser.role}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="app-layout">
+      <div class="top-bar">
+        <div class="top-bar__content">
+          <div class="top-bar__left">
+            <img src="../Shared/img/common/search.svg" alt="" class="icon" />
+            <input class="search" type="text" placeholder="Search by PartnerName" ng-model="searchPartnerName" />
+          </div>
+          <div class="control-left">
+            
+            <input class="search" type="text" placeholder="Search by PartnerPhone" ng-model="searchPartnerPhone" />
+          </div>
+          <div class="top-bar__right">
+            <p class="role">admin</p>
+            <img src="../Shared/img/common/ava.svg" alt="" class="ava" id="avatar" />
+          </div>
+        </div>
+        <div class="top-bar__info" id="information">
+          <div class="info-top">
+            <p class="name">John Doe</p>
+            <p class="email">john@company.com</p>
+          </div>
+          <div class="info-mid">
+            <a href="#!">
+              <p class="set">Profile Settings</p>
+            </a>
+          </div>
+          <div class="info-bottom">
+            <img src="" alt="" class="icon" />
+            <a href="../AuthFE/login.html">
+              <p class="logout">Logout</p>
+            </a>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="app-layout-content">
+        <h1 class="name-menu">Returns </h1>
+        <p class="desc">
+          Manage product inventory and pricing
+        </p>
+        <div class="display-container">
+          <div class="total farme">
+            <p class="name-display">Total Return</p>
+            <p class="data">{{stats.total}}</p>
+          </div>
+          <div class="avg farme">
+            <p class="name-display">Return customer</p>
+            <p class="data">{{stats.returncustomer}}</p>
+          </div>
+          <div class="most-common farme">
+            <p class="name-display">return supplier</p>
+            <p class="data">{{stats.returnsupplier}}</p>
+          </div>
+        </div>
+        <div class="control">
+          <div class="control-left">
+            <img src="../Shared/img/common/search.svg" alt="" class="icon" />
+            <select class="search-type" 
+                    ng-model="searchReturnType" 
+                    ng-change="triggerSearch()">
+                <option value="">All</option>
+                <option value="1">Customer Return</option>
+                <option value="2">Supplier Return</option>
+            </select>
+
+          </div>
+
+          
+
+          <!-- phân trang -->
+          <div class="pager" ng-if="pager.total>0">
+            <div class="pager-info">
+              Showing
+              {{((pager.page-1)*pager.size)+1}}-{{Math.min(pager.page*pager.size,pager.total)}}
+              of {{pager.total}} items
+            </div>
+            <div class="page-nav">
+              <label>
+                Page size:
+                <select ng-model="pager.size" ng-change="changeSize()">
+                  <option value="0">ALL</option>
+                  <option value="10">10</option>
+                  <option value="20">20</option>
+                  <option value="30">30</option>
+                </select>
+              </label>
+              <button class="btn ghost" ng-disabled="pager.page === 1" ng-click="go(1)">
+                «
+              </button>
+              <button class="btn ghost" ng-disabled="pager.page === 1" ng-click="go(pager.page-1)">
+                Prev
+              </button>
+              <span class="page-no"></span>
+              <button class="btn ghost" ng-disabled="pager.page >= pager.pages" ng-click="go(pager.page+1)">
+                Next
+              </button>
+              <button class="btn ghost" ng-disabled="pager.page >= pager.pages" ng-click="go(pager.pages)">
+                »
+              </button>
+            </div>
+          </div>
+
+
+          <div class="control-right">
+
+
+            <div class="control-date">
+            <input class="search" type="date" ng-model="searchFromDate" ng-change="filter()"/>
+            </div>
+            <div class="control-date">
+            <input class="search" type="date" ng-model="searchToDate" ng-change="filter()"/>
+            </div>
+
+            <div class="export" ng-click="exportExcel()">
+              <img src="../Shared/img/common/export.svg" alt="" class="icon" />
+            </div>
+            <div class="add" id="btnOpenAdd">
+              <img src="../Shared/img/common/plus.svg" alt="" class="plus" />
+              <p class="add-return">Add Return</p>
+            </div>
+          </div>
+        </div>
+        <!-- table -->
+        <div class="card">
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th class="id">ID</th>
+                  <th class="type">Return Type</th>
+                  <th class="partnername">Partner Name</th>
+                  <th class="phone">Partner Phone</th>
+                  <th class="productname">Product Name</th>
+                  <th class="date">Return Date</th>
+                  <th class="action txt-right">Actions</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr ng-repeat="r in returns" style="font-weight: 600;">
+
+                  <td>{{r.returnID}}</td>
+
+                  <td><span class="stock"ng-class="r.returnType == 1 ? 'good' : 'low'">
+                      {{ r.returnType == 1 ? 1 : 2 }}
+                    </span>
+                  </td>
+
+                  <td>{{r.partnerName}}</td>
+                  <td>{{r.partnerPhone}}</td>
+                  <td>{{r.productName}}</td>
+                  <td>{{r.returnDate | date:'yyyy-MM-dd HH:mm'}}</td>
+
+                  <td class="txt-right">
+                    <button class="link" ng-click="detail(r)">👁️</button>
+                    <button class="link" ng-click="edit(r)">✎</button>
+                    <button class="link danger" ng-click="remove(r, $event)">🗑</button>
+                  </td>
+                </tr>
+
+                <tr ng-if="!returns || returns.length === 0">
+                  <td colspan="7" class="empty">No Data</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- form -->
+        <div class="form">
+          <!-- add -->
+
+          <div class="form-detail">
+            <div class="form-detail__content">
+              <h3 class="title">detail Return</h3>
+              <p class="desc">detail Return </p>
+              <form name="frmDetail" >
+                <!-- Cột trái ng-submit="detail()"-->
+                <div>
+                  <label for="returnID-detail">ReturnID</label>
+                  <input type="text" id="returnID-detail" readonly
+                    ng-model="detailReturn.returnID" />
+
+
+                  <label for="returnType-detail">ReturnType</label>
+                  <input type="text" id="returnType-detail"  readonly
+                    ng-model="detailReturn.returnType" />
+
+
+
+                  <label for="partnerName-detail">PartnerName</label>
+                  <input type="text" id="partnerName-detail" readonly
+                    ng-model="detailReturn.partnerName" />
+                  
+
+
+                  <label for="partnerPhone-detail">PartnerPhone</label>
+                  <input type="text" id="partnerPhone-detail" readonly
+                    ng-model="detailReturn.partnerPhone" />
+
+
+                  
+                  <label for="productName-detail">ProductName</label>
+                  <input type="text" id="productName-detail" readonly
+                    ng-model="detailReturn.productName" />
+
+
+
+                  <label for="returnDate-detail">ReturnDate</label>
+                  <input type="date" id="returnDate-detail" readonly
+                    ng-model="detailReturn.returnDate" />
+
+
+                  <label for="reason-detail">Reason</label>
+                  <input type="text" id="reason-detail" readonly
+                    ng-model="detailReturn.reason" />
+
+
+
+                </div>
+
+                <!-- Cột phải -->
+                <div>
+
+                    <label for="saleID-detail">SaleID</label>
+                  <input type="text" id="saleID-detail" readonly
+                    ng-model="detailReturn.saleID" />
+
+                  <label for="receiptID-detail">ReceiptID</label>
+                  <input type="text" id="receiptID-detail"  readonly
+                    ng-model="detailReturn.receiptID" />
+
+
+                    <label for="customerID-detail">CustomerID</label>
+                  <input type="text" id="customerID-detail" readonly
+                    ng-model="detailReturn.customerID" />
+
+
+                    <label for="supplierID-detail">SupplierID</label>
+                  <input type="text" id="supplierID-detail" readonly
+                    ng-model="detailReturn.supplierID" />
+
+                    <label for="productID-detail">ProductID</label>
+                  <input type="text" id="productID-detail" readonly
+                    ng-model="detailReturn.productID" />
+
+
+                  <label for="quantity-detail">Quantity</label>
+                  <input type="text" id="quantity-detail" readonly
+                    ng-model="detailReturn.quantity" />
+
+
+                  <label for="unitPrice-detail">UnitPrice</label>
+                  <input type="text" id="unitPrice-detail" readonly
+                    ng-model="detailReturn.unitPrice" />
+                </div>
+
+                <!-- Footer -->
+                <div class="dialog-footer">
+                  <button type="button" class="cancel" ng-click="closeForm()">Cancel</button>
+                </div>
+              </form>
+
+            </div>
+          </div>
+
+
+
+          <div class="form-add">
+            <div class="form-add__content">
+              <h3 class="title">Add return</h3>
+              <p class="desc">Create a new return </p>
+              <form name="frmAdd" ng-submit="add()">
+                <!-- Cột trái -->
+                <div>
+                  <label for="type-add">ReturnType*</label>
+                  <select id="type-add" required ng-model="newReturn.ReturnType" ng-change="onTypeChange()">
+                      <option value="1">Customer Return</option>
+                      <option value="2">Supplier Return</option>
+                  </select>
+
+
+
+                  <label for="phone-add">PartnerPhone*</label>
+                  <input type="text" id="phone-add" required placeholder="Enter " 
+                  ng-model="newReturn.PartnerPhone" />
+
+
+                  <label for="date-add">ReturnDate*</label>
+                  <input type="date" id="date-add" required placeholder="Enter "
+                    ng-model="newReturn.ReturnDate" />
+
+
+                  <label for="reason-add">Reason</label>
+                  <input type="text" id="readon-add" placeholder="Enter " 
+                  ng-model="newReturn.Reason" />
+                </div>
+
+                <!-- Cột phải -->
+                <div>
+
+                  <label for="saleID-add">SaleID*</label>
+                  <input type="number" id="saleID-add"
+                          placeholder="Enter"
+                          ng-model="newReturn.SaleID"
+                          ng-disabled="newReturn.ReturnType != 1">
+
+
+                  <label for="receiptID-add">ReceiptID*</label>
+                  <input type="number" id="receiptID-add"
+                          placeholder="Enter"
+                          ng-model="newReturn.ReceiptID"
+                          ng-disabled="newReturn.ReturnType != 2">
+
+
+                  <label for="productID-add">ProductID*</label>
+                  <input type="number" id="productID-add" placeholder="Enter " 
+                  ng-model="newReturn.ProductID" />
+
+
+                  <label for="sale-add">Quantity*</label>
+                  <input type="number" id="sale-add" placeholder="Enter " 
+                  ng-model="newReturn.Quantity" min="1" step="1" />
+
+                </div>
+
+                <!-- Footer -->
+                <div class="dialog-footer">
+                  <button type="button" class="cancel">Cancel</button>
+                  <input class="submit" type="submit" value="Add Return" ng-disabled="frmAdd.$invalid||savingAdd" />
+                </div>
+              </form>
+
+            </div>
+          </div>
+          <!-- edit -->
+
+          <!-- =================== FORM EDIT =================== -->
+          <div class="form-edit">
+            <div class="form-edit__content">
+              <h3 class="title">Edit Return</h3>
+              <p class="desc">Update Return information</p>
+
+              <form name="frmEdit" ng-submit="updateReturn()">
+                <!-- ===== Cột trái ===== -->
+                <div>
+                  <label for="ReturnID-edit">ReturnID*</label>
+                  <input type="text" id="ReturnID-edit" disabled placeholder="Enter "
+                    ng-model="editingReturn.ReturnID" />
+
+
+                  <label for="ReturnType-edit">ReturnType*</label>
+                  <select id="ReturnType-edit"
+                          ng-model="editingReturn.ReturnType"
+                          ng-options="t.value as t.label for t in returnTypes"
+                          required>
+                  </select>
+
+
+
+                  <label for="PartnerPhone-edit">PartnerPhone*</label>
+                  <input type="text" id="PartnerPhone-edit" required placeholder="Enter "
+                    ng-model="editingReturn.PartnerPhone" />
+
+
+                  <label for="ReturnDate-edit">ReturnDate*</label>
+                  <input type="date" id="ReturnDate-edit" placeholder="Enter " 
+                  ng-model="editingReturn.ReturnDate" />
+
+
+
+                  <label for="Reason-edit">Reason</label>
+                  <input type="text" id="Reason-edit" placeholder="Enter "
+                    ng-model="editingReturn.Reason" />
+                </div>
+
+                <!-- ===== Cột phải ===== -->
+                <div>
+                  <label for="SaleID-edit">SaleID</label>
+                  <input type="number" id="SaleID-edit" placeholder="Enter "
+                    ng-disabled="editingReturn.ReturnType != 1"
+                    ng-model="editingReturn.SaleID" />
+
+
+                  <label for="ReceiptID-edit">ReceiptID</label>
+                  <input type="number" id="ReceiptID-edit" placeholder="Enter"
+                  ng-disabled="editingReturn.ReturnType != 2"
+                    ng-model="editingReturn.ReceiptID"  />
+
+
+
+                  <label for="ProductID-edit">ProductID</label>
+                  <input type="number" id="ProductID-edit" placeholder="Enter"
+                    ng-model="editingReturn.ProductID"  />
+
+
+
+                  <label for="Quantity-edit">Quantity</label>
+                  <input type="number" id="Quantity-edit" placeholder="Enter"
+                    ng-model="editingReturn.Quantity"  />
+
+                </div>
+
+                <!-- ===== Footer ===== -->
+                <div class="dialog-footer">
+                  <button type="button" class="cancel">Cancel</button>
+                  <input class="submit" type="submit" value="Update "
+                    ng-disabled="frmEdit.$invalid || savingEdit" />
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <!-- delete -->
+          <div class="form-delete" ng-class="{open:showDelete}" ng-click="closeDeleteOnOverlay($event)">
+            <div class="form-delete__content">
+              <h3 class="title">Delete Return</h3>
+              <p class="desc">
+                Are you sure you want to delete the Return
+                "{{deleting.ReturnID}}"? This action cannot be undone.
+              </p>
+              <div class="dialog-footer">
+                <button class="cancel" ng-click="cancelDelete($event)">
+                  Cancel
+                </button>
+                <button type="button" class="submit danger" ng-click="confirmDelete()" ng-disabled="deletingBusy">
+                  Delete Return
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+
+  <script src="../Shared/js/returnfe.js"></script>\
+
+
+  <!-- Đây là FileSaver.js — thư viện giúp bạn tải file từ trình duyệt (client-side). -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+</body>
+
+</html>
+
+

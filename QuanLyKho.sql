@@ -1,4 +1,4 @@
-﻿create database QLBanLeKho
+﻿﻿create database QLBanLeKho
 use QLBanLeKho
 
 
@@ -209,20 +209,36 @@ CREATE TABLE SalesItems (
     FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
 );
 
-CREATE TABLE Returns (
-    ReturnID INT IDENTITY(1,1) PRIMARY KEY, -- Mã phiếu trả hàng
-    SaleID INT NULL, -- Mã đơn bán hàng
-    CustomerID INT NULL, -- Mã khách hàng
-    ReturnDate DATE NOT NULL, -- Ngày trả hàng
-    Reason NVARCHAR(255), -- Lý do trả
-	SupplierID INT NULL,
-    ReceiptID INT NULL,
-    FOREIGN KEY (SaleID) REFERENCES Sales(SaleID),
-    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID),
-	FOREIGN KEY (SupplierID) REFERENCES Suppliers(SupplierID),
-	FOREIGN KEY (ReceiptID) REFERENCES GoodsReceipts(ReceiptID),
 
+
+
+
+CREATE TABLE Returns (
+    ReturnID INT IDENTITY(1,1) PRIMARY KEY,
+    -- Loại trả hàng: 1 = trả từ khách hàng; 2 = trả về nhà cung cấp
+    ReturnType TINYINT NULL,    
+    -- Liên kết giao dịch gốc
+    SaleID INT NULL,                -- bắt buộc nếu ReturnType = 1
+    ReceiptID INT NULL,             -- bắt buộc nếu ReturnType = 2
+    -- Liên kết master data
+    CustomerID INT NULL,           
+    SupplierID INT NULL,
+    -- Snapshot thông tin khách/NCC tại thời điểm trả hàng
+    PartnerName NVARCHAR(100),      -- tên khách hoặc nhà cung cấp
+    PartnerPhone VARCHAR(20),
+    ReturnDate DATETIME NOT NULL DEFAULT GETDATE(),
+    Reason NVARCHAR(255),
+    ProductID INT NOT NULL,
+	ProductName NVARCHAR(100) NULL, -- Tên sản phẩm
+    Quantity INT NOT NULL CHECK (Quantity > 0),
+    UnitPrice DECIMAL(18,2) NOT NULL,      -- snapshot giá tại thời điểm trả
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID),
+    FOREIGN KEY (SaleID)      REFERENCES Sales(SaleID),
+    FOREIGN KEY (ReceiptID)   REFERENCES GoodsReceipts(ReceiptID),
+    FOREIGN KEY (CustomerID)  REFERENCES Customers(CustomerID),
+    FOREIGN KEY (SupplierID)  REFERENCES Suppliers(SupplierID)
 );
+
 
 
 
@@ -1890,7 +1906,7 @@ END;
 GO
 
 
-
+select * from Returns
 
 
 -- =============================================
@@ -2053,7 +2069,7 @@ END;
 GO
 
 
-
+select * from Payments
 
 
 
@@ -2443,3 +2459,620 @@ GO
 
 
 
+
+
+
+CREATE TABLE Returns (
+    ReturnID INT IDENTITY(1,1) PRIMARY KEY,
+    -- Loại trả hàng: 1 = trả từ khách hàng; 2 = trả về nhà cung cấp
+    ReturnType TINYINT NULL,    
+    -- Liên kết giao dịch gốc
+    SaleID INT NULL,                -- bắt buộc nếu ReturnType = 1
+    ReceiptID INT NULL,             -- bắt buộc nếu ReturnType = 2
+    -- Liên kết master data
+    CustomerID INT NULL,           
+    SupplierID INT NULL,
+    -- Snapshot thông tin khách/NCC tại thời điểm trả hàng
+    PartnerName NVARCHAR(100),      -- tên khách hoặc nhà cung cấp
+    PartnerPhone VARCHAR(20),
+    ReturnDate DATETIME NOT NULL DEFAULT GETDATE(),
+    Reason NVARCHAR(255),
+    ProductID INT NOT NULL,
+	ProductName NVARCHAR(100) NULL, -- Tên sản phẩm
+    Quantity INT NOT NULL CHECK (Quantity > 0),
+    UnitPrice DECIMAL(18,2) NOT NULL,      -- snapshot giá tại thời điểm trả
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID),
+    FOREIGN KEY (SaleID)      REFERENCES Sales(SaleID),
+    FOREIGN KEY (ReceiptID)   REFERENCES GoodsReceipts(ReceiptID),
+    FOREIGN KEY (CustomerID)  REFERENCES Customers(CustomerID),
+    FOREIGN KEY (SupplierID)  REFERENCES Suppliers(SupplierID)
+);
+
+drop table Returns
+
+
+
+
+CREATE PROCEDURE [dbo].[sp_return_get_by_id]
+(
+    @ReturnID INT
+)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT *
+    FROM Returns
+    WHERE ReturnID = @ReturnID;
+END;
+GO
+
+
+
+
+select * from Products
+
+
+
+CREATE PROCEDURE [dbo].[sp_return_create]
+(
+    @ReturnType TINYINT,        
+    @PartnerPhone VARCHAR(20),  
+
+    @SaleID INT = NULL,
+    @ReceiptID INT = NULL,
+
+    @ProductID INT = NULL,   -- CHO PHÉP NULL ĐỂ KIỂM TRA
+    @Quantity INT = NULL,     -- NẾU NULL → SET = 0
+
+    @ReturnDate DATETIME,
+    @Reason NVARCHAR(255)
+)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    DECLARE 
+        @CustomerID INT = NULL,
+        @SupplierID INT = NULL,
+        @PartnerName NVARCHAR(100) = NULL,
+        @UnitPrice DECIMAL(18,2),
+        @ProductName NVARCHAR(100);
+
+    -----------------------------------------
+    -- 1. VALIDATE PRODUCTID
+    -----------------------------------------
+    IF (@ProductID IS NULL)
+    BEGIN
+        RAISERROR(N'ProductID bắt buộc không được NULL', 16, 1);
+        RETURN;
+    END
+
+    -----------------------------------------
+    -- 2. XỬ LÝ Quantity = NULL → SET = 0
+    -----------------------------------------
+    IF (@Quantity IS NULL)
+    BEGIN
+        RAISERROR(N'Quantity số lượng phải lớn hơn 0', 16, 1);
+        RETURN;
+    END
+
+    -----------------------------------------
+    -- 3. LẤY THÔNG TIN SẢN PHẨM
+    -----------------------------------------
+    SELECT 
+        @UnitPrice = UnitPrice,
+        @ProductName = ProductName
+    FROM Products
+    WHERE ProductID = @ProductID;
+
+    IF (@UnitPrice IS NULL OR @ProductName IS NULL)
+    BEGIN
+        RAISERROR(N'ProductID không tồn tại trong bảng Products', 16, 1);
+        RETURN;
+    END
+
+    -----------------------------------------
+    -- 4. RETURN TYPE 1 → KHÁCH TRẢ HÀNG
+    -----------------------------------------
+    IF (@ReturnType = 1)
+    BEGIN
+        IF (@SaleID IS NULL)
+        BEGIN
+            RAISERROR(N'SaleID bắt buộc khi ReturnType = 1', 16, 1);
+            RETURN;
+        END
+
+
+		IF NOT EXISTS (SELECT 1 FROM Sales WHERE SaleID = @SaleID)
+		BEGIN
+			RAISERROR(N'SaleID không tồn tại trong bảng Sales', 16, 1);
+			RETURN;
+		END
+
+
+        IF (@ReceiptID IS NOT NULL)
+        BEGIN
+            RAISERROR(N'ReceiptID phải NULL khi ReturnType = 1', 16, 1);
+            RETURN;
+        END
+
+        SELECT TOP 1
+            @CustomerID = CustomerID,
+            @PartnerName = CustomerName
+        FROM Customers
+        WHERE Phone = @PartnerPhone;
+
+        IF (@CustomerID IS NULL)
+        BEGIN
+            RAISERROR(N'Số điện thoại khách hàng không tồn tại', 16, 1);
+            RETURN;
+        END
+    END
+    -----------------------------------------
+    -- 5. RETURN TYPE 2 → NHÀ CUNG CẤP
+    -----------------------------------------
+    ELSE IF (@ReturnType = 2)
+    BEGIN
+        IF (@ReceiptID IS NULL)
+        BEGIN
+            RAISERROR(N'ReceiptID bắt buộc khi ReturnType = 2', 16, 1);
+            RETURN;
+        END
+
+
+
+		IF NOT EXISTS (SELECT 1 FROM GoodsReceipts WHERE ReceiptID = @ReceiptID)
+		BEGIN
+			RAISERROR(N'ReceiptID không tồn tại trong bảng GoodsReceipts', 16, 1);
+			RETURN;
+		END
+
+
+
+        IF (@SaleID IS NOT NULL)
+        BEGIN
+            RAISERROR(N'SaleID phải NULL khi ReturnType = 2', 16, 1);
+            RETURN;
+        END
+
+        SELECT TOP 1
+            @SupplierID = SupplierID,
+            @PartnerName = SupplierName
+        FROM Suppliers
+        WHERE Phone = @PartnerPhone;
+
+        IF (@SupplierID IS NULL)
+        BEGIN
+            RAISERROR(N'Số điện thoại nhà cung cấp không tồn tại', 16, 1);
+            RETURN;
+        END
+    END
+    ELSE
+    BEGIN
+        RAISERROR(N'ReturnType không hợp lệ (1 = khách hàng, 2 = nhà cung cấp)', 16, 1);
+        RETURN;
+    END
+
+
+    -----------------------------------------
+    -- 6. INSERT DỮ LIỆU
+    -----------------------------------------
+    INSERT INTO Returns
+    (
+        ReturnType, SaleID, ReceiptID,
+        CustomerID, SupplierID,
+        PartnerName, PartnerPhone,
+        ProductID, ProductName, Quantity, UnitPrice,
+        ReturnDate, Reason
+    )
+    VALUES
+    (
+        @ReturnType, @SaleID, @ReceiptID,
+        @CustomerID, @SupplierID,
+        @PartnerName, @PartnerPhone,
+        @ProductID, @ProductName, @Quantity, @UnitPrice,
+        @ReturnDate, @Reason
+    );
+
+    SELECT SCOPE_IDENTITY() AS NewReturnID;
+END;
+GO
+
+
+
+
+
+
+
+
+
+CREATE PROCEDURE [dbo].[sp_return_update]
+(
+    @ReturnID INT,
+    @ReturnType TINYINT,
+
+    @SaleID INT = NULL,
+    @ReceiptID INT = NULL,
+
+    @PartnerPhone VARCHAR(20) = NULL,
+    @ReturnDate DATETIME = NULL,
+    @Reason NVARCHAR(255) = NULL,
+
+    @ProductID INT = NULL,
+    @Quantity INT = NULL
+)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    DECLARE 
+        @CustomerID INT = NULL,
+        @SupplierID INT = NULL,
+        @PartnerName NVARCHAR(100) = NULL,
+        @UnitPrice DECIMAL(18,2),
+        @ProductName NVARCHAR(100);
+
+    -----------------------------------------
+    -- 1. KIỂM TRA RETURN TỒN TẠI
+    -----------------------------------------
+    IF NOT EXISTS (SELECT 1 FROM Returns WHERE ReturnID = @ReturnID)
+    BEGIN
+        RAISERROR(N'ReturnID không tồn tại', 16, 1);
+        RETURN;
+    END
+
+    -----------------------------------------
+    -- 2. LẤY GIÁ SẢN PHẨM NẾU ĐỔI PRODUCTID
+    -----------------------------------------
+    IF (@ProductID IS NOT NULL)
+    BEGIN
+        SELECT 
+            @UnitPrice = UnitPrice,
+            @ProductName = ProductName
+        FROM Products
+        WHERE ProductID = @ProductID;
+
+        IF (@UnitPrice IS NULL)
+        BEGIN
+            RAISERROR(N'ProductID không hợp lệ', 16, 1);
+            RETURN;
+        END
+    END
+
+    -----------------------------------------
+    -- 3. VALIDATION THEO RETURN TYPE
+    -----------------------------------------
+
+    ------------------------------------------------
+    -- CASE 1: RETURN TYPE = 1 (KHÁCH TRẢ HÀNG)
+    ------------------------------------------------
+    IF (@ReturnType = 1)
+    BEGIN
+        -- SaleID phải có + ReceiptID phải NULL
+        IF (@SaleID IS NULL)
+        BEGIN
+            RAISERROR(N'SaleID bắt buộc khi ReturnType = 1', 16, 1);
+            RETURN;
+        END
+
+
+		IF NOT EXISTS (SELECT 1 FROM Sales WHERE SaleID = @SaleID)
+		BEGIN
+			RAISERROR(N'SaleID không tồn tại trong bảng Sales', 16, 1);
+			RETURN;
+		END
+
+        IF (@ReceiptID IS NOT NULL)
+        BEGIN
+            RAISERROR(N'ReceiptID phải NULL khi ReturnType = 1', 16, 1);
+            RETURN;
+        END
+
+        -- Nếu có truyền SĐT → lấy CustomerID
+        IF (@PartnerPhone IS NOT NULL)
+        BEGIN
+            SELECT TOP 1
+                @CustomerID = CustomerID,
+                @PartnerName = CustomerName
+            FROM Customers
+            WHERE Phone = @PartnerPhone;
+
+            IF (@CustomerID IS NULL)
+            BEGIN
+                RAISERROR(N'Số điện thoại khách hàng không tồn tại', 16, 1);
+                RETURN;
+            END
+        END
+
+        -- 🔥 BẮT BUỘC CustomerID phải có (theo yêu cầu của bạn)
+        IF (@CustomerID IS NULL)
+        BEGIN
+            -- lấy CustomerID hiện tại trong bảng (nếu không đổi)
+            SELECT @CustomerID = CustomerID FROM Returns WHERE ReturnID = @ReturnID;
+
+            IF (@CustomerID IS NULL)
+            BEGIN
+                RAISERROR(N'CustomerID bắt buộc phải có khi ReturnType = 1', 16, 1);
+                RETURN;
+            END
+        END
+
+        -- Bắt buộc SupplierID NULL
+        SET @SupplierID = NULL;
+    END
+
+    ------------------------------------------------
+    -- CASE 2: RETURN TYPE = 2 (TRẢ NHÀ CUNG CẤP)
+    ------------------------------------------------
+    ELSE IF (@ReturnType = 2)
+    BEGIN
+        -- ReceiptID phải có + SaleID phải NULL
+        IF (@ReceiptID IS NULL)
+        BEGIN
+            RAISERROR(N'ReceiptID bắt buộc khi ReturnType = 2', 16, 1);
+            RETURN;
+        END
+
+		IF NOT EXISTS (SELECT 1 FROM GoodsReceipts WHERE ReceiptID = @ReceiptID)
+		BEGIN
+			RAISERROR(N'ReceiptID không tồn tại trong bảng GoodsReceipts', 16, 1);
+			RETURN;
+		END
+
+        IF (@SaleID IS NOT NULL)
+        BEGIN
+            RAISERROR(N'SaleID phải NULL khi ReturnType = 2', 16, 1);
+            RETURN;
+        END
+
+        -- Nếu có truyền Phone → lấy SupplierID
+        IF (@PartnerPhone IS NOT NULL)
+        BEGIN
+            SELECT TOP 1
+                @SupplierID = SupplierID,
+                @PartnerName = SupplierName
+            FROM Suppliers
+            WHERE Phone = @PartnerPhone;
+
+            IF (@SupplierID IS NULL)
+            BEGIN
+                RAISERROR(N'Số điện thoại nhà cung cấp không tồn tại', 16, 1);
+                RETURN;
+            END
+        END
+
+        -- 🔥 BẮT BUỘC SupplierID phải có (theo yêu cầu bạn)
+        IF (@SupplierID IS NULL)
+        BEGIN
+            SELECT @SupplierID = SupplierID FROM Returns WHERE ReturnID = @ReturnID;
+
+            IF (@SupplierID IS NULL)
+            BEGIN
+                RAISERROR(N'SupplierID bắt buộc phải có khi ReturnType = 2', 16, 1);
+                RETURN;
+            END
+        END
+
+        -- Bắt buộc CustomerID NULL
+        SET @CustomerID = NULL;
+    END
+
+    ELSE
+    BEGIN
+        RAISERROR(N'ReturnType không hợp lệ', 16, 1);
+        RETURN;
+    END
+
+    -----------------------------------------
+    -- 4. UPDATE DỮ LIỆU
+    -----------------------------------------
+    UPDATE Returns
+    SET
+        ReturnType = @ReturnType,
+
+        SaleID = CASE WHEN @ReturnType = 1 THEN @SaleID ELSE NULL END,
+        ReceiptID = CASE WHEN @ReturnType = 2 THEN @ReceiptID ELSE NULL END,
+
+        CustomerID = CASE WHEN @ReturnType = 1 THEN @CustomerID ELSE NULL END,
+        SupplierID = CASE WHEN @ReturnType = 2 THEN @SupplierID ELSE NULL END,
+
+        PartnerName = ISNULL(@PartnerName, PartnerName),
+        PartnerPhone = ISNULL(@PartnerPhone, PartnerPhone),
+
+        ProductID = ISNULL(@ProductID, ProductID),
+        ProductName = ISNULL(@ProductName, ProductName),
+        Quantity = ISNULL(@Quantity, Quantity),
+        UnitPrice = ISNULL(@UnitPrice, UnitPrice),
+
+        ReturnDate = ISNULL(@ReturnDate, ReturnDate),
+        Reason = ISNULL(@Reason, Reason)
+    WHERE ReturnID = @ReturnID;
+
+    SELECT '';
+END;
+GO
+
+
+
+
+
+select * from Payments
+
+
+
+
+
+
+CREATE PROCEDURE [dbo].[sp_return_delete]
+(
+    @ReturnID INT
+)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    IF NOT EXISTS (SELECT 1 FROM Returns WHERE ReturnID = @ReturnID)
+    BEGIN
+        RAISERROR(N'ReturnID không tồn tại', 16, 1);
+        RETURN;
+    END
+
+    DELETE FROM Returns WHERE ReturnID = @ReturnID;
+
+    SELECT 'Xóa thành công' AS Message;
+END;
+GO
+
+
+
+
+select * from returns
+
+
+CREATE PROCEDURE [dbo].[sp_return_search]
+(
+    @page_index  INT, 
+    @page_size   INT,
+
+    @ReturnID    NVARCHAR(50) = NULL,
+    @ReturnType  NVARCHAR(50) = NULL,
+    @SaleID      NVARCHAR(50) = NULL,
+    @ReceiptID   NVARCHAR(50) = NULL,
+    @CustomerID  NVARCHAR(50) = NULL,
+    @SupplierID  NVARCHAR(50) = NULL,    
+    @PartnerName NVARCHAR(100) = NULL,
+    @PartnerPhone NVARCHAR(20) = NULL,
+    @ProductID   NVARCHAR(50) = NULL,
+
+    @FromDate    DATETIME = NULL,
+    @ToDate      DATETIME = NULL
+)
+AS
+BEGIN
+    DECLARE @RecordCount BIGINT;
+
+    ----------------------------------------------------------------
+    -- ✨ CASE 1: CÓ PHÂN TRANG (page_size > 0)
+    ----------------------------------------------------------------
+    IF (@page_size <> 0)
+    BEGIN
+        SET NOCOUNT ON;
+
+        SELECT 
+            ROW_NUMBER() OVER (ORDER BY r.ReturnID DESC) AS RowNumber,
+            r.*
+        INTO #Results1
+        FROM Returns r
+        WHERE 
+            (@ReturnID    IS NULL OR CAST(r.ReturnID    AS NVARCHAR(50)) LIKE '%' + @ReturnID + '%')
+        AND (@ReturnType  IS NULL OR CAST(r.ReturnType  AS NVARCHAR(50)) LIKE '%' + @ReturnType + '%')
+        AND (@SaleID      IS NULL OR CAST(r.SaleID      AS NVARCHAR(50)) LIKE '%' + @SaleID + '%')
+        AND (@ReceiptID   IS NULL OR CAST(r.ReceiptID   AS NVARCHAR(50)) LIKE '%' + @ReceiptID + '%')
+        AND (@CustomerID  IS NULL OR CAST(r.CustomerID  AS NVARCHAR(50)) LIKE '%' + @CustomerID + '%')
+        AND (@SupplierID  IS NULL OR CAST(r.SupplierID  AS NVARCHAR(50)) LIKE '%' + @SupplierID + '%')
+        AND (@PartnerName IS NULL OR r.PartnerName LIKE '%' + @PartnerName + '%')
+        AND (@PartnerPhone IS NULL OR r.PartnerPhone LIKE '%' + @PartnerPhone + '%')
+        AND (@ProductID   IS NULL OR CAST(r.ProductID   AS NVARCHAR(50)) LIKE '%' + @ProductID + '%')
+        AND (@FromDate IS NULL OR r.ReturnDate >= @FromDate)
+        AND (@ToDate   IS NULL OR r.ReturnDate <= @ToDate);
+
+
+        SELECT @RecordCount = COUNT(*) FROM #Results1;
+
+        SELECT *, @RecordCount AS RecordCount
+        FROM #Results1
+        WHERE RowNumber BETWEEN (@page_index - 1) * @page_size + 1
+                            AND (@page_index * @page_size);
+
+        DROP TABLE #Results1;
+    END
+    ----------------------------------------------------------------
+    -- ✨ CASE 2: KHÔNG PHÂN TRANG (page_size = 0)
+    ----------------------------------------------------------------
+    ELSE
+    BEGIN
+        SET NOCOUNT ON;
+
+        SELECT 
+            ROW_NUMBER() OVER (ORDER BY r.ReturnID DESC) AS RowNumber,
+            r.*
+        INTO #Results2
+        FROM Returns r
+        WHERE 
+            (@ReturnID    IS NULL OR CAST(r.ReturnID    AS NVARCHAR(50)) LIKE '%' + @ReturnID + '%')
+        AND (@ReturnType  IS NULL OR CAST(r.ReturnType  AS NVARCHAR(50)) LIKE '%' + @ReturnType + '%')
+        AND (@SaleID      IS NULL OR CAST(r.SaleID      AS NVARCHAR(50)) LIKE '%' + @SaleID + '%')
+        AND (@ReceiptID   IS NULL OR CAST(r.ReceiptID   AS NVARCHAR(50)) LIKE '%' + @ReceiptID + '%')
+        AND (@CustomerID  IS NULL OR CAST(r.CustomerID  AS NVARCHAR(50)) LIKE '%' + @CustomerID + '%')
+        AND (@SupplierID  IS NULL OR CAST(r.SupplierID  AS NVARCHAR(50)) LIKE '%' + @SupplierID + '%')
+        AND (@PartnerName IS NULL OR r.PartnerName LIKE '%' + @PartnerName + '%')
+        AND (@PartnerPhone IS NULL OR r.PartnerPhone LIKE '%' + @PartnerPhone + '%')
+        AND (@ProductID   IS NULL OR CAST(r.ProductID   AS NVARCHAR(50)) LIKE '%' + @ProductID + '%')
+        AND (@FromDate IS NULL OR r.ReturnDate >= @FromDate)
+        AND (@ToDate   IS NULL OR r.ReturnDate <= @ToDate);
+
+        SELECT @RecordCount = COUNT(*) FROM #Results2;
+
+        SELECT *, @RecordCount AS RecordCount
+        FROM #Results2
+        ORDER BY ReturnID DESC;
+
+        DROP TABLE #Results2;
+    END
+END
+GO
+
+
+
+
+
+
+
+
+
+INSERT INTO Returns 
+(ReturnType, SaleID, CustomerID, PartnerName, PartnerPhone,
+ ReturnDate, Reason, ProductID, ProductName, Quantity, UnitPrice)
+VALUES
+
+(1, 2, 2,  N'Khách Hàng 2',  '0923000002', '2025-03-10', N'Không vừa size',       2,  N'Sản phẩm 2',  1, 495000),
+(1, 3, 3,  N'Khách Hàng 3',  '0923000003', '2025-03-11', N'Màu không giống hình', 3,  N'Sản phẩm 3',  1, 560000),
+(1, 4, 4,  N'Khách Hàng 4',  '0923000004', '2025-03-11', N'Lỗi đường chỉ',        4,  N'Sản phẩm 4',  1, 540000),
+(1, 5, 5,  N'Khách Hàng 5',  '0923000005', '2025-03-12', N'Bị trầy xước',          5,  N'Sản phẩm 5',  1, 560000),
+(1, 6, 6,  N'Khách Hàng 6',  '0923000006', '2025-03-12', N'Không đúng mẫu đặt',    6,  N'Sản phẩm 6',  1, 450000),
+(1, 7, 7,  N'Khách Hàng 7',  '0923000007', '2025-03-13', N'Trầy đế giày',          7,  N'Sản phẩm 7',  1, 460000),
+(1, 8, 8,  N'Khách Hàng 8',  '0923000008', '2025-03-13', N'Không hợp phong cách',  8,  N'Sản phẩm 8',  1, 700000),
+(1, 9, 9,  N'Khách Hàng 9',  '0923000009', '2025-03-14', N'Lỗi form',              9,  N'Sản phẩm 9',  1, 1050000),
+(1, 10, 10, N'Khách Hàng 10','0923000010', '2025-03-14', N'Nhăn da',              10, N'Sản phẩm 10', 1, 630000),
+(1, 11, 11, N'Khách Hàng 11','0923000011', '2025-03-15', N'Sai size khi giao',    11, N'Sản phẩm 11', 1, 520000),
+(1, 12, 12, N'Khách Hàng 12','0923000012', '2025-03-15', N'Lỗi dáng giày',        12, N'Sản phẩm 12', 1, 920000),
+(1, 13, 13, N'Khách Hàng 13','0923000013', '2025-03-16', N'Không ưng màu',        13, N'Sản phẩm 13', 1, 150000),
+(1, 14, 14, N'Khách Hàng 14','0923000014', '2025-03-16', N'Không thoải mái',      14, N'Sản phẩm 14', 1, 250000),
+(1, 15, 15, N'Khách Hàng 15','0923000015', '2025-03-17', N'Gót giày cứng',        15, N'Sản phẩm 15', 1, 580000);
+
+
+
+
+select * from Returns
+
+
+INSERT INTO Returns 
+(ReturnType, ReceiptID, SupplierID, PartnerName, PartnerPhone,
+ ReturnDate, Reason, ProductID, ProductName, Quantity, UnitPrice)
+VALUES
+(2, 1, 1,   N'Nhà Cung Cấp A', '0912000001', '2025-03-10', N'Hàng lỗi khi nhập',           1,  N'Sản phẩm 1',  2, 450000),
+(2, 2, 2,   N'Nhà Cung Cấp B', '0912000002', '2025-03-18', N'Không đúng số lượng',         2,  N'Sản phẩm 2',  3, 470000),
+(2, 3, 3,   N'Nhà Cung Cấp C', '0912000003', '2025-03-19', N'Hỏng đế giày',                3,  N'Sản phẩm 3',  1, 520000),
+(2, 4, 4,   N'Nhà Cung Cấp D', '0912000004', '2025-03-19', N'Lỗi da bề mặt',              4,  N'Sản phẩm 4',  2, 500000),
+(2, 5, 5,   N'Nhà Cung Cấp E', '0912000005', '2025-03-20', N'Móp mũi giày',               5,  N'Sản phẩm 5',  1, 530000),
+(2, 6, 6,   N'Nhà Cung Cấp F', '0912000006', '2025-03-14', N'Sai model',                   6,  N'Sản phẩm 6',  4, 410000),
+(2, 7, 7,   N'Nhà Cung Cấp G', '0912000007', '2025-06-03', N'Kém chất lượng',              7,  N'Sản phẩm 7',  3, 420000),
+(2, 8, 8,   N'Nhà Cung Cấp H', '0912000008', '2025-06-12', N'Lỗi phần đế',                8,  N'Sản phẩm 8',  2, 650000),
+(2, 9, 9,   N'Nhà Cung Cấp I', '0912000009', '2025-06-22', N'Giày thấm nước',             9,  N'Sản phẩm 9',  1, 980000),
+(2, 10, 10, N'Nhà Cung Cấp J', '0912000010', '2025-09-22', N'Lỗi màu sắc',               10, N'Sản phẩm 10', 3, 590000),
+(2, 11, 11, N'Nhà Cung Cấp K', '0912000011', '2025-09-28', N'Lỗi keo dán',               11, N'Sản phẩm 11', 2, 480000),
+(2, 12, 12, N'Nhà Cung Cấp L', '0912000012', '2025-09-16', N'Suốt chỉ',                  12, N'Sản phẩm 12', 1, 880000),
+(2, 13, 13, N'Nhà Cung Cấp M', '0912000013', '2025-09-24', N'Lỗi form giày',             13, N'Sản phẩm 13', 5, 120000),
+(2, 14, 14, N'Nhà Cung Cấp N', '0912000014', '2025-10-02', N'Giày nứt đế',               14, N'Sản phẩm 14', 4, 220000),
+(2, 15, 15, N'Nhà Cung Cấp O', '0912000015', '2025-10-16', N'Lỗi cao su đế',             15, N'Sản phẩm 15', 2, 540000);

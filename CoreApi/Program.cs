@@ -82,8 +82,8 @@ builder.Services.AddScoped<IPurchaseOrderRepository, PurchaseOrderRepository>();
 
 
 
-builder.Services.AddScoped<IDReturnBLL, ReturnBLL>();
-builder.Services.AddScoped<IDReturnDAL, ReturnDAL>();
+builder.Services.AddScoped<IReturnBLL, ReturnBLL>();
+builder.Services.AddScoped<IReturnDAL, ReturnDAL>();
 
 
 
@@ -111,8 +111,7 @@ builder.Services.AddAuthentication(x =>
     };
 });
 
-builder.Services.AddTransient<IDReturnBLL, ReturnBLL>();
-builder.Services.AddTransient<IDReturnDAL, ReturnDAL>();
+
 
 builder.Services.AddTransient<IDProductDAL, ProductDAL>();
 builder.Services.AddTransient<IDProductBLL, ProductBLL>();

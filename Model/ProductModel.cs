@@ -8,7 +8,7 @@ namespace Model
 {
     public class ProductModel
     {
-        
+
         public int ProductID { get; set; }           // Mã sản phẩm (khóa chính)
         public string SKU { get; set; }              // Mã SKU (unique, not null)
         public string Barcode { get; set; }          // Mã barcode (unique, có thể null)
