@@ -1,4 +1,5 @@
 ﻿using BLL.Interfaces;
+using DAL;
 using DAL.Interfaces;
 using Model;
 using System;
@@ -7,13 +8,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace BLL
 {
-    public class ReturnBLL : IDReturnBLL
+    public class ReturnBLL : IReturnBLL
     {
-        private readonly IDReturnDAL _res;
+        private readonly IReturnDAL _res;
 
-        public ReturnBLL(IDReturnDAL res)
+        public ReturnBLL(IReturnDAL res)
         {
             _res = res;
         }
@@ -23,17 +25,12 @@ namespace BLL
             return _res.GetDatabyID(id);
         }
 
-        public bool CreateCustomer(ReturnCustomerModel model)
+        public int Create(ReturnCreateRequest model)
         {
-            return _res.CreateCustomer(model);
+            return _res.Create(model);
         }
 
-        public bool CreateSupplier(ReturnSupplierModel model)
-        {
-            return _res.CreateSupplier(model);
-        }
-
-        public bool Update(ReturnModel model)
+        public bool Update(ReturnUpdateRequest model)
         {
             return _res.Update(model);
         }
@@ -43,11 +40,22 @@ namespace BLL
             return _res.Delete(id);
         }
 
+
         public List<ReturnModel> Search(int pageIndex, int pageSize, out long total,
-                                  int? ReturnID, int? SaleID, int? CustomerID, int? SupplierID, int? ReceiptID,
-                                  DateTime? FromDate, DateTime? ToDate)
+        int? ReturnID, byte? ReturnType,
+        int? SaleID, int? ReceiptID,
+        int? CustomerID, int? SupplierID,
+        string? PartnerName, string? PartnerPhone,
+        int? ProductID,
+        DateTime? FromDate, DateTime? ToDate)
         {
-            return _res.Search(pageIndex, pageSize, out total, ReturnID, SaleID, CustomerID, ReceiptID, SupplierID ,FromDate, ToDate);
+            return _res.Search(pageIndex, pageSize, out total,
+            ReturnID, ReturnType,
+            SaleID, ReceiptID,
+            CustomerID, SupplierID,
+            PartnerName, PartnerPhone,
+            ProductID,
+            FromDate, ToDate);
         }
     }
 }

@@ -7,15 +7,18 @@ using System.Threading.Tasks;
 
 namespace DAL.Interfaces
 {
-    public partial interface IDReturnDAL
+    public interface IReturnDAL
     {
         ReturnModel GetDatabyID(int returnId);
-        bool CreateCustomer(ReturnCustomerModel model);
-        bool CreateSupplier(ReturnSupplierModel model);
-        bool Update(ReturnModel model);
-        bool Delete(int returnId);
+        int Create(ReturnCreateRequest model);
+        bool Update(ReturnUpdateRequest model);
+        bool Delete(int id);
         List<ReturnModel> Search(int pageIndex, int pageSize, out long total,
-                                  int? ReturnID, int? SaleID, int? CustomerID, int? ReceiptID, int? SupplierID,
-                                  DateTime? FromDate, DateTime? ToDate);
+                                    int? ReturnID, byte? ReturnType,
+                                    int? SaleID, int? ReceiptID,
+                                    int? CustomerID, int? SupplierID,
+                                    string? PartnerName, string? PartnerPhone,
+                                    int? ProductID,
+                                    DateTime? FromDate, DateTime? ToDate);
     }
 }

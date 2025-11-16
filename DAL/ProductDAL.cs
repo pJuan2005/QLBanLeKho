@@ -58,7 +58,7 @@ namespace DAL
                 if (result != null && int.TryParse(result.ToString(), out int newId))
                     model.ProductID = newId;
 
-                return true; 
+                return true;
             }
             catch (Exception ex)
             {
@@ -147,7 +147,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                throw ;
+                throw;
             }
         }
     }
