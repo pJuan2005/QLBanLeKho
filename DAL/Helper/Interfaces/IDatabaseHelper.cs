@@ -132,6 +132,13 @@ namespace DAL.Helper
         /// <returns>List Object Result in query</returns>
         List<Object> ReturnValuesFromExecuteSProcedure(out string msgError, string sprocedureName, int outputParamCountNumber, params object[] paramObjects);
         #endregion 
+
+
+        object ExecuteScalarSProcedureWithTransaction2(
+            out string msgError,
+            string procName,
+            params object[] param);
+
     }
 
 }

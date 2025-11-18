@@ -81,80 +81,57 @@ namespace CoreApi.Controllers
             var response = new ResponseModel();
             try
             {
-                // --- PAGING ---
-                int page = 1, pageSize = 10;
-                if (formData != null)
-                {
-                    if (formData.ContainsKey("page") && int.TryParse(Convert.ToString(formData["page"]), out var p) && p > 0)
-                        page = p;
-                    if (formData.ContainsKey("pageSize") && int.TryParse(Convert.ToString(formData["pageSize"]), out var ps) && ps > 0)
-                        pageSize = ps;
-                }
+                var pageIndex = int.Parse(formData["pageIndex"].ToString());
+                var pageSize = int.Parse(formData["pageSize"].ToString());
 
-                // --- FILTERS ---
-                decimal? minValue = null, maxValue = null;
-                string type = null;
-                int? categoryId = null;
                 DateTime? fromDate = null, toDate = null;
+                string status = "";
 
-                if (formData != null)
+                if (formData.Keys.Contains("fromDate") && DateTime.TryParse(Convert.ToString(formData["fromDate"]), out var fd))
+                    fromDate = fd;
+                if (formData.Keys.Contains("toDate") && DateTime.TryParse(Convert.ToString(formData["toDate"]), out var td))
+                    toDate = td;
+                if (formData.Keys.Contains("status"))
+                    status = Convert.ToString(formData["status"]);
+
+                var data = _promotionsBusiness.Search(pageIndex, pageSize, out long total, fromDate, toDate, status);
+
+                // 🔹 Kiểm tra ngày hết hạn và đổi Status nếu cần
+                foreach (var promo in data)
                 {
-                    if (formData.ContainsKey("minValue"))
+                    if (promo.EndDate <= DateTime.Today && promo.Status == "Active")
                     {
-                        var val = Convert.ToString(formData["minValue"])?.Trim();
-                        if (decimal.TryParse(val, NumberStyles.Any, CultureInfo.InvariantCulture, out var d))
-                            minValue = d;
-                    }
+                        promo.Status = "Expired";
 
-                    if (formData.ContainsKey("maxValue"))
-                    {
-                        var val = Convert.ToString(formData["maxValue"])?.Trim();
-                        if (decimal.TryParse(val, NumberStyles.Any, CultureInfo.InvariantCulture, out var d))
-                            maxValue = d;
-                    }
-
-                    if (formData.ContainsKey("type"))
-                        type = Convert.ToString(formData["type"])?.Trim();
-
-                    if (formData.ContainsKey("categoryId"))
-                    {
-                        var val = Convert.ToString(formData["categoryId"])?.Trim();
-                        if (int.TryParse(val, out var cid))
-                            categoryId = cid;
-                    }
-
-                    if (formData.ContainsKey("fromDate"))
-                    {
-                        var val = Convert.ToString(formData["fromDate"]);
-                        if (DateTime.TryParse(val, out var d))
-                            fromDate = d;
-                    }
-
-                    if (formData.ContainsKey("toDate"))
-                    {
-                        var val = Convert.ToString(formData["toDate"]);
-                        if (DateTime.TryParse(val, out var d))
-                            toDate = d;
+                        // Nếu muốn update DB ngay để đồng bộ
+                        _promotionsBusiness.Update(new PromotionsModel
+                        {
+                            PromotionID = promo.PromotionID,
+                            PromotionName = promo.PromotionName,
+                            Type = promo.Type,
+                            Value = promo.Value,
+                            StartDate = promo.StartDate,
+                            EndDate = promo.EndDate,
+                            CategoryID = promo.CategoryID,
+                            Status = "Expired"
+                        });
                     }
                 }
-
-                // --- CALL BLL ---
-                long total = 0;
-                var data = _promotionsBusiness.Search(
-                    page, pageSize, out total,
-                    minValue, maxValue, type, categoryId, fromDate, toDate);
 
                 response.TotalItems = total;
                 response.Data = data;
-                response.Page = page;
+                response.Page = pageIndex;
                 response.PageSize = pageSize;
-                return response;
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                throw ex;
             }
+            return response;
         }
+
+
+
 
 
 

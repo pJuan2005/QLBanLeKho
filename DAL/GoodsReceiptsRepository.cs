@@ -35,28 +35,20 @@ namespace DAL
             }
         }
 
-        public bool CreateMultiple(List<GoodsReceiptsModel> models)
+        public int Create(GoodsReceiptsModel model)
         {
             string msgError = "";
-            try
-            {
-                var jsonData = Newtonsoft.Json.JsonConvert.SerializeObject(models);
+            var jsonData = Newtonsoft.Json.JsonConvert.SerializeObject(new List<GoodsReceiptsModel> { model });
 
-                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_GoodsReceipts_create_multiple",
-                    "@JsonData", jsonData);
+            var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_GoodsReceipts_create_multiple",
+                "@JsonData", jsonData);
 
-                if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
-                {
-                    throw new Exception(Convert.ToString(result) + msgError);
-                }
+            if (!string.IsNullOrEmpty(msgError))
+                throw new Exception(msgError);
 
-                return true;
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
+            return Convert.ToInt32(result);
         }
+
 
 
         public bool Update(GoodsReceiptsModel model)
@@ -66,9 +58,7 @@ namespace DAL
             {
                 var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_GoodsReceipts_update",
                     "@ReceiptID", model.ReceiptID,
-                    "@POID", model.POID,
                     "@ReceiptDate", model.ReceiptDate,
-                    "@TotalAmount", model.TotalAmount,
                     "@UserID", model.UserID);
 
                 if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
@@ -79,9 +69,10 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                throw ;
+                throw;
             }
         }
+
 
         public bool Delete(GoodsReceiptsModel model)
         {

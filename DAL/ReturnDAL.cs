@@ -10,7 +10,7 @@ using DAL.Interfaces;
 
 namespace DAL
 {
-    public class ReturnDAL : IDReturnDAL
+    public class ReturnDAL : IReturnDAL
     {
         private readonly IDatabaseHelper _dbHelper;
         public ReturnDAL(IDatabaseHelper dbHelper)
@@ -18,159 +18,132 @@ namespace DAL
             _dbHelper = dbHelper;
         }
 
+
         public ReturnModel GetDatabyID(int id)
         {
-            string msgError = "";
-            try
-            {
-                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "sp_return_get_by_id",
-                     "@ReturnID", id);
-                if (!string.IsNullOrEmpty(msgError))
-                    throw new Exception(msgError);
-                return dt.ConvertTo<ReturnModel>().FirstOrDefault();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            string msg = "";
+            var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msg,
+            "sp_return_get_by_id",
+            "@ReturnID", id);
+
+
+            if (!string.IsNullOrEmpty(msg)) throw new Exception(msg);
+            return dt.ConvertTo<ReturnModel>().FirstOrDefault();
         }
 
 
-        public bool CreateCustomer(ReturnCustomerModel model)
+        public int Create(ReturnCreateRequest model)
         {
             string msgError = "";
             try
             {
-                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_return_create",
+                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction2(
+                    out msgError, "sp_return_create",
+                    "@ReturnType", model.ReturnType,
+                    "@PartnerPhone", model.PartnerPhone,
                     "@SaleID", model.SaleID,
-                    "@CustomerID", model.CustomerID,
-                    "@ReturnDate", model.ReturnDate,
-                    "@Reason", model.Reason
-
-                );
-
-                if (!string.IsNullOrEmpty(msgError))
-                    throw new Exception(msgError);
-
-                if (result != null && int.TryParse(result.ToString(), out int newId))
-                    model.ReturnID = newId;
-
-                return true;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
-
-        public bool CreateSupplier(ReturnSupplierModel model)
-        {
-            string msgError = "";
-            try
-            {
-                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_return_create",
                     "@ReceiptID", model.ReceiptID,
-                    "@SupplierID", model.SupplierID,
+                    "@ProductID", model.ProductID,
+                    "@Quantity", model.Quantity,
                     "@ReturnDate", model.ReturnDate,
                     "@Reason", model.Reason
-
                 );
 
                 if (!string.IsNullOrEmpty(msgError))
                     throw new Exception(msgError);
 
-                if (result != null && int.TryParse(result.ToString(), out int newId))
-                    model.ReturnID = newId;
-
-                return true;
+                return Convert.ToInt32(result);
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw;  // không cần throw ex
             }
         }
 
-        public bool Update(ReturnModel model)
+
+
+
+        public bool Update(ReturnUpdateRequest model)
         {
             string msgError = "";
-            try
+
+            var result = _dbHelper.ExecuteScalarSProcedureWithTransaction2(
+                out msgError, "sp_return_update",
+                "@ReturnID", model.ReturnID,
+                "@ReturnType", model.ReturnType,
+                "@SaleID", model.SaleID,
+                "@ReceiptID", model.ReceiptID,
+                "@PartnerPhone", model.PartnerPhone,
+                "@ProductID", model.ProductID,
+                "@Quantity", model.Quantity,
+                "@ReturnDate", model.ReturnDate,
+                "@Reason", model.Reason
+            );
+
+            // ❗ Nếu SQL RAISERROR thì msgError có giá trị
+            if (!string.IsNullOrEmpty(msgError))
             {
-                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_return_update",
-                    "@ReturnID", model.ReturnID,
-                    "@SaleID", model.SaleID,
-                    "@CustomerID", model.CustomerID,
-                    "@ReceiptID", model.ReceiptID,
-                    "@SupplierID", model.SupplierID,
-                    "@ReturnDate", model.ReturnDate,
-                    "@Reason", model.Reason
-                );
-                if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
-                {
-                    throw new Exception(Convert.ToString(result) + msgError);
-                }
-                return true;
+                // trả false cho Controller
+                throw new Exception(msgError);
             }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+
+            return true;
         }
 
 
 
-        public bool Delete(int returnId)
+        public bool Delete(int id)
         {
-            string msgError = "";
-            try
-            {
-                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_return_delete",
-                    "@ReturnID", returnId
-                );
+            string msg = "";
+            _dbHelper.ExecuteScalarSProcedureWithTransaction(out msg,
+            "sp_return_delete",
+            "@ReturnID", id);
 
-                if (!string.IsNullOrEmpty(msgError))
-                    throw new Exception(msgError);
 
-                return true;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            if (!string.IsNullOrEmpty(msg)) throw new Exception(msg);
+            return true;
         }
-
-
 
 
 
         public List<ReturnModel> Search(int pageIndex, int pageSize, out long total,
-                                         int? ReturnID, int? SaleID, int? CustomerID, int? ReceiptID, int? SupplierID,
-                                         DateTime? FromDate, DateTime? ToDate)
-        {
-            string msgError = "";
+                                            int? ReturnID, byte? ReturnType,
+                                            int? SaleID, int? ReceiptID,
+                                            int? CustomerID, int? SupplierID,
+                                            string? PartnerName, string? PartnerPhone,
+                                            int? ProductID,
+                                            DateTime? FromDate, DateTime? ToDate)
+                                                    {
+            string msg = "";
             total = 0;
-            try
-            {
-                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "sp_return_search",
-                    "@page_index", pageIndex,
-                    "@page_size", pageSize,
-                    "@ReturnID", ReturnID,
-                    "@SaleID", SaleID,
-                    "@CustomerID", CustomerID,
-                    "@ReceiptID", ReceiptID,
-                    "@SupplierID", SupplierID,
-                    "@FromDate", FromDate,
-                    "@ToDate", ToDate
-                );
-                if (!string.IsNullOrEmpty(msgError))
-                    throw new Exception(msgError);
-                if (dt.Rows.Count > 0) total = (long)dt.Rows[0]["RecordCount"];
-                return dt.ConvertTo<ReturnModel>().ToList();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+
+
+            var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msg,
+            "sp_return_search",
+            "@page_index", pageIndex,
+            "@page_size", pageSize,
+            "@ReturnID", ReturnID,
+            "@ReturnType", ReturnType,
+            "@SaleID", SaleID,
+            "@ReceiptID", ReceiptID,
+            "@CustomerID", CustomerID,
+            "@SupplierID", SupplierID,
+            "@PartnerName", PartnerName,
+            "@PartnerPhone", PartnerPhone,
+            "@ProductID", ProductID,
+            "@FromDate", FromDate,
+            "@ToDate", ToDate
+            );
+
+
+            if (!string.IsNullOrEmpty(msg)) throw new Exception(msg);
+            if (dt.Rows.Count > 0)
+                total = Convert.ToInt64(dt.Rows[0]["RecordCount"]);
+
+
+
+            return dt.ConvertTo<ReturnModel>().ToList();
         }
+
     }
 }

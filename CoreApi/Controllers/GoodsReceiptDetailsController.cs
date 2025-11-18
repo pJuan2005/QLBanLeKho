@@ -38,9 +38,10 @@ namespace CoreApi.Controllers
 
         [Route("get-by-id/{receiptID}")]
         [HttpGet]
-        public GoodsReceiptDetailsModel GetDatabyID(int receiptID)
+        public IEnumerable<GoodsReceiptDetailsModel> GetDatabyID(int receiptID)
         {
             return _goodsReceiptDetailsBusiness.GetDatabyID(receiptID);
         }
+
     }
 }

@@ -18,10 +18,12 @@ namespace BLL
             _res = res;
         }
 
-        public GoodsReceiptDetailsModel GetDatabyID(int id)
+        public List<GoodsReceiptDetailsModel> GetDatabyID(int id)
         {
             return _res.GetDatabyID(id);
         }
+
+
 
         public bool CreateMultiple(List<GoodsReceiptDetailsModel> models)
         {

@@ -9,7 +9,8 @@ namespace BLL.Interfaces
 {
     public interface IGoodsReceiptDetailsBusiness
     {
-        GoodsReceiptDetailsModel GetDatabyID(int receiptID);
+        List<GoodsReceiptDetailsModel> GetDatabyID(int id);
+
         bool CreateMultiple(List<GoodsReceiptDetailsModel> models);
         
         bool Delete(GoodsReceiptDetailsModel model);

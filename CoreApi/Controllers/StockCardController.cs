@@ -39,13 +39,19 @@ namespace CoreApi.Controllers
             return model;
         }
 
-        [Route("delete/{id}")]
-        [HttpDelete]
+
+
+        [HttpDelete("delete/{id}")]
         public IActionResult Delete(int id)
         {
-            _stockCardBLL.Delete(id);
-            return Ok(new { data = "OK" });
+            var ok = _stockCardBLL.Delete(id);
+
+            if (!ok)
+                return NotFound(new { message = "Stockcard not found" });
+
+            return Ok(new { message = "Delete success" });
         }
+
 
         [Route("search-stockcard")]
         [HttpPost]
@@ -55,15 +61,7 @@ namespace CoreApi.Controllers
             try
             {
                 long total = 0;
-                var data = _stockCardBLL.Search(
-                    request.page,
-                    request.pageSize,
-                    out total,
-                    request.StockID,
-                    request.ProductID,
-                    request.TransactionType,
-                    request.RefID
-                );
+                var data = _stockCardBLL.Search(request, out total);
 
                 response.TotalItems = total;
                 response.Data = data;
