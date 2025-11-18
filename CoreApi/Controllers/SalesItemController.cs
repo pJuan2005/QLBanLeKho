@@ -27,8 +27,6 @@ namespace CoreApi.Controllers
         }
 
 
-      
-
 
         [Route("delete")]
         [HttpPost]

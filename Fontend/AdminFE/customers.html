@@ -299,7 +299,13 @@
               />
               <p class="name-control">Import Excel</p>
             </div>
-            <input type="file" id="fileImport" accept=".xlsx,.xls" style="display: none" onchange="angular.element(this).scope().onImportFileChange(this)"/>
+            <input
+              type="file"
+              id="fileImport"
+              accept=".xlsx,.xls"
+              style="display: none"
+              onchange="angular.element(this).scope().onImportFileChange(this)"
+            />
             <div class="control" ng-click="exportExcel()">
               <img
                 src="../Shared/img/common/export.svg"
@@ -484,7 +490,9 @@
                 />
                 <div class="dialog-footer">
                   <!-- để type button tránh submit -->
-                  <button type="button" class="cancel" ng-click="cancelAdd()">Cancel</button>
+                  <button type="button" class="cancel" ng-click="cancelAdd()">
+                    Cancel
+                  </button>
                   <input
                     class="submit"
                     type="submit"
@@ -501,8 +509,8 @@
             ng-class="{open: showEdit}"
             ng-click="closeEditOnOverlay($event)"
           >
-            <div class="form-edit__content" ng-click="$event.stopPropagation()>
-              <h3 class="title">Edit Customer</h3>
+            <div class="form-edit__content" ng-click="$event.stopPropagation()">
+              <h3>class="title">Edit Customer</h3>
               <form name="frmEdit" ng-submit="updateCustomer()">
                 <label for="name-edit">Full Name</label>
                 <input
@@ -551,7 +559,9 @@
                 />
                 <div class="dialog-footer">
                   <!-- để type button tránh submit -->
-                  <button type="button" class="cancel" ng-click="cancelEdit()">Cancel</button>
+                  <button type="button" class="cancel" ng-click="cancelEdit()">
+                    Cancel
+                  </button>
                   <input
                     class="submit"
                     type="submit"

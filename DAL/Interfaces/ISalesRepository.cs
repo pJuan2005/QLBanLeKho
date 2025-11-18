@@ -14,5 +14,6 @@ namespace DAL.Interfaces
         bool Update(SalesModel model);
         bool Delete(SalesModel model);
         List<SalesModel> Search(int pageIndex, int pageSize, out long total, decimal? minTotalAmount, decimal? maxTotalAmount, string status, DateTime? fromDate, DateTime? toDate);
+        int CreateReturnId(SalesModel model);
     }
 }

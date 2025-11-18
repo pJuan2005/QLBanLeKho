@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using BLL;
 using System.Reflection;
 using BLL.Interfaces;
@@ -7,11 +8,13 @@ using Model;
 using AdminApi.Services.Interface;
 using System.Text.Json;
 using System.Globalization;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CoreApi.Controllers
 {
     [Route("api/sales")]
     [ApiController]
+    [Authorize]
     public class SalesController : ControllerBase
     {
         private ISalesBusiness _salesBusiness;
@@ -144,5 +147,41 @@ namespace CoreApi.Controllers
                 throw new Exception(ex.Message);
             }
         }
+
+        [HttpPost]
+        [Route("create-from-pos")]
+        public IActionResult CreateFromPos([FromBody] PosOrderDto dto)
+        {
+            try
+            {
+                // 1. Lấy UserId từ token (claim tên "UserId")
+                var userIdStr = User.FindFirst("UserId")?.Value;
+                if (!int.TryParse(userIdStr, out var userId))
+                {
+                    throw new Exception("Không tìm thấy UserId trong token.");
+                }
+
+                // 2. Gán vào dto để BLL/DAL dùng
+                dto.UserId = userId;
+
+                // 3. Gọi BLL
+                var result = _salesBusiness.CreateFromPos(dto);
+
+                _auditLogger.Log(
+                    action: $"Đã tạo một đơn bán hàng có id: {result.Sale.SaleID}",
+                    entityName: "Sales",
+                    entityId: result.Sale.SaleID,
+                    operation: "CREATE",
+                    details: JsonSerializer.Serialize(dto)
+                );
+
+                return Ok(result); // FE cần toàn bộ sale với debt mới
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
     }
 }
