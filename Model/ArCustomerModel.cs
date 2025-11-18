@@ -13,6 +13,7 @@ namespace Model
         {
             public int CustomerID { get; set; }
             public string CustomerName { get; set; }
+            public string Phone { get; set; }
             public decimal DebtLimit { get; set; }
             public decimal CurrentDebt { get; set; }
             public bool IsOverLimit { get; set; }
@@ -42,5 +43,6 @@ namespace Model
             public decimal OverBy { get; set; }//mức vượt hạn mức
             public string Message { get; set; }
         }
+
     }
 }

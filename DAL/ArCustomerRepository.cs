@@ -80,5 +80,6 @@ namespace DAL
                 throw new Exception(msgError);
             return result == null ? 0m : Convert.ToDecimal(result);
         }
+
     }
 }

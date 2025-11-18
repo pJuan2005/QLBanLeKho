@@ -15,29 +15,14 @@ namespace BLL
             _res = res;
         }
 
-        public ProductModel GetDatabyID(int id)
-        {
-            return _res.GetDatabyID(id);
-        }
+        public ProductModel GetDatabyID(int id) => _res.GetDatabyID(id);
 
-        public bool Create(ProductModel model)
-        {
-            return _res.Create(model);
-        }
+        public bool Create(ProductModel model) => _res.Create(model);
 
-        public bool Update(ProductModel model)
-        {
-            return _res.Update(model);
-        }
+        public bool Update(ProductModel model) => _res.Update(model);
 
-        public bool Delete(int id)
-        {
-            return _res.Delete(id);
-        }
+        public bool Delete(int id) => _res.Delete(id);
 
         public List<ProductModel> Search(ProductSearchRequest request, out long total)
-        {
-            return _res.Search(request, out total);
-        }
+            => _res.Search(request, out total);
     }
-}

@@ -1,0 +1,264 @@
+/* ========== GLOBAL ========== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  background: #f4f6fb;
+  color: #111827;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ========== INVOICE WRAPPER ========== */
+
+.invoice {
+  width: 820px;
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 18px 45px rgba(15, 23, 42, 0.12);
+  padding: 32px 40px 28px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 24px;
+}
+
+/* ========== TOP AREA ========== */
+
+.invoice-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 20px;
+}
+
+.invoice-top__left {
+  display: flex;
+  align-items: center;
+  column-gap: 12px;
+}
+
+.invoice-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: #e0f2fe;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.invoice-icon .icon {
+  width: 24px;
+  height: 24px;
+}
+
+.invoice-name .name-system {
+  font-size: 20px;
+  font-weight: 700;
+  color: #0ea5e9;
+  margin-bottom: 2px;
+}
+
+.invoice-name .desc-system {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.invoice-top__right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  row-gap: 4px;
+  font-size: 13px;
+}
+
+.invoice-info {
+  display: flex;
+  column-gap: 6px;
+}
+
+.invoice-info .title {
+  color: #6b7280;
+}
+
+.invoice-info .data {
+  font-weight: 500;
+}
+
+/* ========== MAIN AREA ========== */
+
+.invoice-main {
+  display: flex;
+}
+
+.information {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  row-gap: 18px;
+}
+
+/* ---- Customer info ---- */
+.information-customer {
+  display: grid;
+  grid-template-columns: 1fr;
+  row-gap: 4px;
+  font-size: 13px;
+}
+
+.info-customer {
+  display: flex;
+}
+
+.info-customer .title {
+  width: 180px;
+  color: #6b7280;
+}
+
+.info-customer .data {
+  font-weight: 500;
+}
+
+/* ---- Items table ---- */
+.information-items .card {
+  border-top: 1px solid #e5e7eb;
+  padding-top: 12px;
+}
+
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+thead tr td {
+  padding: 8px 6px;
+  font-weight: 600;
+  color: #6b7280;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+tbody tr td {
+  padding: 8px 6px;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.item-name {
+  text-align: left;
+}
+
+.item-qty,
+.item-price,
+.item-discount,
+.item-vat,
+.item-total,
+.qty,
+.price,
+.discount,
+.vat,
+.total {
+  text-align: right;
+}
+
+.data.name {
+  font-weight: 500;
+}
+
+/* ---- Totals ---- */
+.information-total__container {
+  width: 280px;
+  margin-left: auto;
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 4px;
+  font-size: 13px;
+}
+
+.block {
+  display: flex;
+  justify-content: space-between;
+}
+
+.block .title {
+  color: #6b7280;
+}
+
+.block .data {
+  font-weight: 500;
+}
+
+/* Order total nổi bật */
+.block-ordertotal .title {
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  margin-top: 4px;
+}
+
+.block-ordertotal .data {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+/* ========== BOTTOM AREA ========== */
+
+.invoice-bottom {
+  border-top: 1px solid #e5e7eb;
+  padding-top: 14px;
+  text-align: center;
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.invoice-bottom .tieu-de-1 {
+  font-weight: 600;
+  margin-bottom: 2px;
+  color: #111827;
+}
+
+.invoice-bottom .tieu-de-2 {
+  margin-bottom: 4px;
+}
+
+.invoice-bottom .more {
+  color: #9ca3af;
+}
+
+/* ========== PRINT ========== */
+@media print {
+  body {
+    background: #ffffff;
+    margin: 0;
+  }
+
+  .invoice {
+    box-shadow: none;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+}

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- css -->
+    <link rel="stylesheet" href="../Shared/css/printInvoice.css" />
+    <script src="../Shared/angular/angular.min.js"></script>
+    <script src="../Shared/angular/global.js"></script>
+    <script src="../Shared/angular/printInvoice.js"></script>
+    <title>Print Invoice</title>
+  </head>
+  <body ng-app="AppRetailPos" ng-controller="printInvoiceCtrl">
+    <div class="invoice">
+      <div class="invoice-top">
+        <div class="invoice-top__left">
+          <div class="invoice-icon">
+            <img
+              src="../Shared/img/printInvoice/printInvoice.svg"
+              alt=""
+              class="icon"
+            />
+          </div>
+          <div class="invoice-name">
+            <h1 class="name-system">RetailPro</h1>
+            <p class="desc-system">Inventory & POS System</p>
+          </div>
+        </div>
+        <div class="invoice-top__right">
+          <div class="invoice-info invoice-no">
+            <p class="title">Invoice No:</p>
+            <p class="data">{{ invoice.orderId }}</p>
+          </div>
+          <div class="invoice-info invoice-date">
+            <p class="title">Date:</p>
+            <p class="data">
+              {{ invoice.dateTime | date: 'yyyy-MM-dd HH:mm' }}
+            </p>
+          </div>
+          <div class="invoice-info invoice-no">
+            <p class="title">Cashier:</p>
+            <p class="data">{{ invoice.cashier }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="invoice-main">
+        <div class="information">
+          <div class="information-customer">
+            <div class="info-customer info-name">
+              <div class="title">Customer:</div>
+              <div class="data">{{ invoice.customerName }}</div>
+            </div>
+            <div class="info-customer info-phone">
+              <div class="title">Phone:</div>
+              <div class="data">{{ invoice.customerPhone }}</div>
+            </div>
+            <div class="info-customer info-debt__limit">
+              <div class="title">Debt Limit:</div>
+              <div class="data">{{ formatVnd(invoice.debtLimit) }}</div>
+            </div>
+            <div class="info-customer info-current__debt">
+              <div class="title">Current Debt (Before):</div>
+              <div class="data">{{ formatVnd(invoice.beforeDebt) }}</div>
+            </div>
+            <div class="info-customer info-remaining__debt">
+              <div class="title">Remaining Debt (After):</div>
+              <div class="data">{{ formatVnd(invoice.remainingDebt) }}</div>
+            </div>
+          </div>
+          <div class="information-items">
+            <div class="card">
+              <div class="table-responsive">
+                <table>
+                  <thead>
+                    <tr>
+                      <td class="item-name">Item</td>
+                      <td class="item-qty">Qty</td>
+                      <td class="item-price">Price</td>
+                      <td class="item-discount">Discount</td>
+                      <td class="item-vat">VAT</td>
+                      <td class="item-total">Total</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr ng-repeat="it in invoice.items">
+                      <td class="data name">{{ it.ProductName }}</td>
+                      <td class="data qty">{{ it.Quantity }}</td>
+                      <td class="data price">{{ formatVnd(it.UnitPrice) }}</td>
+                      <td class="data discount">0%</td>
+                      <td class="data vat">{{ it.VATRate || 0 }}%</td>
+                      <td class="data total">{{ formatVnd(it._lineTotal) }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="information-total">
+            <div class="information-total__container">
+              <div class="block block-subtotal">
+                <div class="title">Subtotal:</div>
+                <div class="data">{{ formatVnd(subtotal) }}</div>
+              </div>
+              <div class="block block-vat">
+                <div class="title">VAT:</div>
+                <div class="data">{{ formatVnd(vatTotal) }}</div>
+              </div>
+              <div class="block block-ordertotal">
+                <div class="title">Order Total:</div>
+                <div class="data">{{ formatVnd(invoice.orderTotal) }}</div>
+              </div>
+              <div class="block block-customer__pays">
+                <div class="title">Customer Pays:</div>
+                <div class="data">{{ formatVnd(invoice.prepay) }}</div>
+              </div>
+              <div class="block block-method">
+                <div class="title">Payment Method:</div>
+                <div class="data">{{ invoice.method }}</div>
+              </div>
+              <div class="block block-return">
+                <div class="title">Change to Return:</div>
+                <div class="data">{{ formatVnd(changeToReturn) }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="invoice-bottom">
+        <p class="tieu-de-1">Thank you for your purchase!</p>
+        <p class="tieu-de-2">Please keep this invoice for future reference.</p>
+        <p class="more">Generated by RetailPro POS - 2025</p>
+      </div>
+    </div>
+  </body>
+</html>
