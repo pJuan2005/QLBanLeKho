@@ -1,4 +1,5 @@
 var current_url = "http://localhost:5000";
+
 makeScript = function (url) {
   var script = document.createElement("script");
   script.setAttribute("src", url);
@@ -8,6 +9,7 @@ makeScript = function (url) {
 
 // khai báo module chính
 var app = angular.module("AppRetailPos", []);
+
 // ========service lưu/ đọc thông tin user + token==================
 app.factory("AuthService", function ($window) {
   var TOKEN_KEY = "jwt";
@@ -49,11 +51,16 @@ app.factory("PermissionService", function (AuthService) {
       pos: true,
       products: true,
       categories: true,
+      promotions: true,
       customers: true,
       suppliers: true,
       promotions: true,
       purchaseOrders: true,
       stock: true,
+
+      
+   
+
       greceipts: true,
       gissues: true,
       sales: true,
@@ -69,10 +76,12 @@ app.factory("PermissionService", function (AuthService) {
       pos: true,
       products: false,
       categories: false,
+      promotions: true,
       customers: true,
       suppliers: false,
       purchaseOrders: false,
-      stock: false,
+      greceipts: false,
+      gissues: false,
       sales: true,
       returns: true,
       payments: true,
@@ -86,10 +95,12 @@ app.factory("PermissionService", function (AuthService) {
       pos: false,
       products: true,
       categories: true,
+      promotions: false,
       customers: false,
       suppliers: true,
       purchaseOrders: true,
-      stock: true,
+      greceipts: true,
+      gissues: true,
       sales: false,
       returns: false,
       payments: false,
@@ -103,10 +114,12 @@ app.factory("PermissionService", function (AuthService) {
       pos: false,
       products: false,
       categories: false,
+      promotions: false,
       customers: false,
       suppliers: false,
       purchaseOrders: false,
-      stock: false,
+      greceipts: false,
+      gissues: false,
       sales: false,
       returns: false,
       payments: true,
@@ -120,10 +133,12 @@ app.factory("PermissionService", function (AuthService) {
       pos: false,
       products: false,
       categories: false,
+      promotions: false,
       customers: false,
       suppliers: false,
       purchaseOrders: false,
-      stock: false,
+      greceipts: false,
+      gissues: false,
       sales: false,
       returns: false,
       payments: false,

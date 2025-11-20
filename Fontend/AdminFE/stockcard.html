@@ -16,6 +16,7 @@
   <script src="../Shared/angular/angular.min.js"></script>
   <script src="../Shared/angular/global.js"></script>
   <script src="../Shared/angular/stockcard.js"></script>
+  <script src="../Shared/angular/translation.js"></script>
   <!-- Thư viện ExcelJS và FileSaver -->
 <script src="https://cdn.jsdelivr.net/npm/exceljs@4.3.0/dist/exceljs.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
@@ -23,7 +24,7 @@
 
 
 
-  <title>Stockcard</title>
+  <title>{{ t('STOCK_MANAGEMENT') }}</title>
 </head>
 <body ng-app="AppRetailPos" ng-controller="stockcardCtrl">
   <div class="app-content">
@@ -40,176 +41,252 @@
         </div>
       </div>
       <div class="slide-bar__Content">
-        <p class="slide-bar__label">Navigation</p>
-        <!-- menu button 1 -->
-        <a href="../AdminFE/dashboard.html" ng-if="canShow('dashboard')"></a>
-        <div class="slide-bar__MenuButton">
-          <div class="MenuButton-left">
-            <img src="../Shared/img/common/dashboard.svg" alt="" class="icon" />
-          </div>
-          <div class="MenuButton-right">
-            <p class="name-menu">Dashboard</p>
-          </div>
-        </div>
-        </a>
-        <!-- menu button 2 -->
-        <a href="../AdminFE/pos.html" ng-if="canShow('pos')">
+        <p class="slide-bar__label">{{ t('NAVIGATION') }}</p>
+        <!-- menu button Dashboard -->
+        <a href="../AdminFE/dashboard.html" ng-if="canShow('dashboard')">
           <div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img
+                src="../Shared/img/common/dashboard.svg"
+                alt=""
+                class="icon"
+              />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">{{ t('NAV_DASHBOARD') }}</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button POS -->
+        <a href="../AdminFE/pos.html" ng-if="canShow('pos')"
+          ><div class="slide-bar__MenuButton">
             <div class="MenuButton-left">
               <img src="../Shared/img/common/pos.svg" alt="" class="icon" />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">POS</p>
+              <p class="name-menu">{{ t('NAV_POS') }}</p>
             </div>
           </div>
         </a>
-        <!-- menu button 3 -->
-        <a href="../AdminFE/product.html" ng-if="canShow('products')">
-          <div class="slide-bar__MenuButton ">
+        <!-- menu button Products -->
+        <a href="../AdminFE/products.html" ng-if="canShow('products')">
+          <div class="slide-bar__MenuButton " >
             <div class="MenuButton-left">
               <img src="../Shared/img/common/product.svg" alt="" class="icon" />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Products</p>
+              <p class="name-menu">{{ t('NAV_PRODUCTS') }}</p>
             </div>
           </div>
         </a>
-        <!-- menu button 4 -->
+        <!-- menu button Categories -->
         <a href="../AdminFE/categories.html" ng-if="canShow('categories')">
-          <div class="slide-bar__MenuButton ">
+          <div class="slide-bar__MenuButton">
             <div class="MenuButton-left">
-              <img src="../Shared/img/common/category.svg" alt="" class="icon" />
+              <img
+                src="../Shared/img/common/category.svg"
+                alt=""
+                class="icon"
+              />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Categories</p>
+              <p class="name-menu">{{ t('NAV_CATEGORIES') }}</p>
             </div>
           </div>
         </a>
-        <!-- menu button 5 -->
+        <!-- menu button Promotions -->
+        <a href="../AdminFE/promotions.html" ng-if="canShow('promotions')">
+          <div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img
+                src="../Shared/img/common/promotion.svg"
+                alt=""
+                class="icon"
+              />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">{{ t('NAV_PROMOTIONS') }}</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button Customers -->
         <a href="../AdminFE/customers.html" ng-if="canShow('customers')">
           <div class="slide-bar__MenuButton">
             <div class="MenuButton-left">
-              <img src="../Shared/img/common/customer.svg" alt="" class="icon" />
+              <img
+                src="../Shared/img/common/customer.svg"
+                alt=""
+                class="icon"
+              />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Customers</p>
+              <p class="name-menu">{{ t('NAV_CUSTOMERS') }}</p>
             </div>
           </div>
         </a>
-        <!-- menu button 6 -->
-        <a href="../AdminFE/suppliers.html" ng-if="canShow('suppliers')"></a>
-        <div class="slide-bar__MenuButton">
-          <div class="MenuButton-left">
-            <img src="../Shared/img/common/supplier.svg" alt="" class="icon" />
-          </div>
-          <div class="MenuButton-right">
-            <p class="name-menu">Suppliers</p>
-          </div>
-        </div>
-        </a>
-        <!-- menu button 7 -->
-        <a href="../AdminFE/purchaseorders.html" ng-if="canShow('purchaseOrders')">
+        <!-- menu button Suppliers -->
+        <a href="../AdminFE/suppliers.html" ng-if="canShow('suppliers')">
           <div class="slide-bar__MenuButton">
             <div class="MenuButton-left">
-              <img src="../Shared/img/common/purchaseorder.svg" alt="" class="icon" />
+              <img
+                src="../Shared/img/common/supplier.svg"
+                alt=""
+                class="icon"
+              />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Purchase Orders</p>
+              <p class="name-menu">{{ t('NAV_SUPPLIERS') }}</p>
             </div>
           </div>
         </a>
-        <!-- menu button 8 -->
+        <!-- menu button Purchase Orders -->
+        <a
+          href="../AdminFE/purchaseorders.html"
+          ng-if="canShow('purchaseOrders')"
+        >
+          <div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img
+                src="../Shared/img/common/purchaseorder.svg"
+                alt=""
+                class="icon"
+              />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu"> {{ t('NAV_PURCHASE_ORDERS') }}</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button stock -->
         <a href="../AdminFE/stockcard.html" ng-if="canShow('stock')">
-          <div class="slide-bar__MenuButton slide-bar__MenuButton--active">
+          <div class="slide-bar__MenuButton ">
             <div class="MenuButton-left">
               <img src="../Shared/img/common/stock.svg" alt="" class="icon" />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu-active">Stock Management</p>
+              <p class="name-menu">{{ t('NAV_STOCK') }}</p>
             </div>
           </div>
         </a>
-        <!-- menu button 9 -->
-        <a href="../AdminFE/sales.html" ng-if="canShow('sales')">
+        <!-- menu button Goods Receipts -->
+        <a href="../AdminFE/goodsreceipts.html" ng-if="canShow('greceipts')">
           <div class="slide-bar__MenuButton">
             <div class="MenuButton-left">
-              <img src="../Shared/img/common/sales.svg" alt="" class="icon" />
+              <img
+                src="../Shared/img/common/goodReceipt.svg"
+                alt=""
+                class="icon"
+              />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Sales</p>
+              <p class="name-menu">{{ t('GOODS_RECEIPTS') }}</p>
             </div>
           </div>
         </a>
-        <!-- menu button 10 -->
+        <!-- menu button Goods Issues -->
+        <a href="../AdminFE/goodsissues.html" ng-if="canShow('gissues')">
+          <div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img
+                src="../Shared/img/common/goodIssues.svg"
+                alt=""
+                class="icon"
+              />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">{{ t('GOODS_ISSUES') }}</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button Sales -->
+        <a href="../AdminFE/sales.html" ng-if="canShow('sales')">
+          <div class="slide-bar__MenuButton ">
+            <div class="MenuButton-left">
+              <img src="../Shared/img/common/sales.svg" alt="" class="icon" />
+</div>
+            <div class="MenuButton-right">
+              <p class="name-menu">{{ t('NAV_SALES') }}</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button Returns -->
         <a href="../AdminFE/returns.html" ng-if="canShow('returns')">
           <div class="slide-bar__MenuButton">
             <div class="MenuButton-left">
               <img src="../Shared/img/common/return.svg" alt="" class="icon" />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Returns</p>
+              <p class="name-menu">{{ t('NAV_RETURNS') }}</p>
             </div>
           </div>
         </a>
-        <!-- menu button 11 -->
-        <a href="../AdminFE/payments.html" ng-if="canShow('returns')">
+        <!-- menu button Payments & Debts -->
+        <a href="../AdminFE/payments.html" ng-if="canShow('payments')">
           <div class="slide-bar__MenuButton">
             <div class="MenuButton-left">
-              <img src="../Shared/img/common/payments.svg" alt="" class="icon" />
+              <img
+                src="../Shared/img/common/payments.svg"
+                alt=""
+                class="icon"
+              />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Payments & Debts</p>
+              <p class="name-menu">{{ t('NAV_PAYMENTS') }}</p>
             </div>
           </div>
         </a>
-        <!-- menu button 12 -->
+        <!-- menu button Reports -->
         <a href="../AdminFE/reports.html" ng-if="canShow('reports')">
           <div class="slide-bar__MenuButton">
             <div class="MenuButton-left">
               <img src="../Shared/img/common/report.svg" alt="" class="icon" />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Reports</p>
+              <p class="name-menu">{{ t('NAV_REPORTS') }}</p>
             </div>
           </div>
         </a>
-        <!-- menu button 13 -->
-        <a href="../AdminFE/auditlog.html" ng-if="canShow('auditLog')"></a>
-        <div class="slide-bar__MenuButton">
-          <div class="MenuButton-left">
-            <img src="../Shared/img/common/auditlog.svg" alt="" class="icon" />
+        <!-- menu button Audit Log -->
+        <a href="../AdminFE/auditlog.html" ng-if="canShow('auditLog')">
+          <div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img
+                src="../Shared/img/common/auditlog.svg"
+                alt=""
+                class="icon"
+              />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">{{ t('NAV_AUDIT_LOG') }}</p>
+            </div>
           </div>
-          <div class="MenuButton-right">
-            <p class="name-menu">Audit Log</p>
-          </div>
-        </div>
         </a>
-        <!-- menu button 14 -->
+        <!-- menu button Users -->
         <a href="../AdminFE/users.html" ng-if="canShow('users')">
           <div class="slide-bar__MenuButton">
             <div class="MenuButton-left">
               <img src="../Shared/img/common/user.svg" alt="" class="icon" />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Users</p>
+              <p class="name-menu">{{ t('NAV_USERS') }}</p>
             </div>
           </div>
         </a>
-        <!-- menu button 15 -->
+        <!-- menu button Settings -->
         <a href="../AdminFE/settings.html" ng-if="canShow('settings')">
-          <div class="slide-bar__MenuButton">
+          <div class="slide-bar__MenuButton slide-bar__MenuButton--active">
             <div class="MenuButton-left">
               <img src="../Shared/img/common/setting.svg" alt="" class="icon" />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Settings</p>
+              <p class="name-menu-active">{{ t('NAV_SETTINGS') }}</p>
             </div>
           </div>
         </a>
       </div>
       <div class="slide-bar__footer">
         <div class="app-slide-bar">
-          <div class="ava">
+        <div class="ava">
             <img class="ava" src="../Shared/img/common/ava.svg" alt="" />
           </div>
           <div class="info">
@@ -224,12 +301,12 @@
         <div class="top-bar__content">
           <div class="top-bar__left">
             <img src="../Shared/img/common/search.svg" alt="" class="icon" />
-            <input class="search" type="text" placeholder="Search by product name" 
+            <input class="search" type="text" placeholder="{{ t('SEARCH_BY_PRODUCT_NAME') }}" 
                 ng-model="searchProduct" ng-change="filter()"
 />
           </div>
           <div class="top-bar__right">
-            <p class="role">admin</p>
+            <p class="role">{{ t('ROLE_ADMIN') }}</p>
             <img src="../Shared/img/common/ava.svg" alt="" class="ava" id="avatar" />
           </div>
         </div>
@@ -240,13 +317,13 @@
           </div>
           <div class="info-mid">
             <a href="#!">
-              <p class="set">Profile Settings</p>
+              <p class="set">{{ t('PROFILE_SETTINGS') }}</p>
             </a>
           </div>
           <div class="info-bottom">
             <img src="" alt="" class="icon" />
             <a href="../AuthFE/login.html">
-              <p class="logout">Logout</p>
+              <p class="logout">{{ t('LOGOUT') }}</p>
             </a>
           </div>
         </div>
@@ -254,29 +331,29 @@
 
 
       <div class="app-layout-content">
-        <h1 class="name-menu">Stock Management</h1>
+        <h1 class="name-menu">{{ t('STOCK_MANAGEMENT') }}</h1>
         <p class="desc">
-          View and manage all stock movements
+          {{ t('STOCK_DESC') }}
         </p>
         <div class="display-container">
           <div class="total farme">
-            <p class="name-display">Total Stockcard</p>
+            <p class="name-display">{{ t('TOTAL_STOCKCARD') }}</p>
             <p class="data">{{stats.total}}</p>
           </div>
           <div class="avg farme">
-            <p class="name-display">In stock</p>
+            <p class="name-display">{{ t('STOCK_IN') }}</p>
             <p class="data">{{stats.instock}}</p>
           </div>
           <div class="most-common farme">
-            <p class="name-display">Out Stock</p>
+            <p class="name-display">{{ t('STOCK_OUT') }}</p>
             <p class="data">{{stats.outstock}}</p>
           </div>
         </div>
         <div class="control">
           <div class="control-left">
             <img src="../Shared/img/common/search.svg" alt="" class="icon" />
-            <select class="search" placeholder="Search by TransactionType" ng-change="filter()" ng-model="searchType">
-                <option value="ALL">ALL</option>
+            <select class="search" placeholder="{{ t('SEARCH_TRANSACTION_TYPE') }}" ng-change="filter()" ng-model="searchType">
+                <option value="ALL">{{ t('TRANSACTION_ALL') }}</option>
                 <option value="IN">IN</option>
                 <option value="OUT">OUT</option>
             </select>
@@ -287,15 +364,15 @@
           <!-- phân trang -->
           <div class="pager" ng-if="pager.total>0">
             <div class="pager-info">
-              Showing
+              {{ t('PAGING_SHOWING') }}
               {{((pager.page-1)*pager.size)+1}}-{{Math.min(pager.page*pager.size,pager.total)}}
-              of {{pager.total}} items
+              {{ t('PAGING_OF') }} {{pager.total}} {{ t('PAGING_ITEMS') }}
             </div>
             <div class="page-nav">
               <label>
-                Page size:
+                {{ t('PAGING_PAGE_SIZE') }}:
                 <select ng-model="pager.size" ng-change="changeSize()">
-                  <option value="-1">ALL</option>
+                  <option value="-1">{{ t('TRANSACTION_ALL') }}</option>
                   <option value="10">10</option>
                   <option value="20">20</option>
                   <option value="30">30</option>
@@ -305,11 +382,11 @@
                 «
               </button>
               <button class="btn ghost" ng-disabled="pager.page === 1" ng-click="go(pager.page-1)">
-                Prev
+                {{ t('PAGING_PREV') }}
               </button>
               <span class="page-no"></span>
               <button class="btn ghost" ng-disabled="pager.page >= pager.pages" ng-click="go(pager.page+1)">
-                Next
+                {{ t('PAGING_NEXT') }}
               </button>
               <button class="btn ghost" ng-disabled="pager.page >= pager.pages" ng-click="go(pager.pages)">
                 »
@@ -317,9 +394,11 @@
             </div>
           </div>
           <div class="control-right">
+            {{ t('FILTER_FROM_DATE') }}
             <div class="control-date">
             <input class="search" type="date" ng-model="searchFromDate" ng-change="filter()"/>
             </div>
+            {{ t('FILTER_TO_DATE') }}
             <div class="control-date">
             <input class="search" type="date" ng-model="searchToDate" ng-change="filter()"/>
             </div>
@@ -336,12 +415,12 @@
             <table class="table">
                 <thead>
                     <tr>
-                    <th>ID</th>
-                    <th>Product Name</th>
-                    <th>Transaction</th>
-                    <th>Quantity</th>
-                    <th>Date</th>
-                    <th class="txt-right">Actions</th>
+                    <th>{{ t('TB_STOCK_ID') }}</th>
+                    <th>{{ t('TB_PRODUCT_NAME') }}</th>
+                    <th>{{ t('TB_TRANSACTION') }}</th>
+                    <th>{{ t('TB_QUANTITY') }}</th>
+                    <th>{{ t('TB_DATE') }}</th>
+                    <th class="txt-right">{{ t('ACTIONS') }}</th>
                     </tr>
                 </thead>
 
@@ -360,7 +439,7 @@
                     </tr>
 
                     <tr ng-if="!stocks || stocks.length == 0">
-                    <td colspan="6" class="empty">No Data</td>
+                    <td colspan="6" class="empty">{{ t('NO_STOCK_DATA') }}</td>
                     </tr>
                 </tbody>
             </table>
@@ -371,39 +450,39 @@
           <!-- detail -->
           <div class="form-detail">
             <div class="form-detail__content">
-              <h3 class="title">detail Stockcard</h3>
-              <p class="desc">detail Stockcard </p>
+              <h3 class="title">{{ t('DETAIL_STOCKCARD') }}</h3>
+              <p class="desc">{{ t('DETAIL_STOCKCARD_DESC') }} </p>
               <form name="frmDetail" >
                 <!-- Cột trái ng-submit="detail()"-->
                 <div>
-                  <label for="stockID-detail">StockID</label>
+                  <label for="stockID-detail">{{ t('LABEL_STOCK_ID') }}</label>
                   <input type="text" id="stockID-detail" readonly
                     ng-model="detailStock.stockID" />
 
 
-                  <label for="productName-detail">ProductName</label>
+                  <label for="productName-detail">{{ t('LABEL_PRODUCT_NAME') }}</label>
                   <input type="text" id="productName-detail"  readonly
                     ng-model="detailStock.productName" />
 
 
-                    <label for="type-detail">TransactionType</label>
+                    <label for="type-detail">{{ t('LABEL_TRANSACTION_TYPE') }}</label>
                   <select id="type-detail" ng-model="detailStock.transactionType" disabled>
                     <option value="IN">IN</option>
                     <option value="OUT">OUT</option>
                   </select>
 
 
-                  <label for="quantity-detail">Quantity</label>
+                  <label for="quantity-detail">{{ t('LABEL_QUANTITY') }}</label>
                   <input type="text" id="quantity-detail" readonly
                     ng-model="detailStock.quantity" />
 
 
-                    <label for="balance-detail">Balance</label>
+                    <label for="balance-detail">{{ t('LABEL_BALANCE') }}</label>
                   <input type="text" id="balance-detail" readonly
                     ng-model="detailStock.balance" />
 
 
-                     <label for="transactionDate-detail">TransactionDate</label>
+                     <label for="transactionDate-detail">{{ t('LABEL_TRANSACTION_DATE') }}</label>
                   <input type="text" id="transactionDate-detail" readonly
                     ng-model="detailStock.transactionDate" />
                 </div>
@@ -411,25 +490,25 @@
                 <!-- Cột phải -->
                 <div>
 
-                    <label for="productID-detail">ProductID</label>
+                    <label for="productID-detail">{{ t('LABEL_PRODUCT_ID') }}</label>
                   <input type="text" id="productID-detail" readonly
                     ng-model="detailStock.productID" />
 
-                  <label for="receiptID-detail">ReceiptID</label>
+                  <label for="receiptID-detail">{{ t('LABEL_RECEIPT_ID') }}</label>
                   <input type="text" id="receiptID-detail"  readonly
                     ng-model="detailStock.receiptID" />
 
 
-                    <label for="issueID-detail">IssueID</label>
+                    <label for="issueID-detail">{{ t('LABEL_ISSUE_ID') }}</label>
                   <input type="text" id="issueID-detail" readonly
                     ng-model="detailStock.issueID" />
 
 
-                    <label for="supplierID-detail">SupplierID</label>
+                    <label for="supplierID-detail">{{ t('LABEL_SUPPLIER_ID') }}</label>
                   <input type="text" id="supplierID-detail" readonly
                     ng-model="detailStock.supplierID" />
 
-                    <label for="batchNo-detail">BatchNo</label>
+                    <label for="batchNo-detail">{{ t('LABEL_BATCH_NO') }}</label>
                   <input type="text" id="batchNo-detail" readonly
                     ng-model="detailStock.batchNo" />
                 </div>
@@ -437,7 +516,7 @@
 
                 <!-- Footer -->
                 <div class="dialog-footer">
-                  <button type="button" class="cancel" ng-click="closeForm()">Cancel</button>
+                  <button type="button" class="cancel" ng-click="closeForm()">{{ t('BTN_CANCEL') }}</button>
                 </div>
               </form>
 
@@ -448,17 +527,17 @@
           <!-- delete -->
           <div class="form-delete" ng-class="{open:showDelete}" ng-click="closeDeleteOnOverlay($event)">
             <div class="form-delete__content"  ng-click="$event.stopPropagation()">
-              <h3 class="title">Delete Stockcard</h3>
+              <h3 class="title">{{ t('DELETE_STOCKCARD') }}</h3>
               <p class="desc">
-                Are you sure you want to delete the Stockcard
-                "{ID{deleting.stockID}}"? This action cannot be undone.
+                {{ t('DELETE_STOCKCARD_CONFIRM') }}
+                "{ID{deleting.stockID}}"? {{ t('DELETE_RETURN_CONFIRM2') }}
               </p>
               <div class="dialog-footer">
                 <button class="cancel" ng-click="cancelDelete($event)">
-                  Cancel
+                  {{ t('BTN_CANCEL') }}
                 </button>
                 <button type="button" class="submit danger" ng-click="confirmDelete()" ng-disabled="deletingBusy">
-                  Delete Stockcard
+                  {{ t('BTN_DELETE_STOCKCARD') }}
                 </button>
               </div>
             </div>

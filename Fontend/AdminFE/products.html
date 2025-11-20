@@ -16,6 +16,8 @@
   <script src="../Shared/angular/angular.min.js"></script>
   <script src="../Shared/angular/global.js"></script>
   <script src="../Shared/angular/product.js"></script>
+  <script src="../Shared/angular/translation.js"></script>
+
   <!-- Thư viện ExcelJS và FileSaver -->
 <script src="https://cdn.jsdelivr.net/npm/exceljs@4.3.0/dist/exceljs.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
@@ -41,176 +43,252 @@
         </div>
       </div>
       <div class="slide-bar__Content">
-        <p class="slide-bar__label">Navigation</p>
-        <!-- menu button 1 -->
-        <a href="../AdminFE/dashboard.html" ng-if="canShow('dashboard')"></a>
-        <div class="slide-bar__MenuButton">
-          <div class="MenuButton-left">
-            <img src="../Shared/img/common/dashboard.svg" alt="" class="icon" />
-          </div>
-          <div class="MenuButton-right">
-            <p class="name-menu">Dashboard</p>
-          </div>
-        </div>
-        </a>
-        <!-- menu button 2 -->
-        <a href="../AdminFE/pos.html" ng-if="canShow('pos')">
+        <p class="slide-bar__label">{{ t('NAVIGATION') }}</p>
+        <!-- menu button Dashboard -->
+        <a href="../AdminFE/dashboard.html" ng-if="canShow('dashboard')">
           <div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img
+                src="../Shared/img/common/dashboard.svg"
+                alt=""
+                class="icon"
+              />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">{{ t('NAV_DASHBOARD') }}</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button POS -->
+        <a href="../AdminFE/pos.html" ng-if="canShow('pos')"
+          ><div class="slide-bar__MenuButton">
             <div class="MenuButton-left">
               <img src="../Shared/img/common/pos.svg" alt="" class="icon" />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">POS</p>
+              <p class="name-menu">{{ t('NAV_POS') }}</p>
             </div>
           </div>
         </a>
-        <!-- menu button 3 -->
-        <a href="../AdminFE/product.html" ng-if="canShow('products')">
-          <div class="slide-bar__MenuButton slide-bar__MenuButton--active">
+        <!-- menu button Products -->
+        <a href="../AdminFE/products.html" ng-if="canShow('products')">
+          <div class="slide-bar__MenuButton slide-bar__MenuButton--active" >
             <div class="MenuButton-left">
               <img src="../Shared/img/common/product.svg" alt="" class="icon" />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu-active">Products</p>
+              <p class="name-menu-active">{{ t('NAV_PRODUCTS') }}</p>
             </div>
           </div>
         </a>
-        <!-- menu button 4 -->
+        <!-- menu button Categories -->
         <a href="../AdminFE/categories.html" ng-if="canShow('categories')">
-          <div class="slide-bar__MenuButton ">
+          <div class="slide-bar__MenuButton">
             <div class="MenuButton-left">
-              <img src="../Shared/img/common/category.svg" alt="" class="icon" />
+              <img
+                src="../Shared/img/common/category.svg"
+                alt=""
+                class="icon"
+              />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Categories</p>
+              <p class="name-menu">{{ t('NAV_CATEGORIES') }}</p>
             </div>
           </div>
         </a>
-        <!-- menu button 5 -->
+        <!-- menu button Promotions -->
+        <a href="../AdminFE/promotions.html" ng-if="canShow('promotions')">
+          <div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img
+                src="../Shared/img/common/promotion.svg"
+                alt=""
+                class="icon"
+              />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">{{ t('NAV_PROMOTIONS') }}</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button Customers -->
         <a href="../AdminFE/customers.html" ng-if="canShow('customers')">
           <div class="slide-bar__MenuButton">
             <div class="MenuButton-left">
-              <img src="../Shared/img/common/customer.svg" alt="" class="icon" />
+              <img
+                src="../Shared/img/common/customer.svg"
+                alt=""
+                class="icon"
+              />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Customers</p>
+              <p class="name-menu">{{ t('NAV_CUSTOMERS') }}</p>
             </div>
           </div>
         </a>
-        <!-- menu button 6 -->
-        <a href="../AdminFE/suppliers.html" ng-if="canShow('suppliers')"></a>
-        <div class="slide-bar__MenuButton">
-          <div class="MenuButton-left">
-            <img src="../Shared/img/common/supplier.svg" alt="" class="icon" />
-          </div>
-          <div class="MenuButton-right">
-            <p class="name-menu">Suppliers</p>
-          </div>
-        </div>
-        </a>
-        <!-- menu button 7 -->
-        <a href="../AdminFE/purchaseorders.html" ng-if="canShow('purchaseOrders')">
+        <!-- menu button Suppliers -->
+        <a href="../AdminFE/suppliers.html" ng-if="canShow('suppliers')">
           <div class="slide-bar__MenuButton">
             <div class="MenuButton-left">
-              <img src="../Shared/img/common/purchaseorder.svg" alt="" class="icon" />
+              <img
+                src="../Shared/img/common/supplier.svg"
+                alt=""
+                class="icon"
+              />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Purchase Orders</p>
+              <p class="name-menu">{{ t('NAV_SUPPLIERS') }}</p>
             </div>
           </div>
         </a>
-        <!-- menu button 8 -->
+        <!-- menu button Purchase Orders -->
+        <a
+          href="../AdminFE/purchaseorders.html"
+          ng-if="canShow('purchaseOrders')"
+        >
+          <div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img
+                src="../Shared/img/common/purchaseorder.svg"
+                alt=""
+                class="icon"
+              />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu"> {{ t('NAV_PURCHASE_ORDERS') }}</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button stock -->
         <a href="../AdminFE/stockcard.html" ng-if="canShow('stock')">
           <div class="slide-bar__MenuButton">
             <div class="MenuButton-left">
               <img src="../Shared/img/common/stock.svg" alt="" class="icon" />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Stock Management</p>
+              <p class="name-menu">{{ t('NAV_STOCK') }}</p>
             </div>
           </div>
         </a>
-        <!-- menu button 9 -->
-        <a href="../AdminFE/sales.html" ng-if="canShow('sales')">
+        <!-- menu button Goods Receipts -->
+        <a href="../AdminFE/goodsreceipts.html" ng-if="canShow('greceipts')">
           <div class="slide-bar__MenuButton">
             <div class="MenuButton-left">
-              <img src="../Shared/img/common/sales.svg" alt="" class="icon" />
+              <img
+                src="../Shared/img/common/goodReceipt.svg"
+                alt=""
+                class="icon"
+              />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Sales</p>
+              <p class="name-menu">{{ t('GOODS_RECEIPTS') }}</p>
             </div>
           </div>
         </a>
-        <!-- menu button 10 -->
+        <!-- menu button Goods Issues -->
+        <a href="../AdminFE/goodsissues.html" ng-if="canShow('gissues')">
+          <div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img
+                src="../Shared/img/common/goodIssues.svg"
+                alt=""
+                class="icon"
+              />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">{{ t('GOODS_ISSUES') }}</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button Sales -->
+        <a href="../AdminFE/sales.html" ng-if="canShow('sales')">
+          <div class="slide-bar__MenuButton ">
+            <div class="MenuButton-left">
+              <img src="../Shared/img/common/sales.svg" alt="" class="icon" />
+</div>
+            <div class="MenuButton-right">
+              <p class="name-menu">{{ t('NAV_SALES') }}</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button Returns -->
         <a href="../AdminFE/returns.html" ng-if="canShow('returns')">
           <div class="slide-bar__MenuButton">
             <div class="MenuButton-left">
               <img src="../Shared/img/common/return.svg" alt="" class="icon" />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Returns</p>
+              <p class="name-menu">{{ t('NAV_RETURNS') }}</p>
             </div>
           </div>
         </a>
-        <!-- menu button 11 -->
-        <a href="../AdminFE/payments.html" ng-if="canShow('returns')">
+        <!-- menu button Payments & Debts -->
+        <a href="../AdminFE/payments.html" ng-if="canShow('payments')">
           <div class="slide-bar__MenuButton">
             <div class="MenuButton-left">
-              <img src="../Shared/img/common/payments.svg" alt="" class="icon" />
+              <img
+                src="../Shared/img/common/payments.svg"
+                alt=""
+                class="icon"
+              />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Payments & Debts</p>
+              <p class="name-menu">{{ t('NAV_PAYMENTS') }}</p>
             </div>
           </div>
         </a>
-        <!-- menu button 12 -->
+        <!-- menu button Reports -->
         <a href="../AdminFE/reports.html" ng-if="canShow('reports')">
           <div class="slide-bar__MenuButton">
             <div class="MenuButton-left">
               <img src="../Shared/img/common/report.svg" alt="" class="icon" />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Reports</p>
+              <p class="name-menu">{{ t('NAV_REPORTS') }}</p>
             </div>
           </div>
         </a>
-        <!-- menu button 13 -->
-        <a href="../AdminFE/auditlog.html" ng-if="canShow('auditLog')"></a>
-        <div class="slide-bar__MenuButton">
-          <div class="MenuButton-left">
-            <img src="../Shared/img/common/auditlog.svg" alt="" class="icon" />
+        <!-- menu button Audit Log -->
+        <a href="../AdminFE/auditlog.html" ng-if="canShow('auditLog')">
+          <div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img
+                src="../Shared/img/common/auditlog.svg"
+                alt=""
+                class="icon"
+              />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">{{ t('NAV_AUDIT_LOG') }}</p>
+            </div>
           </div>
-          <div class="MenuButton-right">
-            <p class="name-menu">Audit Log</p>
-          </div>
-        </div>
         </a>
-        <!-- menu button 14 -->
+        <!-- menu button Users -->
         <a href="../AdminFE/users.html" ng-if="canShow('users')">
           <div class="slide-bar__MenuButton">
             <div class="MenuButton-left">
               <img src="../Shared/img/common/user.svg" alt="" class="icon" />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Users</p>
+              <p class="name-menu">{{ t('NAV_USERS') }}</p>
             </div>
           </div>
         </a>
-        <!-- menu button 15 -->
+        <!-- menu button Settings -->
         <a href="../AdminFE/settings.html" ng-if="canShow('settings')">
           <div class="slide-bar__MenuButton">
             <div class="MenuButton-left">
               <img src="../Shared/img/common/setting.svg" alt="" class="icon" />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Settings</p>
+              <p class="name-menu">{{ t('NAV_SETTINGS') }}</p>
             </div>
           </div>
         </a>
       </div>
       <div class="slide-bar__footer">
         <div class="app-slide-bar">
-          <div class="ava">
+<div class="ava">
             <img class="ava" src="../Shared/img/common/ava.svg" alt="" />
           </div>
           <div class="info">
@@ -220,6 +298,7 @@
         </div>
       </div>
     </div>
+
     <div class="app-layout">
       <div class="top-bar">
         <div class="top-bar__content">
@@ -228,7 +307,7 @@
             <input class="search" type="text" placeholder="Search by product name" ng-model="searchProduct" />
           </div>
           <div class="top-bar__right">
-            <p class="role">admin</p>
+            <p class="role">{{ t('ROLE_ADMIN') }}</p>
             <img src="../Shared/img/common/ava.svg" alt="" class="ava" id="avatar" />
           </div>
         </div>
@@ -239,13 +318,13 @@
           </div>
           <div class="info-mid">
             <a href="#!">
-              <p class="set">Profile Settings</p>
+              <p class="set">{{ t('PROFILE_SETTINGS') }}</p>
             </a>
           </div>
           <div class="info-bottom">
             <img src="" alt="" class="icon" />
             <a href="../AuthFE/login.html">
-              <p class="logout">Logout</p>
+              <p class="logout">{{ t('LOGOUT') }}</p>
             </a>
           </div>
         </div>
@@ -253,21 +332,21 @@
 
 
       <div class="app-layout-content">
-        <h1 class="name-menu">Product </h1>
+        <h1 class="name-menu">{{ t('PRODUCT') }} </h1>
         <p class="desc">
-          Manage product inventory and pricing
+          {{ t('PRODUCT_DESC') }}
         </p>
         <div class="display-container">
           <div class="total farme">
-            <p class="name-display">Total Products</p>
+            <p class="name-display">{{ t('TOTAL_PRODUCTS') }}</p>
             <p class="data">{{stats.total}}</p>
           </div>
           <div class="avg farme">
-            <p class="name-display">In stock</p>
+            <p class="name-display">{{ t('IN_STOCK') }}</p>
             <p class="data">{{stats.instock}}</p>
           </div>
           <div class="most-common farme">
-            <p class="name-display">Out of Stock</p>
+            <p class="name-display">{{ t('OUT_STOCK') }}</p>
             <p class="data">{{stats.outstock}}</p>
           </div>
         </div>
@@ -279,15 +358,15 @@
           <!-- phân trang -->
           <div class="pager" ng-if="pager.total>0">
             <div class="pager-info">
-              Showing
+              {{ t('PAGING_SHOWING') }}
               {{((pager.page-1)*pager.size)+1}}-{{Math.min(pager.page*pager.size,pager.total)}}
-              of {{pager.total}} items
+              {{ t('PAGING_OF') }} {{pager.total}} {{ t('PAGING_ITEMS') }}
             </div>
             <div class="page-nav">
               <label>
-                Page size:
+                {{ t('PAGING_PAGE_SIZE') }}:
                 <select ng-model="pager.size" ng-change="changeSize()">
-                  <option value="0">ALL</option>
+                  <option value="0">{{ t('PAGING_ALL') }}</option>
                   <option value="10">10</option>
                   <option value="20">20</option>
                   <option value="30">30</option>
@@ -297,11 +376,11 @@
                 «
               </button>
               <button class="btn ghost" ng-disabled="pager.page === 1" ng-click="go(pager.page-1)">
-                Prev
+                {{ t('PAGING_PREV') }}
               </button>
               <span class="page-no"></span>
               <button class="btn ghost" ng-disabled="pager.page >= pager.pages" ng-click="go(pager.page+1)">
-                Next
+                {{ t('PAGING_NEXT') }}
               </button>
               <button class="btn ghost" ng-disabled="pager.page >= pager.pages" ng-click="go(pager.pages)">
                 »
@@ -309,13 +388,50 @@
             </div>
           </div>
           <div class="control-right">
+            <!-- <div class="import" ng-click="triggerImportFile()">
+                <img
+                  src="../Shared/img/common/import.svg"
+                  alt=""
+                  class="icon"
+                />
+              </div>
+              
 
-            <div class="export" ng-click="exportExcel()">
-              <img src="../Shared/img/common/export.svg" alt="" class="icon" />
-            </div>
+
+              <input 
+    type="file"
+    id="fileImport"
+    accept=".xlsx,.xls"
+    style="display:none"
+    onchange="angular.element(this).scope().handleImportFile(this)"
+> -->
+
+                {{ t('PRICE_FROM') }}
+                  <div class="control-left">
+                
+                <input class="searchPrice" type="number" placeholder="{{ t('MIN_PRICE_PLACEHOLDER') }}" ng-model="MinPrice" />
+              </div>
+              {{ t('PRICE_TO') }}
+              <div class="control-left">
+
+            <input class="searchPrice" type="number" placeholder="{{ t('MAX_PRICE_PLACEHOLDER') }}" ng-model="MaxPrice" />
+          </div>
+
+
+
+              <div class="export" ng-click="exportExcel()">
+                <img
+                  src="../Shared/img/common/export.svg"
+                  alt=""
+                  class="icon"
+                />
+              </div>
+            
+
+
             <div class="add" id="btnOpenAdd">
               <img src="../Shared/img/common/plus.svg" alt="" class="plus" />
-              <p class="add-product">Add Product</p>
+              <p class="add-product">{{ t('ADD_PRODUCT') }}</p>
             </div>
           </div>
         </div>
@@ -325,19 +441,19 @@
             <table class="table">
               <thead>
                 <tr>
-                  <th class="id">ID</th>
-                  <th class="name">Product Name</th>
-                  <th class="sku">SKU</th>
-                  <th class="barcode">Barcode</th>
-                  <th class="categoryid">CategoryID</th>
-                  <th class="unitprice">Price</th>
-                  <th class="unit">Unit</th>
-                  <th class="minstock">MinStock</th>
-                  <th class="qty">Quantity</th>
-                  <th class="vat">VAT Rate</th>
-                  <th class="status">Status</th>
-                  <th class="img">Image</th>
-                  <th class="action txt-right">Actions</th>
+                  <th class="id">{{ t('TB_ID') }}</th>
+                  <th class="name">{{ t('TB_PRODUCT_NAME') }}</th>
+                  <th class="sku">{{ t('TB_SKU') }}</th>
+                  <th class="barcode">{{ t('TB_BARCODE') }}</th>
+                  <th class="categoryid">{{ t('TB_CATEGORY_ID') }}</th>
+                  <th class="unitprice">{{ t('TB_PRICE') }}</th>
+                  <th class="unit">{{ t('TB_UNIT') }}</th>
+                  <th class="minstock">{{ t('TB_MIN_STOCK') }}</th>
+                  <th class="qty">{{ t('TB_QUANTITY') }}</th>
+                  <th class="vat">{{ t('TB_VAT_RATE') }}</th>
+                  <th class="status">{{ t('TB_STATUS') }}</th>
+                  <th class="img">{{ t('TB_IMAGE') }}</th>
+                  <th class="action txt-right">{{ t('ACTIONS') }}</th>
                 </tr>
               </thead>
               <tbody>
@@ -378,7 +494,7 @@
                           padding: 2px;
                           cursor: zoom-in;
                         " onerror="this.src='assets/img/no-image.png'; this.onerror=null;" />
-                    <span ng-if="!p.image" style="color: #999;">No image</span>
+                    <span ng-if="!p.image" style="color: #999;">{{ t('NAV_SETTINGS') }}</span>
                   </td>
 
                   <td class="txt-right">
@@ -395,7 +511,7 @@
                   </tr> -->
 
                 <tr ng-if="!products || products.length === 0">
-                  <td colspan="11" class="empty">No Data</td>
+                  <td colspan="11" class="empty">{{ t('NO_DATA') }}</td>
                 </tr>
 
               </tbody>
@@ -414,61 +530,62 @@
 
           <div class="form-add">
             <div class="form-add__content">
-              <h3 class="title">Add Product</h3>
-              <p class="desc">Create a new product </p>
+              <h3 class="title">{{ t('ADD_TITLE') }}</h3>
+              <p class="desc">{{ t('ADD_DESC') }} </p>
               <form name="frmAdd" ng-submit="add()">
 
                 <!-- Cột trái -->
                 <div>
-                  <label for="name-add">Product Name *</label>
-                  <input type="text" id="name-add" required placeholder="Enter product name"
+                  <label for="name-add">{{ t('LABEL_PRODUCT_NAME') }}*</label>
+                  <input type="text" id="name-add" required 
                     ng-model="newProduct.productName" />
 
-                  <label for="sku-add">SKU*</label>
-                  <input type="text" id="sku-add" required placeholder="Enter SKU" ng-model="newProduct.sku" />
+                  <label for="sku-add">{{ t('LABEL_SKU') }}*</label>
+                  <input type="text" id="sku-add" required  ng-model="newProduct.sku" />
 
-                  <label for="barcode-add">Barcode*</label>
-                  <input type="text" id="barcode-add" required placeholder="Enter Barcode"
-                    ng-model="newProduct.barcode" />
+                  <label for="barcode-add">{{ t('LABEL_BARCODE') }}*</label>
+                  <div style="display:flex; gap:10px;">
+                    <input type="text" id="barcode-add" required 
+                      ng-model="newProduct.barcode" />
 
-                  <label for="unitprice-add">Price*</label>
-                  <input type="text" id="unitprice-add" placeholder="Enter " ng-model="newProduct.unitPrice" />
+                    <button type="button" class="btn small" ng-click="generateBarcode()">↻</button>
+                  </div>
+
+                  <label for="unitprice-add">{{ t('LABEL_PRICE') }}*</label>
+                  <input type="text" id="unitprice-add"  ng-model="newProduct.unitPrice" />
 
 
-                  <label for="unit-add">Unit</label>
-                  <input type="text" id="unit-add" placeholder="Enter Unit" ng-model="newProduct.unit" />
+                  <label for="unit-add">{{ t('LABEL_UNIT') }}</label>
+                  <input type="text" id="unit-add"  ng-model="newProduct.unit" />
 
-                  <label for="vat-add">VAT Rate(%)</label>
+                  <label for="vat-add">{{ t('LABEL_VAT_RATE') }}(%)</label>
                   <input type="number" id="vat-add" placeholder="0.00" ng-model="newProduct.vatRate" min="0"
                     step="0.01" />
-                  <label class="standard">
-                    Standard VAT rates: 10% (most products), 9% (special items)
-                  </label>
                 </div>
 
                 <!-- Cột phải -->
                 <div>
-                  <label for="categoryid-add">CategoryName*</label>
+                  <label for="categoryid-add">{{ t('LABEL_CATEGORY') }}*</label>
                   <select id="categoryid-add" required ng-model="newProduct.categoryID"
                     ng-options="c.categoryID as c.categoryName for c in categories">
-                    <option value="">Select Category</option>
+                    <option value="">{{ t('PH_SELECT_CATEGORY') }}</option>
                   </select>
 
-                  <label for="minstock-add">MinStock</label>
-                  <input type="number" id="minstock-add" placeholder="Enter MinStock" ng-model="newProduct.minStock"
+                  <label for="minstock-add">{{ t('LABEL_MIN_STOCK') }}</label>
+                  <input type="number" id="minstock-add"  ng-model="newProduct.minStock"
                     min="0" step="1" />
 
-                  <label for="quantity-add">Quantity</label>
-                  <input type="number" id="quantity-add" placeholder="Enter Quantity" ng-model="newProduct.quantity"
+                  <label for="quantity-add">{{ t('LABEL_QUANTITY') }}</label>
+                  <input type="number" id="quantity-add"  ng-model="newProduct.quantity"
                     min="0" step="1" />
 
-                  <label for="status-add">Status</label>
+                  <label for="status-add">{{ t('LABEL_STATUS') }}</label>
                   <select id="status-add" ng-model="newProduct.status">
-                    <option value="Active">Active</option>
-                    <option value="Inactive">Inactive</option>
+                    <option value="Active">{{ t('STATUS_ACTIVE') }}</option>
+                    <option value="Inactive">{{ t('STATUS_INACTIVE') }}</option>
                   </select>
 
-                  <label for="imageInputAdd">Image</label>
+                  <label for="imageInputAdd">{{ t('LABEL_IMAGE') }}</label>
                   <input type="file" id="imageInputAdd" accept="image/*"
                     onchange="angular.element(this).scope().previewImageAdd(this)">
                   <img id="previewAdd" style="width:60px;height:60px;margin-top:5px;border-radius:6px;"
@@ -478,8 +595,8 @@
 
                 <!-- Footer -->
                 <div class="dialog-footer">
-                  <button type="button" class="cancel">Cancel</button>
-                  <input class="submit" type="submit" value="Add Product" ng-disabled="frmAdd.$invalid||savingAdd" />
+                  <button type="button" class="cancel">{{ t('BTN_CANCEL') }}</button>
+                  <input class="submit" type="submit" value="{{ t('BTN_ADD_PRODUCT') }}" ng-disabled="frmAdd.$invalid||savingAdd" />
                 </div>
               </form>
 
@@ -490,66 +607,63 @@
           <!-- =================== FORM EDIT =================== -->
           <div class="form-edit">
             <div class="form-edit__content">
-              <h3 class="title">Edit Product</h3>
-              <p class="desc">Update product information</p>
+              <h3 class="title">{{ t('EDIT_TITLE') }}</h3>
+              <p class="desc">{{ t('EDIT_DESC') }}</p>
 
               <form name="frmEdit" ng-submit="updateProduct()">
                 <!-- ===== Cột trái ===== -->
                 <div>
-                  <label for="name-edit">Product Name *</label>
-                  <input type="text" id="name-edit" required placeholder="Enter product name"
+                  <label for="name-edit">{{ t('LABEL_PRODUCT_NAME') }}*</label>
+                  <input type="text" id="name-edit" required 
                     ng-model="editingProduct.productName" />
 
-                  <label for="sku-edit">SKU*</label>
-                  <input type="text" id="sku-edit" required placeholder="Enter SKU" ng-model="editingProduct.sku" />
+                  <label for="sku-edit">{{ t('LABEL_SKU') }}*</label>
+                  <input type="text" id="sku-edit" required  ng-model="editingProduct.sku" />
 
-                  <label for="barcode-edit">Barcode*</label>
-                  <input type="text" id="barcode-edit" required placeholder="Enter Barcode"
+                  <label for="barcode-edit">{{ t('LABEL_BARCODE') }}*</label>
+                  <input type="text" id="barcode-edit" required 
                     ng-model="editingProduct.barcode" />
 
-                  <label for="unit-edit">Unit</label>
-                  <input type="text" id="unit-edit" placeholder="Enter Unit" ng-model="editingProduct.unit" />
+                  <label for="unit-edit">{{ t('LABEL_UNIT') }}</label>
+                  <input type="text" id="unit-edit"  ng-model="editingProduct.unit" />
 
 
-                  <label for="unitprice-edit">Price*</label>
-                  <input type="number" id="unitprice-edit" placeholder="Enter price" ng-model="editingProduct.unitPrice" min="0" step="1000" />
+                  <label for="unitprice-edit">{{ t('LABEL_PRICE') }}*</label>
+                  <input type="number" id="unitprice-edit"  ng-model="editingProduct.unitPrice" min="0" step="1000" />
 
 
 
-                  <label for="vat-edit">VAT Rate(%)</label>
+                  <label for="vat-edit">{{ t('LABEL_VAT_RATE') }}(%)</label>
                   <input type="number" id="vat-edit" placeholder="0.00" ng-model="editingProduct.vatRate" min="0"
                     step="0.01" />
-                  <label class="standard">
-                    Standard VAT rates: 10% (most products), 9% (special items)
-                  </label>
                 </div>
 
                 <!-- ===== Cột phải ===== -->
                 <div>
-                  <label for="categoryid-edit">CategoryName*</label>
+                  <label for="categoryid-edit">{{ t('LABEL_CATEGORY') }}*</label>
                   <select id="categoryid-edit" ng-model="editingProduct.categoryID"
                     ng-options="c.categoryID as c.categoryName for c in categories" required>
-                    <option value="">Select Category</option>
+                    <option value="">{{ t('PH_SELECT_CATEGORY') }}</option>
                   </select>
 
 
 
-                  <label for="minstock-edit">MinStock</label>
-                  <input type="number" id="minstock-edit" placeholder="Enter MinStock"
+                  <label for="minstock-edit">{{ t('LABEL_MIN_STOCK') }}</label>
+                  <input type="number" id="minstock-edit"
                     ng-model="editingProduct.minStock" min="0" step="1" />
 
-                  <label for="quantity-edit">Quantity</label>
-                  <input type="number" id="quantity-edit" placeholder="Enter Quantity"
+                  <label for="quantity-edit">{{ t('LABEL_QUANTITY') }}</label>
+                  <input type="number" id="quantity-edit" 
                     ng-model="editingProduct.quantity" min="0" step="1" />
 
-                  <label for="status-edit">Status</label>
+                  <label for="status-edit">{{ t('LABEL_STATUS') }}</label>
                   <select id="status-edit" ng-model="editingProduct.status">
-                    <option value="Active">Active</option>
-                    <option value="Inactive">Inactive</option>
+                    <option value="Active">{{ t('STATUS_ACTIVE') }}</option>
+                    <option value="Inactive">{{ t('STATUS_INACTIVE') }}</option>
                   </select>
 
 
-                  <label for="imageInputEdit">Image</label>
+                  <label for="imageInputEdit">{{ t('LABEL_IMAGE') }}</label>
                   <input type="file" id="imageInputEdit" accept="image/*"
                     onchange="angular.element(this).scope().previewImageEdit(this)">
                   <img id="previewEdit" style="width:60px;height:60px;margin-top:5px;border-radius:6px;"
@@ -559,8 +673,8 @@
 
                 <!-- ===== Footer ===== -->
                 <div class="dialog-footer">
-                  <button type="button" class="cancel">Cancel</button>
-                  <input class="submit" type="submit" value="Update Product"
+                  <button type="button" class="cancel">{{ t('BTN_CANCEL') }}</button>
+                  <input class="submit" type="submit" value="{{ t('BTN_UPDATE_PRODUCT') }}"
                     ng-disabled="frmEdit.$invalid || savingEdit" />
                 </div>
               </form>
@@ -570,17 +684,17 @@
           <!-- delete -->
           <div class="form-delete" ng-class="{open:showDelete}" ng-click="closeDeleteOnOverlay($event)">
             <div class="form-delete__content">
-              <h3 class="title">Delete Product</h3>
+              <h3 class="title">{{ t('DELETE_TITLE') }}</h3>
               <p class="desc">
-                Are you sure you want to delete the Product
-                "{{deleting.productName}}"? This action cannot be undone.
+                {{ t('DELETE_CONFIRM1') }}
+                "{{deleting.productName}}"? {{ t('DELETE_CONFIRM2') }}
               </p>
               <div class="dialog-footer">
                 <button class="cancel" ng-click="cancelDelete($event)">
-                  Cancel
+                  {{ t('BTN_CANCEL') }}
                 </button>
                 <button type="button" class="submit danger" ng-click="confirmDelete()" ng-disabled="deletingBusy">
-                  Delete Product
+                  {{ t('BTN_DELETE_PRODUCT') }}
                 </button>
               </div>
             </div>

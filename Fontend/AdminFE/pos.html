@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- css -->
+    <link rel="stylesheet" href="../Shared/css/pos.css" />
+    <script src="../Shared/angular/angular.min.js"></script>
+    <script src="../Shared/angular/global.js"></script>
+    <script src="../Shared/angular/pos.js"></script>
+    <title>Point of sale</title>
+  </head>
+  <body ng-app="AppRetailPos" ng-controller="posCtrl">
+    <div class="slide-bar">
+      <div class="slide-bar__header">
+        <div class="app-slideBar">
+          <div class="app-slideBar__left">
+            <img src="../Shared/img/common/wheel.svg" alt="" class="icon" />
+          </div>
+          <div class="app-slideBar__right">
+            <h1 class="name-app">RetailPro</h1>
+            <p class="title-nameApp">Inventory & POS</p>
+          </div>
+        </div>
+      </div>
+      <div class="slide-bar__Content">
+        <p class="slide-bar__label">Navigation</p>
+        <!-- menu button Dashboard -->
+        <a href="../AdminFE/dashboard.html" ng-if="canShow('dashboard')">
+          <div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img
+                src="../Shared/img/common/dashboard.svg"
+                alt=""
+                class="icon"
+              />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">Dashboard</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button POS -->
+        <a href="../AdminFE/pos.html" ng-if="canShow('pos')"
+          ><div class="slide-bar__MenuButton slide-bar__MenuButton--active">
+            <div class="MenuButton-left">
+              <img src="../Shared/img/common/pos.svg" alt="" class="icon" />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu-active">POS</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button Products -->
+        <a href="../AdminFE/products.html" ng-if="canShow('products')">
+          <div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img src="../Shared/img/common/product.svg" alt="" class="icon" />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">Products</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button Categories -->
+        <a href="../AdminFE/categories.html" ng-if="canShow('categories')">
+          <div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img
+                src="../Shared/img/common/category.svg"
+                alt=""
+                class="icon"
+              />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">Categories</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button Promotions -->
+        <a href="../AdminFE/promotions.html" ng-if="canShow('promotions')">
+          <div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img
+                src="../Shared/img/common/promotion.svg"
+                alt=""
+                class="icon"
+              />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">Promotions</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button Customers -->
+        <a href="../AdminFE/customers.html" ng-if="canShow('customers')">
+          <div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img
+                src="../Shared/img/common/customer.svg"
+                alt=""
+                class="icon"
+              />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">Customers</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button Suppliers -->
+        <a href="../AdminFE/suppliers.html" ng-if="canShow('suppliers')">
+          <div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img
+                src="../Shared/img/common/supplier.svg"
+                alt=""
+                class="icon"
+              />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">Suppliers</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button Purchase Orders -->
+        <a
+          href="../AdminFE/purchaseorders.html"
+          ng-if="canShow('purchaseOrders')"
+        >
+          <div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img
+                src="../Shared/img/common/purchaseorder.svg"
+                alt=""
+                class="icon"
+              />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">Purchase Orders</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button StockCard -->
+        <a href="../AdminFE/stockcard.html" ng-if="canShow('purchaseOrders')">
+          <div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img src="../Shared/img/common/stock.svg" alt="" class="icon" />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">Stock Management</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button Goods Receipts -->
+        <a href="../AdminFE/goodsreceipts.html" ng-if="canShow('greceipts')">
+          <div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img
+                src="../Shared/img/common/goodReceipt.svg"
+                alt=""
+                class="icon"
+              />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">Goods Receipts</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button Goods Issues -->
+        <a href="../AdminFE/goodsissues.html" ng-if="canShow('gissues')">
+          <div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img
+                src="../Shared/img/common/goodIssues.svg"
+                alt=""
+                class="icon"
+              />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">Goods Issues</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button Sales -->
+        <a href="../AdminFE/sales.html" ng-if="canShow('sales')">
+          <div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img src="../Shared/img/common/sales.svg" alt="" class="icon" />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">Sales</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button Returns -->
+        <a href="../AdminFE/returns.html" ng-if="canShow('returns')">
+          <div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img src="../Shared/img/common/return.svg" alt="" class="icon" />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">Returns</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button Payments & Debts -->
+        <a href="../AdminFE/payments.html" ng-if="canShow('payments')">
+          <div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img
+                src="../Shared/img/common/payments.svg"
+                alt=""
+                class="icon"
+              />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">Payments & Debts</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button Reports -->
+        <a href="../AdminFE/reports.html" ng-if="canShow('reports')">
+          <div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img src="../Shared/img/common/report.svg" alt="" class="icon" />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">Reports</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button Audit Log -->
+        <a href="../AdminFE/auditlog.html" ng-if="canShow('auditLog')">
+          <div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img
+                src="../Shared/img/common/auditlog.svg"
+                alt=""
+                class="icon"
+              />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">Audit Log</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button Users -->
+        <a href="../AdminFE/users.html" ng-if="canShow('users')">
+          <div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img src="../Shared/img/common/user.svg" alt="" class="icon" />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">Users</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button Settings -->
+        <a href="../AdminFE/settings.html" ng-if="canShow('settings')">
+          <div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img src="../Shared/img/common/setting.svg" alt="" class="icon" />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">Settings</p>
+            </div>
+          </div>
+        </a>
+      </div>
+      <div class="slide-bar__footer">
+        <div class="app-slide-bar">
+          <div class="ava">
+            <img class="ava" src="../Shared/img/common/ava.svg" alt="" />
+          </div>
+          <div class="info">
+            <p class="name">{{currentUser.fullname}}</p>
+            <p class="role">{{currentUser.role}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="app-layout">
+      <div class="top-bar">
+        <div class="top-bar__content">
+          <div class="top-bar__left" style="visibility: hidden">
+            <img src="../Shared/img/common/search.svg" alt="" class="icon" />
+            <input
+              class="search"
+              type="text"
+              placeholder="Search by categories name"
+              ng-model="searchCategories"
+            />
+          </div>
+          <div class="top-bar__right">
+            <p class="role">admin</p>
+            <img
+              src="../Shared/img/common/ava.svg"
+              alt=""
+              class="ava"
+              id="avatar"
+            />
+          </div>
+        </div>
+        <div class="top-bar__info" id="information">
+          <div class="info-top">
+            <p class="name">John Doe</p>
+            <p class="email">john@company.com</p>
+          </div>
+          <div class="info-mid">
+            <a href="#!"><p class="set">Profile Settings</p></a>
+          </div>
+          <div class="info-bottom">
+            <img
+              src="../Shared/img/categories/logout.svg"
+              alt=""
+              class="icon"
+            />
+            <a href="../AuthFE/login.html"><p class="logout">Logout</p></a>
+          </div>
+        </div>
+      </div>
+      <div class="app-layout__Content">
+        <div class="content-header">
+          <img
+            src="../Shared/img/common/wheel-blue.svg"
+            alt=""
+            class="icon-app"
+          />
+          <h1 class="name-app">Point of Sale</h1>
+        </div>
+        <p class="app-desc">Create orders, handle credit limit and payments</p>
+        <div class="content-main">
+          <div class="main-customer">
+            <div class="main-customer__title">
+              <img
+                src="../Shared/img/common/customer-blue.svg"
+                alt=""
+                class="icon-customer"
+              />
+              <p class="name-customer">Customer</p>
+            </div>
+            <div class="info-customer">
+              <form ng-submit="searchCustomer()">
+                <label for="phone">Phone *</label>
+                <br />
+                <div class="search">
+                  <input
+                    type="text"
+                    placeholder="+84 123 456 7890"
+                    id="phone"
+                    ng-model="phoneInput"
+                    required
+                  />
+                  <button class="search-phone" type="submit">
+                    <img
+                      src="../Shared/img/common/search-blue.svg"
+                      alt=""
+                      class="icon-search"
+                    />
+                  </button>
+                </div>
+              </form>
+              <!-- khi tìm thất khách hàng -->
+              <div class="info-customer__details" ng-if="selectedCustomer">
+                <p class="name-customer">{{selectedCustomer.CustomerName}}</p>
+                <p class="phone-customer">{{selectedCustomer.CustomerPhone}}</p>
+                <!-- trạng thái nợ -->
+                <div
+                  class="loyal-customer"
+                  ng-class="{'loyal-customer--vip':selectedCustomer.DebtLimit>0}"
+                >
+                  {{getCustomerChipText()}}
+                </div>
+              </div>
+              <!-- khi không tìm thấy -->
+              <div
+                class="info-customer__details info-customer__details--empty"
+                ng-if="hasSearched && !selectedCustomer"
+              >
+                <p class="no-customer">
+                  Không tìm thấy khách hàng với số:
+                  <strong>{{phoneInput}}</strong>
+                </p>
+                <p class="no-customer__hint">
+                  Thêm khách mới để gắn vào đơn này.
+                </p>
+              </div>
+              <div class="add-new__customer" ng-click="openAddCustomer()">
+                <img
+                  src="../Shared/img/common/add-customer.svg"
+                  alt=""
+                  class="icon-add"
+                />
+                <p class="desc-add">New Customer</p>
+              </div>
+            </div>
+          </div>
+          <div class="main-product">
+            <p class="name-card__product">Products</p>
+
+            <!-- Ô search chung: name / SKU / barcode -->
+            <div class="search-product">
+              <img
+                src="../Shared/img/common/search.svg"
+                alt=""
+                class="icon-search__product"
+              />
+              <input
+                type="text"
+                placeholder="Search or scan product (name / SKU / barcode)"
+                ng-model="productSearch"
+                ng-change="loadProducts(1)"
+              />
+            </div>
+
+            <!-- LIST PRODUCT CARD -->
+            <div class="card">
+              <div class="card-product__responsive">
+                <div
+                  class="product-card"
+                  ng-repeat="p in products"
+                  ng-click="addToCart(p)"
+                >
+                  <div class="img-product">
+                    <img
+                      ng-if="p.image"
+                      ng-src="{{ p.image }}"
+                      alt="{{ p.productName }}"
+                    />
+                  </div>
+
+                  <p class="name-product">{{ p.productName }}</p>
+
+                  <p class="cost-product">₫{{ p.unitPrice | number:0 }}</p>
+
+                  <!-- Nếu có khuyến mãi sau này thì bind thêm -->
+                  <div class="discount discount--empty">
+                    <!-- tạm không hiển thị gì -->
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- CART ITEMS -->
+            <div class="cart-items">
+              <div class="cart-items__header">
+                <img
+                  src="../Shared/img/common/cart.svg"
+                  alt=""
+                  class="icon-cart"
+                />
+                <p class="name-cart">Cart Items</p>
+              </div>
+
+              <div class="list-product">
+                <div class="product-item" ng-repeat="item in cartItems">
+                  <p class="name-product__list">{{ item.ProductName }}</p>
+
+                  <p class="quantity-product">x {{ item.Quantity }}</p>
+
+                  <div class="action">
+                    <div
+                      class="action-minus"
+                      ng-click="decreaseQty(item, $event)"
+                    >
+                      <img src="../Shared/img/common/minus.svg" alt="" />
+                    </div>
+                    <div
+                      class="action-plus"
+                      ng-click="increaseQty(item, $event)"
+                    >
+                      <img src="../Shared/img/common/plus-cart.svg" alt="" />
+                    </div>
+                    <div
+                      class="action-trash"
+                      ng-click="removeItem(item, $event)"
+                    >
+                      <img src="../Shared/img/common/trash-cart.svg" alt="" />
+                    </div>
+                  </div>
+
+                  <p class="cost-product">₫{{ item.LineTotal | number:0 }}</p>
+                </div>
+
+                <div class="empty-cart" ng-if="cartItems.length === 0">
+                  Chưa có sản phẩm nào trong giỏ.
+                </div>
+              </div>
+
+              <div class="detail-cart">
+                <div class="subtotal">
+                  <p class="name-subtotal">Subtotal:</p>
+                  <p class="cost-subtotal">₫{{ subtotal | number:0 }}</p>
+                </div>
+                <div class="vat">
+                  <p class="name-vat">VAT:</p>
+                  <p class="cost-vat">₫{{ vatTotal | number:0 }}</p>
+                </div>
+              </div>
+
+              <div class="order-total">
+                <p class="order-total__name">Order Total:</p>
+                <p class="order-total__cost">₫{{ orderTotal | number:0 }}</p>
+              </div>
+            </div>
+          </div>
+          <div class="main-payment">
+            <div class="main-payment__header">
+              <img
+                src="../Shared/img/common/card-atm.svg"
+                alt=""
+                class="icon-payment"
+              />
+              <p class="main-payment__name">Payment</p>
+            </div>
+
+            <!-- Tổng tiền order -->
+            <div class="total-payment">
+              <p class="title-payment">Order Total</p>
+              <p class="total-payment__cost">{{ formatVnd(orderTotal) }}</p>
+            </div>
+
+            <!-- FORM THANH TOÁN -->
+            <form ng-submit="completePayment()">
+              <label for="custom-pay">Customer pays</label>
+              <br />
+              <input
+                id="custom-pay"
+                type="number"
+                min="0"
+                ng-model="payment.customerPays"
+                ng-change="recalcRemainingDebt()"
+                required
+              />
+              <br />
+
+              <label for="method-pay">Payment method</label>
+              <br />
+              <select id="method-pay" ng-model="payment.method">
+                <option value="All">All method</option>
+                <option value="Cash">Cash</option>
+                <option value="Bank">Bank</option>
+              </select>
+              <br />
+
+              <div class="debt">
+                <p class="debt-name">Remaining debt:</p>
+                <p class="cost-remaining">
+                  {{ formatVnd(payment.remainingDebt) }}
+                </p>
+              </div>
+
+              <input type="submit" value="Complete Payment" />
+            </form>
+          </div>
+        </div>
+        <!-- form -->
+        <div class="form">
+          <div
+            class="form-add"
+            ng-class="{open: showAdd}"
+            ng-click="closeAddOnOverlay($event)"
+          >
+            <div class="form-add__content" ng-click="$event.stopPropagation()">
+              <h3 class="title">Add New Customer</h3>
+              <p class="desc">Enter customer details</p>
+
+              <form name="frmAdd" ng-submit="add()">
+                <!-- Full Name (required) -->
+                <label for="name-add"
+                  >Full Name <span class="required">*</span></label
+                >
+                <input
+                  type="text"
+                  id="name-add"
+                  placeholder="Enter customer name"
+                  ng-model="newCustomer.CustomerName"
+                  required
+                />
+
+                <div class="both">
+                  <!-- Phone (required) -->
+                  <div class="both-left">
+                    <label for="phone-add"
+                      >Phone <span class="required">*</span></label
+                    >
+                    <input
+                      type="text"
+                      id="phone-add"
+                      placeholder="+84 123 456 5278"
+                      ng-model="newCustomer.CustomerPhone"
+                      required
+                    />
+                  </div>
+
+                  <!-- Email (optional) -->
+                  <div class="both-right">
+                    <label for="mail-add">Email</label>
+                    <input
+                      type="text"
+                      id="mail-add"
+                      placeholder="phamchuan@email.com"
+                      ng-model="newCustomer.CustomerEmail"
+                    />
+                  </div>
+                </div>
+
+                <!-- Address (optional) -->
+                <label for="address-add">Address</label>
+                <input
+                  type="text"
+                  id="address-add"
+                  placeholder="123 Main City, Main Street"
+                  ng-model="newCustomer.CustomerAddress"
+                />
+
+                <!-- Không còn field Debt Limit trên POS -->
+
+                <div class="dialog-footer">
+                  <button type="button" class="cancel" ng-click="cancelAdd()">
+                    Cancel
+                  </button>
+                  <input
+                    class="submit"
+                    type="submit"
+                    value="Add New Customer"
+                    ng-disabled="frmAdd.$invalid || savingAdd"
+                  />
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- form success payment -->
+    <div class="form-success__payment" ng-show="showPaymentSuccess">
+      <div class="form-payment__header">
+        <img
+          src="../Shared/img/common/icon-success.svg"
+          alt=""
+          class="icon-success"
+        />
+        <h1 class="inform">Payment Successful</h1>
+        <p class="desc-inform">The order has been completed successfully.</p>
+      </div>
+
+      <div class="form-payment__content">
+        <!-- BLOCK 1: ORDER SUMMARY -->
+        <div class="payment-block payment-block__1">
+          <p class="title-block">Order Summary</p>
+          <div class="order-id">
+            <p class="title-order">Order ID</p>
+            <p class="data-order">{{successData.orderId}}</p>
+          </div>
+          <div class="date-order">
+            <p class="title-date">Date & Time</p>
+            <p class="data-date">
+              {{successData.dateTime | date:'yyyy-MM-dd HH:mm'}}
+            </p>
+          </div>
+          <div class="cashier-order">
+            <p class="title-cashier">Cashier</p>
+            <p class="data-cashier">{{successData.cashier}}</p>
+          </div>
+        </div>
+
+        <!-- BLOCK 2: CUSTOMER INFO -->
+        <div class="payment-block payment-block__2">
+          <p class="title-block">Customer Information</p>
+          <div class="custom-information" ng-if="successData.customerName">
+            <p class="info-name">{{successData.customerName}}</p>
+            <p class="info-phone">{{successData.customerPhone}}</p>
+          </div>
+          <div class="before-debt">
+            <p class="title-before">Before Debt</p>
+            <p class="data-before">{{formatVnd(successData.beforeDebt)}}</p>
+          </div>
+          <div class="prepay">
+            <p class="title-prepay">Prepay</p>
+            <p class="data-prepay">{{formatVnd(successData.prepay)}}</p>
+          </div>
+          <div class="remaining-debt">
+            <p class="title-remaining">Remaining Debt</p>
+            <p class="data-remaining">
+              {{formatVnd(successData.remainingDebt)}}
+            </p>
+          </div>
+
+          <div
+            class="loyal-customer"
+            ng-if="successData.debtLimit && successData.debtLimit > 0"
+          >
+            <p class="detail-loyal">Loyal customer – credit available</p>
+          </div>
+        </div>
+
+        <!-- BLOCK 3: ITEMS PURCHASED -->
+        <div class="payment-block payment-block__3">
+          <p class="title-block">Items Purchased</p>
+          <div class="list-items">
+            <div class="item-block" ng-repeat="it in successData.items">
+              <div class="item-block__left">
+                <div class="name-item">{{it.ProductName}}</div>
+                <div class="info-item-block">
+                  <div class="quantity-cost-item">
+                    {{it.Quantity}} x {{formatVnd(it.UnitPrice)}}
+                  </div>
+                  <div class="vat-item">VAT: {{it.VATRate || 0}}%</div>
+                </div>
+              </div>
+              <div class="item-block__right">
+                <div class="item-price">
+                  {{formatVnd((it.LineTotal || 0) + (it.LineVat || 0))}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- BLOCK 4: PAYMENT DETAILS -->
+        <div class="payment-block payment-block__4">
+          <p class="title-block">Payment Details</p>
+          <div class="order-total">
+            <p class="title-order__total">Order Total</p>
+            <p class="data-order__total">
+              {{formatVnd(successData.orderTotal)}}
+            </p>
+          </div>
+          <div class="customer-pays">
+            <p class="title-pays">Customer Pays</p>
+            <p class="data-pays">{{formatVnd(successData.prepay)}}</p>
+          </div>
+          <div class="method-pays">
+            <p class="title-method">Payment Method</p>
+            <p class="data-method">{{successData.method}}</p>
+          </div>
+          <div class="new-remaining__debt">
+            <p class="title-new-remaining">New Remaining Debt</p>
+            <p class="data-new-remaining">
+              {{formatVnd(successData.remainingDebt)}}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-payment__footer">
+        <div class="new-sale" ng-click="startNewSale()">New Sale</div>
+        <a href="" class="print-invoice" ng-click="printInvoice($event)">
+          <img src="../Shared/img/common/print.svg" alt="" class="icon-print" />
+          <p class="title-print">Print Invoice</p>
+        </a>
+      </div>
+    </div>
+
+    <script src="../Shared/js/pos.js"></script>
+  </body>
+</html>

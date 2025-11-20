@@ -298,9 +298,9 @@
     },
 
     {
-      "UpstreamPathTemplate": "/api-admin/system/{everything}",
+      "UpstreamPathTemplate": "/api-admin/settings/{everything}",
       "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
-      "DownstreamPathTemplate": "/api/system/{everything}",
+      "DownstreamPathTemplate": "/api/settings/{everything}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {

@@ -41,8 +41,7 @@ namespace DAL
                 var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_payment_create",
                     "@CustomerID", model.CustomerID,
                     "@SaleID", model.SaleID,
-                    "@Amount", model.Amount,
-                    
+                    "@Amount", model.Amount,              
                     "@Method", model.Method,
                     "@Description", model.Description
                 );
@@ -69,8 +68,7 @@ namespace DAL
                 var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_payment_create",
                     "@SupplierID", model.SupplierID,
                     "@ReceiptID", model.ReceiptID,
-                    "@Amount", model.Amount,
-                   
+                    "@Amount", model.Amoun,
                     "@Method", model.Method,
                     "@Description", model.Description
                 );

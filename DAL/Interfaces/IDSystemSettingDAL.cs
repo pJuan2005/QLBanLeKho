@@ -1,15 +1,10 @@
-﻿// File: DAL/Interfaces/ISystemDAL.cs
-using Model;
-using System.Collections.Generic;
+﻿using Model;
 
 namespace DAL.Interfaces
 {
-    public interface ISystemDAL
+    public partial interface IDSettingsDAL
     {
-        bool Create(SystemSettingModel model);
-        bool Delete(int id);
-        bool Update(SystemSettingModel model);
-        SystemSettingModel GetDatabyID(int systemId);
-        List<SystemSettingModel> Search(SystemSettingSearchRequest request, out long total);
+        SettingsModel GetSettings();
+        bool UpdateSettings(SettingsModel model);
     }
 }

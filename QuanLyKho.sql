@@ -1,8 +1,10 @@
-﻿﻿create database QLBanLeKho
+﻿create database QLBanLeKho
 use QLBanLeKho
 
-
+create database QLBanLeKho
+delete Products
 drop database QLBanLeKho
+
 
 
 
@@ -82,13 +84,13 @@ CREATE TABLE Products (
     Unit NVARCHAR(20) NULL,                                -- Đơn vị tính
     MinStock INT DEFAULT 0,                           -- Tồn kho tối thiểu
     Status NVARCHAR(20) DEFAULT 'Active',             -- Trạng thái
-    ImageData VARBINARY(MAX) NULL,                    -- Hình ảnh
+    Image NVARCHAR(255) NULL,                  -- Hình ảnh
     VATRate DECIMAL(5,2) NULL,                             -- Thuế VAT
     Quantity INT DEFAULT 0,                           -- Số lượng tồn
     FOREIGN KEY (CategoryID) REFERENCES Categories(CategoryID)
 );
 
-
+drop table Products
 select * from Products
 
 
@@ -297,196 +299,8 @@ select * from StockCards
 ---------------------------------------------------------------------------------------------------------------------------------
 
 
-drop TABLE SystemSettings
-
-CREATE TABLE SystemSettings (
-	SettingID INT IDENTITY(1,1) PRIMARY KEY, 
-    Setting NVARCHAR(100) ,
-	Information NVARCHAR(100)
-);
-
--- =============================================
--- Stored Procedure để TẠO MỚI một cài đặt
--- =============================================
-select * from SystemSettings
-
-CREATE PROCEDURE [dbo].[sp_system_setting_create]
-(
-    @Setting NVARCHAR(100),
-    @Information NVARCHAR(100)
-)
-AS
-BEGIN
-    SET NOCOUNT ON;
-    INSERT INTO SystemSettings (Setting, Information)
-    VALUES (@Setting, @Information);
-    SELECT SCOPE_IDENTITY();
-END
-GO
-
--- =============================================
--- Stored Procedure để XÓA một cài đặt theo ID
--- =============================================
-CREATE PROCEDURE [dbo].[sp_system_setting_delete]
-(
-    @SettingID INT
-)
-AS
-BEGIN
-    SET NOCOUNT ON;
-    DELETE FROM SystemSettings
-    WHERE SettingID = @SettingID;
-END
-GO
 
 
-
-
-
-CREATE PROCEDURE [dbo].[sp_system_setting_update]
-(
-    @SettingID INT,
-    @Setting NVARCHAR(100),
-    @Information NVARCHAR(100)
-)
-AS
-BEGIN
-    SET NOCOUNT ON;
-    UPDATE SystemSettings
-    SET 
-        Setting = @Setting,
-        Information = @Information
-    WHERE 
-        SettingID = @SettingID;
-END
-GO
-
-
-
-CREATE PROCEDURE [dbo].[sp_system_settings_get_all] @SettingID INT
-AS
-BEGIN
-    SET NOCOUNT ON;
-    SELECT *
-    FROM SystemSettings
-	WHERE SettingID = @SettingID
-END
-GO
-
-
-CREATE PROCEDURE [dbo].[sp_system_setting_search]
-(
-    @page_index  INT, 
-    @page_size   INT,
-    @SettingID   INT = NULL,
-    @Setting     VARCHAR(100) = '',
-    @Information NVARCHAR(100) = ''
-)
-AS
-BEGIN
-    DECLARE @RecordCount BIGINT;
-
-    IF(@page_size <> 0)
-    BEGIN
-        SET NOCOUNT ON;
-
-        SELECT 
-            ROW_NUMBER() OVER (ORDER BY p.SettingID ASC) AS RowNumber,
-			   p.SettingID,
-               p.Setting,
-               p.Information
-        INTO #Results1
-        FROM SystemSettings AS p
-        WHERE (@SettingID IS NULL OR p.SettingID = @SettingID)
-          AND (@Setting = '' OR p.Setting LIKE '%' + @Setting + '%')
-          AND (@Information = '' OR p.Information LIKE N'%' + @Information + '%')
-
-        SELECT @RecordCount = COUNT(*) FROM #Results1;
-
-        SELECT *, @RecordCount AS RecordCount
-        FROM #Results1
-        WHERE RowNumber BETWEEN(@page_index - 1) * @page_size + 1 
-                            AND (((@page_index - 1) * @page_size + 1) + @page_size) - 1
-           OR @page_index = -1;
-
-        DROP TABLE #Results1; 
-    END
-    ELSE
-    BEGIN
-        SET NOCOUNT ON;
-
-        SELECT 
-            ROW_NUMBER() OVER (ORDER BY p.SettingID ASC) AS RowNumber,
-		       p.SettingID,
-               p.Setting,
-               p.Information 
-        INTO #Results2
-        FROM SystemSettings AS p
-        WHERE (@SettingID IS NULL OR p.SettingID = @SettingID)
-          AND (@Setting = '' OR p.Setting LIKE '%' + @Setting + '%')
-          AND (@Information = '' OR p.Information LIKE N'%' + @Information + '%')
-
-        SELECT @RecordCount = COUNT(*) FROM #Results2;
-
-        SELECT *, @RecordCount AS RecordCount
-        FROM #Results2;
-
-        DROP TABLE #Results2;
-    END;
-END;
-GO
-
-
-INSERT INTO SystemSettings (Setting,Information)
-VALUES
-(N'Address', N'38 tống duy tân'),
-(N'Name', N'Hệ Thống Quản Lý Bán Lẻ & Kho'),
-(N'Phonenumber', N'0941771437'),
-(N'Email', N'a@gmail.com'),
-(N'Currency', N'VND'),
-(N'Currency', N'USD'),
-(N'Currency', N'EUR'),
-(N'Currency', N'JPY'),
-(N'Currency', N'GBP'),
-(N'Currency', N'CNY'),
-(N'Time zone', N'UTC-12: Đường Quốc tế Thay Đổi Ngày'),
-(N'Time zone', N'UTC-11: Samoa'),
-(N'Time zone', N'UTC-10: Hawaii'),
-(N'Time zone', N'UTC-9: Alaska'),
-(N'Time zone', N'UTC-8: Thái Bình Dương (Canada, Mỹ)'),
-(N'Time zone', N'UTC-7: Núi Rocky (Canada, Mỹ)'),
-(N'Time zone', N'UTC-6: Trung Mỹ (Mexico, Canada, Mỹ)'),
-(N'Time zone', N'UTC-5: Đông Bắc Mỹ (Canada, Mỹ)'),
-(N'Time zone', N'UTC-4: Đông Nam Mỹ (Brazil, Argentina)'),
-(N'Time zone', N'UTC-3: Đông Nam Mỹ (Brazil, Argentina)'),
-(N'Time zone', N'UTC-2: Đại Tây Dương'),
-(N'Time zone', N'UTC-1: Đại Tây Dương (Greenland)'),
-(N'Time zone', N'UTC+0: Anh, Bồ Đào Nha, Ireland'),
-(N'Time zone', N'UTC+1: Tây Âu (Pháp, Đức, Italy)'),
-(N'Time zone', N'UTC+2: Trung Đông và Đông Âu'),
-(N'Time zone', N'UTC+3: Nga, Trung Đông'),
-(N'Time zone', N'UTC+4: Caucasus, Nga'),
-(N'Time zone', N'UTC+5: Trung Á'),
-(N'Time zone', N'UTC+6: Bangladesh, Siberia'),
-(N'Time zone', N'UTC+7: Đông Nam Á'),
-(N'Time zone', N'UTC+8: Trung Quốc, Đông Á'),
-(N'Time zone', N'UTC+9: Nhật Bản, Hàn Quốc'),
-(N'Time zone', N'UTC+10: Đông Úc'),
-(N'Time zone', N'UTC+11: Tây Thái Bình Dương'),
-(N'Time zone', N'UTC+12: Tân Zeeland, Fiji')
-
-
-
-select * from SystemSettings
-
-
-
-
-
-
---------------------------------------------------------------------------------------------------------
-
-drop PROCEDURE [dbo].[sp_system_settings_get_all]
 
 -- USERS (15 bản ghi)
 INSERT INTO Users (Username, PasswordHash, Role, FullName, Email, Phone)
@@ -506,6 +320,11 @@ VALUES
 ('user6', '123456', 'ThuKho', N'Phan Văn M', 'user6@shop.com', '0901111013'),
 ('user7', '123456', 'KeToan', N'Đoàn Thị N', 'user7@shop.com', '0901111014'),
 ('user8', '123456', 'Admin', N'Tạ Văn O', 'user8@shop.com', '0901111015');
+
+
+
+
+
 
 -- CATEGORIES (15 bản ghi)
 INSERT INTO Categories (CategoryName, Description,VATRate)
@@ -527,7 +346,11 @@ VALUES
 (N'Giày Thời Trang', N'Giày phong cách cá nhân',10);
 
 
-select * from Categories
+
+
+
+
+
 
 -- SUPPLIERS (15 bản ghi)
 INSERT INTO Suppliers (SupplierName, Address, Phone, Email)
@@ -547,6 +370,11 @@ VALUES
 (N'Nhà Cung Cấp M', N'Lạng Sơn', '0912000013', 'nccM@shop.com'),
 (N'Nhà Cung Cấp N', N'Hòa Bình', '0912000014', 'nccN@shop.com'),
 (N'Nhà Cung Cấp O', N'Vĩnh Phúc', '0912000015', 'nccO@shop.com');
+
+
+
+
+
 
 -- CUSTOMERS (15 bản ghi)
 INSERT INTO Customers (CustomerName, Phone, Email, Address, DebtLimit)
@@ -570,28 +398,36 @@ VALUES
 
 
 
-INSERT INTO Products (SKU, Barcode, ProductName, CategoryID,Quantity,UnitPrice, Unit, MinStock, Status, ImageData, VATRate)
+
+
+
+
+INSERT INTO Products 
+(SKU, Barcode, ProductName, CategoryID, UnitPrice, Unit, MinStock, Status, Image, VATRate, Quantity) 
 VALUES
-('SKU001', 'BC001', N'Giày Sneaker Trắng', 1,4,0,  N'Đôi', 10, 'Active',NULL , 15.00),
-('SKU002', 'BC002', N'Giày Sneaker Đen', 1,9,0,  N'Đôi', 10, 'Active',NULL , 10.00),
-('SKU003', 'BC003', N'Giày Chạy Bộ Nam', 8,6,0,  N'Đôi',  5, 'Active',NULL , 20.00),
-('SKU004', 'BC004', N'Giày Chạy Bộ Nữ', 8,1,0,  N'Đôi',  5, 'Active', NULL, 10.00),
-('SKU005', 'BC005', N'Giày Tennis Trắng', 11,0,0, N'Đôi',  3, 'Active', NULL, 10.00),
-('SKU006', 'BC006', N'Giày Bóng Đá Cỏ Tự Nhiên', 13,25,0,  N'Đôi',  7, 'Active',NULL, 10.00),
-('SKU007', 'BC007', N'Giày Bóng Đá Cỏ Nhân Tạo', 13,6,0,  N'Đôi',  7, 'Active', NULL, 20.00),
-('SKU008', 'BC008', N'Giày Bóng Rổ Cao Cổ', 14,18,0,  N'Đôi', 6, 'Active',NULL, 0),
-('SKU009', 'BC009', N'Giày Golf Chống Thấm', 12,6,0,  N'Đôi',2, 'Active', NULL, 10.00),
-('SKU010', 'BC010', N'Giày Tây Nam', 4, 25 ,0, N'Đôi', 4, 'Active', NULL, 10.00),
-('SKU011', 'BC011', N'Giày Cao Gót Đen', 5, 16,0,  N'Đôi',3, 'Active', NULL, 0),
-('SKU012', 'BC012', N'Giày Boot Da', 6,0,0,  N'Đôi',2, 'Active',NULL, 20.00),
-('SKU013', 'BC013', N'Dép Lê Nam', 3,1,0,  N'Đôi',20, 'Active', NULL, 15.00),
-('SKU014', 'BC014', N'Sandal Nữ Thời Trang', 2,40,0, N'Đôi',15, 'Active', NULL, 15.00),
-('SKU015', 'BC015', N'Giày Lười Nam', 10, 21,0, N'Đôi', 8, 'Active', NULL, 0);
+('SKU001', 'BC001', N'Giày Sneaker Trắng',            1, 850000, N'Đôi', 10, 'Active', N'Products\Giày Sneaker Trắng.jpg',      15.00, 0),
+('SKU002', 'BC002', N'Giày Sneaker Đen',              1, 850000, N'Đôi', 10, 'Active', N'Products\Giày Sneaker Đen.jpg',        10.00, 0),
+('SKU003', 'BC003', N'Giày Chạy Bộ Nam',              8, 950000, N'Đôi', 5,  'Active', N'Products\Giày Chạy Bộ Nam.jpg',        20.00, 0),
+('SKU004', 'BC004', N'Giày Chạy Bộ Nữ',               8, 920000, N'Đôi', 5,  'Active', N'Products\Giày Chạy Bộ Nữ.jpg',         10.00, 0),
+('SKU005', 'BC005', N'Giày Tennis Trắng',             11,1100000, N'Đôi', 3,  'Active', N'Products\Giày Tennis Trắng.jpg',       10.00, 0),
+('SKU006', 'BC006', N'Giày Bóng Đá Cỏ Tự Nhiên',      13,1200000, N'Đôi', 7,  'Active', N'Products\Giày Bóng Đá Cỏ Tự Nhiên.jpg',10.00, 0),
+('SKU007', 'BC007', N'Giày Bóng Đá Cỏ Nhân Tạo',      13,1100000, N'Đôi', 7,  'Active', N'Products\Giày Bóng Đá Cỏ Nhân Tạo.jpg',20.00, 0),
+('SKU008', 'BC008', N'Giày Bóng Rổ Cao Cổ',           14,1300000, N'Đôi', 6,  'Active', N'Products\Giày Bóng Rổ Cao Cổ.jpg',    0.00,  0),
+('SKU009', 'BC009', N'Giày Golf Chống Thấm',          12,1500000, N'Đôi', 2,  'Active', N'Products\Giày Golf Chống Thấm.jpg',   10.00, 0),
+('SKU010', 'BC010', N'Giày Tây Nam',                  4, 650000, N'Đôi', 4,  'Active', N'Products\Giày Tây Nam.jpg',             10.00, 0),
+('SKU011', 'BC011', N'Giày Cao Gót Đen',              5, 700000, N'Đôi', 3,  'Active', N'Products\Giày Cao Gót Đen.jpg',         0.00,  0),
+('SKU012', 'BC012', N'Giày Boot Da',                  6, 1400000, N'Đôi', 2, 'Active', N'Products\Giày Boot Da.jpg',             20.00, 0),
+('SKU013', 'BC013', N'Dép Lê Nam',                    3, 150000, N'Đôi', 20, 'Active', N'Products\Dép Lê Nam.jpg',               15.00, 0),
+('SKU014', 'BC014', N'Sandal Nữ Thời Trang',          2, 300000, N'Đôi', 15, 'Active', N'Products\Sandal Nữ Thời Trang.jpg',     15.00, 0),
+('SKU015', 'BC015', N'Giày Lười Nam',                 10,550000, N'Đôi', 8,  'Active', N'Products\Giày Lười Nam.jpg',            0.00,  0);
 
 
-/* =========================
-   1) PURCHASE ORDERS (15)
-   ========================= */
+
+
+
+
+
+
 INSERT INTO PurchaseOrders (SupplierID, OrderDate, TotalAmount, Status) VALUES
 (1,  '2025-01-05', 0, N'Pending'),
 (2,  '2025-01-06', 0, N'Completed'),
@@ -639,6 +475,11 @@ INSERT INTO PurchaseOrderDetails (POID, ProductID, NameProduct, Quantity, UnitPr
 
 
 
+DELETE FROM GoodsReceipts;
+DBCC CHECKIDENT ('GoodsReceipts', RESEED, 0);
+
+
+
 INSERT INTO GoodsReceipts (POID, ReceiptDate, TotalAmount, UserID, BatchNo) VALUES
 (1,  '2025-01-20', 0,  1,  'BCH001'),
 (2,  '2025-01-21', 0,  2,  'BCH002'),
@@ -657,7 +498,7 @@ INSERT INTO GoodsReceipts (POID, ReceiptDate, TotalAmount, UserID, BatchNo) VALU
 (15, '2025-02-03', 0, 15,  'BCH015');
 
 
-
+select *from GoodsReceipts
 
 
 
@@ -701,9 +542,15 @@ INSERT INTO Promotions (CategoryID, PromotionName, Type, Value, StartDate, EndDa
 (14, N'Bóng Rổ Rực Lửa',              N'Value',   40000, '2025-08-01', '2025-08-15'),
 (NULL, N'Toàn Cửa Hàng - Sinh Nhật',  N'Percent', 5,  '2025-09-01', '2025-09-07');
 
-/* =================
-   6) GOODS ISSUES (15)
-   ================= */
+
+
+
+
+
+
+
+
+
 INSERT INTO GoodsIssues (IssueDate, UserID, TotalAmount) VALUES
 ('2025-02-10 10:00:00', 1,  0),
 ('2025-02-11 11:00:00', 2,  0),
@@ -721,10 +568,14 @@ INSERT INTO GoodsIssues (IssueDate, UserID, TotalAmount) VALUES
 ('2025-02-23 13:30:00',14,  0),
 ('2025-02-24 14:30:00',15,  0);
 
-/* ==========================
-   7) GOODS ISSUE DETAILS (15)
-   (IssueID 1..15; ProductID 1..15)
-   ========================== */
+
+
+
+
+
+
+
+
 INSERT INTO GoodsIssueDetails (IssueID, ProductID, ProductName, Quantity, UnitPrice) VALUES
 (1,  1,  N'Giày Sneaker Trắng',           2, 480000),
 (2,  2,  N'Giày Sneaker Đen',             3, 495000),
@@ -742,9 +593,13 @@ INSERT INTO GoodsIssueDetails (IssueID, ProductID, ProductName, Quantity, UnitPr
 (14, 14, N'Sandal Nữ Thời Trang',          4, 250000),
 (15, 15, N'Giày Lười Nam',                 2, 580000);
 
-/* =========
-   8) SALES (15)
-   ========= */
+
+
+
+
+
+
+
 INSERT INTO Sales (CustomerID, UserID, SaleDate, TotalAmount, VATAmount, PaymentStatus) VALUES
 (1,  1,  '2025-03-01 09:00:00', 960000,   96000,  N'Paid'),
 (2,  2,  '2025-03-01 10:00:00', 495000,   49500,  N'Paid'),
@@ -762,10 +617,14 @@ INSERT INTO Sales (CustomerID, UserID, SaleDate, TotalAmount, VATAmount, Payment
 (14, 14, '2025-03-07 13:30:00', 1000000, 100000,  N'Paid'),
 (15, 15, '2025-03-08 14:30:00', 1160000, 116000,  N'Unpaid');
 
-/* ==================
-   9) SALES ITEMS (15)
-   (1 item mỗi đơn)
-   ================== */
+
+
+
+
+
+
+
+
 INSERT INTO SalesItems (SaleID, ProductID, ProductName, Quantity, UnitPrice, Discount) VALUES
 (1,  1,  N'Giày Sneaker Trắng',           2, 480000, 0),
 (2,  2,  N'Giày Sneaker Đen',             1, 495000, 0),
@@ -783,31 +642,22 @@ INSERT INTO SalesItems (SaleID, ProductID, ProductName, Quantity, UnitPrice, Dis
 (14, 14, N'Sandal Nữ Thời Trang',          4, 250000, 0),
 (15, 15, N'Giày Lười Nam',                 2, 580000, 0);
 
-/* ==============
-   10) RETURNS (15)
-   (Một số trả từ Sales, một số trả NCC theo Receipt)
-   ============== */
-INSERT INTO Returns (SaleID, CustomerID, ReturnDate, Reason, SupplierID, ReceiptID) VALUES
-(1,  1,  '2025-03-02', N'Không vừa size',                 NULL, NULL),
-(2,  2,  '2025-03-02', N'Lỗi keo nhẹ',                    NULL, NULL),
-(3,  3,  '2025-03-03', N'Đổi mẫu',                        NULL, NULL),
-(4,  4,  '2025-03-03', N'Màu không hợp',                  NULL, NULL),
-(5,  5,  '2025-03-04', N'Đế trơn',                        NULL, NULL),
-(6,  6,  '2025-03-04', N'Hàng lỗi đường may',            NULL, NULL),
-(7,  7,  '2025-03-05', N'Khách đổi size',                 NULL, NULL),
-(8,  8,  '2025-03-05', N'Gót cứng',                       NULL, NULL),
-(9,  9,  '2025-03-06', N'Trái kỳ vọng',                   NULL, NULL),
-(10, 10, '2025-03-06', N'Giao nhầm mẫu',                  NULL, NULL),
-(NULL, NULL, '2025-02-02', N'Trả nhà cung cấp - lỗi lô',  1, 1),
-(NULL, NULL, '2025-02-03', N'Trả NCC - giày tróc da',     2, 2),
-(NULL, NULL, '2025-02-04', N'Trả NCC - lỗi keo',          3, 3),
-(NULL, NULL, '2025-02-05', N'Trả NCC - hư form',          4, 4),
-(NULL, NULL, '2025-02-06', N'Trả NCC - sai nhãn',         5, 5);
 
-/* =============
-   11) INVOICES (15)
-   (mỗi Sale có 1 Invoice)
-   ============= */
+
+select * from  SalesItems
+
+
+
+
+
+
+
+
+
+
+
+
+
 INSERT INTO Invoices (SaleID, InvoiceNo, InvoiceDate, TotalAmount, VATAmount) VALUES
 (1,  'INV0001', '2025-03-01', 960000,   96000),
 (2,  'INV0002', '2025-03-01', 495000,   49500),
@@ -825,10 +675,31 @@ INSERT INTO Invoices (SaleID, InvoiceNo, InvoiceDate, TotalAmount, VATAmount) VA
 (14, 'INV0014', '2025-03-07', 1000000, 100000),
 (15, 'INV0015', '2025-03-08', 1160000, 116000);
 
-/* =============
-   12) PAYMENTS (15)
-   (10 bản ghi cho Sales, 5 bản ghi thanh toán NCC theo Receipt)
-   ============= */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 INSERT INTO Payments (SaleID, CustomerID, SupplierID, ReceiptID, Amount, PaymentDate, Method, Description) VALUES
 (1,  1,  NULL, NULL, 960000,  '2025-03-01', N'Tiền mặt',     N'Thanh toán đủ'),
 (2,  2,  NULL, NULL, 495000,  '2025-03-01', N'Chuyển khoản', N'Thanh toán đủ'),
@@ -846,10 +717,17 @@ INSERT INTO Payments (SaleID, CustomerID, SupplierID, ReceiptID, Amount, Payment
 (NULL, NULL, 4, 4,  4500000, '2025-02-08', N'QR',           N'Thanh toán NCC lô 4'),
 (NULL, NULL, 5, 5,  5200000, '2025-02-09', N'Chuyển khoản', N'Thanh toán NCC lô 5');
 
-/* =================
-   13) STOCK CARDS (15)
-   (tham chiếu ReceiptID 1..8 cho IN và IssueID 1..7 cho OUT)
-   ================= */
+
+
+
+
+
+
+
+
+
+
+
 INSERT INTO StockCards (ProductID, ProductName, TransactionType, Quantity, Balance, ReceiptID, IssueID, TransactionDate, SupplierID, BatchNo) VALUES
 (1,  N'Giày Sneaker Trắng',           N'IN',  20,  24, 1, NULL, '2025-01-20 10:00:00', 1,  'BCH001'),
 (2,  N'Giày Sneaker Đen',             N'IN',  30,  39, 2, NULL, '2025-01-21 10:00:00', 2,  'BCH002'),
@@ -1290,40 +1168,40 @@ CREATE PROCEDURE [dbo].[sp_payment_create]
 (
     @SaleID INT = NULL,
     @CustomerID INT = NULL,
-	@SupplierID INT = NULL,
-	@ReceiptID INT = NULL,
+    @SupplierID INT = NULL,
+    @ReceiptID INT = NULL,
     @Amount DECIMAL(18,2),
-    @PaymentDate DATE,
     @Method NVARCHAR(30),
-	@Description NVARCHAR(200)
+    @Description NVARCHAR(200)
 )
 AS
 BEGIN
-	SET NOCOUNT ON;
+    SET NOCOUNT ON;
+
     INSERT INTO Payments
     (
         SaleID,
         CustomerID,
-		SupplierID,
-		ReceiptID,
+        SupplierID,
+        ReceiptID,
         Amount,
         PaymentDate,
         Method,
-		Description
+        Description
     )
     VALUES
     (
         @SaleID,
         @CustomerID,
-		@SupplierID,
-		@ReceiptID,
+        @SupplierID,
+        @ReceiptID,
         @Amount,
-        @PaymentDate,
+        CAST(GETDATE() AS DATE), -- tự động lấy ngày hiện tại
         @Method,
-		@Description
+        @Description
     );
 
-    SELECT SCOPE_IDENTITY() AS NewProductID;
+    SELECT SCOPE_IDENTITY() AS NewPaymentID;
 END;
 GO
 
@@ -1481,6 +1359,32 @@ GO
 select * from Payments
 
 
+
+
+
+
+
+
+
+
+--trigger tự động nhập supplierID qua receiptID
+CREATE TRIGGER trg_AfterInsert_Payments
+ON Payments
+AFTER INSERT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    -- Cập nhật SupplierID trong Payments dựa vào ReceiptID -> GoodsReceipts -> PurchaseOrders
+    UPDATE p
+    SET p.SupplierID = po.SupplierID
+    FROM Payments p
+    INNER JOIN inserted i ON p.PaymentID = i.PaymentID
+    INNER JOIN GoodsReceipts gr ON i.ReceiptID = gr.ReceiptID
+    INNER JOIN PurchaseOrders po ON gr.POID = po.POID
+    WHERE i.ReceiptID IS NOT NULL;
+END;
+GO
 
 
 -- =============================================
@@ -1889,7 +1793,6 @@ GO
 
 
 
-
 -- =============================================
 -- Lấy trả hàngtheo ID
 -- =============================================
@@ -2211,7 +2114,7 @@ GO
 USE [QLBanLeKho]
 GO
 
-
+ư
 
 create procedure [dbo].[sp_user_get_by_username_password](@username varchar(50), @password varchar(255))
 as
@@ -2294,6 +2197,48 @@ USE [QLBanLeKho]
 GO
 
 
+
+CREATE   PROCEDURE [dbo].[sp_category_create]
+(
+    @CategoryName NVARCHAR(100),
+    @Description  NVARCHAR(255),
+    @VATRate DECIMAL(5,2) = NULL  -- cho phép null
+)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    INSERT INTO Categories (CategoryName, [Description], VATRate)
+    VALUES (@CategoryName, @Description, @VATRate);
+
+    -- Tr? v? chu?i r?ng thay vì ID m?i
+    SELECT '';
+END
+GO
+
+
+
+select * from Settings
+
+
+EXEC sp_category_create
+  @CategoryName='gggg', 
+  @Description='gggg', 
+  @VATRate=NULL
+
+
+
+EXEC dbo.sp_category_create 
+    @CategoryName = N'Th?c ph?m',
+    @Description  = N'Hàng th?c ph?m',
+    @VATRate = NULL;
+
+
+
+
+
+
+
 CREATE   PROCEDURE [dbo].[sp_category_create]
 (
     @CategoryName NVARCHAR(100),
@@ -2348,14 +2293,7 @@ GO
 USE [QLBanLeKho]
 GO
 
-<<<<<<< HEAD
-/****** Object:  StoredProcedure [dbo].[sp_category_search]    Script Date: 11/6/2025 3:56:25 PM ******/
-=======
-USE [QLBanLeKho]
-GO
 
-/****** Object:  StoredProcedure [dbo].[sp_category_search]    Script Date: 11/9/2025 9:43:05 PM ******/
->>>>>>> dev
 SET ANSI_NULLS ON
 GO
 
@@ -3076,3 +3014,670 @@ VALUES
 (2, 13, 13, N'Nhà Cung Cấp M', '0912000013', '2025-09-24', N'Lỗi form giày',             13, N'Sản phẩm 13', 5, 120000),
 (2, 14, 14, N'Nhà Cung Cấp N', '0912000014', '2025-10-02', N'Giày nứt đế',               14, N'Sản phẩm 14', 4, 220000),
 (2, 15, 15, N'Nhà Cung Cấp O', '0912000015', '2025-10-16', N'Lỗi cao su đế',             15, N'Sản phẩm 15', 2, 540000);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+CREATE OR ALTER PROCEDURE [dbo].[sp_product_search]
+(
+    @page_index  INT = 1, 
+    @page_size   INT = 20,
+    @ProductID   INT = NULL,
+    @SKU         VARCHAR(50) = '',
+    @Barcode     VARCHAR(50) = '',
+    @ProductName NVARCHAR(100) = '',
+    @CategoryID  INT = NULL,
+    @Status      NVARCHAR(20) = '',
+    @MinPrice    DECIMAL(18,2) = NULL,
+    @MaxPrice    DECIMAL(18,2) = NULL
+)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    ;WITH Filtered AS 
+    (
+        SELECT 
+            p.ProductID,
+            p.SKU,
+            p.Barcode,
+            p.ProductName,
+            p.CategoryID,
+            p.UnitPrice,
+            p.Unit,
+            p.MinStock,
+            p.Status,
+            p.Image,
+            p.VATRate,
+            p.Quantity,
+
+            ROW_NUMBER() OVER (ORDER BY p.ProductID DESC) AS RowNum,
+            COUNT(*) OVER() AS TotalCount
+        FROM Products p WITH (NOLOCK)
+
+        WHERE 
+            (@ProductID IS NULL OR p.ProductID = @ProductID)
+            AND (@SKU = '' OR p.SKU LIKE @SKU + '%')       -- Tối ưu LIKE
+            AND (@Barcode = '' OR p.Barcode LIKE @Barcode + '%')
+            AND (@ProductName = '' 
+                 OR p.ProductName LIKE N'%' + @ProductName + '%')
+            AND (@CategoryID IS NULL OR p.CategoryID = @CategoryID)
+            AND (@Status = '' OR p.Status = @Status)
+            AND (@MinPrice IS NULL OR p.UnitPrice >= @MinPrice)
+            AND (@MaxPrice IS NULL OR p.UnitPrice <= @MaxPrice)
+    )
+
+    SELECT *
+    FROM Filtered
+    WHERE 
+        @page_size = 0
+        OR (RowNum BETWEEN (@page_index - 1) * @page_size + 1
+                        AND  @page_index * @page_size)
+    ORDER BY RowNum;
+END;
+GO
+CREATE INDEX IX_Products_SKU ON Products(SKU);
+CREATE INDEX IX_Products_Barcode ON Products(Barcode);
+CREATE INDEX IX_Products_ProductName ON Products(ProductName);
+CREATE INDEX IX_Products_CategoryID ON Products(CategoryID);
+CREATE INDEX IX_Products_Status ON Products(Status);
+CREATE INDEX IX_Products_UnitPrice ON Products(UnitPrice);
+
+
+
+
+
+
+
+
+DELETE FROM Products;
+DBCC CHECKIDENT ('Products', RESEED, 0);
+
+DECLARE @i INT = 1;
+
+-----------------------------------------------------
+-- BẢNG SẢN PHẨM GỐC (NAME + CATEGORY)
+-----------------------------------------------------
+DECLARE @Products TABLE (Name NVARCHAR(200), Cat INT);
+INSERT INTO @Products VALUES
+(N'Balo Laptop chống sốc 15.6 inch', 8),
+(N'Túi chống sốc Macbook Air/Pro', 8),
+(N'Bàn phím cơ LED RGB', 2),
+(N'Bàn phím văn phòng chống nước', 2),
+(N'Cáp sạc nhanh Type-C 3A', 3),
+(N'Củ sạc nhanh PD 20W', 3),
+(N'Chuột không dây Logitech', 4),
+(N'Chuột gaming DPI cao', 4),
+(N'Loa Bluetooth mini', 5),
+(N'Loa Bluetooth chống nước', 5),
+(N'USB 32GB 3.0', 6),
+(N'SSD 240GB SATA III', 6),
+(N'HDD 1TB 3.5 inch', 6),
+(N'Ốp lưng iPhone chống sốc', 7),
+(N'Ốp lưng Samsung TPU', 7),
+(N'Kính cường lực iPhone', 7),
+(N'Pin dự phòng 10000mAh', 10),
+(N'Pin dự phòng 20000mAh', 10),
+(N'Giá đỡ laptop chống trượt', 9),
+(N'Bộ vệ sinh laptop', 9),
+(N'Giá đỡ điện thoại để bàn', 9),
+(N'Hub USB Type-C 5-in-1', 9),
+(N'Tai nghe chụp tai Bluetooth', 3),
+(N'Tai nghe in-ear chống ồn', 3),
+(N'Tai nghe chụp gaming RGB', 3),
+(N'Webcam Full HD 1080p', 9),
+(N'Micro thu âm livestream', 9),
+(N'Bàn di chuột lớn', 4),
+(N'Đế tản nhiệt laptop 2 quạt', 9),
+(N'Cáp HDMI 1.5m', 3),
+(N'Cáp DisplayPort 1.4', 3);
+
+-----------------------------------------------------
+-- BẢNG ÁNH XẠ TÊN → ẢNH
+-----------------------------------------------------
+DECLARE @ImageMap TABLE (Name NVARCHAR(200), Image NVARCHAR(255));
+INSERT INTO @ImageMap VALUES
+(N'Balo Laptop chống sốc 15.6 inch', N'Products\Balo Laptop chống sốc 15.6 inch.png'),
+(N'Túi chống sốc Macbook Air/Pro', N'Products\Túi chống sốc Macbook AirPro.png'),
+(N'Bàn phím cơ LED RGB', N'Products\Bàn phím cơ LED RGB.png'),
+(N'Bàn phím văn phòng chống nước', N'Products\Bàn phím văn phòng chống nước.png'),
+(N'Cáp sạc nhanh Type-C 3A', N'Products\Cáp sạc nhanh Type-C 3A.png'),
+(N'Củ sạc nhanh PD 20W', N'Products\Củ sạc nhanh PD 20W.png'),
+(N'Chuột không dây Logitech', N'Products\Chuột không dây Logitech.png'),
+(N'Chuột gaming DPI cao', N'Products\Chuột gaming DPI cao.png'),
+(N'Loa Bluetooth mini', N'Products\Loa Bluetooth mini.png'),
+(N'Loa Bluetooth chống nước', N'Products\Loa Bluetooth chống nước.png'),
+(N'USB 32GB 3.0', N'Products\USB 32GB 3.0.png'),
+(N'SSD 240GB SATA III', N'Products\SSD 240GB SATA III.png'),
+(N'HDD 1TB 3.5 inch', N'Products\HDD 1TB 3.5 inch.png'),
+(N'Ốp lưng iPhone chống sốc', N'Products\Ốp lưng iPhone chống sốc.png'),
+(N'Ốp lưng Samsung TPU', N'Products\Ốp lưng Samsung TPU.png'),
+(N'Kính cường lực iPhone', N'Products\Kính cường lực iPhone.png'),
+(N'Pin dự phòng 10000mAh', N'Products\Pin dự phòng 10000mAh.png'),
+(N'Pin dự phòng 20000mAh', N'Products\Pin dự phòng 20000mAh.png'),
+(N'Giá đỡ laptop chống trượt', N'Products\Giá đỡ laptop chống trượt.png'),
+(N'Bộ vệ sinh laptop', N'Products\Bộ vệ sinh laptop.png'),
+(N'Giá đỡ điện thoại để bàn', N'Products\Giá đỡ điện thoại để bàn.png'),
+(N'Hub USB Type-C 5-in-1', N'Products\Hub USB Type-C 5-in-1.png'),
+(N'Tai nghe chụp tai Bluetooth', N'Products\Tai nghe chụp tai Bluetooth.png'),
+(N'Tai nghe in-ear chống ồn', N'Products\Tai nghe in-ear chống ồn.png'),
+(N'Tai nghe chụp gaming RGB', N'Products\Tai nghe chụp gaming RGB.png'),
+(N'Webcam Full HD 1080p', N'Products\Webcam Full HD 1080p.png'),
+(N'Micro thu âm livestream', N'Products\Micro thu âm livestream.png'),
+(N'Bàn di chuột lớn', N'Products\Bàn di chuột lớn.png'),
+(N'Đế tản nhiệt laptop 2 quạt', N'Products\Đế tản nhiệt laptop 2 quạt.png'),
+(N'Cáp HDMI 1.5m', N'Products\Cáp HDMI 1.5m.png'),
+(N'Cáp DisplayPort 1.4', N'Products\Cáp DisplayPort 1.4.png');
+
+-----------------------------------------------------
+-- BẢNG GIÁ
+-----------------------------------------------------
+DECLARE @PriceList TABLE (Price INT);
+INSERT INTO @PriceList VALUES
+(50000), (69000), (89000), (99000),
+(120000), (150000), (199000), (249000), (299000), (350000),
+(399000), (450000), (499000), (550000), (590000),
+(650000), (690000), (750000),
+(890000), (990000), (1290000), (1490000), (1590000),
+(1790000), (1990000), (2290000), (2490000),
+(2690000), (2990000);
+
+-----------------------------------------------------
+-- INSERT 500 SẢN PHẨM
+-----------------------------------------------------
+WHILE (@i <= 500)
+BEGIN
+    DECLARE @Name NVARCHAR(200),
+            @Cat INT,
+            @Img NVARCHAR(255);
+
+    SELECT TOP 1
+        @Name = Name,
+        @Cat = Cat
+    FROM @Products
+    ORDER BY NEWID();
+
+    SELECT @Img = Image FROM @ImageMap WHERE Name = @Name;
+
+    INSERT INTO Products
+    (
+        SKU,
+        Barcode,
+        ProductName,
+        CategoryID,
+        UnitPrice,
+        Unit,
+        MinStock,
+        Status,
+        Image,
+        VATRate,
+        Quantity
+    )
+    VALUES
+    (
+        'SKU' + RIGHT('0' + CAST(@i AS VARCHAR(6)), 6),
+        CAST(10000 + @i AS VARCHAR(20)),
+        @Name,
+        @Cat,
+        (SELECT TOP 1 Price FROM @PriceList ORDER BY NEWID()),
+        N'Cái',
+        (SELECT TOP 1 (2 + ABS(CHECKSUM(NEWID())) % 8)),
+        N'Active',
+        @Img,
+        8.00,
+        (SELECT TOP 1 (5 + ABS(CHECKSUM(NEWID())) % 96))
+    );
+
+    SET @i += 1;
+END;
+
+
+
+
+
+
+
+
+
+
+
+CREATE OR ALTER PROCEDURE [dbo].[sp_product_get_by_id]
+    @ProductID INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT *
+    FROM Products WITH (NOLOCK)
+    WHERE ProductID = @ProductID;
+END;
+GO
+
+
+
+
+CREATE OR ALTER PROCEDURE [dbo].[sp_product_delete]
+    @ProductID INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    DELETE FROM SalesItems WHERE ProductID = @ProductID;
+    DELETE FROM StockCards WHERE ProductID = @ProductID;
+    DELETE FROM GoodsReceiptDetails WHERE ProductID = @ProductID;
+    DELETE FROM PurchaseOrderDetails WHERE ProductID = @ProductID;
+    DELETE FROM GoodsIssueDetails WHERE ProductID = @ProductID;
+
+    DELETE FROM Products WHERE ProductID = @ProductID;
+
+    SELECT 'Xóa sản phẩm thành công' AS Message;
+END;
+GO
+
+
+
+
+CREATE OR ALTER PROCEDURE [dbo].[sp_product_create]
+(
+    @SKU         VARCHAR(50),
+    @Barcode     VARCHAR(50),
+    @ProductName NVARCHAR(100),
+    @CategoryID  INT,
+    @UnitPrice   DECIMAL(18,2) = 0,
+    @Unit        NVARCHAR(20) = NULL,
+    @MinStock    INT = 0,
+    @Status      NVARCHAR(20) = 'Active',
+    @Image       NVARCHAR(255) = NULL,
+    @VATRate     DECIMAL(5,2) = NULL,  
+    @Quantity    INT = 0
+)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    BEGIN TRY
+        -- 🔍 Validate bắt buộc
+        IF (LTRIM(RTRIM(@SKU)) = '')
+            RAISERROR(N'SKU không được để trống.',16,1);
+
+        IF (LTRIM(RTRIM(@Barcode)) = '')
+            RAISERROR(N'Barcode không được để trống.',16,1);
+
+        IF (LTRIM(RTRIM(@ProductName)) = '')
+            RAISERROR(N'Tên sản phẩm không được để trống.',16,1);
+
+        IF (@CategoryID IS NULL)
+            RAISERROR(N'CategoryID không được để trống.',16,1);
+
+        -- 🔍 Check CategoryID tồn tại
+        IF NOT EXISTS (SELECT 1 FROM Categories WHERE CategoryID = @CategoryID)
+            RAISERROR(N'CategoryID không tồn tại.',16,1);
+
+        -- 🔍 SKU trùng
+        IF EXISTS (SELECT 1 FROM Products WHERE SKU = @SKU)
+            RAISERROR(N'SKU "%s" đã tồn tại.',16,1, @SKU);
+
+        -- 🔍 Barcode trùng
+        IF EXISTS (SELECT 1 FROM Products WHERE Barcode = @Barcode)
+            RAISERROR(N'Barcode "%s" đã tồn tại.',16,1, @Barcode);
+
+        -- 🔍 Lấy VATRate từ Category nếu không truyền
+        IF (@VATRate IS NULL)
+        BEGIN
+            SELECT @VATRate = VATRate 
+            FROM Categories 
+            WHERE CategoryID = @CategoryID;
+        END
+
+        -- ➕ INSERT
+        INSERT INTO Products
+        (
+            SKU, Barcode, ProductName, CategoryID,
+            UnitPrice, Unit, MinStock, Status,
+            Image, VATRate, Quantity
+        )
+        VALUES
+        (
+            @SKU, @Barcode, @ProductName, @CategoryID,
+            @UnitPrice, @Unit, @MinStock, @Status,
+            @Image, @VATRate, @Quantity
+        );
+
+        SELECT SCOPE_IDENTITY() AS NewProductID;
+    END TRY
+
+    BEGIN CATCH
+        DECLARE @Err NVARCHAR(4000) = ERROR_MESSAGE();
+        RAISERROR(@Err, 16, 1);
+    END CATCH
+END;
+GO
+
+
+
+
+CREATE OR ALTER PROCEDURE [dbo].[sp_product_update]
+(
+    @ProductID   INT,
+    @SKU         VARCHAR(50) = NULL,
+    @Barcode     VARCHAR(50) = NULL,
+    @ProductName NVARCHAR(100) = NULL,
+    @CategoryID  INT = NULL,
+    @UnitPrice   DECIMAL(18,2) = NULL,
+    @Unit        NVARCHAR(20) = NULL,
+    @MinStock    INT = NULL,
+    @Status      NVARCHAR(20) = NULL,
+    @Image       NVARCHAR(255) = NULL,
+    @VATRate     DECIMAL(5,2) = NULL,
+    @Quantity    INT = NULL
+)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    BEGIN TRY
+        -- Kiểm tra ProductID hợp lệ
+        IF NOT EXISTS (SELECT 1 FROM Products WHERE ProductID = @ProductID)
+            RAISERROR(N'ProductID không tồn tại.', 16, 1);
+
+        DECLARE @FinalCategoryID INT;
+
+        -- Lấy CategoryID nếu không truyền vào
+        SELECT @FinalCategoryID =
+            CASE WHEN @CategoryID IS NULL THEN CategoryID ELSE @CategoryID END
+        FROM Products 
+        WHERE ProductID = @ProductID;
+
+        -- Kiểm tra CategoryID hợp lệ
+        IF NOT EXISTS (SELECT 1 FROM Categories WHERE CategoryID = @FinalCategoryID)
+            RAISERROR(N'CategoryID không hợp lệ.',16,1);
+
+        -- Lấy VAT từ Category nếu không truyền
+        IF (@VATRate IS NULL)
+        BEGIN
+            SELECT @VATRate = VATRate 
+            FROM Categories 
+            WHERE CategoryID = @FinalCategoryID;
+        END
+
+        -- Kiểm tra SKU trùng
+        IF (@SKU IS NOT NULL AND EXISTS (
+            SELECT 1 FROM Products WHERE SKU = @SKU AND ProductID <> @ProductID))
+            RAISERROR(N'SKU "%s" đã tồn tại.', 16, 1, @SKU);
+
+        -- Kiểm tra Barcode trùng
+        IF (@Barcode IS NOT NULL AND EXISTS (
+            SELECT 1 FROM Products WHERE Barcode = @Barcode AND ProductID <> @ProductID))
+            RAISERROR(N'Barcode "%s" đã tồn tại.', 16, 1, @Barcode);
+
+        -- UPDATE
+        UPDATE Products
+        SET
+            SKU         = COALESCE(@SKU, SKU),
+            Barcode     = COALESCE(@Barcode, Barcode),
+            ProductName = COALESCE(@ProductName, ProductName),
+            CategoryID  = COALESCE(@CategoryID, CategoryID),
+            UnitPrice   = COALESCE(@UnitPrice, UnitPrice),
+            Unit        = COALESCE(@Unit, Unit),
+            MinStock    = COALESCE(@MinStock, MinStock),
+            Status      = COALESCE(@Status, Status),
+            Image       = COALESCE(@Image, Image),
+            VATRate     = COALESCE(@VATRate, VATRate),
+            Quantity    = COALESCE(@Quantity, Quantity)
+        WHERE ProductID = @ProductID;
+
+        SELECT 'Update thành công' AS Message;
+    END TRY
+
+    BEGIN CATCH
+        DECLARE @ErrMsg NVARCHAR(4000), @ErrSeverity INT;
+
+        SELECT 
+            @ErrMsg = ERROR_MESSAGE(),
+            @ErrSeverity = ERROR_SEVERITY();
+
+        RAISERROR(@ErrMsg, @ErrSeverity, 1);
+    END CATCH
+END;
+GO
+
+
+
+
+
+CREATE OR ALTER PROCEDURE [dbo].[sp_product_search]
+(
+    @page_index  INT = 1, 
+    @page_size   INT = 20,
+    @ProductID   INT = NULL,
+    @SKU         VARCHAR(50) = '',
+    @Barcode     VARCHAR(50) = '',
+    @ProductName NVARCHAR(100) = '',
+    @CategoryID  INT = NULL,
+    @Status      NVARCHAR(20) = '',
+    @MinPrice    DECIMAL(18,2) = NULL,
+    @MaxPrice    DECIMAL(18,2) = NULL
+)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    ;WITH Filtered AS 
+    (
+        SELECT 
+            p.ProductID,
+            p.SKU,
+            p.Barcode,
+            p.ProductName,
+            p.CategoryID,
+            p.UnitPrice,
+            p.Unit,
+            p.MinStock,
+            p.Status,
+            p.Image,
+            p.VATRate,
+            p.Quantity,
+
+            ROW_NUMBER() OVER (ORDER BY p.ProductID DESC) AS RowNum,
+            COUNT(*) OVER() AS TotalCount
+        FROM Products p WITH (NOLOCK)
+
+        WHERE 
+            (@ProductID IS NULL OR p.ProductID = @ProductID)
+            AND (@SKU = '' OR p.SKU LIKE N'%' + @SKU + '%')       -- Tối ưu LIKE
+            AND (@Barcode = '' OR p.Barcode LIKE N'%' + @Barcode + '%')
+            AND (@ProductName = '' 
+                 OR p.ProductName LIKE N'%' + @ProductName + '%')
+            AND (@CategoryID IS NULL OR p.CategoryID = @CategoryID)
+            AND (@Status = '' OR p.Status = @Status)
+            AND (@MinPrice IS NULL OR p.UnitPrice >= @MinPrice)
+            AND (@MaxPrice IS NULL OR p.UnitPrice <= @MaxPrice)
+    )
+
+    SELECT *
+    FROM Filtered
+    WHERE 
+        @page_size = 0
+        OR (RowNum BETWEEN (@page_index - 1) * @page_size + 1
+                        AND  @page_index * @page_size)
+    ORDER BY RowNum;
+END;
+GO
+
+
+
+select * from Products
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-----------------------------------------------------
+-- phần sét tinh
+-----------------------------------------------------
+CREATE TABLE Settings (
+    SettingID INT IDENTITY(1,1) PRIMARY KEY,
+    VATRate DECIMAL(5,2) NOT NULL,              -- Thu? m?c d?nh, luôn có giá tr?
+    DefaultLanguage VARCHAR(5) NOT NULL,        -- EN ho?c VI
+    LastUpdated DATETIME DEFAULT GETDATE()
+);
+INSERT INTO Settings (VATRate, DefaultLanguage) 
+VALUES (10.00, 'EN');
+
+
+ALTER TABLE Categories 
+ALTER COLUMN VATRate DECIMAL(5,2) NULL;
+
+
+SELECT 
+    c.CategoryName,
+    ISNULL(c.VATRate, s.VATRate) AS AppliedVAT
+FROM Categories c
+CROSS JOIN Settings s;
+
+
+
+CREATE VIEW vw_CategoriesWithVAT AS
+SELECT 
+    c.CategoryID,
+    c.CategoryName,
+    c.Description,
+    ISNULL(c.VATRate, s.VATRate) AS VATRate
+FROM Categories c
+CROSS JOIN Settings s;
+
+
+SELECT DefaultLanguage FROM Settings;
+
+
+
+CREATE TRIGGER trg_Categories_DefaultVAT
+ON Categories
+FOR INSERT
+AS
+BEGIN
+    UPDATE c
+    SET VATRate = s.VATRate
+    FROM Categories c
+    JOIN inserted i ON c.CategoryID = i.CategoryID
+    CROSS JOIN Settings s
+    WHERE i.VATRate IS NULL;
+END
+
+
+CREATE TABLE Languages (
+    LangCode VARCHAR(5) PRIMARY KEY,   -- EN, VI
+    LangName NVARCHAR(50) NOT NULL     -- English, Ti?ng Vi?t
+);
+
+
+INSERT INTO Languages (LangCode, LangName)
+VALUES ('EN', 'English'),
+       ('VI', N'Ti?ng Vi?t');
+
+
+	   ALTER TABLE Settings
+ADD CONSTRAINT FK_Settings_Languages
+FOREIGN KEY (DefaultLanguage)
+REFERENCES Languages(LangCode);
+
+
+SELECT * FROM Languages;
+
+
+
+SELECT DefaultLanguage FROM Settings;
+
+
+
+UPDATE Settings
+SET DefaultLanguage = 'VI', 
+    LastUpdated = GETDATE()
+WHERE SettingID = 1;
+
+
+UPDATE Settings
+SET DefaultLanguage = 'EN',
+    LastUpdated = GETDATE()
+WHERE SettingID = 1;
+
+
+--ki?m tra còn m?c d?nh không
+SELECT 
+    c.name AS ColumnName,
+    d.definition AS DefaultValue
+FROM sys.columns c
+LEFT JOIN sys.default_constraints d
+    ON c.default_object_id = d.object_id
+WHERE c.object_id = OBJECT_ID('Categories')
+  AND c.name = 'VATRate';
+
+
+
+  ALTER TABLE Categories
+DROP CONSTRAINT DF__Categorie__VATRa__398D8EEE;  -- tên constraint c?a b?n
+
+
+
+--Tìm tên DEFAULT constraint th?t
+SELECT 
+    d.name AS ConstraintName
+FROM sys.default_constraints d
+JOIN sys.columns c 
+    ON d.parent_object_id = c.object_id 
+   AND d.parent_column_id = c.column_id
+WHERE c.object_id = OBJECT_ID('Categories')
+  AND c.name = 'VATRate';
+
+
+
+
+  CREATE PROCEDURE sp_settings_get
+AS
+BEGIN
+    SELECT SettingID, VATRate, DefaultLanguage, LastUpdated
+    FROM Settings;
+END
+
+
+
+CREATE PROCEDURE sp_settings_update
+(
+    @SettingID INT,
+    @VATRate DECIMAL(5,2),
+    @DefaultLanguage VARCHAR(5)
+)
+AS
+BEGIN
+    UPDATE Settings
+    SET VATRate = @VATRate,
+        DefaultLanguage = @DefaultLanguage,
+        LastUpdated = GETDATE()
+    WHERE SettingID = @SettingID;
+END

@@ -14,5 +14,12 @@ namespace BLL.Interfaces
         bool Update(SalesModel model);
         bool Delete(SalesModel model);
         List<SalesModel> Search(int pageIndex, int pageSize, out long total, decimal? minTotalAmount, decimal? maxTotalAmount, string status, DateTime? fromDate, DateTime? toDate);
+        PosSaleResult CreateFromPos(PosOrderDto dto);
+        SalesDashboardDto GetDashboard(
+        decimal? minTotalAmount, decimal? maxTotalAmount,
+        string status, DateTime? fromDate, DateTime? toDate,
+        string keyword);
+        List<SalesListItemDto> SearchList(int pageIndex, int pageSize, out long total,string status, DateTime? fromDate, DateTime? toDate,string keyword);
+        SaleDetailDto GetDetail(int saleId);
     }
 }
