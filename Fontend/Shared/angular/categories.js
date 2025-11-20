@@ -75,10 +75,10 @@ app.controller(
     // thêm mới category
     $scope.add = function () {
       var vat = parseFloat($scope.newCategory.VATRate);
-      if (isNaN(vat)) {
-        alert("VAT không hợp lệ.");
-        return;
-      }
+      // if (isNaN(vat)) {
+      //   alert("VAT không hợp lệ.");
+      //   return;
+      // }
 
       // Chuẩn model giống CategoryModel bên C#
       var model = {

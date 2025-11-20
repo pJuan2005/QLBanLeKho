@@ -87,6 +87,9 @@ builder.Services.AddScoped<IReturnDAL, ReturnDAL>();
 
 
 
+
+
+
 // configure strongly typed settings objects
 IConfiguration configuration = builder.Configuration;
 var appSettingsSection = configuration.GetSection("AppSettings");

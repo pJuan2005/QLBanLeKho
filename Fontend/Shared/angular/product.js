@@ -1,11 +1,24 @@
 var app = angular.module("AppRetailPos");
-app.controller("productCtrl", function ($scope, $http, $timeout, AuthService, PermissionService, $window) {
+app.controller("productCtrl", function ($scope, $http, $timeout, AuthService, PermissionService, $window, TranslateService) {
+function applyLanguage(lang) {
+    TranslateService.loadLanguage(lang).then(() => {
+        $scope.t = TranslateService.t;
+    });
+}
+applyLanguage(localStorage.getItem("appLang") || "EN");
+
+
+
   $scope.currentUser = AuthService.getCurrentUser(); // lấy user 
   $scope.products = [];
   $scope.pager = { page: 1, size: 10, total: 0, pages: 1 };
   $scope.stats = { total: 0, instock: 0, outstock: 0 };
   $scope.searchProduct = "";
   $scope.searchSKU = "";
+  $scope.MinPrice !== "" ? Number($scope.MinPrice) : null,
+  $scope.MaxPrice !== "" ? Number($scope.MaxPrice) : null,
+
+
 
   $scope.newProduct = {
     ProductName: "",
@@ -28,6 +41,9 @@ app.controller("productCtrl", function ($scope, $http, $timeout, AuthService, Pe
 
   $scope.showDelete = false;
   $scope.deleting = null;
+
+
+ 
 
 
   // ------Kiểm tra đăng nhập, logout và chia màn hình theo quyền---------
@@ -56,7 +72,9 @@ app.controller("productCtrl", function ($scope, $http, $timeout, AuthService, Pe
       Barcode: "",
       ProductName: productName,
       CategoryID: null,
-      Status: ""
+      Status: "",
+      MinPrice: $scope.MinPrice,
+      MaxPrice: $scope.MaxPrice,
     },
   }).then(
     function (res) {
@@ -75,7 +93,8 @@ app.controller("productCtrl", function ($scope, $http, $timeout, AuthService, Pe
       quantity:    Number(p.Quantity ?? p.quantity ?? 0),
       vatRate:     Number(p.VATRate ?? p.vatRate ?? 0),
       status:      p.Status ?? p.status ?? "Active",
-      image:       p.ImageBase64 ?? p.imageBase64 ?? p.Image ?? p.image ?? ""
+      image: p.ImageBase64 ?? p.imageBase64 ?? p.Image ?? p.image ?? ""
+
     }));
 
 
@@ -118,6 +137,9 @@ app.controller("productCtrl", function ($scope, $http, $timeout, AuthService, Pe
     instock: instock,
     outstock: total - instock
   };
+};
+$scope.generateBarcode = function () {
+  $scope.newProduct.barcode = Math.floor(10000 + Math.random() * 90000).toString();
 };
 
 
@@ -371,6 +393,9 @@ $scope.confirmDelete = function ($event) {
       $timeout.cancel(typingTimer);
       typingTimer = $timeout($scope.LoadProducts, 300);
     }
+
+    $scope.$watch("MinPrice", triggerSearch);
+    $scope.$watch("MaxPrice", triggerSearch);
     $scope.$watch("searchProduct", triggerSearch);
     $scope.$watch("searchSKU", triggerSearch);
 
@@ -388,127 +413,155 @@ $scope.confirmDelete = function ($event) {
 
 
 
+
+
+
   // ========== EXPORT EXCEL (theo phân trang hoặc tất cả) ==========
-$scope.exportExcel = async function (mode = 'page') {
-  try {
-    const isPage = (mode === 'page');
-
-    // Xác nhận
-    const msg = isPage
-      ? `📥 Xuất TRANG HIỆN TẠI (page ${$scope.pager.page}, size ${$scope.pager.size})?`
-      : "📥 Xuất TẤT CẢ sản phẩm?";
-    if (!confirm(msg)) return;
-
-    // ===== 1) Lấy dữ liệu theo mode =====
-    const skuExact = ($scope.searchSKU || '').trim();
-    const productName = ($scope.searchProduct || '').trim();
-
-    const resp = await $http.post(current_url + "/api-core/product/search-product", {
-      page:      isPage ? $scope.pager.page : 1,
-      pageSize:  isPage ? $scope.pager.size : 0,  // 0 = tất cả
-      ProductID: null,
-      SKU:       skuExact,
-      Barcode:   "",
-      ProductName: productName,
-      CategoryID: null,
-      Status:    ""
-    });
-
-    const body = resp.data || {};
-    const rows = (body.data || body.Data || []).map(p => ({
-      productID:  p.ProductID ?? p.productID,
-      productName:p.ProductName ?? p.productName ?? "",
-      sku:        p.SKU ?? p.sku ?? "",
-      barcode:    p.Barcode ?? p.barcode ?? "",
-      categoryID: (p.CategoryID ?? p.categoryID) ?? null,
-      unitPrice:  Number(p.UnitPrice ?? p.unitPrice ?? 0),
-      unit:       p.Unit ?? p.unit ?? "",
-      minStock:   Number(p.MinStock ?? p.minStock ?? 0),
-      quantity:   Number(p.Quantity ?? p.quantity ?? 0),
-      vatRate:    Number(p.VATRate ?? p.vatRate ?? 0),
-      status:     p.Status ?? p.status ?? "Active",
-      image:      p.ImageBase64 ?? p.imageBase64 ?? p.Image ?? p.image ?? ""
-    }));
-    if (!rows.length) { alert("⚠️ Không có dữ liệu để xuất!"); return; }
-
-    // ===== 2) Tạo workbook & sheet =====
-    const wb = new ExcelJS.Workbook();
-    const ws = wb.addWorksheet("Products");
-
-    ws.columns = [
-      { header: "Product ID",   key: "productID",   width: 12 },
-      { header: "Product Name", key: "productName", width: 30 },
-      { header: "SKU",          key: "sku",         width: 15 },
-      { header: "Barcode",      key: "barcode",     width: 15 },
-      { header: "Category ID",  key: "categoryID",  width: 12 },
-      { header: "Unit Price",   key: "unitPrice",   width: 15 },
-      { header: "Unit",         key: "unit",        width: 10 },
-      { header: "Min Stock",    key: "minStock",    width: 12 },
-      { header: "Quantity",     key: "quantity",    width: 12 },
-      { header: "VAT Rate (%)", key: "vatRate",     width: 12 },
-      { header: "Status",       key: "status",      width: 12 },
-      { header: "Image",        key: "image",       width: 20 }
-    ];
-
-    const header = ws.getRow(1);
-    header.font = { bold: true, size: 12 };
-    header.fill = { type: "pattern", pattern: "solid", fgColor: { argb: "FF4472C4" } };
-    header.alignment = { vertical: "middle", horizontal: "center" };
-    header.height = 25;
-
-    // ===== 3) Đổ data + ảnh =====
-    rows.forEach((p, i) => {
-      const rowIndex = i + 2;
-      const r = ws.addRow({
-        productID: p.productID, productName: p.productName, sku: p.sku, barcode: p.barcode,
-        categoryID: p.categoryID, unitPrice: p.unitPrice, unit: p.unit, minStock: p.minStock,
-        quantity: p.quantity, vatRate: p.vatRate, status: p.status
-      });
-      r.height = 80;
-      r.alignment = { vertical: "middle", horizontal: "center" };
-
-      if (p.image && p.image.startsWith("data:image")) {
-        try {
-          const mime = p.image.substring(5, p.image.indexOf(";")); // image/png
-          const ext  = (mime.split("/")[1] || "png").toLowerCase();
-          const base64 = p.image.split(",")[1];
-          const imgId = wb.addImage({ base64, extension: ext === "jpg" ? "jpeg" : ext });
-          ws.addImage(imgId, { tl: { col: 11, row: rowIndex - 1 }, ext: { width: 60, height: 60 }, editAs: "oneCell" });
-        } catch {
-          r.getCell("image").value = "No Image";
-        }
-      } else {
-        r.getCell("image").value = "No Image";
-      }
-    });
-
-    // Viền
-    ws.eachRow(row => row.eachCell(cell => {
-      cell.border = { top:{style:"thin"}, left:{style:"thin"}, bottom:{style:"thin"}, right:{style:"thin"} };
-    }));
-
-    // ===== 4) Ghi file qua download (vào history; Save As nếu user bật) =====
-    const buffer = await wb.xlsx.writeBuffer();
-    const blob = new Blob([buffer], {
-      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-    });
-
-    // tên file theo mode
-    let fileName;
-    if (isPage) {
-      const p = $scope.pager.page, s = $scope.pager.size;
-      fileName = `Products_page-${p}_size-${s}_${new Date().toISOString().slice(0,10)}.xlsx`;
-    } else {
-      fileName = `Products_ALL_${new Date().toISOString().slice(0,10)}.xlsx`;
+  // ========== EXPORT EXCEL (KHÔNG CÓ HÌNH ẢNH) ==========
+$scope.exportExcel = function () {
+    if (!$scope.products || $scope.products.length === 0) {
+        alert("❌ Không có dữ liệu để export!");
+        return;
     }
 
-    saveAs(blob, fileName);
-    alert(`✅ Xuất ${rows.length} sản phẩm thành công!`);
-  } catch (err) {
-    console.error("❌ Lỗi export Excel:", err);
-    alert("Xuất Excel không thành công: " + (err?.message || err));
-  }
+    const workbook = new ExcelJS.Workbook();
+    const ws = workbook.addWorksheet("Products");
+
+    // Định nghĩa cột Excel
+    ws.columns = [
+        { header: "ID", key: "ProductID", width: 10 },
+        { header: "Product Name", key: "ProductName", width: 30 },
+        { header: "SKU", key: "SKU", width: 15 },
+        { header: "Barcode", key: "Barcode", width: 20 },
+        { header: "CategoryID", key: "CategoryID", width: 12 },
+        { header: "Price", key: "UnitPrice", width: 15 },
+        { header: "Unit", key: "Unit", width: 12 },
+        { header: "MinStock", key: "MinStock", width: 12 },
+        { header: "Quantity", key: "Quantity", width: 12 },
+        { header: "VAT Rate (%)", key: "VATRate", width: 12 },
+        { header: "Status", key: "Status", width: 12 }
+    ];
+
+    // Ghi từng dòng
+    $scope.products.forEach(p => {
+        ws.addRow({
+            ProductID: p.productID,
+            ProductName: p.productName,
+            SKU: p.sku,
+            Barcode: p.barcode,
+            CategoryID: p.categoryID,
+            UnitPrice: p.unitPrice,
+            Unit: p.unit,
+            MinStock: p.minStock,
+            Quantity: p.quantity,
+            VATRate: p.vatRate,
+            Status: p.status
+        });
+    });
+
+    // Tải file
+    workbook.xlsx.writeBuffer().then(buffer => {
+        saveAs(new Blob([buffer]), "Products.xlsx");
+    });
+
+    alert("✅ Xuất Excel thành công !");
 };
+
+
+
+
+// $scope.triggerImportFile = function () {
+//     document.getElementById("fileImport").click();
+// };
+
+// $scope.generateSKU = function (index) {
+//     return "SKU" + index.toString().padStart(4, "0");
+// };
+
+// $scope.generateBarcode = function (index) {
+//     return "BC" + index.toString().padStart(4, "0");
+// };
+// $scope.handleImportFile = async function (input) {
+//     $scope.$applyAsync(); // bắt Angular digest
+
+//     console.log("▶ handleImportFile CALLED");
+
+//     if (!input.files || input.files.length === 0) {
+//         alert("❌ Không có file!");
+//         return;
+//     }
+
+//     let file = input.files[0];
+
+//     console.log("📦 File nhận được:", file.name);
+
+//     const workbook = new ExcelJS.Workbook();
+//     await workbook.xlsx.load(await file.arrayBuffer());
+
+//     const ws = workbook.worksheets[0];
+//     if (!ws) {
+//         alert("❌ File Excel không hợp lệ!");
+//         return;
+//     }
+
+//     alert("📥 File đã load, bắt đầu import...");
+
+//     let rows = [];
+//     let index = 1;
+
+//     ws.eachRow((row, rowIndex) => {
+//         if (rowIndex === 1) return;
+
+//         rows.push({
+//             ProductName: row.getCell(1).value || "",
+//             CategoryID: Number(row.getCell(2).value || 0),
+//             UnitPrice: Number(row.getCell(3).value || 0),
+//             Unit: row.getCell(4).value || "",
+//             MinStock: Number(row.getCell(5).value || 0),
+//             Quantity: Number(row.getCell(6).value || 0),
+//             VATRate: Number(row.getCell(7).value || 0),
+//             SKU: $scope.generateSKU(index),
+//             Barcode: $scope.generateBarcode(index)
+//         });
+
+//         index++;
+//     });
+
+//     console.log("✔ Rows parsed:", rows);
+
+//     if (rows.length === 0) {
+//         alert("❌ File không có dữ liệu!");
+//         return;
+//     }
+
+//     for (let item of rows) {
+//         let formData = new FormData();
+//         formData.append("ProductName", item.ProductName);
+//         formData.append("SKU", item.SKU);
+//         formData.append("Barcode", item.Barcode);
+//         formData.append("CategoryID", item.CategoryID);
+//         formData.append("UnitPrice", item.UnitPrice);
+//         formData.append("Unit", item.Unit);
+//         formData.append("MinStock", item.MinStock);
+//         formData.append("Quantity", item.Quantity);
+//         formData.append("VATRate", item.VATRate);
+//         formData.append("Status", "Active");
+
+//         await $http.post(current_url + "/api-core/product/create-product",
+//             formData,
+//             {
+//                 transformRequest: angular.identity,
+//                 headers: { "Content-Type": undefined }
+//             }
+//         );
+//     }
+
+//     alert("🎉 Import thành công!");
+//     $scope.LoadProducts();
+
+//     input.value = "";
+// };
+
 
 
 
@@ -535,5 +588,3 @@ $scope.closeImageModal = function (event) {
   $scope.LoadCategories();
   $scope.LoadProducts();
 });
-
-

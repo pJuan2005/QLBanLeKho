@@ -42,7 +42,7 @@ namespace DAL
                     "@CustomerID", model.CustomerID,
                     "@SaleID", model.SaleID,
                     "@Amount", model.Amount,
-                    "@PaymentDate", model.PaymentDate,
+                    //"@PaymentDate", model.PaymentDate,
                     "@Method", model.Method,
                     "@Description", model.Description
                 );
@@ -70,7 +70,7 @@ namespace DAL
                     "@SupplierID", model.SupplierID,
                     "@ReceiptID", model.ReceiptID,
                     "@Amount", model.Amount,
-                    "@PaymentDate", model.PaymentDate,
+                    //"@PaymentDate", model.PaymentDate,
                     "@Method", model.Method,
                     "@Description", model.Description
                 );

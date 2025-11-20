@@ -19,136 +19,114 @@ namespace DAL
         public ProductModel GetDatabyID(int id)
         {
             string msgError = "";
-            try
-            {
-                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "sp_product_get_by_id",
-                     "@ProductID", id);
-                if (!string.IsNullOrEmpty(msgError))
-                    throw new Exception(msgError);
-                return dt.ConvertTo<ProductModel>().FirstOrDefault();
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
+            var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError,
+                        "sp_product_get_by_id",
+                        "@ProductID", id);
+
+            if (!string.IsNullOrEmpty(msgError))
+                throw new Exception(msgError);
+
+            return dt.ConvertTo<ProductModel>().FirstOrDefault();
         }
 
         public bool Create(ProductModel model)
         {
             string msgError = "";
-            try
-            {
-                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_product_create",
-                    "@SKU", model.SKU,
-                    "@Barcode", model.Barcode,
-                    "@ProductName", model.ProductName,
-                    "@CategoryID", model.CategoryID,
-                    "@UnitPrice", model.UnitPrice,
-                    "@Unit", model.Unit,
-                    "@MinStock", model.MinStock,
-                    "@Status", model.Status,
-                    "@ImageData", model.ImageData,
-                    "@VATRate", model.VATRate,
-                    "@Quantity", model.Quantity
-                );
 
-                if (!string.IsNullOrEmpty(msgError))
-                    throw new Exception(msgError);
+            var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(
+                out msgError,
+                "sp_product_create",
+                "@SKU", model.SKU,
+                "@Barcode", model.Barcode,
+                "@ProductName", model.ProductName,
+                "@CategoryID", model.CategoryID,
+                "@UnitPrice", model.UnitPrice,
+                "@Unit", model.Unit,
+                "@MinStock", model.MinStock,
+                "@Status", model.Status,
+                "@Image", model.Image,
+                "@VATRate", model.VATRate,
+                "@Quantity", model.Quantity
+            );
 
-                if (result != null && int.TryParse(result.ToString(), out int newId))
-                    model.ProductID = newId;
+            if (!string.IsNullOrEmpty(msgError))
+                throw new Exception(msgError);
 
-                return true;
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
+            if (result != null && int.TryParse(result.ToString(), out int newId))
+                model.ProductID = newId;
+
+            return true;
         }
-
-
 
         public bool Update(ProductModel model)
         {
             string msgError = "";
-            try
-            {
-                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_product_update",
-                    "@ProductID", model.ProductID,
-                    "@SKU", (object?)model.SKU ?? DBNull.Value,
-                    "@Barcode", (object?)model.Barcode ?? DBNull.Value,
-                    "@ProductName", (object?)model.ProductName ?? DBNull.Value,
-                    "@CategoryID", (object?)model.CategoryID ?? DBNull.Value,
-                    "@UnitPrice", model.UnitPrice,
-                    "@Unit", (object?)model.Unit ?? DBNull.Value,
-                    "@MinStock", (object?)model.MinStock ?? DBNull.Value,
-                    "@Status", (object?)model.Status ?? DBNull.Value,
-                    "@ImageData", (object?)model.ImageData ?? DBNull.Value,
-                    "@VATRate", (object?)model.VATRate ?? DBNull.Value,
-                    "@Quantity", (object?)model.Quantity ?? DBNull.Value
-                );
 
-                // ✅ Chỉ bắn lỗi khi msgError có nội dung
-                if (!string.IsNullOrEmpty(msgError))
-                    throw new Exception(msgError);
+            var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(
+                out msgError,
+                "sp_product_update",
+                "@ProductID", model.ProductID,
+                "@SKU", model.SKU,
+                "@Barcode", model.Barcode,
+                "@ProductName", model.ProductName,
+                "@CategoryID", model.CategoryID,
+                "@UnitPrice", model.UnitPrice,
+                "@Unit", model.Unit,
+                "@MinStock", model.MinStock,
+                "@Status", model.Status,
+                "@Image", model.Image,
+                "@VATRate", model.VATRate,
+                "@Quantity", model.Quantity
+            );
 
-                // (tuỳ chọn) bạn có thể log result nếu muốn
-                return true;
-            }
-            catch { throw; }
+            if (!string.IsNullOrEmpty(msgError))
+                throw new Exception(msgError);
+
+            return true;
         }
-
 
         public bool Delete(int productId)
         {
             string msgError = "";
-            try
-            {
-                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(
-                    out msgError, "sp_product_delete",
-                    "@ProductID", productId);
 
-                if (!string.IsNullOrEmpty(msgError))
-                    throw new Exception(msgError); // <-- bắn lỗi thay vì return false
+            var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(
+                out msgError,
+                "sp_product_delete",
+                "@ProductID", productId);
 
-                return true;
-            }
-            catch (Exception ex)
-            {
-                // log nếu muốn, nhưng nên bắn tiếp
-                throw; // <-- đừng return false
-            }
+            if (!string.IsNullOrEmpty(msgError))
+                throw new Exception(msgError);
+
+            return true;
         }
 
-
-
-
-        public List<ProductModel> Search(ProductSearchRequest request, out long total)
+        public List<ProductModel> Search(ProductSearchRequest req, out long total)
         {
             string msgError = "";
             total = 0;
-            try
-            {
-                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "sp_product_search",
-                    "@page_index", request.page,               // Thay đổi ở đây
-                    "@page_size", request.pageSize,           // Thay đổi ở đây
-                    "@ProductID", request.ProductID,         // Thay đổi ở đây
-                    "@SKU", request.SKU,                     // Thay đổi ở đây
-                    "@Barcode", request.Barcode,
-                    "@ProductName", request.ProductName,     // Thay đổi ở đây
-                    "@CategoryID", request.CategoryID,       // Thay đổi ở đây
-                    "@Status", request.Status               // ✨ Thêm tham số Status
-                );
 
-                if (!string.IsNullOrEmpty(msgError))
-                    throw new Exception(msgError);
-                if (dt.Rows.Count > 0) total = (long)dt.Rows[0]["RecordCount"];
-                return dt.ConvertTo<ProductModel>().ToList();
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
+            var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError,
+                "sp_product_search",
+                "@page_index", req.page,
+                "@page_size", req.pageSize,
+                "@ProductID", req.ProductID,
+                "@SKU", req.SKU,
+                "@Barcode", req.Barcode,
+                "@ProductName", req.ProductName,
+                "@CategoryID", req.CategoryID,
+                "@Status", req.Status,
+                "@MinPrice", req.MinPrice,
+                "@MaxPrice", req.MaxPrice
+            );
+
+            if (!string.IsNullOrEmpty(msgError))
+                throw new Exception(msgError);
+
+            if (dt.Rows.Count > 0)
+                total = Convert.ToInt64(dt.Rows[0]["TotalCount"]);
+
+            return dt.ConvertTo<ProductModel>().ToList();
         }
     }
+
 }

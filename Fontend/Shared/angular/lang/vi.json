@@ -1,0 +1,197 @@
+{
+  "SYSTEM_SETTINGS": "Cài đặt hệ thống",
+  "VAT_RATE": "Thuế VAT (%)",
+  "DEFAULT_LANGUAGE": "Ngôn ngữ mặc định",
+  "SAVE_SETTINGS": "Lưu cài đặt",
+
+
+ 
+  "NAVIGATION": "Điều hướng",
+  "NAV_DASHBOARD": "Bảng điều khiển",
+  "NAV_POS": "Bán hàng",
+  "NAV_PRODUCTS": "Sản phẩm",
+  "NAV_CATEGORIES": "Loại hàng",
+  "NAV_PROMOTIONS": "Khuyến mãi",
+  "NAV_CUSTOMERS": "Khách hàng",
+  "NAV_SUPPLIERS": "Nhà cung cấp",
+  "NAV_PURCHASE_ORDERS": "Đơn nhập hàng",
+  "NAV_STOCK": "Quản lý kho",
+  "GOODS_RECEIPTS": "Phiếu nhập kho",
+  "GOODS_ISSUES": "Phiếu xuất kho",
+  "NAV_SALES": "Doanh số",
+  "NAV_RETURNS": "Trả hàng",
+  "NAV_PAYMENTS": "Công nợ & Thanh toán",
+  "NAV_REPORTS": "Báo cáo",
+  "NAV_AUDIT_LOG": "Lịch sử hệ thống",
+  "NAV_USERS": "Người dùng",
+  "NAV_SETTINGS": "Cài đặt",
+  "ROLE_ADMIN": "Quản trị viên",
+  "LOGOUT": "Đăng xuất",
+  "PROFILE_SETTINGS": "Cài đặt hồ sơ",
+
+
+
+
+  "PAGING_SHOWING": "Hiển thị",
+  "PAGING_OF": "đến",
+  "PAGING_ITEMS": "mục",
+  "PAGING_PAGE_SIZE": "Số dòng/trang",
+  "PAGING_PREV": "Trước",
+  "PAGING_NEXT": "Sau",
+
+
+  "PRODUCT": "Sản phẩm",
+    "PRODUCT_DESC": "Quản lý tồn kho và giá sản phẩm",
+    "SEARCH_NAME": "Tìm theo tên sản phẩm",
+    "SEARCH_SKU": "Tìm theo mã SKU",
+    "TOTAL_PRODUCTS": "Tổng số sản phẩm",
+    "IN_STOCK": "Còn hàng",
+    "OUT_STOCK": "Hết hàng",
+    "ADD_PRODUCT": "Thêm sản phẩm",
+    "ACTIONS": "Thao tác",
+    "NO_DATA": "Không có dữ liệu",
+    "SEARCH_NAME_PLACEHOLDER": "Tìm theo tên sản phẩm",
+  "PRICE_FROM": "Từ",
+  "PRICE_TO": "Đến",
+  "MIN_PRICE_PLACEHOLDER": "Giá tối thiểu",
+  "MAX_PRICE_PLACEHOLDER": "Giá tối đa",
+  "TB_ID": "Mã",
+  "TB_PRODUCT_NAME": "Tên sản phẩm",
+  "TB_SKU": "SKU",
+  "TB_BARCODE": "Mã vạch",
+  "TB_CATEGORY_ID": "Mã loại",
+  "TB_PRICE": "Giá",
+  "TB_UNIT": "Đơn vị",
+  "TB_MIN_STOCK": "Tồn tối thiểu",
+  "TB_QUANTITY": "Số lượng",
+  "TB_VAT_RATE": "Thuế VAT",
+  "TB_STATUS": "Trạng thái",
+  "TB_IMAGE": "Hình ảnh",
+  "ADD_TITLE": "Thêm sản phẩm",
+  "ADD_DESC": "Tạo mới một sản phẩm",
+  "LABEL_PRODUCT_NAME": "Tên sản phẩm",
+  "LABEL_SKU": "SKU",
+  "LABEL_BARCODE": "Mã vạch",
+  "LABEL_PRICE": "Giá",
+  "LABEL_UNIT": "Đơn vị",
+  "LABEL_VAT_RATE": "Thuế VAT (%)",
+  "LABEL_CATEGORY": "Loại hàng",
+  "LABEL_MIN_STOCK": "Tồn tối thiểu",
+  "LABEL_QUANTITY": "Số lượng",
+  "LABEL_STATUS": "Trạng thái",
+  "STATUS_ACTIVE": "Đang bán",
+  "STATUS_INACTIVE": "Ngừng bán",
+  "LABEL_IMAGE": "Hình ảnh",
+  "BTN_CANCEL": "Hủy",
+  "BTN_ADD_PRODUCT": "Thêm sản phẩm",
+  "BTN_UPDATE_PRODUCT": "Cập nhật sản phẩm",
+  "EDIT_TITLE": "Chỉnh sửa sản phẩm",
+  "EDIT_DESC": "Cập nhật thông tin sản phẩm",
+  "DELETE_TITLE": "Xóa sản phẩm",
+  "DELETE_CONFIRM": "Bạn có chắc muốn xóa sản phẩm này? Hành động này không thể hoàn tác.",
+  "BTN_DELETE_PRODUCT": "Xóa sản phẩm",
+
+
+
+
+
+
+
+  "RETURNS": "Trả hàng",
+  "RETURNS_DESC": "Quản lý các giao dịch trả hàng",
+
+  "SEARCH_PARTNER_NAME": "Tìm theo tên đối tác",
+  "SEARCH_PARTNER_PHONE": "Tìm theo số điện thoại",
+  "SEARCH_RETURN_TYPE": "Loại trả hàng",
+  "RETURN_TYPE_CUSTOMER": "Khách trả hàng",
+  "RETURN_TYPE_SUPPLIER": "Trả hàng cho nhà cung cấp",
+  "RETURN_TYPE_ALL": "Tất cả",
+
+  "TOTAL_RETURN": "Tổng trả hàng",
+  "TOTAL_RETURN_CUSTOMER": "Khách trả hàng",
+  "TOTAL_RETURN_SUPPLIER": "Trả hàng NCC",
+
+  "FILTER_FROM_DATE": "Từ",
+  "FILTER_TO_DATE": "Đến",
+
+  "ADD_RETURN": "Thêm trả hàng",
+  "EDIT_RETURN": "Sửa trả hàng",
+  "DELETE_RETURN": "Xóa trả hàng",
+
+  "TB_RETURN_ID": "Mã trả hàng",
+  "TB_RETURN_TYPE": "Loại trả hàng",
+  "TB_PARTNER_NAME": "Tên đối tác",
+  "TB_PARTNER_PHONE": "SĐT đối tác",
+  "TB_PRODUCT_NAME": "Tên sản phẩm",
+  "TB_RETURN_DATE": "Ngày trả",
+  "DETAIL_RETURN": "Chi tiết trả hàng",
+  "DETAIL_RETURN_DESC": "Xem thông tin chi tiết trả hàng",
+  "LABEL_RETURN_ID": "Mã trả hàng",
+  "LABEL_RETURN_TYPE": "Loại trả hàng",
+  "LABEL_PARTNER_NAME": "Tên đối tác",
+  "LABEL_PARTNER_PHONE": "SĐT đối tác",
+  "LABEL_PRODUCT_NAME": "Tên sản phẩm",
+  "LABEL_RETURN_DATE": "Ngày trả",
+  "LABEL_REASON": "Lý do",
+  "LABEL_SALE_ID": "Mã bán hàng",
+  "LABEL_RECEIPT_ID": "Mã phiếu nhập",
+  "LABEL_CUSTOMER_ID": "Mã khách hàng",
+  "LABEL_SUPPLIER_ID": "Mã nhà cung cấp",
+  "LABEL_PRODUCT_ID": "Mã sản phẩm",
+  "LABEL_QUANTITY": "Số lượng",
+  "LABEL_UNIT_PRICE": "Đơn giá",
+  "ADD_RETURN_TITLE": "Thêm trả hàng",
+  "ADD_RETURN_DESC": "Tạo một giao dịch trả hàng mới",
+  "EDIT_RETURN_TITLE": "Chỉnh sửa trả hàng",
+  "EDIT_RETURN_DESC": "Cập nhật thông tin trả hàng",
+  "DELETE_RETURN_CONFIRM1": "Bạn có chắc muốn xóa giao dịch trả hàng này không?",
+  "DELETE_RETURN_CONFIRM2":"Không thể hoàn tác hành động này",
+  "BTN_DELETE_RETURN": "Xóa trả hàng",
+  "BTN_ADD_RETURN": "Thêm trả hàng",
+  "BTN_UPDATE_RETURN": "Cập nhật trả hàng",
+  "NO_RETURN_DATA": "Không có dữ liệu trả hàng",
+
+
+
+
+
+
+
+  "STOCK_MANAGEMENT": "Quản lý kho",
+  "STOCK_DESC": "Xem và quản lý tất cả biến động kho",
+
+  "TOTAL_STOCKCARD": "Tổng phiếu kho",
+  "STOCK_IN": "Nhập kho",
+  "STOCK_OUT": "Xuất kho",
+
+  "SEARCH_BY_PRODUCT_NAME": "Tìm theo tên sản phẩm",
+  "SEARCH_TRANSACTION_TYPE": "Loại giao dịch",
+
+  "TRANSACTION_ALL": "Tất cả",
+  "TRANSACTION_IN": "Nhập",
+  "TRANSACTION_OUT": "Xuất",
+
+  "FILTER_DATE_FROM": "Từ ngày",
+  "FILTER_DATE_TO": "Đến ngày",
+
+  "TB_STOCK_ID": "Mã phiếu kho",
+  "TB_TRANSACTION": "Giao dịch",
+  "TB_QUANTITY": "Số lượng",
+  "TB_DATE": "Ngày",
+
+  "DETAIL_STOCKCARD": "Chi tiết phiếu kho",
+  "DETAIL_STOCKCARD_DESC": "Xem thông tin chi tiết phiếu kho",
+
+  "LABEL_STOCK_ID": "Mã phiếu kho",
+  "LABEL_TRANSACTION_TYPE": "Loại giao dịch",
+  "LABEL_BALANCE": "Tồn sau giao dịch",
+  "LABEL_TRANSACTION_DATE": "Ngày giao dịch",
+  "LABEL_BATCH_NO": "Số lô",
+  "LABEL_ISSUE_ID": "Mã phiếu xuất",
+
+  "DELETE_STOCKCARD": "Xóa phiếu kho",
+  "DELETE_STOCKCARD_CONFIRM": "Bạn có chắc muốn xóa phiếu kho này không? Hành động này không thể hoàn tác.",
+  "BTN_DELETE_STOCKCARD": "Xóa phiếu kho",
+
+  "NO_STOCK_DATA": "Không có dữ liệu kho"
+}
