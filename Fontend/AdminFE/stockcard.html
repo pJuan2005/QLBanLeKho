@@ -159,12 +159,12 @@
         </a>
         <!-- menu button stock -->
         <a href="../AdminFE/stockcard.html" ng-if="canShow('stock')">
-          <div class="slide-bar__MenuButton ">
+          <div class="slide-bar__MenuButton slide-bar__MenuButton--active">
             <div class="MenuButton-left">
               <img src="../Shared/img/common/stock.svg" alt="" class="icon" />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">{{ t('NAV_STOCK') }}</p>
+              <p class="name-menu-active">{{ t('NAV_STOCK') }}</p>
             </div>
           </div>
         </a>
@@ -203,7 +203,7 @@
           <div class="slide-bar__MenuButton ">
             <div class="MenuButton-left">
               <img src="../Shared/img/common/sales.svg" alt="" class="icon" />
-</div>
+            </div>
             <div class="MenuButton-right">
               <p class="name-menu">{{ t('NAV_SALES') }}</p>
             </div>
@@ -274,12 +274,12 @@
         </a>
         <!-- menu button Settings -->
         <a href="../AdminFE/settings.html" ng-if="canShow('settings')">
-          <div class="slide-bar__MenuButton slide-bar__MenuButton--active">
+          <div class="slide-bar__MenuButton ">
             <div class="MenuButton-left">
               <img src="../Shared/img/common/setting.svg" alt="" class="icon" />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu-active">{{ t('NAV_SETTINGS') }}</p>
+              <p class="name-menu">{{ t('NAV_SETTINGS') }}</p>
             </div>
           </div>
         </a>

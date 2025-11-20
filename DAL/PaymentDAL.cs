@@ -68,7 +68,7 @@ namespace DAL
                 var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_payment_create",
                     "@SupplierID", model.SupplierID,
                     "@ReceiptID", model.ReceiptID,
-                    "@Amount", model.Amoun,
+                    "@Amount", model.Amount,
                     "@Method", model.Method,
                     "@Description", model.Description
                 );
