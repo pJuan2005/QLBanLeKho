@@ -1,7 +1,3 @@
-// pos.js
-// LƯU Ý: module AppRetailPos đã được tạo trong global.js:
-// angular.module("AppRetailPos", [...]);
-// Ở đây chỉ lấy lại module, KHÔNG tạo mới.
 var app = angular.module("AppRetailPos");
 
 app.controller(

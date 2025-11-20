@@ -15,3 +15,4 @@ namespace DAL.Interfaces
         bool Delete(int productId);
         List<ProductModel> Search(ProductSearchRequest request, out long total);
     }
+}

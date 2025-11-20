@@ -34,7 +34,7 @@
         </div>
         <div class="slide-bar__Content">
           <p class="slide-bar__label">Navigation</p>
-          <!-- menu button 1 -->
+          <!-- menu button Dashboard -->
           <a href="../AdminFE/dashboard.html" ng-if="canShow('dashboard')">
             <div class="slide-bar__MenuButton">
               <div class="MenuButton-left">
@@ -49,7 +49,7 @@
               </div>
             </div>
           </a>
-          <!-- menu button 2 -->
+          <!-- menu button POS -->
           <a href="../AdminFE/pos.html" ng-if="canShow('pos')"
             ><div class="slide-bar__MenuButton">
               <div class="MenuButton-left">
@@ -60,7 +60,7 @@
               </div>
             </div>
           </a>
-          <!-- menu button 3 -->
+          <!-- menu button Products -->
           <a href="../AdminFE/products.html" ng-if="canShow('products')">
             <div class="slide-bar__MenuButton">
               <div class="MenuButton-left">
@@ -75,7 +75,7 @@
               </div>
             </div>
           </a>
-          <!-- menu button 4 -->
+          <!-- menu button Categories -->
           <a href="../AdminFE/categories.html" ng-if="canShow('categories')">
             <div class="slide-bar__MenuButton slide-bar__MenuButton--active">
               <div class="MenuButton-left">
@@ -90,7 +90,22 @@
               </div>
             </div>
           </a>
-          <!-- menu button 5 -->
+          <!-- menu button Promotions -->
+          <a href="../AdminFE/promotions.html" ng-if="canShow('promotions')">
+            <div class="slide-bar__MenuButton">
+              <div class="MenuButton-left">
+                <img
+                  src="../Shared/img/common/promotion.svg"
+                  alt=""
+                  class="icon"
+                />
+              </div>
+              <div class="MenuButton-right">
+                <p class="name-menu">Promotions</p>
+              </div>
+            </div>
+          </a>
+          <!-- menu button Customers -->
           <a href="../AdminFE/customers.html" ng-if="canShow('customers')">
             <div class="slide-bar__MenuButton">
               <div class="MenuButton-left">
@@ -105,7 +120,7 @@
               </div>
             </div>
           </a>
-          <!-- menu button 6 -->
+          <!-- menu button Suppliers -->
           <a href="../AdminFE/suppliers.html" ng-if="canShow('suppliers')">
             <div class="slide-bar__MenuButton">
               <div class="MenuButton-left">
@@ -120,7 +135,7 @@
               </div>
             </div>
           </a>
-          <!-- menu button 7 -->
+          <!-- menu button Purchase Orders -->
           <a
             href="../AdminFE/purchaseorders.html"
             ng-if="canShow('purchaseOrders')"
@@ -138,18 +153,48 @@
               </div>
             </div>
           </a>
-          <!-- menu button 8 -->
-          <a href="../AdminFE/stockcard.html" ng-if="canShow('stock')">
+          <!-- menu button StockCard -->
+        <a href="../AdminFE/stockcard.html" ng-if="canShow('purchaseOrders')">
+          <div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img src="../Shared/img/common/stock.svg" alt="" class="icon" />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">Stock Management</p>
+            </div>
+          </div>
+        </a>
+          <!-- menu button Goods Receipts -->
+          <a href="../AdminFE/goodsreceipts.html" ng-if="canShow('greceipts')">
             <div class="slide-bar__MenuButton">
               <div class="MenuButton-left">
-                <img src="../Shared/img/common/stock.svg" alt="" class="icon" />
+                <img
+                  src="../Shared/img/common/goodReceipt.svg"
+                  alt=""
+                  class="icon"
+                />
               </div>
               <div class="MenuButton-right">
-                <p class="name-menu">Stock Management</p>
+                <p class="name-menu">Goods Receipts</p>
               </div>
             </div>
           </a>
-          <!-- menu button 9 -->
+          <!-- menu button Goods Issues -->
+          <a href="../AdminFE/goodsissues.html" ng-if="canShow('gissues')">
+            <div class="slide-bar__MenuButton">
+              <div class="MenuButton-left">
+                <img
+                  src="../Shared/img/common/goodIssues.svg"
+                  alt=""
+                  class="icon"
+                />
+              </div>
+              <div class="MenuButton-right">
+                <p class="name-menu">Goods Issues</p>
+              </div>
+            </div>
+          </a>
+          <!-- menu button Sales -->
           <a href="../AdminFE/sales.html" ng-if="canShow('sales')">
             <div class="slide-bar__MenuButton">
               <div class="MenuButton-left">
@@ -160,7 +205,7 @@
               </div>
             </div>
           </a>
-          <!-- menu button 10 -->
+          <!-- menu button Returns -->
           <a href="../AdminFE/returns.html" ng-if="canShow('returns')">
             <div class="slide-bar__MenuButton">
               <div class="MenuButton-left">
@@ -175,7 +220,7 @@
               </div>
             </div>
           </a>
-          <!-- menu button 11 -->
+          <!-- menu button Payments & Debts -->
           <a href="../AdminFE/payments.html" ng-if="canShow('payments')">
             <div class="slide-bar__MenuButton">
               <div class="MenuButton-left">
@@ -190,7 +235,7 @@
               </div>
             </div>
           </a>
-          <!-- menu button 12 -->
+          <!-- menu button Reports -->
           <a href="../AdminFE/reports.html" ng-if="canShow('reports')">
             <div class="slide-bar__MenuButton">
               <div class="MenuButton-left">
@@ -205,7 +250,7 @@
               </div>
             </div>
           </a>
-          <!-- menu button 13 -->
+          <!-- menu button Audit Log -->
           <a href="../AdminFE/auditlog.html" ng-if="canShow('auditLog')">
             <div class="slide-bar__MenuButton">
               <div class="MenuButton-left">
@@ -220,7 +265,7 @@
               </div>
             </div>
           </a>
-          <!-- menu button 14 -->
+          <!-- menu button Users -->
           <a href="../AdminFE/users.html" ng-if="canShow('users')">
             <div class="slide-bar__MenuButton">
               <div class="MenuButton-left">
@@ -231,7 +276,7 @@
               </div>
             </div>
           </a>
-          <!-- menu button 15 -->
+          <!-- menu button Settings -->
           <a href="../AdminFE/settings.html" ng-if="canShow('settings')">
             <div class="slide-bar__MenuButton">
               <div class="MenuButton-left">
@@ -262,15 +307,15 @@
       <div class="app-layout">
         <div class="top-bar">
           <div class="top-bar__content">
-              <div class="top-bar__left">
-                <img src="../Shared/img/common/search.svg" alt="" class="icon" />
-                <input
-                  class="search"
-                  type="text"
-                  placeholder="Search by categories name"
-                  ng-model="searchCategories"
-                />
-              </div>
+            <div class="top-bar__left">
+              <img src="../Shared/img/common/search.svg" alt="" class="icon" />
+              <input
+                class="search"
+                type="text"
+                placeholder="Search by categories name"
+                ng-model="searchCategories"
+              />
+            </div>
             <div class="top-bar__right">
               <p class="role">admin</p>
               <img
@@ -325,7 +370,7 @@
               <input
                 class="search"
                 type="text"
-                placeholder="Search by VAT..."  
+                placeholder="Search by VAT..."
                 ng-model="searchVAT"
               />
             </div>
@@ -406,7 +451,7 @@
           </div>
           <!-- table -->
           <div class="card">
-            <div class="table-responsive">  
+            <div class="table-responsive">
               <table class="table">
                 <thead>
                   <tr>
@@ -442,9 +487,13 @@
           <!-- form -->
           <div class="form">
             <!-- =============== IMAGE PREVIEW MODAL =============== -->
-            <div class="image-viewer" ng-if="showImageModal" ng-click="closeImageModal($event)">
+            <div
+              class="image-viewer"
+              ng-if="showImageModal"
+              ng-click="closeImageModal($event)"
+            >
               <div class="image-viewer__content">
-                <img ng-src="{{selectedImage}}" alt="Full view">
+                <img ng-src="{{selectedImage}}" alt="Full view" />
               </div>
             </div>
             <!-- add -->
@@ -555,7 +604,7 @@
               class="form-delete"
               ng-class="{open:showDelete}"
               ng-click="closeDeleteOnOverlay($event)"
-              >
+            >
               <div class="form-delete__content">
                 <h3 class="title">Delete Category</h3>
                 <p class="desc">
