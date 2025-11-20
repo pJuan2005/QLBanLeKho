@@ -136,6 +136,16 @@ namespace BLL
             return _salesRepo.Delete(model);
         }
 
+        public List<SalesListItemDto> SearchList(
+    int pageIndex, int pageSize, out long total,
+    string status, DateTime? fromDate, DateTime? toDate,
+    string keyword)
+        {
+            return _salesRepo.SearchList(pageIndex, pageSize, out total,
+                status, fromDate, toDate, keyword);
+        }
+
+
         public List<SalesModel> Search(int pageIndex, int pageSize, out long total,
             decimal? minTotalAmount, decimal? maxTotalAmount,
             string status, DateTime? fromDate, DateTime? toDate)
@@ -143,5 +153,17 @@ namespace BLL
             return _salesRepo.Search(pageIndex, pageSize, out total,
                 minTotalAmount, maxTotalAmount, status, fromDate, toDate);
         }
+
+        public SalesDashboardDto GetDashboard(decimal? minTotalAmount, decimal? maxTotalAmount,string status, DateTime? fromDate, DateTime? toDate,string keyword)
+        {
+            return _salesRepo.GetDashboard( minTotalAmount, maxTotalAmount,
+                status, fromDate, toDate, keyword);
+        }
+
+        public SaleDetailDto GetDetail(int saleId)
+        {
+            return _salesRepo.GetDetail(saleId);
+        }
+
     }
 }
