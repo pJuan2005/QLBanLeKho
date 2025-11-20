@@ -111,13 +111,6 @@ namespace CoreApi.Controllers
                     string fullPath = Path.Combine(folder, fileName);
 
 
-
-                    if (!Directory.Exists(folder))
-                        Directory.CreateDirectory(folder);
-
-                    string fileName = $"{Guid.NewGuid()}_{imageFile.FileName}";
-                    string fullPath = Path.Combine(folder, fileName);
-
                     using (var stream = new FileStream(fullPath, FileMode.Create))
                     {
                         await imageFile.CopyToAsync(stream);

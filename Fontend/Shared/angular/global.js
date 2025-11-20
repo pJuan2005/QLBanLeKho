@@ -57,10 +57,6 @@ app.factory("PermissionService", function (AuthService) {
       promotions: true,
       purchaseOrders: true,
       stock: true,
-
-      
-   
-
       greceipts: true,
       gissues: true,
       sales: true,
@@ -80,6 +76,7 @@ app.factory("PermissionService", function (AuthService) {
       customers: true,
       suppliers: false,
       purchaseOrders: false,
+      stock: false,
       greceipts: false,
       gissues: false,
       sales: true,
@@ -99,6 +96,7 @@ app.factory("PermissionService", function (AuthService) {
       customers: false,
       suppliers: true,
       purchaseOrders: true,
+      stock: true,
       greceipts: true,
       gissues: true,
       sales: false,
@@ -118,6 +116,7 @@ app.factory("PermissionService", function (AuthService) {
       customers: false,
       suppliers: false,
       purchaseOrders: false,
+      stock: true,
       greceipts: false,
       gissues: false,
       sales: false,
@@ -137,6 +136,7 @@ app.factory("PermissionService", function (AuthService) {
       customers: false,
       suppliers: false,
       purchaseOrders: false,
+      stock: false,
       greceipts: false,
       gissues: false,
       sales: false,

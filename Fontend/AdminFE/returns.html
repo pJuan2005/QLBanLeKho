@@ -309,7 +309,7 @@
             <input class="search" type="text" placeholder="{{ t('SEARCH_PARTNER_PHONE') }}" ng-model="searchPartnerPhone" />
           </div>
           <div class="top-bar__right">
-            <p class="role">{{ t('ROLE_ADMIN') }}</p>
+            <p class="role">{{currentUser.role}}</p>
             <img src="../Shared/img/common/ava.svg" alt="" class="ava" id="avatar" />
           </div>
         </div>
@@ -625,8 +625,8 @@
 
                 <!-- Footer -->
                 <div class="dialog-footer">
-                  <button type="button" class="cancel">{{ t('ADD_RETURN') }}</button>
-                  <input class="submit" type="submit" value="{{ t('BTN_CANCEL') }}" ng-disabled="frmAdd.$invalid||savingAdd" />
+                  <button type="button" class="cancel">{{ t('BTN_CANCEL') }}</button>
+                  <input class="submit" type="submit" value="{{ t('BTN_ADD_RETURN') }}" ng-disabled="frmAdd.$invalid||savingAdd" />
                 </div>
               </form>
 
