@@ -43,7 +43,6 @@ namespace DAL
                     "@Unit", model.Unit,
                     "@MinStock", model.MinStock,
                     "@Status", model.Status,
-                    "@ImageData", model.ImageData,
                     "@VATRate", model.VATRate,
                     "@Quantity", model.Quantity
                 );

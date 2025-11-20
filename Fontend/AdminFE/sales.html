@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- css -->
+    <link rel="stylesheet" href="../Shared/css/sales.css" />
+    <script src="../Shared/angular/angular.min.js"></script>
+    <script src="../Shared/angular/global.js"></script>
+    <script src="../Shared/angular/sales.js"></script>
+    <title>Sales</title>
+  </head>
+  <body ng-app="AppRetailPos" ng-controller="salesCtrl">
+    <div class="slide-bar">
+      <div class="slide-bar__header">
+        <div class="app-slideBar">
+          <div class="app-slideBar__left">
+            <img src="../Shared/img/common/wheel.svg" alt="" class="icon" />
+          </div>
+          <div class="app-slideBar__right">
+            <h1 class="name-app">RetailPro</h1>
+            <p class="title-nameApp">Inventory & POS</p>
+          </div>
+        </div>
+      </div>
+      <div class="slide-bar__Content">
+        <p class="slide-bar__label">Navigation</p>
+        <!-- menu button Dashboard -->
+        <a href="../AdminFE/dashboard.html" ng-if="canShow('dashboard')">
+          <div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img
+                src="../Shared/img/common/dashboard.svg"
+                alt=""
+                class="icon"
+              />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">Dashboard</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button POS -->
+        <a href="../AdminFE/pos.html" ng-if="canShow('pos')"
+          ><div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img src="../Shared/img/common/pos.svg" alt="" class="icon" />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">POS</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button Products -->
+        <a href="../AdminFE/products.html" ng-if="canShow('products')">
+          <div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img src="../Shared/img/common/product.svg" alt="" class="icon" />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">Products</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button Categories -->
+        <a href="../AdminFE/categories.html" ng-if="canShow('categories')">
+          <div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img
+                src="../Shared/img/common/category.svg"
+                alt=""
+                class="icon"
+              />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">Categories</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button Promotions -->
+        <a href="../AdminFE/promotions.html" ng-if="canShow('promotions')">
+          <div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img
+                src="../Shared/img/common/promotion.svg"
+                alt=""
+                class="icon"
+              />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">Promotions</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button Customers -->
+        <a href="../AdminFE/customers.html" ng-if="canShow('customers')">
+          <div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img
+                src="../Shared/img/common/customer.svg"
+                alt=""
+                class="icon"
+              />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">Customers</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button Suppliers -->
+        <a href="../AdminFE/suppliers.html" ng-if="canShow('suppliers')">
+          <div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img
+                src="../Shared/img/common/supplier.svg"
+                alt=""
+                class="icon"
+              />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">Suppliers</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button Purchase Orders -->
+        <a
+          href="../AdminFE/purchaseorders.html"
+          ng-if="canShow('purchaseOrders')"
+        >
+          <div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img
+                src="../Shared/img/common/purchaseorder.svg"
+                alt=""
+                class="icon"
+              />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">Purchase Orders</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button StockCard -->
+        <a href="../AdminFE/stockcard.html" ng-if="canShow('purchaseOrders')">
+          <div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img src="../Shared/img/common/stock.svg" alt="" class="icon" />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">Stock Management</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button Goods Receipts -->
+        <a href="../AdminFE/goodsreceipts.html" ng-if="canShow('greceipts')">
+          <div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img
+                src="../Shared/img/common/goodReceipt.svg"
+                alt=""
+                class="icon"
+              />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">Goods Receipts</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button Goods Issues -->
+        <a href="../AdminFE/goodsissues.html" ng-if="canShow('gissues')">
+          <div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img
+                src="../Shared/img/common/goodIssues.svg"
+                alt=""
+                class="icon"
+              />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">Goods Issues</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button Sales -->
+        <a href="../AdminFE/sales.html" ng-if="canShow('sales')">
+          <div class="slide-bar__MenuButton slide-bar__MenuButton--active">
+            <div class="MenuButton-left">
+              <img src="../Shared/img/common/sales.svg" alt="" class="icon" />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu-active">Sales</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button Returns -->
+        <a href="../AdminFE/returns.html" ng-if="canShow('returns')">
+          <div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img src="../Shared/img/common/return.svg" alt="" class="icon" />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">Returns</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button Payments & Debts -->
+        <a href="../AdminFE/payments.html" ng-if="canShow('payments')">
+          <div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img
+                src="../Shared/img/common/payments.svg"
+                alt=""
+                class="icon"
+              />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">Payments & Debts</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button Reports -->
+        <a href="../AdminFE/reports.html" ng-if="canShow('reports')">
+          <div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img src="../Shared/img/common/report.svg" alt="" class="icon" />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">Reports</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button Audit Log -->
+        <a href="../AdminFE/auditlog.html" ng-if="canShow('auditLog')">
+          <div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img
+                src="../Shared/img/common/auditlog.svg"
+                alt=""
+                class="icon"
+              />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">Audit Log</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button Users -->
+        <a href="../AdminFE/users.html" ng-if="canShow('users')">
+          <div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img src="../Shared/img/common/user.svg" alt="" class="icon" />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">Users</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button Settings -->
+        <a href="../AdminFE/settings.html" ng-if="canShow('settings')">
+          <div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img src="../Shared/img/common/setting.svg" alt="" class="icon" />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">Settings</p>
+            </div>
+          </div>
+        </a>
+      </div>
+      <div class="slide-bar__footer">
+        <div class="app-slide-bar">
+          <div class="ava">
+            <img class="ava" src="../Shared/img/common/ava.svg" alt="" />
+          </div>
+          <div class="info">
+            <p class="name">{{currentUser.fullname}}</p>
+            <p class="role">{{currentUser.role}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="app-layout">
+      <div class="top-bar">
+        <div class="top-bar__content">
+          <div class="top-bar__left" style="visibility: hidden">
+            <img src="../Shared/img/common/search.svg" alt="" class="icon" />
+            <input
+              class="search"
+              type="text"
+              placeholder="Search by categories name"
+              ng-model="searchCategories"
+            />
+          </div>
+          <div class="top-bar__right">
+            <p class="role">admin</p>
+            <img
+              src="../Shared/img/common/ava.svg"
+              alt=""
+              class="ava"
+              id="avatar"
+            />
+          </div>
+        </div>
+        <div class="top-bar__info" id="information">
+          <div class="info-top">
+            <p class="name">John Doe</p>
+            <p class="email">john@company.com</p>
+          </div>
+          <div class="info-mid">
+            <a href="#!"><p class="set">Profile Settings</p></a>
+          </div>
+          <div class="info-bottom">
+            <img
+              src="../Shared/img/categories/logout.svg"
+              alt=""
+              class="icon"
+            />
+            <a href="../AuthFE/login.html"><p class="logout">Logout</p></a>
+          </div>
+        </div>
+      </div>
+      <div class="app-layout__content">
+        <div class="sales">
+          <div class="sales-top">
+            <div class="container-intro">
+              <img
+                src="../Shared/img/common/money-sale.svg"
+                alt=""
+                class="icon"
+              />
+              <h1 class="name-page">Sales Management</h1>
+            </div>
+            <div class="container-card">
+              <!-- Total Sales -->
+              <div class="card-block card-total__sales">
+                <div class="title">Total Sales</div>
+                <div class="decor">
+                  <img
+                    src="../Shared/img/common/money-sale.svg"
+                    alt=""
+                    class="icon-decor"
+                  />
+                </div>
+                <p class="data">{{ salesDashboard.totalSales || 0 }}</p>
+              </div>
+
+              <!-- Total Revenue -->
+              <div class="card-block card-total__revenue">
+                <div class="title">Total Revenue</div>
+                <div class="decor">
+                  <img
+                    src="../Shared/img/common/revenue.svg"
+                    alt=""
+                    class="icon-decor"
+                  />
+                </div>
+                <p class="data">{{ formatVnd(salesDashboard.totalRevenue) }}</p>
+              </div>
+
+              <!-- Avg Order Value -->
+              <div class="card-block card-avg__oder">
+                <div class="title">Avg Order Value</div>
+                <div class="decor">
+                  <img
+                    src="../Shared/img/common/avg.svg"
+                    alt=""
+                    class="icon-decor"
+                  />
+                </div>
+                <p class="data">
+                  {{ formatVnd(salesDashboard.avgOrderValue) }}
+                </p>
+              </div>
+
+              <!-- Paid / Unpaid -->
+              <div class="card-block card-status__sale">
+                <div class="title">Paid / Unpaid</div>
+                <div class="decor">
+                  <img
+                    src="../Shared/img/common/status.svg"
+                    alt=""
+                    class="icon-decor"
+                  />
+                </div>
+                <p class="data">
+                  {{ (salesDashboard.paidCount || 0) }} / {{
+                  (salesDashboard.unpaidCount || 0) }}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="sales-content">
+            <div class="list-sales">
+              <p class="desc">All Sales</p>
+
+              <!-- FILTERS -->
+              <div class="filters">
+                <!-- From date -->
+                <div class="filters-block start-date">
+                  <label for="from-date">From date</label>
+                  <input
+                    id="from-date"
+                    type="date"
+                    class="search date-input"
+                    ng-model="filters.fromDate"
+                    ng-change="onFilterChanged()"
+                  />
+                </div>
+
+                <!-- To date -->
+                <div class="filters-block end-date">
+                  <label for="to-date">To date</label>
+                  <input
+                    id="to-date"
+                    type="date"
+                    class="search date-input"
+                    ng-model="filters.toDate"
+                    ng-change="onFilterChanged()"
+                  />
+                </div>
+
+                <!-- Status -->
+                <div class="filters-block filter-status">
+                  <select
+                    class="search search-status"
+                    ng-model="filters.status"
+                    ng-change="onFilterChanged()"
+                  >
+                    <option value="">All Status</option>
+                    <option value="Paid">Paid</option>
+                    <option value="Unpaid">Unpaid</option>
+                    <option value="Partial">Partial</option>
+                  </select>
+                </div>
+
+                <!-- Search by invoice or customer -->
+                <div class="filters-block filters-invoice__customer">
+                  <img
+                    src="../Shared/img/common/search.svg"
+                    alt=""
+                    class="icon-search"
+                  />
+                  <input
+                    type="text"
+                    class="searchByInvoiceOrCustomerName"
+                    placeholder="Search by invoice or customer name..."
+                    ng-model="filters.keyword"
+                    ng-model-options="{ debounce: 500 }"
+                    ng-change="onFilterChanged()"
+                  />
+                </div>
+              </div>
+
+              <!-- TABLE -->
+              <div class="list-sales__table">
+                <table>
+                  <thead>
+                    <tr>
+                      <td class="invoice-id">Invoice #</td>
+                      <td class="date-invoice">Date</td>
+                      <td class="customer-name">Customer</td>
+                      <td class="total-order">Total</td>
+                      <td class="payment-method">Payment Method</td>
+                      <td class="status-sale">Status</td>
+                      <td class="action">Action</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr ng-repeat="s in sales">
+                      <td class="invoice-id">
+                        <a href="" ng-click="openInvoiceModal(s, $event)">
+                          {{ s.invoiceNo }}
+                        </a>
+                      </td>
+                      <td class="date-invoice">
+                        {{ s.saleDate | date:'yyyy-MM-dd HH:mm' }}
+                      </td>
+                      <td class="customer-name">
+                        {{ s.customerName || 'N/A' }}
+                      </td>
+                      <td class="total-order">
+                        {{ formatVnd(s.totalAmount) }}
+                      </td>
+                      <td class="payment-method">
+                        {{ s.paymentMethod || 'N/A' }}
+                      </td>
+                      <td class="status-sale">
+                        <div class="color" ng-class="getStatusClass(s)">
+                          {{ s.paymentStatus || 'N/A' }}
+                        </div>
+                      </td>
+                      <td class="action">
+                        <img
+                          src="../Shared/img/common/three-dot.svg"
+                          alt=""
+                          class="icon-dot"
+                          ng-click="toggleAction(s, $event)"
+                        />
+
+                        <!-- menu nhỏ -->
+                        <div
+                          class="open-action"
+                          ng-show="s.showMenu"
+                          ng-click="$event.stopPropagation()"
+                        >
+                          <div
+                            class="detail"
+                            ng-click="openDetailModal(s, $event)"
+                          >
+                            <img
+                              src="../Shared/img/common/view.svg"
+                              class="icon-view"
+                            />
+                            <p class="name-action">View Sale Details</p>
+                          </div>
+
+                          <div
+                            class="print"
+                            ng-click="openInvoiceModal(s, $event)"
+                          >
+                            <img
+                              src="../Shared/img/common/printer.svg"
+                              class="printer-icon"
+                            />
+                            <p class="printer-action">Print Invoice</p>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+
+                    <!-- không có dữ liệu -->
+                    <tr ng-if="sales.length === 0">
+                      <td colspan="7" class="no-data">No sales found.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <!-- PAGER -->
+              <div class="pager" ng-if="pager.total > 0">
+                <div class="pager-info">
+                  Showing {{ ((pager.page-1)*pager.size)+1 }}-{{
+                  Math.min(pager.page*pager.size,pager.total) }} of {{
+                  pager.total }} items
+                </div>
+                <div class="page-nav">
+                  <label>
+                    Page size:
+                    <select ng-model="pager.size" ng-change="changeSize()">
+                      <option value="10">10</option>
+                      <option value="20">20</option>
+                      <option value="30">30</option>
+                    </select>
+                  </label>
+                  <button
+                    class="btn ghost"
+                    ng-disabled="pager.page === 1"
+                    ng-click="go(1)"
+                  >
+                    «
+                  </button>
+                  <button
+                    class="btn ghost"
+                    ng-disabled="pager.page === 1"
+                    ng-click="go(pager.page-1)"
+                  >
+                    Prev
+                  </button>
+                  <span class="page-no">
+                    Page {{ pager.page }} / {{ pager.pages }}
+                  </span>
+                  <button
+                    class="btn ghost"
+                    ng-disabled="pager.page >= pager.pages"
+                    ng-click="go(pager.page+1)"
+                  >
+                    Next
+                  </button>
+                  <button
+                    class="btn ghost"
+                    ng-disabled="pager.page >= pager.pages"
+                    ng-click="go(pager.pages)"
+                  >
+                    »
+                  </button>
+                </div>
+              </div>
+            </div>
+            <!-- overlay cho tất cả modal -->
+            <div
+              class="modal-backdrop"
+              ng-show="showDetailModal || showInvoiceModal"
+              ng-click="closeModals()"
+            ></div>
+
+            <!-- ========== MODAL 1: SALE DETAILS ========== -->
+            <div
+              class="modal-root modal-sale-detail"
+              ng-show="showDetailModal"
+              ng-click="closeModals()"
+            >
+              <div class="modal-card" ng-click="$event.stopPropagation()">
+                <div class="modal-header">
+                  <div class="modal-title">
+                    <img
+                      src="../Shared/img/common/money-sale.svg"
+                      class="icon"
+                    />
+                    <div>
+                      <p class="title-top">Sale Details -</p>
+                      <p class="title-main">{{ selectedSale.invoiceNo }}</p>
+                      <p class="title-sub">
+                        View complete information about this sale transaction
+                      </p>
+                    </div>
+                  </div>
+                  <button class="modal-close" ng-click="closeModals()">
+                    ✕
+                  </button>
+                </div>
+
+                <!-- info 2 cột -->
+                <div class="modal-section modal-info-grid">
+                  <div class="info-block">
+                    <p class="info-label">Invoice Number</p>
+                    <p class="info-value link">{{ selectedSale.invoiceNo }}</p>
+                  </div>
+                  <div class="info-block">
+                    <p class="info-label">Date &amp; Time</p>
+                    <p class="info-value">
+                      {{ selectedSale.saleDate | date:'yyyy-MM-dd HH:mm' }}
+                    </p>
+                  </div>
+                  <div class="info-block">
+                    <p class="info-label">Customer</p>
+                    <p class="info-value">
+                      {{ saleDetail.customerName }}<br />
+                      <span class="info-sub"
+                        >{{ saleDetail.customerPhone }}</span
+                      >
+                    </p>
+                  </div>
+                  <div class="info-block">
+                    <p class="info-label">Cashier</p>
+                    <p class="info-value">{{ saleDetail.cashierName }}</p>
+                  </div>
+                  <div class="info-block">
+                    <p class="info-label">Payment Method</p>
+                    <p class="info-value">{{ selectedSale.paymentMethod }}</p>
+                  </div>
+                  <div class="info-block">
+                    <p class="info-label">Status</p>
+                    <div class="color" ng-class="getStatusClass(selectedSale)">
+                      {{ selectedSale.paymentStatus }}
+                    </div>
+                  </div>
+                </div>
+
+                <!-- items purchased -->
+                <div class="modal-section">
+                  <p class="section-title">Items Purchased</p>
+                  <div class="detail-table-wrapper">
+                    <table class="detail-table">
+                      <thead>
+                        <tr>
+                          <th>Product</th>
+                          <th>SKU</th>
+                          <th>Qty</th>
+                          <th>Price</th>
+                          <th>Discount</th>
+                          <th>VAT %</th>
+                          <th>Subtotal</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr ng-repeat="item in saleItems">
+                          <td>{{ item.productName }}</td>
+                          <td>{{ item.sku }}</td>
+                          <td>{{ item.quantity }}</td>
+                          <td>{{ formatVnd(item.unitPrice) }}</td>
+                          <td>{{ item.discount | number:0 }}%</td>
+                          <td>{{ item.vatPercent | number:0 }}%</td>
+                          <td>{{ formatVnd(item.lineTotal) }}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+                <!-- totals -->
+                <div class="modal-section modal-totals">
+                  <div class="totals-row">
+                    <span>Subtotal</span>
+                    <span>{{ formatVnd(saleTotals.subtotal) }}</span>
+                  </div>
+                  <div class="totals-row">
+                    <span>VAT Amount</span>
+                    <span>{{ formatVnd(saleTotals.vatAmount) }}</span>
+                  </div>
+                  <div class="totals-row totals-row--bold">
+                    <span>Total</span>
+                    <span>{{ formatVnd(saleTotals.total) }}</span>
+                  </div>
+                  <div class="totals-row totals-row--highlight">
+                    <span>Customer Paid</span>
+                    <span>{{ formatVnd(saleTotals.customerPaid) }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- ========== MODAL 2: SALES INVOICE (PRINT) ========== -->
+            <div
+              class="modal-root modal-invoice"
+              ng-show="showInvoiceModal"
+              ng-click="closeModals()"
+            >
+              <div
+                class="modal-card modal-card--narrow"
+                ng-click="$event.stopPropagation()"
+              >
+                <div class="invoice-header">
+                  <h2 class="store-name">RetailPro Store</h2>
+                  <p class="store-sub">99 Đức Minh Thanh Bình Hải Dương</p>
+                </div>
+
+                <div class="invoice-title">
+                  <p class="invoice-caption">SALES INVOICE</p>
+                  <a href="" class="invoice-link"
+                    >{{ selectedSale.invoiceNo }}</a
+                  >
+                </div>
+
+                <div class="invoice-info-grid">
+                  <div>
+                    <p class="info-label">Date &amp; Time:</p>
+                    <p class="info-value">
+                      {{ selectedSale.saleDate | date:'yyyy-MM-dd HH:mm' }}
+                    </p>
+                  </div>
+                  <div>
+                    <p class="info-label">Cashier:</p>
+                    <p class="info-value">{{ saleDetail.cashierName }}</p>
+                  </div>
+                  <div>
+                    <p class="info-label">Customer:</p>
+                    <p class="info-value">
+                      {{ saleDetail.customerName }}<br />
+                      <span class="info-sub"
+                        >{{ saleDetail.customerPhone }}</span
+                      >
+                    </p>
+                  </div>
+                </div>
+
+                <!-- bảng items -->
+                <div class="detail-table-wrapper invoice-table">
+                  <table class="detail-table">
+                    <thead>
+                      <tr>
+                        <th class="col-item">Item</th>
+                        <th>Qty</th>
+                        <th>Price</th>
+                        <th>Total</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr ng-repeat="item in saleItems">
+                        <td class="col-item">
+                          {{ item.productName }}
+                          <span
+                            class="line-discount"
+                            ng-if="item.discount && item.discount > 0"
+                          >
+                            ({{ '-' + (item.discount | number:0) + '%' }})
+                          </span>
+                        </td>
+                        <td>{{ item.quantity }}</td>
+                        <td>{{ formatVnd(item.unitPrice) }}</td>
+                        <td>{{ formatVnd(item.lineTotal) }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <!-- totals -->
+                <div class="modal-section modal-totals invoice-totals">
+                  <div class="totals-row">
+                    <span>Subtotal:</span>
+                    <span>{{ formatVnd(saleTotals.subtotal) }}</span>
+                  </div>
+                  <div class="totals-row">
+                    <span>VAT ({{ saleTotals.vatPercent || 0 }}%):</span>
+                    <span>{{ formatVnd(saleTotals.vatAmount) }}</span>
+                  </div>
+                  <div class="totals-row totals-row--bold">
+                    <span>Total:</span>
+                    <span>{{ formatVnd(saleTotals.total) }}</span>
+                  </div>
+                  <div class="totals-row">
+                    <span>Payment Method:</span>
+                    <span>{{ selectedSale.paymentMethod }}</span>
+                  </div>
+                  <div class="totals-row totals-row--highlight">
+                    <span>Customer Paid:</span>
+                    <span>{{ formatVnd(saleTotals.customerPaid) }}</span>
+                  </div>
+                </div>
+
+                <p class="invoice-footnote">
+                  Thank you for your purchase!<br />
+                  Please keep this invoice for warranty purposes.
+                </p>
+
+                <button class="btn-print" ng-click="printInvoicePdf()">
+                  <img
+                    src="../Shared/img/common/printer.svg"
+                    class="printer-icon"
+                  />
+                  <span>Print PDF (A5)</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="../Shared/js/sales.js"></script>
+  </body>
+</html>

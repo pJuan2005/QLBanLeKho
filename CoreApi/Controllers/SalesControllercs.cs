@@ -183,5 +183,160 @@ namespace CoreApi.Controllers
             }
         }
 
+        [Route("dashboard")]
+        [HttpPost]
+        public IActionResult GetDashboard([FromBody] Dictionary<string, object> formData)
+        {
+            try
+            {
+                decimal? minTotalAmount = null, maxTotalAmount = null;
+                string status = null;
+                DateTime? fromDate = null, toDate = null;
+                string keyword = null; // invoice hoặc customer name
+
+                if (formData != null)
+                {
+                    if (formData.ContainsKey("minTotalAmount"))
+                    {
+                        var val = Convert.ToString(formData["minTotalAmount"])?.Trim();
+                        if (decimal.TryParse(val, NumberStyles.Any, CultureInfo.InvariantCulture, out var d))
+                            minTotalAmount = d;
+                    }
+
+                    if (formData.ContainsKey("maxTotalAmount"))
+                    {
+                        var val = Convert.ToString(formData["maxTotalAmount"])?.Trim();
+                        if (decimal.TryParse(val, NumberStyles.Any, CultureInfo.InvariantCulture, out var d))
+                            maxTotalAmount = d;
+                    }
+
+                    if (formData.ContainsKey("status"))
+                    {
+                        var sVal = Convert.ToString(formData["status"]);
+                        if (!string.IsNullOrWhiteSpace(sVal))
+                            status = sVal.Trim();
+                        else
+                            status = null;
+                    }
+
+                    if (formData.ContainsKey("fromDate"))
+                    {
+                        var val = Convert.ToString(formData["fromDate"]);
+                        if (DateTime.TryParse(val, out var d))
+                            fromDate = d;
+                    }
+
+                    if (formData.ContainsKey("toDate"))
+                    {
+                        var val = Convert.ToString(formData["toDate"]);
+                        if (DateTime.TryParse(val, out var d))
+                            toDate = d;
+                    }
+
+                    if (formData.ContainsKey("keyword"))
+                    {
+                        var kVal = Convert.ToString(formData["keyword"]);
+                        if (!string.IsNullOrWhiteSpace(kVal))
+                            keyword = kVal.Trim();
+                        else
+                            keyword = null;
+                    }
+                }
+
+                var dto = _salesBusiness.GetDashboard(
+                    minTotalAmount, maxTotalAmount,
+                    status, fromDate, toDate,
+                    keyword
+                );
+
+                return Ok(dto);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
+        [Route("list")]
+        [HttpPost]
+        public ResponseModel GetSalesList([FromBody] Dictionary<string, object> formData)
+        {
+            var response = new ResponseModel();
+            try
+            {
+                int page = 1, pageSize = 10;
+                string status = null;
+                DateTime? fromDate = null, toDate = null;
+                string keyword = null;
+
+                if (formData != null)
+                {
+                    if (formData.ContainsKey("page"))
+                        int.TryParse(Convert.ToString(formData["page"]), out page);
+                    if (formData.ContainsKey("pageSize"))
+                        int.TryParse(Convert.ToString(formData["pageSize"]), out pageSize);
+
+                    // --- STATUS ---
+                    if (formData.ContainsKey("status"))
+                    {
+                        var sVal = Convert.ToString(formData["status"]);
+                        status = string.IsNullOrWhiteSpace(sVal) ? null : sVal.Trim();
+                    }
+
+                    // --- FROM DATE ---
+                    if (formData.ContainsKey("fromDate") &&
+                        DateTime.TryParse(Convert.ToString(formData["fromDate"]), out var fd))
+                        fromDate = fd;
+
+                    // --- TO DATE ---
+                    if (formData.ContainsKey("toDate") &&
+                        DateTime.TryParse(Convert.ToString(formData["toDate"]), out var td))
+                        toDate = td;
+
+                    // --- KEYWORD ---
+                    if (formData.ContainsKey("keyword"))
+                    {
+                        var kVal = Convert.ToString(formData["keyword"]);
+                        keyword = string.IsNullOrWhiteSpace(kVal) ? null : kVal.Trim();
+                    }
+                }
+
+                long total = 0;
+                var data = _salesBusiness.SearchList(
+                    page, pageSize, out total,
+                    status, fromDate, toDate, keyword);
+
+                response.Page = page;
+                response.PageSize = pageSize;
+                response.TotalItems = total;
+                response.Data = data;
+
+                return response;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        [HttpGet]
+        [Route("detail")]
+        public IActionResult GetDetail([FromQuery(Name = "saleId")] int saleId)
+        {
+            if (saleId <= 0)
+                return BadRequest(new { message = "saleId không hợp lệ" });
+
+            var detail = _salesBusiness.GetDetail(saleId);
+            if (detail == null || detail.Sale == null)
+                return NotFound(new { message = "Không tìm thấy đơn sale." });
+
+            // Trả đúng structure mà FE đang expect: sale, items, totals
+            return Ok(new
+            {
+                sale = detail.Sale,
+                items = detail.Items,
+                totals = detail.Totals
+            });
+        }
     }
 }

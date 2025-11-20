@@ -150,5 +150,110 @@ namespace DAL
             return Convert.ToInt32(result);
         }
 
+        public SalesDashboardDto GetDashboard( decimal? minTotalAmount, decimal? maxTotalAmount, string status, DateTime? fromDate, DateTime? toDate,string keyword)
+        {
+            string msgError = "";
+            try
+            {
+                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(
+                    out msgError, "sp_Sales_dashboard",
+                    "@MinTotalAmount", minTotalAmount,
+                    "@MaxTotalAmount", maxTotalAmount,
+                    "@Status", status,
+                    "@FromDate", fromDate,
+                    "@ToDate", toDate,
+                    "@Keyword", keyword
+                );
+
+                if (!string.IsNullOrEmpty(msgError))
+                    throw new Exception(msgError);
+
+                // SP trả về đúng 1 dòng
+                if (dt.Rows.Count == 0) return new SalesDashboardDto();
+
+                var row = dt.Rows[0];
+                var result = new SalesDashboardDto
+                {
+                    TotalSales = Convert.ToInt32(row["TotalSales"]),
+                    TotalRevenue = row["TotalRevenue"] != DBNull.Value
+                        ? Convert.ToDecimal(row["TotalRevenue"])
+                        : 0,
+                    AvgOrderValue = row["AvgOrderValue"] != DBNull.Value
+                        ? Convert.ToDecimal(row["AvgOrderValue"])
+                        : 0,
+                    PaidCount = Convert.ToInt32(row["PaidCount"]),
+                    UnpaidCount = Convert.ToInt32(row["UnpaidCount"])
+                };
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public List<SalesListItemDto> SearchList(int pageIndex, int pageSize, out long total,string status, DateTime? fromDate, DateTime? toDate,string keyword)
+        {
+            string msgError = "";
+            total = 0;
+
+            var dt = _dbHelper.ExecuteSProcedureReturnDataTable(
+                out msgError, "sp_Sales_list_view",
+                "@page_index", pageIndex,
+                "@page_size", pageSize,
+                "@Status", status,
+                "@FromDate", fromDate,
+                "@ToDate", toDate,
+                "@Keyword", keyword
+            );
+
+            if (!string.IsNullOrEmpty(msgError))
+                throw new Exception(msgError);
+
+            if (dt.Rows.Count > 0)
+                total = Convert.ToInt64(dt.Rows[0]["RecordCount"]);
+
+            return dt.ConvertTo<SalesListItemDto>().ToList();
+        }
+        public SaleDetailDto GetDetail(int saleId)
+        {
+            string msgError = "";
+
+            // 1) Header
+            var dtHeader = _dbHelper.ExecuteSProcedureReturnDataTable(
+                out msgError, "sp_Sales_detail_header",
+                "@SaleID", saleId);
+            if (!string.IsNullOrEmpty(msgError))
+                throw new Exception(msgError);
+
+            var header = dtHeader.ConvertTo<SaleDetailHeaderDto>().FirstOrDefault();
+
+            // 2) Items
+            var dtItems = _dbHelper.ExecuteSProcedureReturnDataTable(
+                out msgError, "sp_Sales_detail_items",
+                "@SaleID", saleId);
+            if (!string.IsNullOrEmpty(msgError))
+                throw new Exception(msgError);
+
+            var items = dtItems.ConvertTo<SaleItemDetailDto>().ToList();
+
+            // 3) Totals
+            var dtTotals = _dbHelper.ExecuteSProcedureReturnDataTable(
+                out msgError, "sp_Sales_detail_totals",
+                "@SaleID", saleId);
+            if (!string.IsNullOrEmpty(msgError))
+                throw new Exception(msgError);
+
+            var totals = dtTotals.ConvertTo<SaleTotalsDto>().FirstOrDefault()
+                         ?? new SaleTotalsDto();
+
+            return new SaleDetailDto
+            {
+                Sale = header,
+                Items = items,
+                Totals = totals
+            };
+        }
+
     }
 }
