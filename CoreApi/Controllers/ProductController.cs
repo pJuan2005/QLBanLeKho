@@ -103,6 +103,15 @@ namespace CoreApi.Controllers
                 {
                     string folder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Products");
 
+
+                    if (!Directory.Exists(folder))
+                        Directory.CreateDirectory(folder);
+
+                    string fileName = $"{Guid.NewGuid()}_{imageFile.FileName}";
+                    string fullPath = Path.Combine(folder, fileName);
+
+
+
                     if (!Directory.Exists(folder))
                         Directory.CreateDirectory(folder);
 
@@ -165,6 +174,7 @@ namespace CoreApi.Controllers
                 {
                     if (!string.IsNullOrEmpty(p.Image))
                         p.Image = GetImageUrl(p.Image);
+
                 }
 
                 return Ok(new
@@ -180,5 +190,6 @@ namespace CoreApi.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
     }
 }

@@ -1,5 +1,13 @@
 var app = angular.module("AppRetailPos");
-app.controller("returnCtrl", function ($scope, $http, $timeout, AuthService, PermissionService, $window) {
+app.controller("returnCtrl", function ($scope, $http, $timeout, AuthService, PermissionService, $window, TranslateService) {
+function applyLanguage(lang) {
+    TranslateService.loadLanguage(lang).then(() => {
+        $scope.t = TranslateService.t;
+    });
+}
+applyLanguage(localStorage.getItem("appLang") || "EN");
+
+
   $scope.currentUser = AuthService.getCurrentUser(); // lấy user 
   $scope.returns = [];
   $scope.pager = { page: 1, size: 10, total: 0, pages: 1 };

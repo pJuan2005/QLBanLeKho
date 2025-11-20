@@ -32,6 +32,31 @@ namespace DAL
         public bool Create(ProductModel model)
         {
             string msgError = "";
+
+            var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(
+                out msgError,
+                "sp_product_create",
+                "@SKU", model.SKU,
+                "@Barcode", model.Barcode,
+                "@ProductName", model.ProductName,
+                "@CategoryID", model.CategoryID,
+                "@UnitPrice", model.UnitPrice,
+                "@Unit", model.Unit,
+                "@MinStock", model.MinStock,
+                "@Status", model.Status,
+                "@Image", model.Image,
+                "@VATRate", model.VATRate,
+                "@Quantity", model.Quantity
+            );
+
+            if (!string.IsNullOrEmpty(msgError))
+                throw new Exception(msgError);
+
+            if (result != null && int.TryParse(result.ToString(), out int newId))
+                model.ProductID = newId;
+
+            return true;
+
             try
             {
                 var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_product_create",
@@ -88,6 +113,29 @@ namespace DAL
             return true;
         }
 
+
+            var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(
+                out msgError,
+                "sp_product_update",
+                "@ProductID", model.ProductID,
+                "@SKU", model.SKU,
+                "@Barcode", model.Barcode,
+                "@ProductName", model.ProductName,
+                "@CategoryID", model.CategoryID,
+                "@UnitPrice", model.UnitPrice,
+                "@Unit", model.Unit,
+                "@MinStock", model.MinStock,
+                "@Status", model.Status,
+                "@Image", model.Image,
+                "@VATRate", model.VATRate,
+                "@Quantity", model.Quantity
+            );
+
+            if (!string.IsNullOrEmpty(msgError))
+                throw new Exception(msgError);
+
+            return true;
+        }
         public bool Delete(int productId)
         {
             string msgError = "";
@@ -130,4 +178,5 @@ namespace DAL
             return dt.ConvertTo<ProductModel>().ToList();
         }
     }
+
 }

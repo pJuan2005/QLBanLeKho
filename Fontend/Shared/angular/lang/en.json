@@ -1,0 +1,206 @@
+{
+  "SYSTEM_SETTINGS": "System Settings",
+  "VAT_RATE": "VAT Rate (%)",
+  "DEFAULT_LANGUAGE": "Default Language",
+  "SAVE_SETTINGS": "Save Settings",
+
+  "NAVIGATION": "Navigation",
+  "NAV_DASHBOARD": "Dashboard",
+  "NAV_POS": "POS",
+  "NAV_PRODUCTS": "Products",
+  "NAV_CATEGORIES": "Categories",
+  "NAV_PROMOTIONS": "Promotions",
+  "NAV_CUSTOMERS": "Customers",
+  "NAV_SUPPLIERS": "Suppliers",
+  "NAV_PURCHASE_ORDERS": "Purchase Orders",
+  "NAV_STOCK": "Stock Management",
+  "GOODS_RECEIPTS": "Goods Receipts",
+  "GOODS_ISSUES": "Goods Issues",
+  "NAV_SALES": "Sales",
+  "NAV_RETURNS": "Returns",
+  "NAV_PAYMENTS": "Payments & Debts",
+  "NAV_REPORTS": "Reports",
+  "NAV_AUDIT_LOG": "Audit Log",
+  "NAV_USERS": "Users",
+  "NAV_SETTINGS": "Settings",
+
+  "ROLE_ADMIN": "Admin",
+
+
+    "PRODUCT": "Products",
+    "PRODUCT_DESC": "Manage product inventory and pricing",
+    "SEARCH_NAME": "Search by product name",
+    "SEARCH_SKU": "Search by SKU",
+    "TOTAL_PRODUCTS": "Total Products",
+    "IN_STOCK": "In stock",
+    "OUT_STOCK": "Out of stock",
+    "ADD_PRODUCT": "Add Product",
+    "ACTIONS": "Actions",
+    "NO_DATA": "No Data",
+    "SEARCH_NAME_PLACEHOLDER": "Search by product name",
+  "PROFILE_SETTINGS": "Profile Settings",
+  "LOGOUT": "Logout",
+
+  "PAGING_SHOWING": "Showing",
+  "PAGING_OF": "of",
+  "PAGING_ITEMS": "items",
+  "PAGING_PAGE_SIZE": "Page size",
+  "PAGING_ALL": "ALL",
+  "PAGING_PREV": "Prev",
+  "PAGING_NEXT": "Next",
+
+  "PRICE_FROM": "From",
+  "PRICE_TO": "To",
+  "MIN_PRICE_PLACEHOLDER": "Min price",
+  "MAX_PRICE_PLACEHOLDER": "Max price",
+
+  "TB_ID": "ID",
+  "TB_PRODUCT_NAME": "Product Name",
+  "TB_SKU": "SKU",
+  "TB_BARCODE": "Barcode",
+  "TB_CATEGORY_ID": "Category ID",
+  "TB_PRICE": "Price",
+  "TB_UNIT": "Unit",
+  "TB_MIN_STOCK": "Min Stock",
+  "TB_QUANTITY": "Quantity",
+  "TB_VAT_RATE": "VAT Rate",
+  "TB_STATUS": "Status",
+  "TB_IMAGE": "Image",
+
+  "ADD_TITLE": "Add Product",
+  "ADD_DESC": "Create a new product",
+  "LABEL_PRODUCT_NAME": "Product Name",
+  "LABEL_SKU": "SKU",
+  "LABEL_BARCODE": "Barcode",
+  "LABEL_PRICE": "Price",
+  "LABEL_UNIT": "Unit",
+  "LABEL_VAT_RATE": "VAT Rate (%)",
+  "LABEL_CATEGORY": "Category",
+  "PH_SELECT_CATEGORY": "Select Category",
+  "LABEL_MIN_STOCK": "Min Stock",
+  "LABEL_QUANTITY": "Quantity",
+  "LABEL_STATUS": "Status",
+  "STATUS_ACTIVE": "Active",
+  "STATUS_INACTIVE": "Inactive",
+  "LABEL_IMAGE": "Image",
+
+  "BTN_CANCEL": "Cancel",
+  "BTN_ADD_PRODUCT": "Add Product",
+  "BTN_UPDATE_PRODUCT": "Update Product",
+
+  "EDIT_TITLE": "Edit Product",
+  "EDIT_DESC": "Update product information",
+
+  "DELETE_TITLE": "Delete Product",
+  "DELETE_CONFIRM1": "Are you sure you want to delete this product? ",
+  "DELETE_CONFIRM2": "This action cannot be undone.",
+  "BTN_DELETE_PRODUCT": "Delete Product",
+
+
+
+
+
+
+  "RETURNS": "Returns",
+  "RETURNS_DESC": "Manage product return transactions",
+
+  "SEARCH_PARTNER_NAME": "Search by Partner Name",
+  "SEARCH_PARTNER_PHONE": "Search by Partner Phone",
+  "SEARCH_RETURN_TYPE": "Return Type",
+  "RETURN_TYPE_CUSTOMER": "Customer Return",
+  "RETURN_TYPE_SUPPLIER": "Supplier Return",
+  "RETURN_TYPE_ALL": "All",
+
+  "TOTAL_RETURN": "Total Returns",
+  "TOTAL_RETURN_CUSTOMER": "Customer Returns",
+  "TOTAL_RETURN_SUPPLIER": "Supplier Returns",
+
+  "FILTER_FROM_DATE": "From date",
+  "FILTER_TO_DATE": "To date",
+
+  "ADD_RETURN": "Add Return",
+  "EDIT_RETURN": "Edit Return",
+  "DELETE_RETURN": "Delete Return",
+
+  "TB_RETURN_ID": "Return ID",
+  "TB_RETURN_TYPE": "Return Type",
+  "TB_PARTNER_NAME": "Partner Name",
+  "TB_PARTNER_PHONE": "Partner Phone",
+  "TB_PRODUCT_NAME": "Product Name",
+  "TB_RETURN_DATE": "Return Date",
+
+  "DETAIL_RETURN": "Return Details",
+  "DETAIL_RETURN_DESC": "View detailed return information",
+
+  "LABEL_RETURN_ID": "Return ID",
+  "LABEL_RETURN_TYPE": "Return Type",
+  "LABEL_PARTNER_NAME": "Partner Name",
+  "LABEL_PARTNER_PHONE": "Partner Phone",
+  "LABEL_PRODUCT_NAME": "Product Name",
+  "LABEL_RETURN_DATE": "Return Date",
+  "LABEL_REASON": "Reason",
+  "LABEL_SALE_ID": "Sale ID",
+  "LABEL_RECEIPT_ID": "Receipt ID",
+  "LABEL_CUSTOMER_ID": "Customer ID",
+  "LABEL_SUPPLIER_ID": "Supplier ID",
+  "LABEL_PRODUCT_ID": "Product ID",
+  "LABEL_QUANTITY": "Quantity",
+  "LABEL_UNIT_PRICE": "Unit Price",
+
+  "ADD_RETURN_TITLE": "Add Return",
+  "ADD_RETURN_DESC": "Create a new return record",
+
+  "EDIT_RETURN_TITLE": "Edit Return",
+  "EDIT_RETURN_DESC": "Update return information",
+  "DELETE_RETURN_CONFIRM1": "Are you sure you want to delete this return record?",
+  "DELETE_RETURN_CONFIRM2":"This action cannot be undone",
+  "BTN_DELETE_RETURN": "Delete Return",
+  "BTN_ADD_RETURN": "Add Return",
+  "BTN_UPDATE_RETURN": "Update Return",
+  "NO_RETURN_DATA": "No return data available",
+
+
+
+
+
+
+
+
+  "STOCK_MANAGEMENT": "Stock Management",
+  "STOCK_DESC": "View and manage all stock movements",
+
+  "TOTAL_STOCKCARD": "Total Stockcards",
+  "STOCK_IN": "In Stock",
+  "STOCK_OUT": "Out Stock",
+
+  "SEARCH_BY_PRODUCT_NAME": "Search by product name",
+  "SEARCH_TRANSACTION_TYPE": "Transaction Type",
+
+  "TRANSACTION_ALL": "ALL",
+  "TRANSACTION_IN": "IN",
+  "TRANSACTION_OUT": "OUT",
+
+  "FILTER_DATE_FROM": "From date",
+  "FILTER_DATE_TO": "To date",
+
+  "TB_STOCK_ID": "Stock ID",
+  "TB_TRANSACTION": "Transaction",
+  "TB_QUANTITY": "Quantity",
+  "TB_DATE": "Date",
+
+  "DETAIL_STOCKCARD": "Stockcard Details",
+  "DETAIL_STOCKCARD_DESC": "View detailed information of the stock movement",
+
+  "LABEL_STOCK_ID": "Stock ID",
+  "LABEL_TRANSACTION_TYPE": "Transaction Type",
+  "LABEL_BALANCE": "Balance",
+  "LABEL_TRANSACTION_DATE": "Transaction Date",
+  "LABEL_BATCH_NO": "Batch No",
+  "LABEL_ISSUE_ID": "Issue ID",
+
+  "DELETE_STOCKCARD": "Delete Stockcard",
+  "DELETE_STOCKCARD_CONFIRM": "Are you sure you want to delete this stockcard? This action cannot be undone.",
+  "BTN_DELETE_STOCKCARD": "Delete Stockcard",
+
+  "NO_STOCK_DATA": "No stock data available"
+}

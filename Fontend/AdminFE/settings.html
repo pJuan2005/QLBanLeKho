@@ -12,11 +12,12 @@
     rel="stylesheet" />
 
   <!-- css -->
-  <link rel="stylesheet" href="../Shared/css/stockcard.css" />
+  <link rel="stylesheet" href="../Shared/css/settings.css" />
   <script src="../Shared/angular/angular.min.js"></script>
   <script src="../Shared/angular/global.js"></script>
-  <script src="../Shared/angular/stockcard.js"></script>
+  <script src="../Shared/angular/settings.js"></script>
   <script src="../Shared/angular/translation.js"></script>
+
   <!-- Thư viện ExcelJS và FileSaver -->
 <script src="https://cdn.jsdelivr.net/npm/exceljs@4.3.0/dist/exceljs.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
@@ -24,9 +25,10 @@
 
 
 
-  <title>{{ t('STOCK_MANAGEMENT') }}</title>
+  <title>Settings</title>
 </head>
-<body ng-app="AppRetailPos" ng-controller="stockcardCtrl">
+
+<body ng-app="AppRetailPos" ng-controller="settingCtrl">
   <div class="app-content">
     <div class="slide-bar">
       <div class="slide-bar__header">
@@ -286,7 +288,7 @@
       </div>
       <div class="slide-bar__footer">
         <div class="app-slide-bar">
-        <div class="ava">
+<div class="ava">
             <img class="ava" src="../Shared/img/common/ava.svg" alt="" />
           </div>
           <div class="info">
@@ -300,10 +302,7 @@
       <div class="top-bar">
         <div class="top-bar__content">
           <div class="top-bar__left">
-            <img src="../Shared/img/common/search.svg" alt="" class="icon" />
-            <input class="search" type="text" placeholder="{{ t('SEARCH_BY_PRODUCT_NAME') }}" 
-                ng-model="searchProduct" ng-change="filter()"
-/>
+
           </div>
           <div class="top-bar__right">
             <p class="role">{{ t('ROLE_ADMIN') }}</p>
@@ -317,242 +316,66 @@
           </div>
           <div class="info-mid">
             <a href="#!">
-              <p class="set">{{ t('PROFILE_SETTINGS') }}</p>
+              <p class="set">Profile Settings</p>
             </a>
           </div>
           <div class="info-bottom">
             <img src="" alt="" class="icon" />
             <a href="../AuthFE/login.html">
-              <p class="logout">{{ t('LOGOUT') }}</p>
+              <p class="logout">Logout</p>
             </a>
           </div>
         </div>
       </div>
 
+      <!-- SETTINGS CONTENT -->
+<div class="settings-container" >
 
-      <div class="app-layout-content">
-        <h1 class="name-menu">{{ t('STOCK_MANAGEMENT') }}</h1>
-        <p class="desc">
-          {{ t('STOCK_DESC') }}
-        </p>
-        <div class="display-container">
-          <div class="total farme">
-            <p class="name-display">{{ t('TOTAL_STOCKCARD') }}</p>
-            <p class="data">{{stats.total}}</p>
-          </div>
-          <div class="avg farme">
-            <p class="name-display">{{ t('STOCK_IN') }}</p>
-            <p class="data">{{stats.instock}}</p>
-          </div>
-          <div class="most-common farme">
-            <p class="name-display">{{ t('STOCK_OUT') }}</p>
-            <p class="data">{{stats.outstock}}</p>
-          </div>
-        </div>
-        <div class="control">
-          <div class="control-left">
-            <img src="../Shared/img/common/search.svg" alt="" class="icon" />
-            <select class="search" placeholder="{{ t('SEARCH_TRANSACTION_TYPE') }}" ng-change="filter()" ng-model="searchType">
-                <option value="ALL">{{ t('TRANSACTION_ALL') }}</option>
-                <option value="IN">IN</option>
-                <option value="OUT">OUT</option>
-            </select>
-          </div>
+  <h2 class="settings-title">{{ t('SYSTEM_SETTINGS') }}</h2>
 
-          
-          
-          <!-- phân trang -->
-          <div class="pager" ng-if="pager.total>0">
-            <div class="pager-info">
-              {{ t('PAGING_SHOWING') }}
-              {{((pager.page-1)*pager.size)+1}}-{{Math.min(pager.page*pager.size,pager.total)}}
-              {{ t('PAGING_OF') }} {{pager.total}} {{ t('PAGING_ITEMS') }}
-            </div>
-            <div class="page-nav">
-              <label>
-                {{ t('PAGING_PAGE_SIZE') }}:
-                <select ng-model="pager.size" ng-change="changeSize()">
-                  <option value="-1">{{ t('TRANSACTION_ALL') }}</option>
-                  <option value="10">10</option>
-                  <option value="20">20</option>
-                  <option value="30">30</option>
-                </select>
-              </label>
-              <button class="btn ghost" ng-disabled="pager.page === 1" ng-click="go(1)">
-                «
-              </button>
-              <button class="btn ghost" ng-disabled="pager.page === 1" ng-click="go(pager.page-1)">
-                {{ t('PAGING_PREV') }}
-              </button>
-              <span class="page-no"></span>
-              <button class="btn ghost" ng-disabled="pager.page >= pager.pages" ng-click="go(pager.page+1)">
-                {{ t('PAGING_NEXT') }}
-              </button>
-              <button class="btn ghost" ng-disabled="pager.page >= pager.pages" ng-click="go(pager.pages)">
-                »
-              </button>
-            </div>
-          </div>
-          <div class="control-right">
-            {{ t('FILTER_FROM_DATE') }}
-            <div class="control-date">
-            <input class="search" type="date" ng-model="searchFromDate" ng-change="filter()"/>
-            </div>
-            {{ t('FILTER_TO_DATE') }}
-            <div class="control-date">
-            <input class="search" type="date" ng-model="searchToDate" ng-change="filter()"/>
-            </div>
+  <!-- VAT RATE -->
+  <div class="setting-group">
+    <label>{{ t('VAT_RATE') }}</label>
+    <input type="number" min="0" max="30" step="0.1"
+           ng-model="settings.vatRate"
+           class="setting-input" />
+  </div>
 
-            <div class="export" ng-click="exportExcel()">
-              <img src="../Shared/img/common/export.svg" alt="" class="icon" />
-            </div>
+  <!-- LANGUAGE -->
+  <div class="setting-group">
+    <label>{{ t('DEFAULT_LANGUAGE') }}</label>
+    <select ng-model="settings.defaultLanguage"
+            class="setting-input">
+      <option value="EN">English</option>
+      <option value="VI">Tiếng Việt</option>
+    </select>
+  </div>
 
-          </div>
-        </div>
-        <!-- table -->
-        <div class="card">
-          <div class="table-responsive">
-            <table class="table">
-                <thead>
-                    <tr>
-                    <th>{{ t('TB_STOCK_ID') }}</th>
-                    <th>{{ t('TB_PRODUCT_NAME') }}</th>
-                    <th>{{ t('TB_TRANSACTION') }}</th>
-                    <th>{{ t('TB_QUANTITY') }}</th>
-                    <th>{{ t('TB_DATE') }}</th>
-                    <th class="txt-right">{{ t('ACTIONS') }}</th>
-                    </tr>
-                </thead>
+  <!-- BUTTON -->
+  <button class="btn-save"
+          ng-click="updateSettings()"
+          ng-disabled="isSaving">
+          {{ t('SAVE_SETTINGS') }}
+  </button>
 
-                <tbody>
-                    <tr ng-repeat="s in stocks">
-                    <td>{{s.stockID}}</td>
-                    <td>{{s.productName}}</td>
-                    <td>{{s.transactionType}}</td>
-                    <td>{{s.quantity}}</td>
-                    <td>{{s.transactionDate | date:'dd/MM/yyyy'}}</td>
-
-                    <td class="txt-right">
-                        <button class="link danger" ng-click="remove(s)">🗑</button>
-                        <button class="link" ng-click="detail(s)">👁️</button>
-                    </td>
-                    </tr>
-
-                    <tr ng-if="!stocks || stocks.length == 0">
-                    <td colspan="6" class="empty">{{ t('NO_STOCK_DATA') }}</td>
-                    </tr>
-                </tbody>
-            </table>
-          </div>
-        </div>
-        <!-- form -->
-        <div class="form">
-          <!-- detail -->
-          <div class="form-detail">
-            <div class="form-detail__content">
-              <h3 class="title">{{ t('DETAIL_STOCKCARD') }}</h3>
-              <p class="desc">{{ t('DETAIL_STOCKCARD_DESC') }} </p>
-              <form name="frmDetail" >
-                <!-- Cột trái ng-submit="detail()"-->
-                <div>
-                  <label for="stockID-detail">{{ t('LABEL_STOCK_ID') }}</label>
-                  <input type="text" id="stockID-detail" readonly
-                    ng-model="detailStock.stockID" />
+</div>
 
 
-                  <label for="productName-detail">{{ t('LABEL_PRODUCT_NAME') }}</label>
-                  <input type="text" id="productName-detail"  readonly
-                    ng-model="detailStock.productName" />
 
+      
 
-                    <label for="type-detail">{{ t('LABEL_TRANSACTION_TYPE') }}</label>
-                  <select id="type-detail" ng-model="detailStock.transactionType" disabled>
-                    <option value="IN">IN</option>
-                    <option value="OUT">OUT</option>
-                  </select>
-
-
-                  <label for="quantity-detail">{{ t('LABEL_QUANTITY') }}</label>
-                  <input type="text" id="quantity-detail" readonly
-                    ng-model="detailStock.quantity" />
-
-
-                    <label for="balance-detail">{{ t('LABEL_BALANCE') }}</label>
-                  <input type="text" id="balance-detail" readonly
-                    ng-model="detailStock.balance" />
-
-
-                     <label for="transactionDate-detail">{{ t('LABEL_TRANSACTION_DATE') }}</label>
-                  <input type="text" id="transactionDate-detail" readonly
-                    ng-model="detailStock.transactionDate" />
-                </div>
-
-                <!-- Cột phải -->
-                <div>
-
-                    <label for="productID-detail">{{ t('LABEL_PRODUCT_ID') }}</label>
-                  <input type="text" id="productID-detail" readonly
-                    ng-model="detailStock.productID" />
-
-                  <label for="receiptID-detail">{{ t('LABEL_RECEIPT_ID') }}</label>
-                  <input type="text" id="receiptID-detail"  readonly
-                    ng-model="detailStock.receiptID" />
-
-
-                    <label for="issueID-detail">{{ t('LABEL_ISSUE_ID') }}</label>
-                  <input type="text" id="issueID-detail" readonly
-                    ng-model="detailStock.issueID" />
-
-
-                    <label for="supplierID-detail">{{ t('LABEL_SUPPLIER_ID') }}</label>
-                  <input type="text" id="supplierID-detail" readonly
-                    ng-model="detailStock.supplierID" />
-
-                    <label for="batchNo-detail">{{ t('LABEL_BATCH_NO') }}</label>
-                  <input type="text" id="batchNo-detail" readonly
-                    ng-model="detailStock.batchNo" />
-                </div>
-
-
-                <!-- Footer -->
-                <div class="dialog-footer">
-                  <button type="button" class="cancel" ng-click="closeForm()">{{ t('BTN_CANCEL') }}</button>
-                </div>
-              </form>
-
-            </div>
-          </div>
-          
-
-          <!-- delete -->
-          <div class="form-delete" ng-class="{open:showDelete}" ng-click="closeDeleteOnOverlay($event)">
-            <div class="form-delete__content"  ng-click="$event.stopPropagation()">
-              <h3 class="title">{{ t('DELETE_STOCKCARD') }}</h3>
-              <p class="desc">
-                {{ t('DELETE_STOCKCARD_CONFIRM') }}
-                "{ID{deleting.stockID}}"? {{ t('DELETE_RETURN_CONFIRM2') }}
-              </p>
-              <div class="dialog-footer">
-                <button class="cancel" ng-click="cancelDelete($event)">
-                  {{ t('BTN_CANCEL') }}
-                </button>
-                <button type="button" class="submit danger" ng-click="confirmDelete()" ng-disabled="deletingBusy">
-                  {{ t('BTN_DELETE_STOCKCARD') }}
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+ 
     </div>
   </div>
   
 
-  <script src="../Shared/js/stockcardfe.js"></script>
+  <script src="../Shared/js/settings.js"></script>\
 
 
   <!-- Đây là FileSaver.js — thư viện giúp bạn tải file từ trình duyệt (client-side). -->
-  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 </body>
 
 </html>
+
+

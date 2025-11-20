@@ -26,4 +26,7 @@ namespace BLL
         public List<ProductModel> Search(ProductSearchRequest request, out long total)
             => _res.Search(request, out total);
     }
+
+
 }
+
