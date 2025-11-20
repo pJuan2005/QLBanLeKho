@@ -57,33 +57,6 @@ namespace DAL
 
             return true;
 
-            try
-            {
-                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_product_create",
-                    "@SKU", model.SKU,
-                    "@Barcode", model.Barcode,
-                    "@ProductName", model.ProductName,
-                    "@CategoryID", model.CategoryID,
-                    "@UnitPrice", model.UnitPrice,
-                    "@Unit", model.Unit,
-                    "@MinStock", model.MinStock,
-                    "@Status", model.Status,
-                    "@VATRate", model.VATRate,
-                    "@Quantity", model.Quantity
-                );
-
-                if (!string.IsNullOrEmpty(msgError))
-                    throw new Exception(msgError);
-
-                if (result != null && int.TryParse(result.ToString(), out int newId))
-                    model.ProductID = newId;
-
-                return true;
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
         }
 
         public bool Update(ProductModel model)
@@ -114,28 +87,8 @@ namespace DAL
         }
 
 
-            var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(
-                out msgError,
-                "sp_product_update",
-                "@ProductID", model.ProductID,
-                "@SKU", model.SKU,
-                "@Barcode", model.Barcode,
-                "@ProductName", model.ProductName,
-                "@CategoryID", model.CategoryID,
-                "@UnitPrice", model.UnitPrice,
-                "@Unit", model.Unit,
-                "@MinStock", model.MinStock,
-                "@Status", model.Status,
-                "@Image", model.Image,
-                "@VATRate", model.VATRate,
-                "@Quantity", model.Quantity
-            );
 
-            if (!string.IsNullOrEmpty(msgError))
-                throw new Exception(msgError);
-
-            return true;
-        }
+        
         public bool Delete(int productId)
         {
             string msgError = "";
