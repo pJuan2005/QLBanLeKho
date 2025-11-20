@@ -54,7 +54,7 @@ app.factory("PermissionService", function (AuthService) {
       promotions: true,
       customers: true,
       suppliers: true,
-      promotions:true,
+      promotions: true,
       purchaseOrders: true,
       stock: true,
       greceipts: true,

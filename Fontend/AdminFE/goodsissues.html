@@ -13,14 +13,14 @@
         rel="stylesheet" />
 
     <!-- css -->
-    <link rel="stylesheet" href="../Shared/css/goodsreceipts.css" />
+    <link rel="stylesheet" href="../Shared/css/goodsissues.css" />
     <script src="../Shared/angular/angular.min.js"></script>
     <script src="../Shared/angular/global.js"></script>
-    <script src="../Shared/angular/goodsreceipts.js"></script>
-    <title>GoodsReceipts</title>
+    <script src="../Shared/angular/goodsissues.js"></script>
+    <title>GoodsIssues</title>
 </head>
 
-<body ng-app="AppRetailPos" ng-controller="goodsreceiptsCtrl">
+<body ng-app="AppRetailPos" ng-controller="goodsissuesCtrl">
     <div class="slide-bar">
         <div class="slide-bar__header">
             <div class="app-slideBar">
@@ -138,7 +138,7 @@
 
             <!-- menu button Goods Receipts -->
             <a href="../AdminFE/goodsreceipts.html" ng-if="canShow('greceipts')">
-                <div class="slide-bar__MenuButton">
+                <div class="slide-bar__MenuButton slide-bar__MenuButton--active">
                     <div class="MenuButton-left">
                         <img src="../Shared/img/common/goodReceipt.svg" alt="" class="icon" />
                     </div>
@@ -150,7 +150,7 @@
 
             <!-- menu button Goods Issues -->
             <a href="../AdminFE/goodsissues.html" ng-if="canShow('gissues')">
-                <div class="slide-bar__MenuButton slide-bar__MenuButton--active">
+                <div class="slide-bar__MenuButton ">
                     <div class="MenuButton-left">
                         <img src="../Shared/img/common/goodIssues.svg" alt="" class="icon" />
                     </div>
@@ -193,7 +193,7 @@
                     </div>
                 </div>
             </a>
-             <!-- menu button Reports -->
+            <!-- menu button Reports -->
             <a href="../AdminFE/reports.html" ng-if="canShow('reports')">
                 <div class="slide-bar__MenuButton">
                     <div class="MenuButton-left">
@@ -259,7 +259,7 @@
                         ng-model="searchAddress" />
                 </div>
                 <div class="top-bar__right">
-                    <p class="role">{{currentUser.role}}</p>
+                    <p class="role">admin</p>
                     <img src="../Shared/img/common/ava.svg" alt="" class="ava" id="avatar" />
                 </div>
             </div>
@@ -284,69 +284,60 @@
         <div class="app-layout-content">
             <div class="container-top">
                 <div class="container-top--left">
-                    <h1 class="name-system">GoodsReceipts</h1>
+                    <h1 class="name-system">GoodsIssues</h1>
                     <p class="desc-system">
-                        Manage goods receipt records and inventory updates
+                        Manage warehouse outbound transactions and inventory issues
                     </p>
                 </div>
-                <div class="control add-goodsreceipts" ng-click="openAddReceipt()">
+
+                <div class="control add-goodsissues" ng-click="openAddIssue()">
                     <img src="../Shared/img/common/plus.svg" alt="" class="icon-control" />
-                    <p class="name-control">Add GoodsReceipts</p>
-
+                    <p class="name-control">Add GoodsIssues </p>
                 </div>
 
 
-
             </div>
+
+            <!-- ===== THỐNG KÊ (chỉ 1 ô) ===== -->
             <div class="container-card">
-                <div class="card">
-                    <p class="name-card">Total GoodReceipts</p>
-                    <p class="data-card">{{stats.totalReceipts}}</p>
-                </div>
-
-                <div class="card">
-                    <p class="name-card">Total Completed</p>
-                    <p class="data-card">{{stats.totalCompleted}}</p>
-                </div>
-                <div class="card">
-                    <p class="name-card">Total Pending</p>
-                    <p class="data-card">{{stats.totalPending}}</p>
-                </div>
-                <div class="card">
-                    <p class="name-card">Total Processing</p>
-                    <p class="data-card">{{stats.totalProcessing}}</p>
+                <div class="card card--total-issues">
+                    <p class="name-card">Total Goods Issues</p>
+                    <p class="data-card">{{stats.totalIssues}}</p>
                 </div>
             </div>
-
-            <div class="search-goodreceipts">
-                <!-- tìm theo khoảng thời gian -->
+            <!-- ===== TÌM KIẾM GOODS ISSUES ===== -->
+            <div class="search-goodissues">
+                <!-- Từ ngày -->
                 <div class="search-field">
                     <label>From Date:</label>
                     <input type="date" ng-model="searchFromDate" class="search" />
                 </div>
+
+                <!-- Đến ngày -->
                 <div class="search-field">
                     <label>To Date:</label>
                     <input type="date" ng-model="searchToDate" class="search" />
                 </div>
 
-                <!-- tìm theo khoảng tiền -->
+                <!-- Số tiền nhỏ nhất -->
                 <div class="search-field">
                     <label>Min Amount:</label>
                     <input type="number" ng-model="searchMinAmount" class="search" placeholder="0" />
                 </div>
+
+                <!-- Số tiền lớn nhất -->
                 <div class="search-field">
                     <label>Max Amount:</label>
                     <input type="number" ng-model="searchMaxAmount" class="search" placeholder="1000000" />
                 </div>
 
-                <!-- tìm theo POID -->
+                <!-- UserID (thay cho POID) -->
                 <div class="search-field">
-                    <label>POID:</label>
-                    <input type="text" ng-model="searchPOID" class="search" placeholder="Enter POID" />
+                    <label>User ID:</label>
+                    <input type="text" ng-model="searchUserID" class="search" placeholder="Enter User ID" />
                 </div>
-
-
             </div>
+
             <!-- phân trang -->
             <div class="pager" ng-if="pager.total>0">
                 <div class="pager-info">
@@ -378,171 +369,122 @@
                     </button>
                 </div>
             </div>
+            <!-- ===== BẢNG HIỂN THỊ GOODS ISSUES ===== -->
             <div class="card-table">
                 <div class="table-responsive">
                     <table class="table">
                         <thead>
                             <tr>
-                                <th class="id">Receipt ID</th>
-                                <th class="poid">POID</th>
-                                <th class="date">Receipt Date</th>
-                                <th class="amount">Total Amount</th>
+                                <th class="id">Issue ID</th>
+                                <th class="date">Issue Date</th>
                                 <th class="user">User ID</th>
-                                <th class="batch">Batch No</th>
-                                <th class="status">Status</th>
+                                <th class="amount">Total Amount</th>
                                 <th class="action txt-right">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="gr in goodsReceipts">
-                                <td>{{gr.receiptID}}</td>
-                                <td>{{gr.poid}}</td>
-                                <td>{{gr.receiptDate | date:'yyyy-MM-dd'}}</td>
-                                <td>{{gr.totalAmount | number:2}}đ</td>
-                                <td>{{gr.userID}}</td>
-                                <td>{{gr.batchNo}}</td>
-                                <td>{{gr.status}}</td>
-                                <td class="txt-right">
+                            <tr ng-repeat="gi in goodsIssues">
+                                <td>{{gi.issueID}}</td>
+                                <td>{{gi.issueDate | date:'yyyy-MM-dd'}}</td>
+                                <td>{{gi.userID}}</td>
+                                <td class="txt-right">{{gi.totalAmount | number:2}}đ</td>
+                                <td class="txt-right action-cell">
                                     <div class="action-menu">
-                                        <button class="menu-toggle" ng-click="toggleActionMenu(gr)">⚙</button>
-                                        <ul class="menu-list" ng-show="gr.showMenu">
-                                            <li ng-click="edit(gr)">✎ Edit</li>
-                                            <li ng-click="remove(gr)">🗑 Delete</li>
-                                            <li ng-click="detail(gr)">🔍 Detail</li>
-                                            <li ng-click="exportExcel(gr)">⬇ Export</li>
-                                            <li ng-click="payment(gr)">💰 Payment</li>
+                                        <button class="menu-toggle" ng-click="toggleActionMenu(gi)">⚙</button>
+                                        <ul class="menu-list" ng-show="gi.showMenu">
+                                            <li ng-click="detail(gi)">🔍 Detail</li>
                                         </ul>
                                     </div>
                                 </td>
-
                             </tr>
-                            <tr ng-if="goodsReceipts.length == 0">
-                                <td colspan="8" class="empty">No Data</td>
+                            <tr ng-if="goodsIssues.length == 0">
+                                <td colspan="5" class="empty">No Data</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
-            <!-- form -->
             <div class="form">
-                <!-- Add Goods Receipt -->
-                <div class="form-add" ng-class="{open: showAddReceipt}" ng-click="closeAddReceiptOnOverlay($event)">
+                <!-- Add Goods Issue -->
+                <div class="form-add" ng-class="{open: showAddIssue}" ng-click="closeAddIssueOnOverlay($event)">
                     <div class="form-add__content" ng-click="$event.stopPropagation()">
-                        <h3 class="title">Add New Goods Receipt</h3>
-                        <p class="desc">Enter receipt and product details</p>
+                        <h3 class="title">Add New Goods Issue</h3>
+                        <p class="desc">Enter issue details and products to issue</p>
 
-                        <form name="frmAddGR" ng-submit="addGoodsReceipt()">
-                            <!-- Phiếu nhập -->
-                            <label for="poid">POID</label>
-                            <input type="number" id="poid" required placeholder="Enter POID"
-                                ng-model="newReceipt.POID" />
-
+                        <form name="frmAddGI" ng-submit="addGoodsIssue()">
+                            <!-- Phiếu xuất -->
                             <label for="userid">User ID</label>
                             <input type="number" id="userid" required placeholder="Enter User ID"
-                                ng-model="newReceipt.UserID" />
+                                ng-model="newIssue.UserID" />
 
-                            <!-- Chi tiết phiếu nhập -->
-                            <h4 class="subtitle">Receipt Details</h4>
-                            <div ng-repeat="item in newReceiptDetails" class="detail-row">
+                            <!-- Chi tiết phiếu xuất -->
+                            <h4 class="subtitle">Issue Details</h4>
+                            <div ng-repeat="item in newIssueDetails" class="detail-row">
                                 <label>Product ID</label>
                                 <input type="number" ng-model="item.ProductID" required placeholder="Product ID" />
 
                                 <label>Quantity</label>
-                                <input type="number" ng-model="item.Quantity" required placeholder="Quantity" />
+                                <input type="number" ng-model="item.Quantity" required placeholder="Quantity" min="1" />
 
                                 <label>Unit Price</label>
-                                <input type="number" ng-model="item.UnitPrice" required placeholder="Unit Price" />
-
-                                <label>Expiry Date</label>
-                                <input type="date" ng-model="item.ExpiryDate" />
+                                <input type="number" ng-model="item.UnitPrice" required placeholder="Unit Price" min="0"
+                                    step="0.01" />
 
                                 <button type="button" class="remove"
-                                    ng-click="removeDetailRowForNewReceipt($index)">Remove</button>
+                                    ng-click="removeDetailRowForNewIssue($index)">Remove</button>
                             </div>
 
-                            <button type="button" class="add-detail" ng-click="addDetailRowForNewReceipt()">+ Add
+                            <button type="button" class="add-detail" ng-click="addDetailRowForNewIssue()">+ Add
                                 Product</button>
 
                             <!-- Footer -->
                             <div class="dialog-footer">
-                                <button type="button" class="cancel" ng-click="cancelAddReceipt()">Cancel</button>
-                                <input class="submit" type="submit" value="Add Receipt"
-                                    ng-disabled="frmAddGR.$invalid || savingAddReceipt" />
+                                <button type="button" class="cancel" ng-click="cancelAddIssue()">Cancel</button>
+                                <input class="submit" type="submit" value="Add Issue"
+                                    ng-disabled="frmAddGI.$invalid || savingAddIssue || newIssueDetails.length === 0" />
                             </div>
                         </form>
                     </div>
                 </div>
 
-                <div class="form-edit" ng-class="{open: showEdit}" ng-click="closeEditOnOverlay($event)">
-                    <div class="form-edit__content" ng-click="$event.stopPropagation()">
-                        <h3 class="title">Edit Goods Receipt</h3>
-                        <form name="frmEditGR" ng-submit="updateGoodsReceipt()">
-
-                            <!-- ReceiptDate -->
-                            <label for="date-edit">Receipt Date</label>
-                            <input type="date" id="date-edit" required ng-model="editingReceipt.ReceiptDate" />
-
-                            <!-- UserID -->
-                            <label for="userid-edit">User ID</label>
-                            <input type="number" id="userid-edit" required placeholder="Enter User ID"
-                                ng-model="editingReceipt.UserID" />
-
-                            <!-- Footer -->
-                            <div class="dialog-footer">
-                                <button type="button" class="cancel" ng-click="cancelEdit()">Cancel</button>
-                                <input class="submit" type="submit" value="Edit Goods Receipt"
-                                    ng-disabled="frmEditGR.$invalid || savingEdit" />
-                            </div>
-                        </form>
-                    </div>
-                </div>
-                <div class="form-delete" ng-class="{open: showDelete}" ng-click="closeDeleteOnOverlay($event)">
-                    <div class="form-delete__content" ng-click="$event.stopPropagation()">
-                        <h3 class="title">Xác nhận xóa phiếu nhập</h3>
-                        <p>Bạn có chắc muốn xóa phiếu nhập <strong>{{deleting.BatchNo}}</strong> không?</p>
-                        <div class="dialog-footer">
-                            <button type="button" class="cancel" ng-click="cancelDelete()">Hủy</button>
-                            <button type="button" class="submit" ng-click="confirmDelete()">Xóa</button>
-                        </div>
-                    </div>
-                </div>
 
             </div>
 
-
-            <!-- Detail Goods Receipt -->
-            <div class="form-detail" ng-class="{open: showDetail}" ng-click="closeDetailOnOverlay($event)">
+            <!-- ==================== FORM DETAIL GOODS ISSUES ==================== -->
+            <div class="form-detail" ng-class="{open: showDetailIssue}" ng-click="closeDetailIssueOnOverlay($event)">
                 <div class="form-detail__content" ng-click="$event.stopPropagation()">
-                    <h3 class="title">Goods Receipt Details - {{detailReceipt.BatchNo}}</h3>
+                    <h3 class="title">Goods Issue Details - ID: {{detailIssue.IssueID}} ({{detailIssue.IssueDate |
+                        date:'dd/MM/yyyy'}})</h3>
+                    <p class="subtitle">User ID: {{detailIssue.UserID}} | Total Amount: {{detailIssue.TotalAmount |
+                        number:0}}đ</p>
 
-                    <!-- Form nhập chi tiết mới -->
+                    <!-- Form thêm chi tiết mới -->
+                    <!-- Form thêm sản phẩm trong Detail -->
                     <div class="detail-add-form">
-                        <h4>Thêm chi tiết mới</h4>
+                        <h4>Thêm sản phẩm xuất kho</h4>
                         <div class="form-row">
                             <label>Product ID:</label>
-                            <input type="number" ng-model="newDetail.ProductID" required />
+                            <input type="number" ng-model="newDetail.ProductID" placeholder="Nhập mã sản phẩm"
+                                required />
                         </div>
                         <div class="form-row">
                             <label>Quantity:</label>
-                            <input type="number" ng-model="newDetail.Quantity" required />
+                            <input type="number" min="1" ng-model="newDetail.Quantity" placeholder="Số lượng"
+                                required />
                         </div>
                         <div class="form-row">
                             <label>Unit Price:</label>
-                            <input type="number" ng-model="newDetail.UnitPrice" required />
+                            <input type="number" step="0.01" ng-model="newDetail.UnitPrice" placeholder="Đơn giá"
+                                required />
                         </div>
-                        <div class="form-row">
-                            <label>Expiry Date:</label>
-                            <input type="date" ng-model="newDetail.ExpiryDate" />
-                        </div>
-                        <button class="add-btn" ng-click="addGoodsReceiptDetail()"
+                        <button class="add-btn" ng-click="addGoodsIssueDetail()"
                             ng-disabled="savingAddDetail || !newDetail.ProductID || !newDetail.Quantity || !newDetail.UnitPrice">
                             <span ng-if="savingAddDetail">Adding...</span>
                             <span ng-if="!savingAddDetail">Add Product</span>
                         </button>
-
                     </div>
 
-                    <!-- Bảng chi tiết -->
+                    <!-- BẢNG CHI TIẾT PHIẾU XUẤT – CHỈ 5 CỘT -->
                     <table class="detail-table">
                         <thead>
                             <tr>
@@ -550,115 +492,47 @@
                                 <th>Product Name</th>
                                 <th>Quantity</th>
                                 <th>Unit Price</th>
-                                <th>Expiry Date</th>
-                                <th>Actions</th>
+                                <th class="action-col">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="d in receiptDetails">
-                                <td>{{d.productID}}</td>
-                                <td>{{d.productName}}</td>
-                                <td>{{d.quantity}}</td>
-                                <td>{{d.unitPrice | currency:"":0}}</td>
-                                <td>{{d.expiryDate ? (d.expiryDate | date:'yyyy-MM-dd') : '—'}}</td>
-                                <td>
-                                    <button class="remove-btn" ng-click="deleteGoodsReceiptDetail(d)">🗑 Delete</button>
+                            <tr ng-repeat="d in issueDetails">
+                                <td>{{d.ProductID}}</td>
+                                <td>{{d.ProductName || '—'}}</td>
+                                <td class="txt-right">{{d.Quantity | number:0}}</td>
+                                <td class="txt-right">{{d.UnitPrice | number:0}}đ</td>
+                                <td class="action-col">
+                                    <button class="remove-btn" ng-click="deleteGoodsIssueDetail(d)"
+                                        ng-disabled="deletingDetail" title="Xóa sản phẩm này khỏi phiếu xuất">
+                                        <span ng-if="!deletingDetail">Delete</span>
+                                        <span ng-if="deletingDetail">Deleting...</span>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr ng-if="!issueDetails || issueDetails.length === 0">
+                                <td colspan="5" style="text-align:center; color:#999; padding:20px; font-style:italic;">
+                                    Chưa có sản phẩm nào được xuất
                                 </td>
                             </tr>
                         </tbody>
                     </table>
 
 
+
                     <div class="dialog-footer">
-                        <button type="button" class="cancel" ng-click="closeDetail()">Close</button>
+                        <button type="button" class="cancel" ng-click="closeDetailIssue()">Close</button>
                     </div>
                 </div>
             </div>
-
-            <!-- ==================== MODAL THANH TOÁN NHÀ CUNG CẤP ==================== -->
-            <div class="form-payment" ng-class="{open: showPaymentModal}" ng-click="closePaymentModal()">
-                <div class="form-payment__content" ng-click="$event.stopPropagation()">
-                    <h3 class="title">Thanh toán cho phiếu nhập #{{paymentReceipt.ReceiptID}}</h3>
-                    <p class="subtitle">
-                        Nhà cung cấp: <strong>#{{paymentReceipt.SupplierID || '—'}}</strong> |
-                        POID: <strong>{{paymentReceipt.POID}}</strong> |
-                        Tổng tiền: <strong>{{paymentReceipt.TotalAmount | number:0}}đ</strong>
-                    </p>
-
-                    <!-- BẢNG LỊCH SỬ THANH TOÁN -->
-                    <div class="payment-history">
-                        <h4>Lịch sử thanh toán</h4>
-                        <table class="detail-table">
-                            <thead>
-                                <tr>
-                                    <th>PaymentID</th>
-                                    <th>Amount</th>
-                                    <th>PaymentDate</th>
-                                    <th>Method</th>
-                                    <th>Description</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr ng-repeat="p in paymentHistory">
-                                    <td>{{p.paymentID}}</td>
-                                    <td class="txt-right">{{p.amount | number:0}}đ</td>
-                                    <td>{{p.paymentDate | date:'dd/MM/yyyy'}}</td>
-                                    <td>{{p.method}}</td>
-                                    <td>{{p.description || '—'}}</td>
-                                </tr>
-                                <tr ng-if="!paymentHistory || paymentHistory.length === 0">
-                                    <td colspan="5" class="empty">Chưa có thanh toán nào</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <!-- FORM THÊM THANH TOÁN MỚI -->
-                    <div class="add-payment-form">
-                        <h4>Thêm thanh toán mới</h4>
-                        <div class="form-row">
-                            <label>Số tiền thanh toán <span class="req">*</span></label>
-                            <input type="number" ng-model="newPayment.Amount" min="1" placeholder="Nhập số tiền"
-                                required />
-                        </div>
-                        <div class="form-row">
-                            <label>Hình thức thanh toán <span class="req">*</span></label>
-                            <select ng-model="newPayment.Method" required>
-                                <option value="">-- Chọn hình thức --</option>
-                                <option value="Tiền mặt">Tiền mặt</option>
-                                <option value="Chuyển khoản">Chuyển khoản</option>
-                                <option value="Thẻ">Thẻ</option>
-                                <option value="Nợ">Ghi nợ</option>
-                            </select>
-                        </div>
-                        <div class="form-row">
-                            <label>Ghi chú</label>
-                            <input type="text" ng-model="newPayment.Description"
-                                placeholder="Ví dụ: Thanh toán lần 1, CK Vietcombank..." />
-                        </div>
-
-                        <div class="dialog-footer">
-                            <button type="button" class="cancel" ng-click="closePaymentModal()">Đóng</button>
-                            <button type="button" class="submit" ng-click="addPayment()"
-                                ng-disabled="!newPayment.Amount || !newPayment.Method || savingPayment">
-                                <span ng-if="!savingPayment">Thanh toán</span>
-                                <span ng-if="savingPayment">Đang xử lý...</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-
-
-
-
         </div>
+
+
+
 
     </div>
 
-    <script src="../Shared/js/goodsreceipts.js"></script>
+    </div>
+
 </body>
 
 </html>

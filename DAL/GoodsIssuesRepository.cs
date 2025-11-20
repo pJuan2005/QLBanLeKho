@@ -35,23 +35,19 @@ namespace DAL
             }
         }
 
-        public bool Create(GoodsIssuesModel model)
+        public int Create(GoodsIssuesModel model)  // ← Trả int
         {
             string msgError = "";
             try
             {
                 var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_GoodsIssues_create",
-                    
-                    
                     "@UserID", model.UserID
-                    
-                    );
+                );
 
-                if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
-                {
-                    throw new Exception(Convert.ToString(result) + msgError);
-                }
-                return true;
+                if (!string.IsNullOrEmpty(msgError))
+                    throw new Exception(msgError);
+
+                return Convert.ToInt32(result);  // ← Trả về IssueID
             }
             catch (Exception ex)
             {
@@ -133,6 +129,7 @@ namespace DAL
                 throw ex;
             }
         }
+
 
     }
 }
