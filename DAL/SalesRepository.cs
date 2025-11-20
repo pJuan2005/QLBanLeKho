@@ -138,5 +138,17 @@ namespace DAL
             }
         }
 
+        //thêm hàm create trả về id của sales đó để insert vào saleitems, payment,...
+        public int CreateReturnId(SalesModel model)
+        {
+            string msgError = "";
+            var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_sales_create_return_id",
+                "@CustomerId",model.CustomerID, "@UserId",model.UserID);
+            if(!string.IsNullOrEmpty(msgError)) throw new Exception(msgError);
+            if (result == null || string.IsNullOrEmpty(result.ToString()))
+                throw new Exception("sp không trả về salesID");
+            return Convert.ToInt32(result);
+        }
+
     }
 }

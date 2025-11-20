@@ -27,4 +27,6 @@ namespace BLL
             => _res.Search(request, out total);
     }
 
+
 }
+
