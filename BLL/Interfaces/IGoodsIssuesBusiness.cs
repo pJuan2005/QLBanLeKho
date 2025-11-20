@@ -10,7 +10,7 @@ namespace BLL.Interfaces
     public interface IGoodsIssuesBusiness
     {
         GoodsIssuesModel GetDatabyID(int id);
-        bool Create(GoodsIssuesModel model);
+        int Create(GoodsIssuesModel model);
         bool Update(GoodsIssuesModel model);
         bool Delete(GoodsIssuesModel model);
         List<GoodsIssuesModel> Search(int pageIndex, int pageSize, out long total, decimal? minTotalAmount, decimal? maxTotalAmount, int? userId, DateTime? fromDate, DateTime? toDate);

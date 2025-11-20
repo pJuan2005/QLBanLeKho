@@ -11,6 +11,14 @@ app.controller(
             return PermissionService.canShow(key);
         };
 
+        function syncBodyClass() {
+            if ($scope.showAddReceipt || $scope.showEdit || $scope.showDelete || $scope.showDetail) {
+                document.body.classList.add("modal-open");
+            } else {
+                document.body.classList.remove("modal-open");
+            }
+        }
+
         // dữ liệu
         $scope.goodsReceipts = [];
         $scope.pager = { page: 1, size: 10, total: 0, pages: 1 };
@@ -21,15 +29,6 @@ app.controller(
             totalPending: 0,
             totalProcessing: 0,
         };
-        function syncBodyClass() {
-            if ($scope.showAdd || $scope.showEdit || $scope.showDelete) {
-                document.body.classList.add("modal-open");
-            } else {
-                document.body.classList.remove("modal-open");
-            }
-        }
-
-
 
         // filter tìm kiếm
         $scope.searchFromDate = "";
@@ -126,6 +125,13 @@ app.controller(
             $scope.stats.totalProcessing = processing;
         };
 
+        // ========== HÀM CHUNG: TẠO CHI TIẾT PHIẾU NHẬP (DÙNG CHO CẢ ADD VÀ DETAIL) ==========
+        $scope.createGoodsReceiptDetails = function (details) {
+            return $http.post(current_url + "/api-core/goodsreceiptdetails/create", details)
+                .then(function (res) { return res.data || true; })
+                .catch(function (err) { throw err; });
+        };
+
         // ======== MODEL ADD GOODS RECEIPT =========
         $scope.newReceipt = {
             POID: "",
@@ -147,7 +153,8 @@ app.controller(
         // ======== ĐÓNG FORM KHI CLICK OVERLAY =========
         $scope.closeAddReceiptOnOverlay = function (e) {
             if (e.target.classList.contains("form-add")) {
-                $scope.cancelAddReceipt();
+                $scope.showAddReceipt = false;
+                syncBodyClass();
                 $scope.$applyAsync();
             }
         };
@@ -160,12 +167,7 @@ app.controller(
 
         // ======== THÊM DÒNG CHI TIẾT =========
         $scope.addDetailRowForNewReceipt = function () {
-            $scope.newReceiptDetails.push({
-                ProductID: null,
-                Quantity: null,
-                UnitPrice: null,
-                ExpiryDate: null
-            });
+            $scope.newReceiptDetails.push({ ProductID: null, Quantity: null, UnitPrice: null, ExpiryDate: null });
         };
 
         // ======== XÓA DÒNG CHI TIẾT =========
@@ -175,61 +177,48 @@ app.controller(
 
         // ======== ADD GOODS RECEIPT + DETAILS =========
         $scope.addGoodsReceipt = function () {
-            if (!$scope.newReceipt.POID || !$scope.newReceipt.UserID) {
-                alert("POID và UserID là bắt buộc!");
-                return;
-            }
-            if ($scope.newReceiptDetails.length === 0) {
-                alert("Vui lòng thêm ít nhất 1 sản phẩm vào chi tiết phiếu nhập.");
-                return;
-            }
+            if (!$scope.newReceipt.POID || !$scope.newReceipt.UserID) return alert("POID và UserID là bắt buộc!");
+            if ($scope.newReceiptDetails.length === 0) return alert("Vui lòng thêm ít nhất 1 sản phẩm!");
 
             $scope.savingAddReceipt = true;
 
             $http.post(current_url + "/api-core/goodsreceipts/create", $scope.newReceipt)
                 .then(function (res) {
                     var receiptID = res.data.receiptID;
-                    if (!receiptID) throw new Error("Không nhận được ReceiptID từ API goodsreceipts/create");
+                    if (!receiptID) throw new Error("Không nhận được ReceiptID");
 
-                    var details = $scope.newReceiptDetails.map(function (item) {
+                    var details = $scope.newReceiptDetails.map(function (d) {
                         return {
                             ReceiptID: receiptID,
-                            ProductID: item.ProductID,
-                            Quantity: item.Quantity,
-                            UnitPrice: item.UnitPrice,
-                            ExpiryDate: item.ExpiryDate
+                            ProductID: d.ProductID,
+                            Quantity: d.Quantity,
+                            UnitPrice: d.UnitPrice,
+                            ExpiryDate: d.ExpiryDate || null
                         };
                     });
 
-                    return $http.post(current_url + "/api-core/goodsreceiptdetails/create", details);
+                    return $scope.createGoodsReceiptDetails(details);
                 })
                 .then(function () {
-                    $scope.savingAddReceipt = false;
-                    alert("Thêm phiếu nhập và chi tiết thành công!");
-                    $scope.resetAddReceiptForm();
+                    alert("Thêm phiếu nhập thành công!");
                     $scope.showAddReceipt = false;
+                    $scope.resetAddReceiptForm();
                     syncBodyClass();
-                    $scope.pager.page = 1;
                     $scope.LoadGoodReceipts();
                 })
                 .catch(function (err) {
+                    console.error(err);
+                    alert("Thêm thất bại!");
+                })
+                .finally(function () {
                     $scope.savingAddReceipt = false;
-                    console.error("Lỗi khi thêm phiếu nhập:", err);
-                    alert("Thêm phiếu nhập không thành công!");
                 });
         };
 
         // ======== RESET FORM =========
         $scope.resetAddReceiptForm = function () {
-            $scope.newReceipt = {
-                POID: "",
-                UserID: ""
-            };
+            $scope.newReceipt = { POID: "", UserID: "" };
             $scope.newReceiptDetails = [];
-            if ($scope.frmAddGR) {
-                $scope.frmAddGR.$setPristine();
-                $scope.frmAddGR.$setUntouched();
-            }
         };
 
 
@@ -357,34 +346,39 @@ app.controller(
             );
         };
 
-        //Detail
-
+        // ==================== DETAIL PHIẾU NHẬP ====================
         $scope.showDetail = false;
         $scope.detailReceipt = null;
         $scope.receiptDetails = [];
+        $scope.newDetail = {};
+        $scope.savingAddDetail = false;
 
-        // Mở form detail
         $scope.detail = function (gr) {
             $scope.detailReceipt = {
                 ReceiptID: gr.receiptID || gr.ReceiptID,
                 BatchNo: gr.batchNo || gr.BatchNo,
                 POID: gr.poid || gr.POID,
                 ReceiptDate: gr.receiptDate || gr.ReceiptDate,
-                UserID: gr.userID || gr.UserID,
-                Status: gr.status || gr.Status
+                UserID: gr.userID || gr.UserID
             };
+
             $scope.showDetail = true;
             syncBodyClass();
 
-            var receiptID = $scope.detailReceipt.ReceiptID;
-
-            $http.get(current_url + "/api-core/goodsreceiptdetails/get-by-id/" + receiptID)
+            $http.get(current_url + "/api-core/goodsreceiptdetails/get-by-id/" + $scope.detailReceipt.ReceiptID)
                 .then(function (res) {
-                    $scope.receiptDetails = res.data || [];
-                }, function (err) {
-                    console.error(err);
-                    $scope.receiptDetails = [];
-                });
+                    var data = res.data || [];
+                    $scope.receiptDetails = data.map(function (item) {
+                        return {
+                            productID: item.ProductID || item.productID,
+                            productName: item.ProductName || item.productName || '—',
+                            quantity: item.Quantity || item.quantity,
+                            unitPrice: item.UnitPrice || item.unitPrice,
+                            expiryDate: item.ExpiryDate || item.expiryDate
+                        };
+                    });
+                })
+                .catch(function () { $scope.receiptDetails = []; });
         };
 
 
@@ -400,78 +394,58 @@ app.controller(
         // Đóng form detail
         $scope.closeDetail = function () {
             $scope.showDetail = false;
+            $scope.detailReceipt = null;
+            $scope.receiptDetails = [];
+            $scope.newDetail = {};
             syncBodyClass();
         };
 
 
-        // Model cho form add chi tiết
-        $scope.newDetail = {
-            ProductID: null,
-            Quantity: null,
-            UnitPrice: null,
-            ExpiryDate: null
-        };
-        $scope.savingAddDetail = false;
-
-        // Thêm chi tiết vào phiếu nhập đã có
+        // Thêm chi tiết vào phiếu cũ
         $scope.addGoodsReceiptDetail = function () {
-            var receiptID = $scope.detailReceipt?.ReceiptID;
-            if (!receiptID) {
-                alert("Không xác định được ReceiptID.");
-                return;
-            }
-
             if (!$scope.newDetail.ProductID || !$scope.newDetail.Quantity || !$scope.newDetail.UnitPrice) {
-                alert("Vui lòng nhập đầy đủ ProductID, Quantity và UnitPrice.");
-                return;
+                return alert("Vui lòng nhập đầy đủ thông tin!");
             }
 
-            var model = [{
-                ReceiptID: receiptID,
+            var payload = [{
+                ReceiptID: $scope.detailReceipt.ReceiptID,
                 ProductID: $scope.newDetail.ProductID,
                 Quantity: $scope.newDetail.Quantity,
                 UnitPrice: $scope.newDetail.UnitPrice,
-                ExpiryDate: $scope.newDetail.ExpiryDate
+                ExpiryDate: $scope.newDetail.ExpiryDate || null
             }];
 
             $scope.savingAddDetail = true;
 
-            $http.post(current_url + "/api-core/goodsreceiptdetails/create", model)
+            $scope.createGoodsReceiptDetails(payload)
                 .then(function () {
-                    $scope.savingAddDetail = false;
-                    alert("Thêm chi tiết thành công!");
-                    $scope.newDetail = {}; // reset form
-                    $scope.detail($scope.detailReceipt); // reload lại chi tiết
-                    $scope.LoadGoodReceipts(); // 🔁 reload lại bảng danh sách phiếu nhập
+                    alert("Thêm sản phẩm thành công!");
+                    $scope.newDetail = {};
+                    $scope.detail($scope.detailReceipt);
+                    $scope.LoadGoodReceipts();
                 })
                 .catch(function (err) {
+                    console.error(err);
+                    alert("Thêm thất bại!");
+                })
+                .finally(function () {
                     $scope.savingAddDetail = false;
-                    console.error("Lỗi khi thêm chi tiết:", err);
-                    alert("Thêm chi tiết không thành công!");
                 });
         };
 
-        $scope.deleteGoodsReceiptDetail = function (detail) {
-            var receiptID = $scope.detailReceipt?.ReceiptID;
-            var productID = detail?.productID;
-
-            if (!receiptID || !productID) {
-                alert("Không xác định được bản ghi cần xóa.");
-                return;
-            }
-
-            if (!confirm("Bạn có chắc muốn xóa sản phẩm này khỏi phiếu nhập?")) return;
+        // Xóa chi tiết
+        $scope.deleteGoodsReceiptDetail = function (d) {
+            if (!confirm(`Xóa sản phẩm ${d.productID} - ${d.productName || ''}?`)) return;
 
             $http.post(current_url + "/api-core/goodsreceiptdetails/delete", {
-                ReceiptID: receiptID,
-                ProductID: productID
+                ReceiptID: $scope.detailReceipt.ReceiptID,
+                ProductID: d.productID
             }).then(function () {
-                alert("Xóa chi tiết thành công!");
-                $scope.detail($scope.detailReceipt); // reload lại bảng chi tiết
-                $scope.LoadGoodReceipts(); // reload lại bảng GR
-            }, function (err) {
-                console.error(err);
-                alert("Xóa chi tiết không thành công!");
+                alert("Xóa thành công!");
+                $scope.detail($scope.detailReceipt);
+                $scope.LoadGoodReceipts();
+            }).catch(function () {
+                alert("Xóa thất bại!");
             });
         };
 
@@ -501,21 +475,16 @@ app.controller(
         };
         $scope.selectedReceipt = null;
 
+        // Action menu
         $scope.toggleActionMenu = function (gr) {
-            // Đóng tất cả menu khác trước khi mở
-            $scope.goodsReceipts.forEach(function (item) {
-                item.showMenu = false;
-            });
-
+            $scope.goodsReceipts.forEach(function (item) { item.showMenu = false; });
             gr.showMenu = true;
         };
+
         document.addEventListener("click", function (e) {
-            var isMenuClick = e.target.closest(".action-menu");
-            if (!isMenuClick) {
+            if (!e.target.closest(".action-menu")) {
                 $scope.$apply(function () {
-                    $scope.goodsReceipts.forEach(function (item) {
-                        item.showMenu = false;
-                    });
+                    $scope.goodsReceipts.forEach(function (item) { item.showMenu = false; });
                 });
             }
         });
@@ -543,6 +512,140 @@ app.controller(
                 console.error("Lỗi khi xuất Excel:", err);
                 alert("Xuất Excel không thành công!");
             });
+        };
+
+        // ==================== THANH TOÁN NHÀ CUNG CẤP ====================
+        $scope.showPaymentModal = false;
+        $scope.paymentReceipt = null;
+        $scope.paymentHistory = [];
+        $scope.newPayment = {};
+        $scope.savingPayment = false;
+
+        $scope.payment = function (gr) {
+            var receiptID = gr.receiptID || gr.ReceiptID;
+
+            // GỌI API THANH TOÁN ĐỂ LẤY SUPPLIERID (VÌ NÓ CÓ CHẮC CHẮN!)
+            $http.post(current_url + "/api-core/payments/search-payment", {
+                page: 1,
+                pageSize: 100,
+                ReceiptID: receiptID,
+                CustomerID: null,
+                SupplierID: null,
+                SaleID: null,
+                Method: "",
+                FromDate: null,
+                ToDate: null
+            }).then(function (res) {
+                var payments = res.data.data || [];
+                var supplierID = payments.length > 0 ? payments[0].supplierID : null;
+
+                // GÁN ĐÚNG SUPPLIERID TỪ BẢNG PAYMENTS
+                $scope.paymentReceipt = {
+                    ReceiptID: receiptID,
+                    POID: gr.poid || gr.POID,
+                    TotalAmount: gr.totalAmount || gr.TotalAmount || 0,
+                    SupplierID: supplierID,                    // ← ĐÚNG RỒI ĐÂY!
+                    SupplierName: supplierID ? 'Nhà cung cấp #' + supplierID : '—'
+                };
+
+                // Gán luôn lịch sử thanh toán
+                $scope.paymentHistory = payments;
+
+                // Mở modal
+                $scope.showPaymentModal = true;
+                $scope.newPayment = { Amount: null, Method: "", Description: "" };
+                syncBodyClass();
+
+            }).catch(function (err) {
+                console.error("Lỗi load payment history:", err);
+
+                // Trường hợp chưa có thanh toán nào → vẫn mở modal, nhưng SupplierID = null
+                $scope.paymentReceipt = {
+                    ReceiptID: receiptID,
+                    POID: gr.poid || gr.POID,
+                    TotalAmount: gr.totalAmount || gr.TotalAmount || 0,
+                    SupplierID: null,
+                    SupplierName: '—'
+                };
+                $scope.paymentHistory = [];
+                $scope.showPaymentModal = true;
+                $scope.newPayment = { Amount: null, Method: "", Description: "" };
+                syncBodyClass();
+            });
+        };
+
+        $scope.closePaymentModal = function () {
+            $scope.showPaymentModal = false;
+            $scope.paymentReceipt = null;
+            $scope.paymentHistory = [];
+            $scope.newPayment = {};
+            syncBodyClass();
+        };
+
+        $scope.addPayment = function () {
+            if (!$scope.newPayment.Amount || $scope.newPayment.Amount <= 0) {
+                alert("Vui lòng nhập số tiền hợp lệ!");
+                return;
+            }
+            if (!$scope.newPayment.Method) {
+                alert("Vui lòng chọn hình thức thanh toán!");
+                return;
+            }
+
+            var payload = {
+                ReceiptID: $scope.paymentReceipt.ReceiptID,
+                SupplierID: $scope.paymentReceipt.SupplierID,
+                Amount: parseFloat($scope.newPayment.Amount),
+                Description: $scope.newPayment.Description || null,
+                Method: $scope.newPayment.Method
+            };
+
+            $scope.savingPayment = true;
+
+            $http.post(current_url + "/api-core/payments/create-payment-supplier", payload)
+                .then(function () {
+                    alert("Thanh toán thành công!");
+
+                    // XÓA FORM NHẬP
+                    $scope.newPayment = { Amount: null, Method: "", Description: "" };
+
+                    // RELOAD LẠI TOÀN BỘ LỊCH SỬ THANH TOÁN → HIỂN THỊ NGAY TRONG MODAL!
+                    $http.post(current_url + "/api-core/payments/search-payment", {
+                        page: 1,
+                        pageSize: 100,
+                        ReceiptID: $scope.paymentReceipt.ReceiptID,
+                        CustomerID: null,
+                        SupplierID: null,
+                        SaleID: null,
+                        Method: "",           // Đảm bảo backend chấp nhận
+                        FromDate: null,
+                        ToDate: null
+                    }).then(function (res) {
+                        var newData = (res.data && res.data.data) || [];
+
+                        // GÁN LẠI DỮ LIỆU MỚI → BẢNG TỰ CẬP NHẬT NGAY LẬP TỨC!
+                        $scope.paymentHistory = newData;
+
+                        // BONUS: Nếu lần đầu thanh toán → cập nhật SupplierID (nếu chưa có)
+                        if (!$scope.paymentReceipt.SupplierID && newData.length > 0) {
+                            $scope.paymentReceipt.SupplierID = newData[0].supplierID;
+                        }
+
+                    }).catch(function () {
+                        alert("Thanh toán thành công nhưng không tải lại được lịch sử!");
+                    });
+
+                    // Cập nhật lại danh sách phiếu nhập (nếu bạn có cột "Đã thanh toán" ở bảng chính)
+                    $scope.LoadGoodReceipts();
+
+                })
+                .catch(function (err) {
+                    console.error("Lỗi thanh toán:", err);
+                    alert("Thanh toán thất bại: " + (err.data?.message || "Lỗi không xác định"));
+                })
+                .finally(function () {
+                    $scope.savingPayment = false;
+                });
         };
 
         // khởi tạo

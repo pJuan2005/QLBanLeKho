@@ -19,10 +19,11 @@ namespace BLL
             _res = res;
         }
 
-        public GoodsIssueDetailsModel GetDatabyID(int issueID, int productID)
+        public List<GoodsIssueDetailsModel> GetDatabyID(int issueID)
         {
-            return _res.GetDatabyID(issueID, productID);
+            return _res.GetDatabyID(issueID);
         }
+
 
         public bool CreateMultiple(List<GoodsIssueDetailsModel> models)
         {

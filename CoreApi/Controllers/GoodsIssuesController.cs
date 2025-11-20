@@ -7,7 +7,7 @@ using System.Globalization;
 
 namespace CoreApi.Controllers
 {
-    [Route("api/GoodsIssues")]
+    [Route("api/goodsissues")]
     [ApiController]
     public class GoodsIssuesController : ControllerBase
     {
@@ -20,10 +20,17 @@ namespace CoreApi.Controllers
 
         [Route("create")]
         [HttpPost]
-        public GoodsIssuesModel Create([FromBody] GoodsIssuesModel model)
+        public IActionResult Create([FromBody] GoodsIssuesModel model)
         {
-            _goodsIssuesBusiness.Create(model);
-            return model;
+            try
+            {
+                var issueID = _goodsIssuesBusiness.Create(model);  
+                return Ok(new { issueID });  
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
 
         [Route("update")]
@@ -57,75 +64,66 @@ namespace CoreApi.Controllers
             try
             {
                 // --- PAGING ---
-                int page = 1, pageSize = 10;
-                if (formData != null)
-                {
-                    if (formData.ContainsKey("page") && int.TryParse(Convert.ToString(formData["page"]), out var p) && p > 0)
-                        page = p;
-                    if (formData.ContainsKey("pageSize") && int.TryParse(Convert.ToString(formData["pageSize"]), out var ps) && ps > 0)
-                        pageSize = ps;
-                }
+                var pageIndex = int.Parse(formData["pageIndex"].ToString());
+                var pageSize = int.Parse(formData["pageSize"].ToString());
 
                 // --- FILTERS ---
-                decimal? minTotalAmount = null, maxTotalAmount = null;
+                decimal? minTotalAmount = null;
+                decimal? maxTotalAmount = null;
                 int? userId = null;
-                DateTime? fromDate = null, toDate = null;
+                DateTime? fromDate = null;
+                DateTime? toDate = null;
 
-                if (formData != null)
+                if (formData.Keys.Contains("minTotalAmount") &&
+                    !string.IsNullOrEmpty(Convert.ToString(formData["minTotalAmount"])) &&
+                    decimal.TryParse(Convert.ToString(formData["minTotalAmount"]), out var minAmt))
                 {
-                    if (formData.ContainsKey("minTotalAmount"))
-                    {
-                        var val = Convert.ToString(formData["minTotalAmount"])?.Trim();
-                        if (decimal.TryParse(val, NumberStyles.Any, CultureInfo.InvariantCulture, out var d))
-                            minTotalAmount = d;
-                    }
+                    minTotalAmount = minAmt;
+                }
 
-                    if (formData.ContainsKey("maxTotalAmount"))
-                    {
-                        var val = Convert.ToString(formData["maxTotalAmount"])?.Trim();
-                        if (decimal.TryParse(val, NumberStyles.Any, CultureInfo.InvariantCulture, out var d))
-                            maxTotalAmount = d;
-                    }
+                if (formData.Keys.Contains("maxTotalAmount") &&
+                    !string.IsNullOrEmpty(Convert.ToString(formData["maxTotalAmount"])) &&
+                    decimal.TryParse(Convert.ToString(formData["maxTotalAmount"]), out var maxAmt))
+                {
+                    maxTotalAmount = maxAmt;
+                }
 
-                    if (formData.ContainsKey("userId"))
-                    {
-                        var val = Convert.ToString(formData["userId"])?.Trim();
-                        if (int.TryParse(val, out var uid))
-                            userId = uid;
-                    }
+                if (formData.Keys.Contains("userId") &&
+                    !string.IsNullOrEmpty(Convert.ToString(formData["userId"])) &&
+                    int.TryParse(Convert.ToString(formData["userId"]), out var uid))
+                {
+                    userId = uid;
+                }
 
-                    if (formData.ContainsKey("fromDate"))
-                    {
-                        var val = Convert.ToString(formData["fromDate"]);
-                        if (DateTime.TryParse(val, out var d))
-                            fromDate = d;
-                    }
+                if (formData.Keys.Contains("fromDate") &&
+                    DateTime.TryParse(Convert.ToString(formData["fromDate"]), out var fd))
+                {
+                    fromDate = fd;
+                }
 
-                    if (formData.ContainsKey("toDate"))
-                    {
-                        var val = Convert.ToString(formData["toDate"]);
-                        if (DateTime.TryParse(val, out var d))
-                            toDate = d;
-                    }
+                if (formData.Keys.Contains("toDate") &&
+                    DateTime.TryParse(Convert.ToString(formData["toDate"]), out var td))
+                {
+                    toDate = td;
                 }
 
                 // --- CALL BLL ---
-                long total = 0;
                 var data = _goodsIssuesBusiness.Search(
-                    page, pageSize, out total,
+                    pageIndex, pageSize, out long total,
                     minTotalAmount, maxTotalAmount, userId, fromDate, toDate);
 
                 response.TotalItems = total;
                 response.Data = data;
-                response.Page = page;
+                response.Page = pageIndex;
                 response.PageSize = pageSize;
-                return response;
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                throw ex;
             }
+            return response;
         }
+
 
     }
 }

@@ -9,7 +9,7 @@ namespace DAL.Interfaces
 {
     public interface IGoodsIssueDetailsRepository
     {
-        GoodsIssueDetailsModel GetDatabyID(int issueID, int productID);
+        List<GoodsIssueDetailsModel> GetDatabyID(int issueID);
         bool CreateMultiple(List<GoodsIssueDetailsModel> models);
 
         

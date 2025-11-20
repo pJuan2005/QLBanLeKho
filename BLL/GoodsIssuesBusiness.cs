@@ -24,9 +24,9 @@ namespace BLL
             return _res.GetDatabyID(id);
         }
 
-        public bool Create(GoodsIssuesModel model)
+        public int Create(GoodsIssuesModel model)
         {
-            return _res.Create(model);
+            return _res.Create(model);  
         }
 
         public bool Update(GoodsIssuesModel model)

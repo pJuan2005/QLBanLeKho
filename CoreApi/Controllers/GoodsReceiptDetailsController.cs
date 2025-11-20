@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Model;
 using System.Reflection;
 using BLL.Interfaces;
+using BLL;
 
 namespace CoreApi.Controllers
 {
@@ -42,6 +43,8 @@ namespace CoreApi.Controllers
         {
             return _goodsReceiptDetailsBusiness.GetDatabyID(receiptID);
         }
+
+        
 
     }
 }

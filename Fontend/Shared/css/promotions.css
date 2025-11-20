@@ -317,6 +317,7 @@ input:focus {
 /* ==============================app-layout-content============================= */
 .app-layout-content {
   padding: 30px;
+  outline: 2px dashed red;
 }
 
 /* container-top */
@@ -378,8 +379,10 @@ input:focus {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
+  margin-top: 20px; /* thêm dòng này */
   margin-bottom: 20px;
 }
+
 
 .card {
   flex: 1 1 30%;
@@ -406,8 +409,10 @@ input:focus {
   flex-wrap: wrap;
   gap: 16px;
   align-items: center;
+  justify-content: center; /* thêm dòng này */
   margin-bottom: 20px;
 }
+
 
 .search-group {
   display: flex;
