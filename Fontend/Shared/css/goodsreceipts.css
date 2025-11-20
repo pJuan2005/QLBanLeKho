@@ -319,13 +319,19 @@ input:focus {
 /* ==============================app-layout-content============================= */
 .app-layout-content {
   padding: 30px;
+  
+ 
+    
 }
+
 
 /* container-top */
 .container-top {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin-bottom: 20px; 
+  
 }
 
 .name-system {
@@ -382,6 +388,7 @@ input:focus {
   justify-content: space-between;
   gap: 12px;
   margin-top: 26px;
+  margin-bottom: 20px;
 }
 
 .card {
@@ -413,6 +420,7 @@ input:focus {
   flex-wrap: wrap;
   gap: 12px;
   align-items: center;
+  margin-bottom: 20px;
 }
 
 .search-goodreceipts .search-field {
@@ -433,14 +441,7 @@ input:focus {
   border: 1px solid #e2e8f0;
 }
 
-.search-btn {
-  background: #0ea5e9;
-  color: #fff;
-  border: none;
-  padding: 6px 12px;
-  border-radius: 8px;
-  cursor: pointer;
-}
+
 .search-btn:hover {
   background: #0284c7;
 }
@@ -501,7 +502,7 @@ input:focus {
 }
 /* ==============table============= */
 .table {
-  margin-top: 24px;
+  margin-top: 30px;
   border: 1px solid #e2e8f0;
   width: 100%;
   table-layout: fixed;
@@ -581,7 +582,7 @@ input:focus {
 
 /* Viền và font */
 .table thead th {
-  border: 1px solid #e2e8f0;
+  border: 1px solid #040709;
   font-weight: 600;
   color: #0f172a;
 }
@@ -810,6 +811,8 @@ input:focus {
   cursor: not-allowed;
 }
 
+/* ========== Form Delete ========== */
+
 /* Overlay delete */
 .form-delete {
   position: fixed;
@@ -991,7 +994,7 @@ input:focus {
 .add-btn {
   margin-top: 10px;
   padding: 8px 16px;
-  background: #27ae60;
+  background:  #0ea5e9;
   color: #fff;
   border: none;
   border-radius: 5px;
@@ -1027,6 +1030,191 @@ input:focus {
 
 .menu-list li:hover {
   background: #f0f0f0;
+}
+
+/* ==================== MODAL THANH TOÁN NHÀ CUNG CẤP ==================== */
+.form-payment {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.65);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.form-payment.open {
+    opacity: 1;
+    visibility: visible;
+}
+
+.form-payment__content {
+    background: #fff;
+    width: 920px;
+    max-width: 95vw;
+    max-height: 92vh;
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    overflow: hidden;
+    animation: modalShow 0.35s ease-out;
+}
+
+@keyframes modalShow {
+    from { transform: translateY(-50px); opacity: 0; }
+    to   { transform: translateY(0); opacity: 1; }
+}
+
+/* Header */
+.form-payment .title {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #fff;
+    margin: 0;
+    padding: 18px 24px;
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.form-payment .subtitle {
+    padding: 12px 24px;
+    margin: 0;
+    background: #f8f9ff;
+    border-bottom: 1px solid #eee;
+    font-size: 15px;
+}
+
+/* Body */
+.form-payment__content > div {
+    padding: 20px 24px;
+}
+
+/* Lịch sử thanh toán */
+.payment-history h4,
+.add-payment-form h4 {
+    margin: 0 0 15px 0;
+    color: #333;
+    font-size: 18px;
+    border-bottom: 2px solid #667eea;
+    padding-bottom: 8px;
+    display: inline-block;
+}
+
+.payment-history table th {
+    background: #f1f3f9 !important;
+    font-weight: 600;
+    color: #444;
+}
+
+.payment-history table td.txt-right {
+    font-weight: 600;
+    color: #28a745;
+}
+
+/* Form thêm thanh toán */
+.add-payment-form {
+    background: #f8fffe;
+    border: 1px dashed #4caf50;
+    border-radius: 10px;
+    margin-top: 25px;
+}
+
+.add-payment-form .form-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.add-payment-form .form-row label {
+    min-width: 160px;
+    font-weight: 500;
+    color: #333;
+}
+
+.add-payment-form .form-row .req {
+    color: #e74c3c;
+}
+
+.add-payment-form input,
+.add-payment-form select {
+    flex: 1;
+    padding: 11px 14px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 15px;
+    min-width: 250px;
+}
+
+.add-payment-form input:focus,
+.add-payment-form select:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
+}
+
+/* Footer buttons */
+.form-payment .dialog-footer {
+    padding: 20px 24px;
+    background: #f9f9f9;
+    border-top: 1px solid #eee;
+    text-align: right;
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+}
+
+.form-payment .dialog-footer button {
+    padding: 10px 24px;
+    border-radius: 6px;
+    font-weight: 600;
+    min-width: 110px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.form-payment .dialog-footer .cancel {
+    background: #95a5a6;
+    color: #fff;
+    border: none;
+}
+
+.form-payment .dialog-footer .cancel:hover {
+    background: #7f8c8d;
+}
+
+.form-payment .dialog-footer .submit {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #fff;
+    border: none;
+}
+
+.form-payment .dialog-footer .submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(102, 126, 234, 0.4);
+}
+
+.form-payment .dialog-footer .submit:disabled {
+    background: #bbb;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .form-payment__content {
+        width: 98vw;
+        margin: 10px;
+    }
+    .add-payment-form .form-row {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .add-payment-form .form-row label {
+        min-width: auto;
+    }
 }
 
 

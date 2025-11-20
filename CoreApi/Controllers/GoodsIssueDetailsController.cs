@@ -37,13 +37,14 @@ namespace CoreApi.Controllers
             return Ok(new { data = "OK" });
         }
 
-        [Route("get-by-id/{issueID}/{productID}")]
+        
+        [Route("get-by-id/{issueID}")]
         [HttpGet]
-        public GoodsIssueDetailsModel GetDatabyID(int issueID, int productID)
+        public IEnumerable<GoodsIssueDetailsModel> GetDatabyID(int issueID)
         {
-            return _goodsIssueDetailsBusiness.GetDatabyID(issueID, productID);
+            return _goodsIssueDetailsBusiness.GetDatabyID(issueID);
         }
 
-        
+
     }
 }

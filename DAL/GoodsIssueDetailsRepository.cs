@@ -18,17 +18,20 @@ namespace DAL
             _dbHelper = dbHelper;
         }
 
-        public GoodsIssueDetailsModel GetDatabyID(int issueID, int productID)
+        public List<GoodsIssueDetailsModel> GetDatabyID(int issueID)
         {
             string msgError = "";
             try
             {
-                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "sp_GoodsIssueDetails_get_by_id",
-                    "@IssueID", issueID,
-                    "@ProductID", productID);
+                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(
+                    out msgError,
+                    "sp_GoodsIssueDetails_get_by_IssueID",  // tên SP giữ nguyên
+                    "@IssueID", issueID);
+
                 if (!string.IsNullOrEmpty(msgError))
                     throw new Exception(msgError);
-                return dt.ConvertTo<GoodsIssueDetailsModel>().FirstOrDefault();
+
+                return dt.ConvertTo<GoodsIssueDetailsModel>().ToList();
             }
             catch (Exception ex)
             {
