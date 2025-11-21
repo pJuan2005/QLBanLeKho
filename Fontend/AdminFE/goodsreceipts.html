@@ -138,7 +138,7 @@
 
             <!-- menu button Goods Receipts -->
             <a href="../AdminFE/goodsreceipts.html" ng-if="canShow('greceipts')">
-                <div class="slide-bar__MenuButton">
+                <div class="slide-bar__MenuButton slide-bar__MenuButton--active">
                     <div class="MenuButton-left">
                         <img src="../Shared/img/common/goodReceipt.svg" alt="" class="icon" />
                     </div>
@@ -150,7 +150,7 @@
 
             <!-- menu button Goods Issues -->
             <a href="../AdminFE/goodsissues.html" ng-if="canShow('gissues')">
-                <div class="slide-bar__MenuButton slide-bar__MenuButton--active">
+                <div class="slide-bar__MenuButton ">
                     <div class="MenuButton-left">
                         <img src="../Shared/img/common/goodIssues.svg" alt="" class="icon" />
                     </div>
@@ -259,7 +259,7 @@
                         ng-model="searchAddress" />
                 </div>
                 <div class="top-bar__right">
-                    <p class="role">{{currentUser.role}}</p>
+                    <p class="role">admin</p>
                     <img src="../Shared/img/common/ava.svg" alt="" class="ava" id="avatar" />
                 </div>
             </div>

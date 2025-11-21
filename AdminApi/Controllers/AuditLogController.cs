@@ -6,7 +6,7 @@ using BLL.Interfaces;
 
 namespace AdminApi.Controllers
 {
-    [Authorize(Roles ="Admin")]
+    
     [Route("api/auditlogs")]
     [ApiController]
     public class AuditLogController : ControllerBase
@@ -29,12 +29,12 @@ namespace AdminApi.Controllers
             public DateTime? ToDate { get; set; }
         }
 
-        [HttpGet("search")]
+        [HttpPost("search")]
         public IActionResult Search([FromBody] AuditLogSearchRequest request)
         {
             long total;
             var data = _bus.Search(
-              request.PageIndex,request.PageSize,out total,request.UserId,request.ActionKeyword??string.Empty,request.Operation??string.Empty,request.FromDate,request.ToDate);
+              request.PageIndex,request.PageSize,out total,request.UserId,request.ActionKeyword,request.Operation,request.FromDate,request.ToDate);
             return Ok(new
             {
                 pageIndex = request.PageIndex,
