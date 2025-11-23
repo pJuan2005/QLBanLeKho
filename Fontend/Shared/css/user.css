@@ -170,6 +170,7 @@ input:focus {
   border-radius: 12px;
   background: #f8fafc;
 }
+
 /* ====================app-layout================== */
 .app-layout {
   margin-left: 255px;
@@ -179,9 +180,10 @@ input:focus {
   min-width: 0;
 }
 
+/* ====================Top bar================== */
 .top-bar {
   position: relative;
-  padding: 8px 0px;
+  padding: 8px 0;
   border-bottom: 1px solid #ccc;
 }
 
@@ -208,14 +210,13 @@ input:focus {
 .top-bar__left .icon {
   position: absolute;
   top: 10px;
-  bottom: 10px;
   left: 12px;
-  right: 12px;
+  width: 16px;
+  height: 16px;
 }
 
 .top-bar__right {
   display: flex;
-  justify-content: center;
   align-items: center;
   gap: 5px;
 }
@@ -233,8 +234,6 @@ input:focus {
   color: #0ea5e9;
   font-size: 1.2rem;
   font-weight: 500;
-  line-height: 1.3;
-  cursor: default;
 }
 
 .top-bar__right .ava {
@@ -244,18 +243,22 @@ input:focus {
   cursor: pointer;
 }
 
+/* Dropdown info */
 .top-bar__info {
   display: none;
   position: absolute;
-  z-index: 1;
   right: 32px;
+  top: 60px;
   width: 224px;
-  height: 130px;
   border-radius: 10px;
   border: 0.889px solid #e2e8f0;
   background: #fff;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
-    0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  z-index: 10;
+}
+
+.top-bar__info.active {
+  display: block;
 }
 
 .info-top {
@@ -264,63 +267,47 @@ input:focus {
 }
 
 .info-top .name {
-  color: #0f172a;
-  font-size: 1.6rem;
-  line-height: 1.5;
   margin: 0;
+  font-size: 1.6rem;
+  color: #0f172a;
 }
 
 .info-top .email {
-  color: #64748b;
-  font-size: 1.4rem;
   margin: 0;
-  line-height: 1.5;
+  font-size: 1.4rem;
+  color: #64748b;
 }
 
 .info-mid {
-  padding: 4px;
+  padding: 4px 8px;
 }
 
 .set {
-  color: #0f172a;
-  font-size: 1.4rem;
-  line-height: 1.43;
-  padding-left: 8px;
-  padding-right: 8px;
   margin: 0;
+  font-size: 1.4rem;
+  color: #0f172a;
 }
 
 .info-bottom {
   display: flex;
   align-items: center;
-  padding-top: 7px;
-  padding-bottom: 7px;
-  padding-left: 8px;
   gap: 16px;
+  padding: 8px;
   border-top: 1px solid #ccc;
-}
-
-.info-bottom .icon {
-  margin: 0;
 }
 
 .logout {
   margin: 0;
   color: #ef4444;
   font-size: 1.4rem;
-  line-height: 1.43;
 }
 
-.top-bar__info.active {
-  display: block;
-}
-/* ==============================app-layout-content============================= */
+/* ====================content================== */
 .app-layout-content {
   padding: 30px;
-  
 }
 
-/* container-top */
+/* ==========Container top========== */
 .container-top {
   display: flex;
   align-items: center;
@@ -328,258 +315,176 @@ input:focus {
 }
 
 .name-system {
+  font-size: 2.4rem;
   margin: 0;
   color: #0f172a;
-  font-size: 2.4rem;
-  font-weight: 500;
 }
 
 .desc-system {
-  color: #64748b;
   font-size: 1.6rem;
-  margin: 0;
+  margin-top: 4px;
+  color: #64748b;
 }
 
+/* Buttons container */
 .container-top--right {
   display: flex;
-  gap: 8px;
+  gap: 12px;
+}
+
+/* Common button */
+.control {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+  background: #fff;
+  font-size: 1.4rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.control:hover {
+  border-color: #cbd5e1;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }
 
 .icon-control {
   width: 16px;
   height: 16px;
-  margin: 0;
 }
 
-.name-control {
-  margin: 0;
+/* Special: Add User button */
+.add-User {
+  background: #0ea5e9;
+  color: #fff !important;
+  border: none;
 }
 
-.control {
-  display: flex;
-  justify-content: center;
-  gap: 16px;
-  padding: 7px;
-  align-items: center;
+.add-User:hover {
+  background: #0284c7;
+}
+
+/* ====================SEARCH USERS================== */
+.search-username-fullname-users {
+  margin-top: 24px;
+  position: relative;
+}
+
+.search-username-fullname-users .search {
+  width: 100%;
+  height: 36px;
+  padding: 4px 12px 4px 40px;
   border-radius: 10px;
   border: 0.889px solid #e2e8f0;
-  background: #fff;
-  cursor: pointer;
-  color: #0f172a;
-  font-size: 1.4rem;
-  font-weight: 500;
+  background: rgba(248, 250, 252, 0.5);
 }
 
-.add-promotion {
-  background-color: #0ea5e9;
-  color: #fff;
+.search-username-fullname-users .icon {
+  position: absolute;
+  top: 10px;
+  left: 12px;
+  width: 16px;
+  height: 16px;
 }
 
-.container-card {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 20px; /* thêm dòng này */
-  margin-bottom: 20px;
-}
-
-
-.card {
-  flex: 1 1 30%;
-  padding: 16px;
-  border-radius: 16px;
-  border: 0.889px solid #e2e8f0;
-  background: #fff;
-}
-
-.name-card {
-  margin: 0;
-  color: #64748b;
-  font-size: 1.4rem;
-}
-
-.data-card {
-  color: #0f172a;
-  margin: 0;
-  font-size: 2.4rem;
-}
-
-.search-promotion {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
-  align-items: center;
-  justify-content: center; /* thêm dòng này */
-  margin-bottom: 20px;
-}
-
-
-.search-group {
-  display: flex;
-  flex-direction: column;
-}
-
-.search-input {
-  padding: 8px 12px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 1.2rem;
-}
-
-/* =====phân trang===== */
+/* ====================Pagination================== */
 .pager-info {
-  display: flex;
-  justify-content: center;
+  text-align: center;
   margin-top: 12px;
-  color: #0f172a;
   font-size: 1.4rem;
-  line-height: 1.4;
+  color: #0f172a;
 }
 
-.pager label {
-  color: #0f172a;
-  font-family: Inter;
-  font-size: 1.4rem;
-  line-height: 1.4;
-}
-
-.page-nav{
+.page-nav {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-top: 6px;
+  gap: 6px;
 }
 
 .btn {
   background: rgba(248, 250, 252, 0.5);
   border: 1px solid #ccc;
-  border-radius: 2px;
-  color: #0f172a;
-  font-family: Inter;
+  border-radius: 4px;
   font-size: 1.4rem;
-  line-height: 1.4;
+  padding: 4px 10px;
+  cursor: pointer;
 }
 
+/* ====================TABLE================== */
 
-/* ==============table promotion============= */
 .table {
   margin-top: 24px;
-  border: 1px solid #e2e8f0;
   width: 100%;
-  table-layout: fixed; /* giữ độ rộng cột ổn định */
+  border: 1px solid #e2e8f0;
   border-collapse: collapse;
-  color: #0f172a;
+  table-layout: fixed;
   font-size: 1.4rem;
-  line-height: 1.4;
+  color: #0f172a;
 }
 
-/* cell chung */
 .table th,
 .table td {
   padding: 12px 14px;
-  vertical-align: middle;
-  overflow: hidden;
+  white-space: nowrap;
   text-overflow: ellipsis;
+  overflow: hidden;
 }
 
-/* --- CHIA CỘT: khớp class hiện có --- */
-
-/* ID nhỏ gọn */
-.table thead th.id,
-.table tbody td:nth-child(1) {
-  width: 100px;
-  text-align: center;
-  white-space: nowrap;
-}
-
-/* Name */
-.table thead th.name,
-.table tbody td:nth-child(2) {
-  width: 20%;
-  white-space: nowrap;
-}
-
-/* Type */
-.table thead th.type,
-.table tbody td:nth-child(3) {
-  width: 120px;
-  text-align: center;
-  white-space: nowrap;
-}
-
-/* Value */
-.table thead th.value,
-.table tbody td:nth-child(4) {
-  width: 100px;
-  text-align: right;
-  white-space: nowrap;
-}
-
-/* Start Date */
-.table thead th.start,
-.table tbody td:nth-child(5) {
-  width: 140px;
-  text-align: center;
-  white-space: nowrap;
-}
-
-/* End Date */
-.table thead th.end,
-.table tbody td:nth-child(6) {
-  width: 140px;
-  text-align: center;
-  white-space: nowrap;
-}
-
-/* Category */
-.table thead th.category,
-.table tbody td:nth-child(7) {
-  width: 120px;
-  text-align: center;
-  white-space: nowrap;
-}
-
-/* Status */
-.table thead th.status,
-.table tbody td:nth-child(8) {
-  width: 120px;
-  text-align: center;
-  white-space: nowrap;
-}
-
-/* Actions: đủ cho 2 nút */
-.table thead th.action,
-.table tbody td:nth-child(9) {
-  width: 170px;
-  text-align: right;
-  white-space: nowrap;
-}
-
-/* viền nhẹ */
 .table thead th {
-  border: 1px solid #e2e8f0;
+  background: #f8fafc;
+  border-bottom: 1px solid #e2e8f0;
   font-weight: 600;
-  color: #0f172a;
 }
+
+/* Column widths */
+.table th.id { width: 100px; text-align: center; }
+.table th.username { width: 18%; }
+.table th.fullname { width: 18%; }
+.table th.role { width: 120px; text-align: center; }
+.table th.email { width: 200px; }
+.table th.phone { width: 120px; }
+.table th.action { 
+  width: 220px; /* tăng từ 150px lên 220px */
+  text-align: right; 
+}
+
+
+
+/* Table rows */
 .table tbody tr + tr td {
   border-top: 1px solid #f1f5f9;
 }
 
-/* nút hành động */
+/* Buttons inside table */
 .txt-right button {
-  cursor: pointer;
-  border: none;
   background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px 6px; /* giảm padding một chút để vừa khít */
+  font-size: 1.4rem;
+  white-space: nowrap; /* không xuống dòng */
 }
 
-.txt-right button:hover {
-  color: #0ea5e9;
-}
+.txt-right button:hover { color: #0ea5e9; }
+.txt-right button.danger:hover { color: #ef4444; }
 
-/* ========================= ADD PROMOTION ======================== */
-/* Modal Add Promotion */
-.form-add {
+.table .empty {
+  text-align: center;
+  color: #94a3b8;
+  font-size: 1.5rem;
+  font-style: italic;
+  padding: 40px;
+}
+/* ========================= DETAIL USER ======================== */
+.form-detail {
   position: fixed;
-  inset: 0;                /* top:0; right:0; bottom:0; left:0 */
+  inset: 0;
   display: none;           /* mặc định ẩn */
   align-items: center;
   justify-content: center;
@@ -587,7 +492,7 @@ input:focus {
 }
 
 /* nền mờ */
-.form-add::before {
+.form-detail::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -596,6 +501,81 @@ input:focus {
 }
 
 /* hộp nội dung */
+.form-detail__content {
+  position: relative;
+  width: min(92vw, 400px); /* nhỏ hơn form Add/Edit */
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  box-shadow: 0 24px 48px rgba(2, 6, 23, 0.18);
+  padding: 20px 24px;
+  z-index: 1;
+  animation: modalIn 0.18s ease-out;
+  font-size: 14px;
+  color: #0f172a;
+}
+
+.form-detail__content .title {
+  margin: 0 0 8px 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+/* đoạn hiển thị thông tin */
+.form-detail__content p {
+  margin: 8px 0;
+}
+
+/* footer nút */
+.dialog-footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 16px;
+}
+
+.dialog-footer .cancel {
+  border: 1px solid #e2e8f0;
+  background: #fff;
+  padding: 6px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+/* mở modal */
+.form-detail.open {
+  display: flex;
+}
+
+/* khóa scroll nền khi mở modal */
+body.modal-open {
+  overflow: hidden;
+}
+
+
+/* ========================= ADD USER ======================== */
+.form-add {
+  position: fixed;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.form-add.open {
+  display: flex;
+}
+
+.form-add::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.45);
+  backdrop-filter: blur(2px);
+}
+
 .form-add__content {
   position: relative;
   width: min(92vw, 560px);
@@ -608,7 +588,6 @@ input:focus {
   animation: modalIn 0.18s ease-out;
 }
 
-/* tiêu đề + mô tả */
 .form-add__content .title {
   margin: 0 0 4px 0;
   font-size: 20px;
@@ -621,7 +600,6 @@ input:focus {
   font-size: 14px;
 }
 
-/* label + input */
 .form-add__content label {
   display: block;
   color: #0f172a;
@@ -631,10 +609,8 @@ input:focus {
 }
 
 .form-add__content input[type="text"],
-.form-add__content input[type="number"],
-.form-add__content input[type="date"],
-.form-add__content select,
-.form-add__content textarea {
+.form-add__content input[type="email"],
+.form-add__content input[type="password"] {
   width: 100%;
   border: 1px solid #e2e8f0;
   border-radius: 8px;
@@ -642,29 +618,156 @@ input:focus {
   font-size: 14px;
   outline: none;
   transition: border-color 0.15s, box-shadow 0.15s;
-  background: #fff;
 }
 
-.form-add__content textarea {
-  resize: vertical;
-}
-
-.form-add__content input[type="text"]:focus,
-.form-add__content input[type="number"]:focus,
-.form-add__content input[type="date"]:focus,
-.form-add__content select:focus,
-.form-add__content textarea:focus {
+.form-add__content input:focus {
   border-color: #0ea5e9;
   box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.18);
 }
 
-/* hàng 2 cột (Type/Value, StartDate/EndDate) */
+/* Select */
+.form-add__content select {
+  width: 100%;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 14px;
+  background: #fff;
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.form-add__content select:focus {
+  border-color: #0ea5e9;
+  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.18);
+}
+
+/* Flex 2 cột */
 .form-add__content .both {
   display: flex;
   gap: 12px;
 }
+
 .form-add__content .both-left,
 .form-add__content .both-right {
+  flex: 1;
+}
+
+/* Footer */
+.dialog-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.dialog-footer .cancel {
+  border: 1px solid #e2e8f0;
+  background: #fff;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.dialog-footer .cancel:hover {
+  background: #f1f5f9;
+}
+
+.dialog-footer .submit {
+  border: 0;
+  background: #0ea5e9;
+  color: #fff;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.dialog-footer .submit:hover {
+  background: #0284c7;
+}
+
+/* ========================= EDIT USER ======================== */
+.form-edit {
+  position: fixed;
+  inset: 0;
+  display: none;           /* mặc định ẩn */
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+/* nền mờ */
+.form-edit::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.45);
+  backdrop-filter: blur(2px);
+}
+
+/* hộp nội dung */
+.form-edit__content {
+  position: relative;
+  width: min(92vw, 560px);
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  box-shadow: 0 24px 48px rgba(2, 6, 23, 0.18);
+  padding: 20px 24px;
+  z-index: 1;
+  animation: modalIn 0.18s ease-out;
+}
+
+/* tiêu đề + mô tả */
+.form-edit__content .title {
+  margin: 0 0 4px 0;
+  font-size: 20px;
+  font-weight: 700;
+  color: #0f172a;
+}
+.form-edit__content .desc {
+  margin: 0 0 16px 0;
+  color: #64748b;
+  font-size: 14px;
+}
+
+/* label + input */
+.form-edit__content label {
+  display: block;
+  color: #0f172a;
+  font-weight: 500;
+  font-size: 14px;
+  margin: 12px 0 6px;
+}
+
+.form-edit__content input[type="text"],
+.form-edit__content input[type="password"],
+.form-edit__content input[type="email"],
+.form-edit__content select {
+  width: 100%;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.form-edit__content input:focus,
+.form-edit__content select:focus {
+  border-color: #0ea5e9;
+  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.18);
+}
+
+/* hàng 2 cột (Phone / Email) */
+.form-edit__content .both {
+  display: flex;
+  gap: 12px;
+}
+.form-edit__content .both-left,
+.form-edit__content .both-right {
   flex: 1;
 }
 
@@ -693,8 +796,8 @@ input:focus {
   font-size: 14px;
 }
 
-/* mở modal add */
-.form-add.open {
+/* mở modal edit */
+.form-edit.open {
   display: flex;
 }
 
@@ -702,104 +805,7 @@ input:focus {
 body.modal-open {
   overflow: hidden;
 }
-
-/* ========================= EDIT PROMOTION ======================== */
-.form-edit {
-  position: fixed;
-  inset: 0;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-}
-
-.form-edit::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(15, 23, 42, 0.45);
-  backdrop-filter: blur(2px);
-}
-
-.form-edit__content {
-  position: relative;
-  width: min(92vw, 560px);
-  background: #fff;
-  border: 1px solid #e2e8f0;
-  border-radius: 12px;
-  box-shadow: 0 24px 48px rgba(2, 6, 23, 0.18);
-  padding: 20px 24px;
-  z-index: 1;
-  animation: modalIn 0.18s ease-out;
-}
-
-/* tiêu đề */
-.form-edit__content .title {
-  margin: 0 0 4px 0;
-  font-size: 20px;
-  font-weight: 700;
-  color: #0f172a;
-}
-.form-edit__content .desc {
-  margin: 0 0 16px 0;
-  color: #64748b;
-  font-size: 14px;
-}
-
-/* label + input */
-.form-edit__content label {
-  display: block;
-  color: #0f172a;
-  font-weight: 500;
-  font-size: 14px;
-  margin: 12px 0 6px;
-}
-
-.form-edit__content input[type="text"],
-.form-edit__content input[type="number"],
-.form-edit__content input[type="date"],
-.form-edit__content select,
-.form-edit__content textarea {
-  width: 100%;
-  border: 1px solid #e2e8f0;
-  border-radius: 8px;
-  padding: 10px 12px;
-  font-size: 14px;
-  outline: none;
-  transition: border-color 0.15s, box-shadow 0.15s;
-  background: #fff;
-}
-
-.form-edit__content textarea {
-  resize: vertical;
-}
-
-.form-edit__content input[type="text"]:focus,
-.form-edit__content input[type="number"]:focus,
-.form-edit__content input[type="date"]:focus,
-.form-edit__content select:focus,
-.form-edit__content textarea:focus {
-  border-color: #0ea5e9;
-  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.18);
-}
-
-/* hàng 2 cột (Type/Value, StartDate/EndDate) */
-.form-edit__content .both {
-  display: flex;
-  gap: 12px;
-}
-.form-edit__content .both-left,
-.form-edit__content .both-right {
-  flex: 1;
-}
-
-/* footer dùng lại .dialog-footer, .cancel, .submit ở trên */
-
-/* mở modal edit */
-.form-edit.open {
-  display: flex;
-}
-/* ========================= DELETE PROMOTION ======================== */
+/* ========================= DELETE User ======================== */
 .form-delete {
   position: fixed;
   inset: 0;
@@ -830,7 +836,6 @@ body.modal-open {
   animation: modalIn 0.18s ease-out;
 }
 
-/* tiêu đề + mô tả */
 .form-delete__content .title {
   margin: 0 0 8px 0;
   font-size: 20px;
@@ -844,7 +849,7 @@ body.modal-open {
   line-height: 1.5;
 }
 
-/* footer nút */
+/* footer nút dùng lại .dialog-footer */
 .dialog-footer .danger {
   background: #ef4444;
   color: #fff;
@@ -865,14 +870,4 @@ body.modal-open {
 }
 
 
-/* ========================= ANIMATION ========================= */
-@keyframes modalIn {
-  from {
-    transform: translateY(8px);
-    opacity: 0.8;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
+

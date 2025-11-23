@@ -1,0 +1,585 @@
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+/* khôi phục font chữ */
+body {
+  font-size: 1.6rem;
+  font-family: "Inter", sans-serif;
+  margin: 0;
+}
+
+/* =====================common==================== */
+a {
+  text-decoration: none;
+}
+
+input,
+textarea,
+select,
+button {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+input:focus {
+  outline: none;
+  border: 1px solid #0ea5e9;
+  border-bottom: none;
+  box-shadow: 0 0 0 2px rgba(14, 165, 233, 0.3);
+}
+
+/* ====================main====================== */
+.app-content {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* ====================slide-bar===================== */
+.slide-bar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  width: 255px;
+  border-right: 1px solid #000;
+  background: #fff;
+}
+
+.slide-bar__header {
+  padding: 16px;
+  border: 1px solid #ccc;
+  border-right: none;
+}
+
+.slide-bar__header .app-slideBar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.app-slideBar__left {
+  width: 40px;
+  height: 40px;
+  border-radius: 16px;
+  background: #0ea5e9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.app-slideBar__right .name-app {
+  color: #0f172a;
+  font-size: 2rem;
+  font-weight: 500;
+  margin: 0;
+}
+
+.app-slideBar__right .title-nameApp {
+  color: #64748b;
+  font-family: Inter;
+  font-size: 1.2rem;
+  margin: 0;
+  margin-top: 2px;
+}
+
+.slide-bar__Content {
+  padding: 8px;
+  flex: 1 1 auto;
+  overflow-y: auto;
+}
+
+.slide-bar__label {
+  padding: 0 8px;
+  color: rgba(15, 23, 42, 0.7);
+  font-size: 1.2rem;
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+.slide-bar__MenuButton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-left: 8px;
+}
+
+.MenuButton-right {
+  color: #0f172a;
+  font-size: 1.4rem;
+  line-height: 1.43;
+}
+
+.name-menu-active {
+  font-weight: 500;
+}
+
+.slide-bar__MenuButton--active {
+  border-radius: 10px;
+  background: #f8fafc;
+}
+
+.slide-bar__MenuButton:hover {
+  border-radius: 10px;
+  background: #f8fafc;
+}
+.slide-bar__footer {
+  border-top: 1px solid #ccc;
+  padding: 16px;
+}
+
+.slide-bar__footer .app-slide-bar {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  gap: 12px;
+}
+
+.app-slide-bar .ava {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.app-slide-bar .info .name {
+  color: #0f172a;
+  font-size: 1.4rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.app-slide-bar .info .role {
+  color: #64748b;
+  font-size: 1.2rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.app-slide-bar {
+  border-radius: 12px;
+  background: #f8fafc;
+}
+/* ====================app-layout================== */
+.app-layout {
+  margin-left: 255px;
+  height: 100vh;
+  width: calc(100vw - 255px);
+  overflow: auto;
+  min-width: 0;
+}
+
+.top-bar {
+  position: relative;
+  padding: 8px 0px;
+  border-bottom: 1px solid #ccc;
+}
+
+.top-bar__content {
+  padding: 0 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.top-bar__left {
+  position: relative;
+}
+
+.top-bar__left .search {
+  width: 448px;
+  height: 36px;
+  padding: 4px 12px 4px 40px;
+  border-radius: 10px;
+  border: 0.889px solid #e2e8f0;
+  background: rgba(248, 250, 252, 0.5);
+}
+
+.top-bar__left .icon {
+  position: absolute;
+  top: 10px;
+  bottom: 10px;
+  left: 12px;
+  right: 12px;
+}
+
+.top-bar__right {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
+
+.top-bar__right .role {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 21px;
+  padding: 2px 8px;
+  border-radius: 10px;
+  border: 0.889px solid rgba(14, 165, 233, 0.2);
+  background: rgba(14, 165, 233, 0.1);
+  color: #0ea5e9;
+  font-size: 1.2rem;
+  font-weight: 500;
+  line-height: 1.3;
+  cursor: default;
+}
+
+.top-bar__right .ava {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.top-bar__info {
+  display: none;
+  position: absolute;
+  z-index: 1;
+  right: 32px;
+  width: 224px;
+  height: 130px;
+  border-radius: 10px;
+  border: 0.889px solid #e2e8f0;
+  background: #fff;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -2px rgba(0, 0, 0, 0.1);
+}
+
+.info-top {
+  padding: 10px 12px;
+  border-bottom: 1px solid #ccc;
+}
+
+.info-top .name {
+  color: #0f172a;
+  font-size: 1.6rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.info-top .email {
+  color: #64748b;
+  font-size: 1.4rem;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.info-mid {
+  padding: 4px;
+}
+
+.set {
+  color: #0f172a;
+  font-size: 1.4rem;
+  line-height: 1.43;
+  padding-left: 8px;
+  padding-right: 8px;
+  margin: 0;
+}
+
+.info-bottom {
+  display: flex;
+  align-items: center;
+  padding-top: 7px;
+  padding-bottom: 7px;
+  padding-left: 8px;
+  gap: 16px;
+  border-top: 1px solid #ccc;
+}
+
+.info-bottom .icon {
+  margin: 0;
+}
+
+.logout {
+  margin: 0;
+  color: #ef4444;
+  font-size: 1.4rem;
+  line-height: 1.43;
+}
+
+.top-bar__info.active {
+  display: block;
+}
+/* ============================== AUDITLOG LAYOUT  ============================== */
+.app-layout-content {
+    padding: 30px;
+}
+
+/* ==================== CONTAINER TOP  ==================== */
+.container-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+}
+
+.container-top--left {
+    flex: 1;
+}
+
+.name-system {
+    margin: 0 0 4px 0;
+    color: #0f172a;
+    font-size: 2.6rem;
+    font-weight: 600;
+    line-height: 1.2;
+}
+
+.desc-system {
+    margin: 0;
+    color: #64748b;
+    font-size: 1.5rem;
+    font-weight: 400;
+}
+
+/* Không có nút Add → bỏ phần right để tránh khoảng trống thừa */
+.container-top:empty ~ .container-top--right,
+.container-top--right {
+    display: none !important;
+}
+
+/* ==================== TÌM KIẾM AUDITLOG  ==================== */
+.search-auditlog {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    padding: 20px;
+    background: #f8f9ff;
+    border-radius: 14px;
+    margin-bottom: 24px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    align-items: end;
+}
+
+.search-auditlog .search-field {
+    flex: 1;
+    min-width: 200px;
+    display: flex;
+    flex-direction: column;
+}
+
+.search-auditlog label {
+    font-size: 1.35rem;
+    color: #475569;
+    margin-bottom: 6px;
+    font-weight: 600;
+}
+
+.search-auditlog .search {
+    height: 44px;
+    padding: 0 14px;
+    border-radius: 10px;
+    border: 1.5px solid #cbd5e1;
+    font-size: 1.4rem;
+    background: #ffffff;
+    transition: all 0.25s ease;
+}
+
+.search-auditlog .search:focus {
+    outline: none;
+    border-color: #0ea5e9;
+    box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.18);
+    background: #fff;
+}
+
+.search-auditlog select.search {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2364748b'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 16px;
+}
+
+/* Responsive cho mobile */
+@media (max-width: 768px) {
+    .search-auditlog {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .search-auditlog .search-field {
+        min-width: auto;
+    }
+    
+    .name-system {
+        font-size: 2.2rem;
+    }
+}
+/* =====phân trang===== */
+.pager-info {
+  display: flex;
+  justify-content: center;
+  margin-top: 12px;
+  color: #0f172a;
+  font-size: 1.4rem;
+  line-height: 1.4;
+}
+
+.pager label {
+  color: #0f172a;
+  font-family: Inter;
+  font-size: 1.4rem;
+  line-height: 1.4;
+}
+
+.page-nav{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn {
+  background: rgba(248, 250, 252, 0.5);
+  border: 1px solid #ccc;
+  border-radius: 2px;
+  color: #0f172a;
+  font-family: Inter;
+  font-size: 1.4rem;
+  line-height: 1.4;
+}
+
+.search-phone-customer {
+  margin-top: 24px;
+  position: relative;
+}
+
+.search-phone-customer .search {
+  width: 100%;
+  height: 36px;
+  padding: 4px 12px 4px 40px;
+  border-radius: 10px;
+  border: 0.889px solid #e2e8f0;
+  background: rgba(248, 250, 252, 0.5);
+}
+
+.search-phone-customer .icon {
+  position: absolute;
+  top: 10px;
+  bottom: 10px;
+  left: 12px;
+  right: 12px;
+}
+/* ============== BẢNG AUDITLOG – ĐẸP NHƯ GOODSISSUES ============= */
+.table-responsive {
+    overflow: visible !important;
+    position: relative;
+    margin-top: 24px;
+}
+
+.table {
+    margin-top: 0 !important;
+    border: 1px solid #e2e8f0;
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+    color: #0f172a;
+    font-size: 1.38rem;
+    line-height: 1.45;
+    z-index: 1;
+}
+
+.table th,
+.table td {
+    padding: 12px 14px;
+    vertical-align: middle;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    border-right: 1px solid #f1f5f9;
+}
+
+.table th:last-child,
+.table td:last-child { border-right: none; }
+
+/* Cột cố định */
+.table thead th.id           { width: 80px;  text-align: center; }
+.table thead th.user         { width: 90px;  text-align: center; }
+.table thead th.username     { width: 140px; }
+.table thead th.fullname     { width: 160px; }
+.table thead th.entity       { width: 120px; text-align: center; }
+.table thead th.entity-id    { width: 100px; text-align: center; }
+.table thead th.operation    { width: 110px; text-align: center; }
+.table thead th.details      { width: 280px; }
+.table thead th.date         { width: 160px; text-align: center; }
+
+/* Header */
+.table thead th {
+    border-bottom: 2px solid #e2e8f0;
+    font-weight: 600;
+    color: #1e293b;
+    background-color: #f8fafc;
+    font-size: 1.35rem;
+}
+
+/* Dòng dữ liệu */
+.table tbody tr:hover {
+    background-color: #f1f5f9;
+}
+
+.table tbody td {
+    border-top: 1px solid #f1f5f9;
+}
+
+/* Tag Entity */
+.tag-entity {
+    padding: 4px 10px;
+    background: #e0e7ff;
+    color: #4338ca;
+    border-radius: 6px;
+    font-size: 1.25rem;
+    font-weight: 500;
+}
+
+/* Tag Operation – màu đẹp theo loại */
+.tag-op {
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: white;
+}
+.tag-create  { background: #22c55e; }
+.tag-update  { background: #3b82f6; }
+.tag-delete  { background: #ef4444; }
+.tag-login   { background: #8b5cf6; }
+
+/* Chi tiết – tooltip khi hover */
+.details-text {
+    cursor: help;
+    color: #475569;
+}
+.details-text:hover {
+    color: #0ea5e9;
+    text-decoration: underline;
+}
+
+/* Dòng trống */
+.empty {
+    text-align: center;
+    padding: 40px !important;
+    color: #94a3b8;
+    font-style: italic;
+    font-size: 1.5rem;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+    .table thead th.details { width: 200px; }
+    .table thead th.fullname { width: 140px; }
+}

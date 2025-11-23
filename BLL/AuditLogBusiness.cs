@@ -47,6 +47,8 @@ namespace BLL
         {
             //chuẩn hoá keyword
             actionKeyword = string.IsNullOrEmpty(actionKeyword) ? null : actionKeyword.Trim();
+            // Chuẩn hóa operation (THIẾU DÒNG NÀY)
+            operation = string.IsNullOrWhiteSpace(operation) ? null : operation.Trim();
 
             return _res.Search(pageIndex, pageSize,out total,userId,actionKeyword,operation,fromDate,toDate);
         }
