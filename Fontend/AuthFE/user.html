@@ -13,14 +13,14 @@
         rel="stylesheet" />
 
     <!-- css -->
-    <link rel="stylesheet" href="../Shared/css/goodsissues.css" />
+    <link rel="stylesheet" href="../Shared/css/user.css" />
     <script src="../Shared/angular/angular.min.js"></script>
     <script src="../Shared/angular/global.js"></script>
-    <script src="../Shared/angular/goodsissues.js"></script>
-    <title>GoodsIssues</title>
+    <script src="../Shared/angular/user.js"></script>
+    <title>User</title>
 </head>
 
-<body ng-app="AppRetailPos" ng-controller="goodsissuesCtrl">
+<body ng-app="AppRetailPos" ng-controller="userCtrl">
     <div class="slide-bar">
         <div class="slide-bar__header">
             <div class="app-slideBar">
@@ -48,12 +48,12 @@
             </a>
             <!-- menu button POS -->
             <a href="../AdminFE/pos.html" ng-if="canShow('pos')">
-                <div class="slide-bar__MenuButton">
+                <div class="slide-bar__MenuButton ">
                     <div class="MenuButton-left">
                         <img src="../Shared/img/common/pos.svg" alt="" class="icon" />
                     </div>
                     <div class="MenuButton-right">
-                        <p class="name-menu">POS</p>
+                        <p class="name-menu-active">POS</p>
                     </div>
                 </div>
             </a>
@@ -79,7 +79,6 @@
                     </div>
                 </div>
             </a>
-
             <!-- menu button Promotions -->
             <a href="../AdminFE/promotions.html" ng-if="canShow('promotions')">
                 <div class="slide-bar__MenuButton">
@@ -93,12 +92,12 @@
             </a>
             <!-- menu button Customers -->
             <a href="../AdminFE/customers.html" ng-if="canShow('customers')">
-                <div class="slide-bar__MenuButton ">
+                <div class="slide-bar__MenuButton">
                     <div class="MenuButton-left">
                         <img src="../Shared/img/common/customer.svg" alt="" class="icon" />
                     </div>
                     <div class="MenuButton-right">
-                        <p class="name-menu-active">Customers</p>
+                        <p class="name-menu">Customers</p>
                     </div>
                 </div>
             </a>
@@ -125,7 +124,7 @@
                 </div>
             </a>
             <!-- menu button StockCard -->
-            <a href="../AdminFE/stockcard.html" ng-if="canShow('stock')">
+            <a href="../AdminFE/stockcard.html" ng-if="canShow('purchaseOrders')">
                 <div class="slide-bar__MenuButton">
                     <div class="MenuButton-left">
                         <img src="../Shared/img/common/stock.svg" alt="" class="icon" />
@@ -135,10 +134,9 @@
                     </div>
                 </div>
             </a>
-
             <!-- menu button Goods Receipts -->
             <a href="../AdminFE/goodsreceipts.html" ng-if="canShow('greceipts')">
-                <div class="slide-bar__MenuButton ">
+                <div class="slide-bar__MenuButton">
                     <div class="MenuButton-left">
                         <img src="../Shared/img/common/goodReceipt.svg" alt="" class="icon" />
                     </div>
@@ -147,10 +145,9 @@
                     </div>
                 </div>
             </a>
-
             <!-- menu button Goods Issues -->
             <a href="../AdminFE/goodsissues.html" ng-if="canShow('gissues')">
-                <div class="slide-bar__MenuButton slide-bar__MenuButton--active">
+                <div class="slide-bar__MenuButton">
                     <div class="MenuButton-left">
                         <img src="../Shared/img/common/goodIssues.svg" alt="" class="icon" />
                     </div>
@@ -159,7 +156,6 @@
                     </div>
                 </div>
             </a>
-
             <!-- menu button Sales -->
             <a href="../AdminFE/sales.html" ng-if="canShow('sales')">
                 <div class="slide-bar__MenuButton">
@@ -217,7 +213,7 @@
             </a>
             <!-- menu button Users -->
             <a href="../AdminFE/users.html" ng-if="canShow('users')">
-                <div class="slide-bar__MenuButton">
+                <div class="slide-bar__MenuButton slide-bar__MenuButton--active">
                     <div class="MenuButton-left">
                         <img src="../Shared/img/common/user.svg" alt="" class="icon" />
                     </div>
@@ -284,58 +280,23 @@
         <div class="app-layout-content">
             <div class="container-top">
                 <div class="container-top--left">
-                    <h1 class="name-system">GoodsIssues</h1>
+                    <h1 class="name-system">Users</h1>
                     <p class="desc-system">
-                        Manage warehouse outbound transactions and inventory issues
+                        Manage user accounts and permissions
                     </p>
                 </div>
+                <div class="container-top--right">
 
-                <div class="control add-goodsissues" ng-click="openAddIssue()">
-                    <img src="../Shared/img/common/plus.svg" alt="" class="icon-control" />
-                    <p class="name-control">Add GoodsIssues </p>
-                </div>
-
-
-            </div>
-
-            <!-- ===== THỐNG KÊ (chỉ 1 ô) ===== -->
-            <div class="container-card">
-                <div class="card card--total-issues">
-                    <p class="name-card">Total Goods Issues</p>
-                    <p class="data-card">{{stats.totalIssues}}</p>
+                    <div class="control add-User" ng-click="openAdd()">
+                        <img src="../Shared/img/common/plus.svg" alt="" class="icon-control" />
+                        <p class="name-control">Add User</p>
+                    </div>
                 </div>
             </div>
-            <!-- ===== TÌM KIẾM GOODS ISSUES ===== -->
-            <div class="search-goodissues">
-                <!-- Từ ngày -->
-                <div class="search-field">
-                    <label>From Date:</label>
-                    <input type="date" ng-model="searchFromDate" class="search" />
-                </div>
-
-                <!-- Đến ngày -->
-                <div class="search-field">
-                    <label>To Date:</label>
-                    <input type="date" ng-model="searchToDate" class="search" />
-                </div>
-
-                <!-- Số tiền nhỏ nhất -->
-                <div class="search-field">
-                    <label>Min Amount:</label>
-                    <input type="number" ng-model="searchMinAmount" class="search" placeholder="0" />
-                </div>
-
-                <!-- Số tiền lớn nhất -->
-                <div class="search-field">
-                    <label>Max Amount:</label>
-                    <input type="number" ng-model="searchMaxAmount" class="search" placeholder="1000000" />
-                </div>
-
-                <!-- UserID (thay cho POID) -->
-                <div class="search-field">
-                    <label>User ID:</label>
-                    <input type="text" ng-model="searchUserID" class="search" placeholder="Enter User ID" />
-                </div>
+            <div class="search-username-fullname-users">
+                <img src="../Shared/img/common/search.svg" alt="" class="icon" />
+                <input class="search" type="text" placeholder="Search by Username or Full Name"
+                    ng-model="searchUserText" />
             </div>
 
             <!-- phân trang -->
@@ -369,170 +330,199 @@
                     </button>
                 </div>
             </div>
-            <!-- ===== BẢNG HIỂN THỊ GOODS ISSUES ===== -->
             <div class="card-table">
                 <div class="table-responsive">
                     <table class="table">
                         <thead>
                             <tr>
-                                <th class="id">Issue ID</th>
-                                <th class="date">Issue Date</th>
-                                <th class="user">User ID</th>
-                                <th class="amount">Total Amount</th>
+                                <th class="id">User ID</th>
+                                <th class="fullname">Full Name</th>
+                                <th class="role">Role</th>
+                                <th class="email">Email</th>
+                                <th class="phone">Phone</th>
                                 <th class="action txt-right">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="gi in goodsIssues">
-                                <td>{{gi.issueID}}</td>
-                                <td>{{gi.issueDate | date:'yyyy-MM-dd'}}</td>
-                                <td>{{gi.userID}}</td>
-                                <td class="txt-right">{{gi.totalAmount | number:2}}đ</td>
-                                <td class="txt-right action-cell">
-                                    <div class="action-menu">
-                                        <button class="menu-toggle" ng-click="toggleActionMenu(gi)">⚙</button>
-                                        <ul class="menu-list" ng-show="gi.showMenu">
-                                            <li ng-click="detail(gi)">🔍 Detail</li>
-                                        </ul>
-                                    </div>
+                            <tr ng-repeat="u in users">
+                                <td>{{u.userID || u.UserID}}</td>
+                                <td>{{u.fullName || u.FullName}}</td>
+                                <td>{{u.role || u.Role}}</td>
+                                <td>{{u.email || u.Email}}</td>
+                                <td>{{u.phone || u.Phone}}</td>
+                                <td class="txt-right">
+                                    <button class="link" ng-click="edit(u)">✎ Edit</button>
+                                    <button class="link danger" ng-click="remove(u)">🗑 Delete</button>
+                                    <button class="link" ng-click="detail(u)">🔍 Detail</button>
                                 </td>
                             </tr>
-                            <tr ng-if="goodsIssues.length == 0">
-                                <td colspan="5" class="empty">No Data</td>
+
+                            <tr ng-if="(users | filter:searchUserText).length == 0">
+                                <td colspan="6" class="empty">No Data</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
+
+            <!-- form -->
             <div class="form">
-                <!-- Add Goods Issue -->
-                <div class="form-add" ng-class="{open: showAddIssue}" ng-click="closeAddIssueOnOverlay($event)">
+                <!-- add -->
+                <div class="form-add" ng-class="{open: showAdd}" ng-click="closeAddOnOverlay($event)">
                     <div class="form-add__content" ng-click="$event.stopPropagation()">
-                        <h3 class="title">Add New Goods Issue</h3>
-                        <p class="desc">Enter issue details and products to issue</p>
+                        <h3 class="title">Add New User</h3>
+                        <p class="desc">Enter user account information</p>
 
-                        <form name="frmAddGI" ng-submit="addGoodsIssue()">
-                            <!-- Phiếu xuất -->
-                            <label for="userid">User ID</label>
-                            <input type="number" id="userid" required placeholder="Enter User ID"
-                                ng-model="newIssue.UserID" />
+                        <form name="frmAddUser" ng-submit="addUser()">
 
-                            <!-- Chi tiết phiếu xuất -->
-                            <h4 class="subtitle">Issue Details</h4>
-                            <div ng-repeat="item in newIssueDetails" class="detail-row">
-                                <label>Product ID</label>
-                                <input type="number" ng-model="item.ProductID" required placeholder="Product ID" />
+                            <!-- Username -->
+                            <label for="username-add">Username</label>
+                            <input type="text" id="username-add" required placeholder="Enter username"
+                                ng-model="newUser.Username" />
 
-                                <label>Quantity</label>
-                                <input type="number" ng-model="item.Quantity" required placeholder="Quantity" min="1" />
+                            <!-- Password -->
+                            <label for="password-add">Password</label>
+                            <input type="password" id="password-add" required placeholder="Enter password"
+                                ng-model="newUser.PasswordHash" />
 
-                                <label>Unit Price</label>
-                                <input type="number" ng-model="item.UnitPrice" required placeholder="Unit Price" min="0"
-                                    step="0.01" />
+                            <div class="both">
+                                <!-- Full Name -->
+                                <div class="both-left">
+                                    <label for="fullname-add">Full Name</label>
+                                    <input type="text" id="fullname-add" required placeholder="Nguyen Van A"
+                                        ng-model="newUser.FullName" />
+                                </div>
 
-                                <button type="button" class="remove"
-                                    ng-click="removeDetailRowForNewIssue($index)">Remove</button>
+                                <!-- Role -->
+                                <div class="both-right">
+                                    <label for="role-add">Role</label>
+                                    <select id="role-add" required ng-model="newUser.Role">
+                                        <option value="" disabled selected>Select role</option>
+                                        <option value="Admin">Admin</option>
+                                        <option value="ThuNgan">Thu Ngân</option>
+                                        <option value="ThuKho">Thủ Kho</option>
+                                        <option value="KeToan">Kế Toán</option>
+                                    </select>
+                                </div>
                             </div>
 
-                            <button type="button" class="add-detail" ng-click="addDetailRowForNewIssue()">+ Add
-                                Product</button>
+                            <div class="both">
+                                <!-- Phone -->
+                                <div class="both-left">
+                                    <label for="phone-add">Phone</label>
+                                    <input type="text" id="phone-add" placeholder="+84 123 456 789"
+                                        ng-model="newUser.Phone" />
+                                </div>
 
-                            <!-- Footer -->
+                                <!-- Email -->
+                                <div class="both-right">
+                                    <label for="email-add">Email</label>
+                                    <input type="email" id="email-add" placeholder="user@email.com"
+                                        ng-model="newUser.Email" />
+                                </div>
+                            </div>
+
                             <div class="dialog-footer">
-                                <button type="button" class="cancel" ng-click="cancelAddIssue()">Cancel</button>
-                                <input class="submit" type="submit" value="Add Issue"
-                                    ng-disabled="frmAddGI.$invalid || savingAddIssue || newIssueDetails.length === 0" />
+                                <button type="button" class="cancel" ng-click="cancelAdd()">Cancel</button>
+                                <input class="submit" type="submit" value="Add User"
+                                    ng-disabled="frmAddUser.$invalid || savingAdd" />
                             </div>
+
                         </form>
                     </div>
                 </div>
 
-
-            </div>
-
-            <!-- ==================== FORM DETAIL GOODS ISSUES ==================== -->
-            <div class="form-detail" ng-class="{open: showDetailIssue}" ng-click="closeDetailIssueOnOverlay($event)">
-                <div class="form-detail__content" ng-click="$event.stopPropagation()">
-                    <h3 class="title">Goods Issue Details - ID: {{detailIssue.IssueID}} ({{detailIssue.IssueDate |
-                        date:'dd/MM/yyyy'}})</h3>
-                    <p class="subtitle">User ID: {{detailIssue.UserID}} | Total Amount: {{detailIssue.TotalAmount |
-                        number:0}}đ</p>
-
-                    <!-- Form thêm chi tiết mới -->
-                    <!-- Form thêm sản phẩm trong Detail -->
-                    <div class="detail-add-form">
-                        <h4>Thêm sản phẩm xuất kho</h4>
-                        <div class="form-row">
-                            <label>Product ID:</label>
-                            <input type="number" ng-model="newDetail.ProductID" placeholder="Nhập mã sản phẩm"
-                                required />
+                <!-- Modal detail -->
+                <div class="form-detail" ng-class="{open: showDetail}" ng-click="closeDetailOnOverlay($event)">
+                    <div class="form-detail__content" ng-click="$event.stopPropagation()">
+                        <h3 class="title">User Details</h3>
+                        <p><strong>Username:</strong> {{detailUser.Username}}</p>
+                        <p><strong>PasswordHash:</strong> {{detailUser.PasswordHash}}</p>
+                        <div class="dialog-footer">
+                            <button type="button" class="cancel" ng-click="cancelDetail()">Close</button>
                         </div>
-                        <div class="form-row">
-                            <label>Quantity:</label>
-                            <input type="number" min="1" ng-model="newDetail.Quantity" placeholder="Số lượng"
-                                required />
-                        </div>
-                        <div class="form-row">
-                            <label>Unit Price:</label>
-                            <input type="number" step="0.01" ng-model="newDetail.UnitPrice" placeholder="Đơn giá"
-                                required />
-                        </div>
-                        <button class="add-btn" ng-click="addGoodsIssueDetail()"
-                            ng-disabled="savingAddDetail || !newDetail.ProductID || !newDetail.Quantity || !newDetail.UnitPrice">
-                            <span ng-if="savingAddDetail">Adding...</span>
-                            <span ng-if="!savingAddDetail">Add Product</span>
-                        </button>
-                    </div>
-
-                    <!-- BẢNG CHI TIẾT PHIẾU XUẤT – CHỈ 5 CỘT -->
-                    <table class="detail-table">
-                        <thead>
-                            <tr>
-                                <th>Product ID</th>
-                                <th>Product Name</th>
-                                <th>Quantity</th>
-                                <th>Unit Price</th>
-                                <th class="action-col">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr ng-repeat="d in issueDetails">
-                                <td>{{d.ProductID}}</td>
-                                <td>{{d.ProductName || '—'}}</td>
-                                <td class="txt-right">{{d.Quantity | number:0}}</td>
-                                <td class="txt-right">{{d.UnitPrice | number:0}}đ</td>
-                                <td class="action-col">
-                                    <button class="remove-btn" ng-click="deleteGoodsIssueDetail(d)"
-                                        ng-disabled="deletingDetail" title="Xóa sản phẩm này khỏi phiếu xuất">
-                                        <span ng-if="!deletingDetail">Delete</span>
-                                        <span ng-if="deletingDetail">Deleting...</span>
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr ng-if="!issueDetails || issueDetails.length === 0">
-                                <td colspan="5" style="text-align:center; color:#999; padding:20px; font-style:italic;">
-                                    Chưa có sản phẩm nào được xuất
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-
-
-                    <div class="dialog-footer">
-                        <button type="button" class="cancel" ng-click="closeDetailIssue()">Close</button>
                     </div>
                 </div>
+
+                <!-- Modal Edit User -->
+                <div class="form-edit" ng-class="{open: showEdit}" ng-click="closeEditOnOverlay($event)">
+                    <div class="form-edit__content" ng-click="$event.stopPropagation()">
+                        <h3 class="title">Edit User</h3>
+                        <p class="desc">Update user details</p>
+                        <form name="frmEditUser" ng-submit="updateUser()">
+
+                            <label for="username-edit">Username</label>
+                            <input type="text" id="username-edit" required placeholder="Enter username"
+                                ng-model="editUser.Username" />
+
+                            <label for="password-edit">Password</label>
+                            <input type="password" id="password-edit" placeholder="Enter new password"
+                                ng-model="editUser.PasswordHash" />
+
+                            <label for="role-edit">Role</label>
+                            <select id="role-edit" required ng-model="editUser.Role">
+                                <option value="">Select role</option>
+                                <option value="Admin">Admin</option>
+                                <option value="ThuNgan">ThuNgan</option>
+                                <option value="ThuKho">ThuKho</option>
+                                <option value="KeToan">KeToan</option>
+                            </select>
+
+                            <label for="fullname-edit">Full Name</label>
+                            <input type="text" id="fullname-edit" required placeholder="Enter full name"
+                                ng-model="editUser.FullName" />
+
+                            <div class="both">
+                                <div class="both-left">
+                                    <label for="phone-edit">Phone</label>
+                                    <input type="text" id="phone-edit" required placeholder="+84 123 456 789"
+                                        ng-model="editUser.Phone" />
+                                </div>
+                                <div class="both-right">
+                                    <label for="email-edit">Email</label>
+                                    <input type="email" id="email-edit" placeholder="user@email.com"
+                                        ng-model="editUser.Email" />
+                                </div>
+                            </div>
+
+                            <div class="dialog-footer">
+                                <button type="button" class="cancel" ng-click="cancelEdit()">Cancel</button>
+                                <input class="submit" type="submit" value="Update User"
+                                    ng-disabled="frmEditUser.$invalid || savingEdit" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!-- Modal Delete User -->
+                <div class="form-delete" ng-class="{open: showDelete}" ng-click="closeDeleteOnOverlay($event)">
+                    <div class="form-delete__content" ng-click="$event.stopPropagation()">
+                        <h3 class="title">Delete User</h3>
+                        <p class="desc">
+                            Bạn có chắc chắn muốn xóa người dùng
+                            <strong>{{deletingUser.FullName || deletingUser.Username}}</strong> không?
+                        </p>
+
+                        <div class="dialog-footer">
+                            <button type="button" class="cancel" ng-click="cancelDelete()">Cancel</button>
+                            <button type="button" class="submit danger" ng-click="confirmDelete()"
+                                ng-disabled="savingDelete">
+                                Delete
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+
+
             </div>
+
+
+
         </div>
-
-
-
-
     </div>
 
-    </div>
-    <script src="../Shared/js/goodsissues.js"></script>
+    <script src="../Shared/js/user.js"></script>
+
 
 </body>
 

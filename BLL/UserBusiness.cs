@@ -73,9 +73,10 @@ namespace BLL
             return _res.Update(model);
         }
 
-        public List<UserModel>Search(int pageIndex, int pageSize, out long total, string fullname, string username)
+        public List<UserModel> Search(int pageIndex, int pageSize, out long total, string fullname, string username)
         {
             return _res.Search(pageIndex, pageSize, out total, fullname, username);
         }
+
     }
 }

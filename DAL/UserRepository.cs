@@ -116,18 +116,23 @@ namespace DAL
         {
             string msgError = "";
             total = 0;
+
+            // Gom fullname + username thành 1 keyword
+            string keyword = !string.IsNullOrEmpty(fullname) ? fullname : username;
+
             try
             {
-                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "sp_user_search1",
+                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "sp_user_search",
                     "@pageIndex", pageIndex,
                     "@pageSize", pageSize,
-                    //"@total", total,
-                    "@fullName", fullname,
-                    "@username", username);
+                    "@keyword", keyword);
+
                 if (!string.IsNullOrEmpty(msgError))
                     throw new Exception(msgError);
+
                 if (dt.Rows.Count > 0)
                     total = (long)dt.Rows[0]["RecordCount"];
+
                 return dt.ConvertTo<UserModel>().ToList();
             }
             catch (Exception ex)
@@ -135,5 +140,6 @@ namespace DAL
                 throw ex;
             }
         }
+
     }
 }
