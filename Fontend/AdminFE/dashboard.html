@@ -191,7 +191,7 @@
         </a>
         <!-- menu button Sales -->
         <a href="../AdminFE/sales.html" ng-if="canShow('sales')">
-          <div class="slide-bar__MenuButton ">
+          <div class="slide-bar__MenuButton">
             <div class="MenuButton-left">
               <img src="../Shared/img/common/sales.svg" alt="" class="icon" />
             </div>
@@ -311,8 +311,8 @@
         </div>
         <div class="top-bar__info" id="information">
           <div class="info-top">
-            <p class="name">John Doe</p>
-            <p class="email">john@company.com</p>
+            <p class="name">{{currentUser.fullname}}</p>
+            <p class="email">{{currentUser.email}}</p>
           </div>
           <div class="info-mid">
             <a href="#!"><p class="set">Profile Settings</p></a>

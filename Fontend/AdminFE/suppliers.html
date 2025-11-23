@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- font -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
-        rel="stylesheet" />
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+      rel="stylesheet"
+    />
 
     <!-- css -->
     <link rel="stylesheet" href="../Shared/css/suppliers.css" />
@@ -17,9 +17,9 @@
     <script src="../Shared/angular/global.js"></script>
     <script src="../Shared/angular/suppliers.js"></script>
     <title>Suppliers</title>
-</head>
+  </head>
 
-<body ng-app="AppRetailPos" ng-controller="suppliersCtrl">
+  <body ng-app="AppRetailPos" ng-controller="suppliersCtrl">
     <div class="slide-bar">
       <div class="slide-bar__header">
         <div class="app-slideBar">
@@ -290,237 +290,348 @@
     </div>
 
     <div class="app-layout">
-        <div class="top-bar">
-            <div class="top-bar__content">
-                <div class="top-bar__left">
-                    <img src="../Shared/img/common/search.svg" alt="" class="icon" />
-                    <input class="search" type="text" placeholder="Search by address customer"
-                        ng-model="searchAddress" />
-                </div>
-                <div class="top-bar__right">
-                    <p class="role">{{currentUser.role}}</p>
-                    <img src="../Shared/img/common/ava.svg" alt="" class="ava" id="avatar" />
-                </div>
-            </div>
-            <div class="top-bar__info" id="information">
-                <div class="info-top">
-                    <p class="name">John Doe</p>
-                    <p class="email">john@company.com</p>
-                </div>
-                <div class="info-mid">
-                    <a href="#!">
-                        <p class="set">Profile Settings</p>
-                    </a>
-                </div>
-                <div class="info-bottom">
-                    <img src="../Shared/img/categories/logout.svg" alt="" class="icon" />
-                    <a href="../AuthFE/login.html">
-                        <p class="logout">Logout</p>
-                    </a>
-                </div>
-            </div>
+      <div class="top-bar">
+        <div class="top-bar__content">
+          <div class="top-bar__left" style="visibility: hidden">
+            <img src="../Shared/img/common/search.svg" alt="" class="icon" />
+            <input
+              class="search"
+              type="text"
+              placeholder="Search by categories name"
+              ng-model="searchCategories"
+            />
+          </div>
+          <div class="top-bar__right">
+            <p class="role">{{currentUser.role}}</p>
+            <img
+              src="../Shared/img/common/ava.svg"
+              alt=""
+              class="ava"
+              id="avatar"
+            />
+          </div>
         </div>
-        <div class="app-layout-content">
-            <div class="container-top">
-                <div class="container-top--left">
-                    <h1 class="name-system">Suppliers</h1>
-                    <p class="desc-system">
-                        Manage supplier information and partnerships
-                    </p>
-                </div>
-                <div class="container-top--right">
-                    <div class="control" ng-click="openImportDialog()">
-                        <img src="../Shared/img/common/import.svg" alt="" class="icon-control" />
-                        <p class="name-control">Import Excel</p>
-                    </div>
-                    <input type="file" id="fileImport" accept=".xlsx,.xls" style="display: none"
-                        onchange="angular.element(this).scope().onImportFileChange(this)" />
-                    <div class="control" ng-click="exportExcel()">
-                        <img src="../Shared/img/common/export.svg" alt="" class="icon-control" />
-                        <p class="name-control">Export Excel</p>
-                    </div>
-                    <div class="control add-Supplier" ng-click="openAdd()">
-                        <img src="../Shared/img/common/plus.svg" alt="" class="icon-control" />
-                        <p class="name-control">Add Supplier</p>
-                    </div>
-                </div>
+        <div class="top-bar__info" id="information">
+          <div class="info-top">
+            <p class="name">{{currentUser.fullname}}</p>
+            <p class="email">{{currentUser.email}}</p>
+          </div>
+          <div class="info-mid">
+            <a href="#!"><p class="set">Profile Settings</p></a>
+          </div>
+          <div class="info-bottom">
+            <img
+              src="../Shared/img/categories/logout.svg"
+              alt=""
+              class="icon"
+            />
+            <a href="../AuthFE/login.html"><p class="logout">Logout</p></a>
+          </div>
+        </div>
+      </div>
+      <div class="app-layout-content">
+        <div class="container-top">
+          <div class="container-top--left">
+            <h1 class="name-system">Suppliers</h1>
+            <p class="desc-system">
+              Manage supplier information and partnerships
+            </p>
+          </div>
+          <div class="container-top--right">
+            <div class="control" ng-click="openImportDialog()">
+              <img
+                src="../Shared/img/common/import.svg"
+                alt=""
+                class="icon-control"
+              />
+              <p class="name-control">Import Excel</p>
             </div>
-            <div class="container-card">
-                <div class="card">
-                    <p class="name-card">Total Supplier</p>
-                    <p class="data-card">{{stats.totalSupplier}}</p>
-                </div>
-
+            <input
+              type="file"
+              id="fileImport"
+              accept=".xlsx,.xls"
+              style="display: none"
+              onchange="angular.element(this).scope().onImportFileChange(this)"
+            />
+            <div class="control" ng-click="exportExcel()">
+              <img
+                src="../Shared/img/common/export.svg"
+                alt=""
+                class="icon-control"
+              />
+              <p class="name-control">Export Excel</p>
             </div>
-            <div class="search-phone-suppliers">
-                <img src="../Shared/img/common/search.svg" alt="" class="icon" />
-                <input class="search" type="text" placeholder="Search by phone Supplier" ng-model="searchPhone" />
+            <div class="control add-Supplier" ng-click="openAdd()">
+              <img
+                src="../Shared/img/common/plus.svg"
+                alt=""
+                class="icon-control"
+              />
+              <p class="name-control">Add Supplier</p>
             </div>
-
-            <!-- phân trang -->
-            <div class="pager" ng-if="pager.total>0">
-                <div class="pager-info">
-                    Showing
-                    {{((pager.page-1)*pager.size)+1}}-{{Math.min(pager.page*pager.size,pager.total)}}
-                    of {{pager.total}} items
-                </div>
-                <div class="page-nav">
-                    <label>
-                        Page size:
-                        <select ng-model="pager.size" ng-change="changeSize()">
-                            <option value="10">10</option>
-                            <option value="20">20</option>
-                            <option value="30">30</option>
-                        </select>
-                    </label>
-                    <button class="btn ghost" ng-disable="pager.page === 1" ng-click="go(1)">
-                        «
-                    </button>
-                    <button class="btn ghost" ng-disabled="pager.page === 1" ng-click="go(pager.page-1)">
-                        Prev
-                    </button>
-                    <span class="page-no"></span>
-                    <button class="btn ghost" ng-disabled="pager.page >= pager.pages" ng-click="go(pager.page+1)">
-                        Next
-                    </button>
-                    <button class="btn ghost" ng-disabled="pager.page >= pager.pages" ng-click="go(pager.pages)">
-                        »
-                    </button>
-                </div>
-            </div>
-            <div class="card-table">
-                <div class="table-responsive">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th class="id">Supplier ID</th>
-                                <th class="name">Supplier Name</th>
-                                <th class="phone">Phone</th>
-                                <th class="email">Email</th>
-                                <th class="address">Address</th>
-                                <th class="action txt-right">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr ng-repeat="s in suppliers">
-                                <td>{{s.supplierID || s.SupplierID}}</td>
-                                <td>{{s.supplierName || s.SupplierName}}</td>
-                                <td>{{s.phone || s.Phone}}</td>
-                                <td>{{s.email || s.Email}}</td>
-                                <td>{{s.address || s.Address}}</td>
-                                <td class="txt-right">
-                                    <button class="link" ng-click="edit(s)">✎ Edit</button>
-                                    <button class="link danger" ng-click="remove(s)">🗑 Delete</button>
-                                </td>
-                            </tr>
-                            <tr ng-if="(suppliers | filter:searchPhone).length == 0">
-                                <td colspan="6" class="empty">No Data</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <!-- form -->
-            <div class="form">
-                <!-- add -->
-                <div class="form-add" ng-class="{open: showAdd}" ng-click="closeAddOnOverlay($event)">
-                    <div class="form-add__content" ng-click="$event.stopPropagation()">
-                        <h3 class="title">Add New Supplier</h3>
-                        <p class="desc">Enter supplier details</p>
-                        <form name="frmAddSupplier" ng-submit="addSupplier()">
-                            <label for="name-add">Supplier Name</label>
-                            <input type="text" id="name-add" required placeholder="Enter supplier name"
-                                ng-model="newSupplier.SupplierName" />
-
-                            <div class="both">
-                                <div class="both-left">
-                                    <label for="phone-add">Phone</label>
-                                    <input type="text" id="phone-add" required placeholder="+84 123 456 789"
-                                        ng-model="newSupplier.Phone" />
-                                </div>
-                                <div class="both-right">
-                                    <label for="mail-add">Email</label>
-                                    <input type="email" id="mail-add" placeholder="supplier@email.com"
-                                        ng-model="newSupplier.Email" />
-                                </div>
-                            </div>
-
-                            <label for="address-add">Address</label>
-                            <input type="text" id="address-add" placeholder="123 Main Street, City"
-                                ng-model="newSupplier.Address" />
-
-                            <div class="dialog-footer">
-                                <button type="button" class="cancel" ng-click="cancelAdd()">Cancel</button>
-                                <input class="submit" type="submit" value="Add New Supplier"
-                                    ng-disabled="frmAddSupplier.$invalid || savingAdd" />
-                            </div>
-                        </form>
-                    </div>
-                </div>
-
-                <!-- Modal Edit Supplier -->
-                <div class="form-add" ng-class="{open: showEdit}" ng-click="closeEditOnOverlay($event)">
-                    <div class="form-add__content" ng-click="$event.stopPropagation()">
-                        <h3 class="title">Edit Supplier</h3>
-                        <p class="desc">Update supplier details</p>
-                        <form name="frmEditSupplier" ng-submit="updateSupplier()">
-                            <label for="name-edit">Supplier Name</label>
-                            <input type="text" id="name-edit" required placeholder="Enter supplier name"
-                                ng-model="editSupplier.SupplierName" />
-
-                            <div class="both">
-                                <div class="both-left">
-                                    <label for="phone-edit">Phone</label>
-                                    <input type="text" id="phone-edit" required placeholder="+84 123 456 789"
-                                        ng-model="editSupplier.Phone" />
-                                </div>
-                                <div class="both-right">
-                                    <label for="mail-edit">Email</label>
-                                    <input type="email" id="mail-edit" placeholder="supplier@email.com"
-                                        ng-model="editSupplier.Email" />
-                                </div>
-                            </div>
-
-                            <label for="address-edit">Address</label>
-                            <input type="text" id="address-edit" placeholder="123 Main Street, City"
-                                ng-model="editSupplier.Address" />
-
-                            <div class="dialog-footer">
-                                <button type="button" class="cancel" ng-click="cancelEdit()">Cancel</button>
-                                <input class="submit" type="submit" value="Save Changes"
-                                    ng-disabled="frmEditSupplier.$invalid || savingEdit" />
-                            </div>
-                        </form>
-                    </div>
-                </div>
-                <!-- Modal Delete Supplier -->
-                <div class="form-delete" ng-class="{open: showDelete}" ng-click="closeDeleteOnOverlay($event)">
-                    <div class="form-delete__content" ng-click="$event.stopPropagation()">
-                        <h3 class="title">Delete Supplier</h3>
-                        <p class="desc">
-                            Bạn có chắc chắn muốn xóa nhà cung cấp
-                            <strong>{{deleting.SupplierName}}</strong> không?
-                        </p>
-
-                        <div class="dialog-footer">
-                            <button type="button" class="cancel" ng-click="cancelDelete()">Cancel</button>
-                            <button type="button" class="submit danger" ng-click="confirmDelete()"
-                                ng-disabled="savingDelete">
-                                Delete
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-
-            </div>
-
+          </div>
+        </div>
+        <div class="container-card">
+          <div class="card">
+            <p class="name-card">Total Supplier</p>
+            <p class="data-card">{{stats.totalSupplier}}</p>
+          </div>
+        </div>
+        <div class="search-phone-suppliers">
+          <img src="../Shared/img/common/search.svg" alt="" class="icon" />
+          <input
+            class="search"
+            type="text"
+            placeholder="Search by phone Supplier"
+            ng-model="searchPhone"
+          />
         </div>
 
+        <!-- phân trang -->
+        <div class="pager" ng-if="pager.total>0">
+          <div class="pager-info">
+            Showing
+            {{((pager.page-1)*pager.size)+1}}-{{Math.min(pager.page*pager.size,pager.total)}}
+            of {{pager.total}} items
+          </div>
+          <div class="page-nav">
+            <label>
+              Page size:
+              <select ng-model="pager.size" ng-change="changeSize()">
+                <option value="10">10</option>
+                <option value="20">20</option>
+                <option value="30">30</option>
+              </select>
+            </label>
+            <button
+              class="btn ghost"
+              ng-disable="pager.page === 1"
+              ng-click="go(1)"
+            >
+              «
+            </button>
+            <button
+              class="btn ghost"
+              ng-disabled="pager.page === 1"
+              ng-click="go(pager.page-1)"
+            >
+              Prev
+            </button>
+            <span class="page-no"></span>
+            <button
+              class="btn ghost"
+              ng-disabled="pager.page >= pager.pages"
+              ng-click="go(pager.page+1)"
+            >
+              Next
+            </button>
+            <button
+              class="btn ghost"
+              ng-disabled="pager.page >= pager.pages"
+              ng-click="go(pager.pages)"
+            >
+              »
+            </button>
+          </div>
+        </div>
+        <div class="card-table">
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th class="id">Supplier ID</th>
+                  <th class="name">Supplier Name</th>
+                  <th class="phone">Phone</th>
+                  <th class="email">Email</th>
+                  <th class="address">Address</th>
+                  <th class="action txt-right">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="s in suppliers">
+                  <td>{{s.supplierID || s.SupplierID}}</td>
+                  <td>{{s.supplierName || s.SupplierName}}</td>
+                  <td>{{s.phone || s.Phone}}</td>
+                  <td>{{s.email || s.Email}}</td>
+                  <td>{{s.address || s.Address}}</td>
+                  <td class="txt-right">
+                    <button class="link" ng-click="edit(s)">✎ Edit</button>
+                    <button class="link danger" ng-click="remove(s)">
+                      🗑 Delete
+                    </button>
+                  </td>
+                </tr>
+                <tr ng-if="(suppliers | filter:searchPhone).length == 0">
+                  <td colspan="6" class="empty">No Data</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <!-- form -->
+        <div class="form">
+          <!-- add -->
+          <div
+            class="form-add"
+            ng-class="{open: showAdd}"
+            ng-click="closeAddOnOverlay($event)"
+          >
+            <div class="form-add__content" ng-click="$event.stopPropagation()">
+              <h3 class="title">Add New Supplier</h3>
+              <p class="desc">Enter supplier details</p>
+              <form name="frmAddSupplier" ng-submit="addSupplier()">
+                <label for="name-add">Supplier Name</label>
+                <input
+                  type="text"
+                  id="name-add"
+                  required
+                  placeholder="Enter supplier name"
+                  ng-model="newSupplier.SupplierName"
+                />
 
+                <div class="both">
+                  <div class="both-left">
+                    <label for="phone-add">Phone</label>
+                    <input
+                      type="text"
+                      id="phone-add"
+                      required
+                      placeholder="+84 123 456 789"
+                      ng-model="newSupplier.Phone"
+                    />
+                  </div>
+                  <div class="both-right">
+                    <label for="mail-add">Email</label>
+                    <input
+                      type="email"
+                      id="mail-add"
+                      placeholder="supplier@email.com"
+                      ng-model="newSupplier.Email"
+                    />
+                  </div>
+                </div>
+
+                <label for="address-add">Address</label>
+                <input
+                  type="text"
+                  id="address-add"
+                  placeholder="123 Main Street, City"
+                  ng-model="newSupplier.Address"
+                />
+
+                <div class="dialog-footer">
+                  <button type="button" class="cancel" ng-click="cancelAdd()">
+                    Cancel
+                  </button>
+                  <input
+                    class="submit"
+                    type="submit"
+                    value="Add New Supplier"
+                    ng-disabled="frmAddSupplier.$invalid || savingAdd"
+                  />
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <!-- Modal Edit Supplier -->
+          <div
+            class="form-add"
+            ng-class="{open: showEdit}"
+            ng-click="closeEditOnOverlay($event)"
+          >
+            <div class="form-add__content" ng-click="$event.stopPropagation()">
+              <h3 class="title">Edit Supplier</h3>
+              <p class="desc">Update supplier details</p>
+              <form name="frmEditSupplier" ng-submit="updateSupplier()">
+                <label for="name-edit">Supplier Name</label>
+                <input
+                  type="text"
+                  id="name-edit"
+                  required
+                  placeholder="Enter supplier name"
+                  ng-model="editSupplier.SupplierName"
+                />
+
+                <div class="both">
+                  <div class="both-left">
+                    <label for="phone-edit">Phone</label>
+                    <input
+                      type="text"
+                      id="phone-edit"
+                      required
+                      placeholder="+84 123 456 789"
+                      ng-model="editSupplier.Phone"
+                    />
+                  </div>
+                  <div class="both-right">
+                    <label for="mail-edit">Email</label>
+                    <input
+                      type="email"
+                      id="mail-edit"
+                      placeholder="supplier@email.com"
+                      ng-model="editSupplier.Email"
+                    />
+                  </div>
+                </div>
+
+                <label for="address-edit">Address</label>
+                <input
+                  type="text"
+                  id="address-edit"
+                  placeholder="123 Main Street, City"
+                  ng-model="editSupplier.Address"
+                />
+
+                <div class="dialog-footer">
+                  <button type="button" class="cancel" ng-click="cancelEdit()">
+                    Cancel
+                  </button>
+                  <input
+                    class="submit"
+                    type="submit"
+                    value="Save Changes"
+                    ng-disabled="frmEditSupplier.$invalid || savingEdit"
+                  />
+                </div>
+              </form>
+            </div>
+          </div>
+          <!-- Modal Delete Supplier -->
+          <div
+            class="form-delete"
+            ng-class="{open: showDelete}"
+            ng-click="closeDeleteOnOverlay($event)"
+          >
+            <div
+              class="form-delete__content"
+              ng-click="$event.stopPropagation()"
+            >
+              <h3 class="title">Delete Supplier</h3>
+              <p class="desc">
+                Bạn có chắc chắn muốn xóa nhà cung cấp
+                <strong>{{deleting.SupplierName}}</strong> không?
+              </p>
+
+              <div class="dialog-footer">
+                <button type="button" class="cancel" ng-click="cancelDelete()">
+                  Cancel
+                </button>
+                <button
+                  type="button"
+                  class="submit danger"
+                  ng-click="confirmDelete()"
+                  ng-disabled="savingDelete"
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <script src="../Shared/js/suppliers.js"></script>
-</body>
-
+  </body>
 </html>

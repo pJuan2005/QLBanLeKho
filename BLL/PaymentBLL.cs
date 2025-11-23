@@ -47,5 +47,19 @@ namespace BLL
                                CustomerID, SupplierID, SaleID, ReceiptID, Method, FromDate, ToDate);
         }
 
+        public List<ArOpenInvoiceDto> GetArOpenInvoices(
+            int pageIndex, int pageSize, out long total,
+            string search, DateTime? fromDate, DateTime? toDate)
+        {
+            return _res.GetArOpenInvoices(pageIndex, pageSize, out total, search, fromDate, toDate);
+        }
+
+        public List<ApOpenBillDto> GetApOpenBills(
+            int pageIndex, int pageSize, out long total,
+            string search, DateTime? fromDate, DateTime? toDate)
+        {
+            return _res.GetApOpenBills(pageIndex, pageSize, out total, search, fromDate, toDate);
+        }
+
     }
 }

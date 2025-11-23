@@ -109,6 +109,66 @@ namespace CoreApi.Controllers
             }
             return response;
         }
+        // ============= 1) Lấy danh sách hóa đơn còn nợ (AR) =============
+        [HttpPost]
+        [Route("ar-open-invoices")]
+        public ResponseModel GetArOpenInvoices([FromBody] OpenPaymentSearchRequest request)
+        {
+            var response = new ResponseModel();
+            try
+            {
+                int page = request.page <= 0 ? 1 : request.page;
+                int pageSize = request.pageSize <= 0 ? 10 : request.pageSize;
+                string search = request.search ?? string.Empty;
 
+                long total = 0;
+                var data = _paymentBLL.GetArOpenInvoices(
+                    page, pageSize, out total,
+                    search, request.FromDate, request.ToDate
+                );
+
+                response.Page = page;
+                response.PageSize = pageSize;
+                response.TotalItems = total;
+                response.Data = data;
+
+                return response;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        // ============= 2) Lấy danh sách phiếu nhập còn nợ (AP) =============
+        [HttpPost]
+        [Route("ap-open-bills")]
+        public ResponseModel GetApOpenBills([FromBody] OpenPaymentSearchRequest request)
+        {
+            var response = new ResponseModel();
+            try
+            {
+                int page = request.page <= 0 ? 1 : request.page;
+                int pageSize = request.pageSize <= 0 ? 10 : request.pageSize;
+                string search = request.search ?? string.Empty;
+
+                long total = 0;
+                var data = _paymentBLL.GetApOpenBills(
+                    page, pageSize, out total,
+                    search, request.FromDate, request.ToDate
+                );
+
+                response.Page = page;
+                response.PageSize = pageSize;
+                response.TotalItems = total;
+                response.Data = data;
+
+                return response;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

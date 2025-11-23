@@ -8,10 +8,6 @@ using Model;
 using AdminApi.Services.Interface;
 using System.Text.Json;
 
-using BLL.Interfaces;
-using Microsoft.AspNetCore.Mvc;
-using Model;
-
 namespace CoreApi.Controllers
 {
     [Route("api/product")]
@@ -19,10 +15,12 @@ namespace CoreApi.Controllers
     public class ProductController : ControllerBase
     {
         private readonly IDProductBLL _productBLL;
+        private readonly IAuditLogger _auditLogger;
 
-        public ProductController(IDProductBLL productBLL)
+        public ProductController(IDProductBLL productBLL, IAuditLogger auditLogger)
         {
             _productBLL = productBLL;
+            _auditLogger = auditLogger;
         }
 
         private string GetImageUrl(string imagePath)
@@ -33,7 +31,7 @@ namespace CoreApi.Controllers
         }
 
         // =====================================================
-        // 1️⃣ GET BY ID (NEW)
+        // 1️⃣ GET BY ID
         // =====================================================
         [HttpGet("get-by-id/{id}")]
         public IActionResult GetById(int id)
@@ -50,7 +48,7 @@ namespace CoreApi.Controllers
         }
 
         // =====================================================
-        // 2️⃣ CREATE PRODUCT (NEW)
+        // 2️⃣ CREATE PRODUCT + AUDIT
         // =====================================================
         [HttpPost("create-product")]
         public async Task<IActionResult> Create([FromForm] ProductModel model, IFormFile? imageFile)
@@ -74,6 +72,15 @@ namespace CoreApi.Controllers
 
                 _productBLL.Create(model);
 
+                // 🔹 Audit log
+                _auditLogger.Log(
+                    action: $"Create product: {model.ProductName} (SKU: {model.SKU})",
+                    entityName: "Products",
+                    entityId: model.ProductID,
+                    operation: "CREATE",
+                    details: JsonSerializer.Serialize(model)
+                );
+
                 return Ok(new
                 {
                     success = true,
@@ -88,7 +95,7 @@ namespace CoreApi.Controllers
         }
 
         // =====================================================
-        // 3️⃣ UPDATE PRODUCT (NEW)
+        // 3️⃣ UPDATE PRODUCT + AUDIT
         // =====================================================
         [HttpPut("update-product/{id}")]
         public async Task<IActionResult> Update(int id, [FromForm] ProductModel model, IFormFile? imageFile)
@@ -103,13 +110,11 @@ namespace CoreApi.Controllers
                 {
                     string folder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Products");
 
-
                     if (!Directory.Exists(folder))
                         Directory.CreateDirectory(folder);
 
                     string fileName = $"{Guid.NewGuid()}_{imageFile.FileName}";
                     string fullPath = Path.Combine(folder, fileName);
-
 
                     using (var stream = new FileStream(fullPath, FileMode.Create))
                     {
@@ -120,12 +125,26 @@ namespace CoreApi.Controllers
                 }
                 else
                 {
+                    // Giữ nguyên ảnh cũ nếu không upload ảnh mới
                     model.Image = exist.Image;
                 }
 
                 model.ProductID = id;
 
                 _productBLL.Update(model);
+
+                // 🔹 Audit log (log cả Before / After cho dễ debug)
+                _auditLogger.Log(
+                    action: $"Update product: {model.ProductName} (ID: {model.ProductID})",
+                    entityName: "Products",
+                    entityId: model.ProductID,
+                    operation: "UPDATE",
+                    details: JsonSerializer.Serialize(new
+                    {
+                        Before = exist,
+                        After = model
+                    })
+                );
 
                 return Ok(new { message = "Cập nhật sản phẩm thành công!" });
             }
@@ -136,14 +155,28 @@ namespace CoreApi.Controllers
         }
 
         // =====================================================
-        // 4️⃣ DELETE PRODUCT
+        // 4️⃣ DELETE PRODUCT + AUDIT
         // =====================================================
         [HttpDelete("delete-product/{id}")]
         public IActionResult Delete(int id)
         {
             try
             {
+                var exist = _productBLL.GetDatabyID(id);
+                if (exist == null)
+                    return NotFound("Không tìm thấy sản phẩm.");
+
                 _productBLL.Delete(id);
+
+                // 🔹 Audit log
+                _auditLogger.Log(
+                    action: $"Delete product: {exist.ProductName} (ID: {exist.ProductID})",
+                    entityName: "Products",
+                    entityId: exist.ProductID,
+                    operation: "DELETE",
+                    details: JsonSerializer.Serialize(exist)
+                );
+
                 return Ok(new { message = "Xóa thành công!" });
             }
             catch (Exception ex)
@@ -153,7 +186,7 @@ namespace CoreApi.Controllers
         }
 
         // =====================================================
-        // 5️⃣ SEARCH PRODUCT (NEW)
+        // 5️⃣ SEARCH PRODUCT
         // =====================================================
         [HttpPost("search-product")]
         public IActionResult Search([FromBody] ProductSearchRequest req)
@@ -167,7 +200,6 @@ namespace CoreApi.Controllers
                 {
                     if (!string.IsNullOrEmpty(p.Image))
                         p.Image = GetImageUrl(p.Image);
-
                 }
 
                 return Ok(new

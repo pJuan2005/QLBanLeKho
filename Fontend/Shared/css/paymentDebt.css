@@ -1,0 +1,1137 @@
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+/* khôi phục font chữ */
+body {
+  font-size: 1.6rem;
+  font-family: "Inter", sans-serif;
+  margin: 0;
+}
+
+/* =====================common==================== */
+a {
+  text-decoration: none;
+}
+
+input,
+textarea,
+select,
+button {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+input:focus {
+  outline: none;
+  border: 1px solid #0ea5e9;
+  border-bottom: none;
+  box-shadow: 0 0 0 2px rgba(14, 165, 233, 0.3);
+}
+
+/* ====================main====================== */
+.app-content {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* ====================slide-bar===================== */
+.slide-bar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  width: 255px;
+  border-right: 1px solid #000;
+  background: #fff;
+}
+
+.slide-bar__header {
+  padding: 16px;
+  border: 1px solid #ccc;
+  border-right: none;
+}
+
+.slide-bar__header .app-slideBar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.app-slideBar__left {
+  width: 40px;
+  height: 40px;
+  border-radius: 16px;
+  background: #0ea5e9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.app-slideBar__right .name-app {
+  color: #0f172a;
+  font-size: 2rem;
+  font-weight: 500;
+  margin: 0;
+}
+
+.app-slideBar__right .title-nameApp {
+  color: #64748b;
+  font-family: Inter;
+  font-size: 1.2rem;
+  margin: 0;
+  margin-top: 2px;
+}
+
+.slide-bar__Content {
+  padding: 8px;
+  flex: 1 1 auto;
+  overflow-y: auto;
+}
+
+.slide-bar__label {
+  padding: 0 8px;
+  color: rgba(15, 23, 42, 0.7);
+  font-size: 1.2rem;
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+.slide-bar__MenuButton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-left: 8px;
+}
+
+.MenuButton-right {
+  color: #0f172a;
+  font-size: 1.4rem;
+  line-height: 1.43;
+}
+
+.name-menu-active {
+  font-weight: 500;
+}
+
+.slide-bar__MenuButton--active {
+  border-radius: 10px;
+  background: #f8fafc;
+}
+
+.slide-bar__MenuButton:hover {
+  border-radius: 10px;
+  background: #f8fafc;
+}
+.slide-bar__footer {
+  border-top: 1px solid #ccc;
+  padding: 16px;
+}
+
+.slide-bar__footer .app-slide-bar {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  gap: 12px;
+}
+
+.app-slide-bar .ava {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.app-slide-bar .info .name {
+  color: #0f172a;
+  font-size: 1.4rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.app-slide-bar .info .role {
+  color: #64748b;
+  font-size: 1.2rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.app-slide-bar {
+  border-radius: 12px;
+  background: #f8fafc;
+}
+
+/* ====================app-layout================== */
+.app-layout {
+  margin-left: 255px;
+  height: 100vh;
+  width: calc(100vw - 255px);
+  overflow: auto;
+  min-width: 0;
+}
+
+.top-bar {
+  position: relative;
+  padding: 8px 0px;
+  border-bottom: 1px solid #ccc;
+}
+
+.top-bar__content {
+  padding: 0 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.top-bar__left {
+  position: relative;
+}
+
+.top-bar__left .search {
+  width: 448px;
+  height: 36px;
+  padding: 4px 12px 4px 40px;
+  border-radius: 10px;
+  border: 0.889px solid #e2e8f0;
+  background: rgba(248, 250, 252, 0.5);
+}
+
+.top-bar__left .icon {
+  position: absolute;
+  top: 10px;
+  bottom: 10px;
+  left: 12px;
+  right: 12px;
+}
+
+.top-bar__right {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
+
+.top-bar__right .role {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 21px;
+  padding: 2px 8px;
+  border-radius: 10px;
+  border: 0.889px solid rgba(14, 165, 233, 0.2);
+  background: rgba(14, 165, 233, 0.1);
+  color: #0ea5e9;
+  font-size: 1.2rem;
+  font-weight: 500;
+  line-height: 1.3;
+  cursor: default;
+}
+
+.top-bar__right .ava {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.top-bar__info {
+  display: none;
+  position: absolute;
+  z-index: 1;
+  right: 32px;
+  width: 224px;
+  height: 130px;
+  border-radius: 10px;
+  border: 0.889px solid #e2e8f0;
+  background: #fff;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -2px rgba(0, 0, 0, 0.1);
+}
+
+.info-top {
+  padding: 10px 12px;
+  border-bottom: 1px solid #ccc;
+}
+
+.info-top .name {
+  color: #0f172a;
+  font-size: 1.6rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.info-top .email {
+  color: #64748b;
+  font-size: 1.4rem;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.info-mid {
+  padding: 4px;
+}
+
+.set {
+  color: #0f172a;
+  font-size: 1.4rem;
+  line-height: 1.43;
+  padding-left: 8px;
+  padding-right: 8px;
+  margin: 0;
+}
+
+.info-bottom {
+  display: flex;
+  align-items: center;
+  padding-top: 7px;
+  padding-bottom: 7px;
+  padding-left: 8px;
+  gap: 16px;
+  border-top: 1px solid #ccc;
+}
+
+.info-bottom .icon {
+  margin: 0;
+}
+
+.logout {
+  margin: 0;
+  color: #ef4444;
+  font-size: 1.4rem;
+  line-height: 1.43;
+}
+
+.top-bar__info.active {
+  display: block;
+}
+
+/* ===========================app-layout__content========================= */
+
+.app-layout__content {
+  padding: 24px 32px 32px;
+  background: #f4f6fb;
+  min-height: calc(100vh - 57px);
+}
+
+/* ======== Title + Tabs ======== */
+
+.layout-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.name-page {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.icon-payment {
+  width: 30px;
+  height: 30px;
+}
+
+.name-page .name {
+  margin: 0;
+  font-size: 2.2rem;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.select-payment {
+  display: inline-flex;
+  padding: 4px;
+  border-radius: 999px;
+  background: #eff4ff;
+  gap: 4px;
+}
+
+.select-payment .pay-customer,
+.select-payment .pay-supplier {
+  min-width: 180px;
+  text-align: center;
+  padding: 6px 18px;
+  border-radius: 999px;
+  font-size: 1.4rem;
+  font-weight: 500;
+  cursor: pointer;
+  color: #0f172a;
+  transition: all 0.15s ease;
+}
+
+.select-payment .active {
+  background: #0ea5e9;
+  color: #fff;
+  box-shadow: 0 8px 20px rgba(14, 165, 233, 0.4);
+}
+
+/* ==================== CUSTOMER & SUPPLIER WRAPPER =================== */
+
+.layout-customer,
+.layout-supplier {
+  margin-top: 8px;
+}
+
+/* ---- cards top ---- */
+
+.layout-customer__card,
+.layout-supplier__card {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.card {
+  display: flex;
+  align-items: center;
+  padding: 18px 20px;
+  border-radius: 16px;
+  background: #ffffff;
+  box-shadow: 0 18px 45px rgba(15, 23, 42, 0.08);
+}
+
+.card-total__debt .total-debt__left,
+.card-total__payable .total-payable__left {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 12px;
+}
+
+.card-total__debt .total-debt__left {
+  background: #e0f2fe;
+}
+
+.card-total__payable .total-payable__left {
+  background: #e0ecff;
+}
+
+.card-settled__left {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  background: #dcfce7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 12px;
+}
+
+.title-total-debt,
+.title-total-payable,
+.title-settled {
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: #6b7280;
+  margin-bottom: 4px;
+}
+
+.data-total-debt,
+.data-total-payable,
+.data-settled {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 4px;
+}
+
+.desc-total-debt,
+.desc-total-payable,
+.desc-settled {
+  font-size: 1.2rem;
+  color: #9ca3af;
+}
+
+/* ---- filter bar (dùng chung customer + supplier) ---- */
+
+.layout-customer__filter,
+.layout-supplier__filter {
+  display: grid;
+  grid-template-columns: minmax(0, 1.7fr) 0.9fr 1.1fr;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.search-by__information {
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+}
+
+.search-by__information .icon-search {
+  width: 16px;
+  height: 16px;
+  margin-right: 8px;
+}
+
+.search-by__information input {
+  border: none;
+  outline: none;
+  width: 100%;
+  font-size: 1.4rem;
+  background: transparent;
+}
+
+.search-by__status .select-status,
+.search-by__date .from-date,
+.search-by__date .to-date {
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid #e2e8f0;
+  background: #fff;
+  font-size: 1.4rem;
+}
+
+.search-by__date {
+  display: flex;
+  gap: 8px;
+}
+
+/* ==================== TABLE CUSTOMER (AR) =================== */
+
+.layout-customer__list {
+  margin-top: 6px;
+}
+
+.desc-table {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #0f172a;
+  margin-bottom: 10px;
+}
+
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 18px 45px rgba(15, 23, 42, 0.06);
+}
+
+.debt-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 1.4rem;
+}
+
+.debt-table thead {
+  background: #f9fafb;
+}
+
+.debt-table th {
+  padding: 12px 18px;
+  font-weight: 600;
+  color: #64748b;
+  border-bottom: 1px solid #e5e7eb;
+  white-space: nowrap;
+}
+
+.debt-table td {
+  padding: 14px 18px;
+  color: #0f172a;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.debt-table tr:hover td {
+  background: #f8fafc;
+}
+
+.amount-remain {
+  font-weight: 600;
+  color: #ef4444;
+}
+
+/* buttons customer table */
+.btn-view,
+.btn-pay {
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 1.3rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+
+.btn-view {
+  background: #f1f5f9;
+  color: #0f172a;
+  border-color: #e2e8f0;
+  margin-right: 6px;
+}
+
+.btn-view:hover {
+  background: #e2e8f0;
+}
+
+.btn-pay {
+  background: #0ea5e9;
+  color: #fff;
+  border-color: #0ea5e9;
+  box-shadow: 0 6px 18px rgba(14, 165, 233, 0.4);
+}
+
+.btn-pay:hover {
+  background: #0284c7;
+}
+
+.icon {
+  width: 14px;
+  height: 14px;
+}
+
+.txt-right {
+  text-align: right;
+  white-space: nowrap;
+}
+
+/* ==================== TABLE SUPPLIER (AP) =================== */
+
+.layout-supplier__list {
+  margin-top: 6px;
+}
+
+/* container giống card ở hình */
+.layout-supplier__list .table-debt {
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 18px 45px rgba(15, 23, 42, 0.06);
+  overflow: hidden;
+}
+
+.layout-supplier__list .table-debt table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 1.4rem;
+}
+
+.layout-supplier__list thead {
+  background: #f9fafb;
+}
+
+.layout-supplier__list thead th {
+  text-align: left;
+  padding: 10px 18px;
+  color: #6b7280;
+  font-weight: 500;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.layout-supplier__list tbody tr {
+  transition: background 0.15s ease;
+}
+
+.layout-supplier__list tbody tr:hover {
+  background: #f9fafb;
+}
+
+.layout-supplier__list tbody td {
+  padding: 10px 18px;
+  border-bottom: 1px solid #f3f4f6;
+  color: #0f172a;
+}
+
+.layout-supplier__list tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.invoice-no {
+  width: 110px;
+}
+
+.date-col {
+  width: 130px;
+}
+
+.name-customer {
+  max-width: 260px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.money-col {
+  width: 120px;
+}
+
+.remaining-cell {
+  font-weight: 600;
+  color: #ef4444;
+}
+
+/* buttons supplier table (View + Pay) */
+
+.table-debt .view,
+.table-debt .collect-pay {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  background: transparent;
+  cursor: pointer;
+  font-size: 1.3rem;
+}
+
+.table-debt .view {
+  color: #0f172a;
+  border-color: #e5e7eb;
+  background: #f9fafb;
+  margin-right: 6px;
+}
+
+.table-debt .view:hover {
+  background: #eef2ff;
+}
+
+.table-debt .collect-pay {
+  color: #fff;
+  background: #0ea5e9;
+  border-color: #0ea5e9;
+  box-shadow: 0 10px 22px rgba(14, 165, 233, 0.4);
+}
+
+.table-debt .collect-pay:hover {
+  background: #0284c7;
+}
+
+.icon-view,
+.icon-plus {
+  width: 14px;
+  height: 14px;
+}
+
+/* ==================== MODAL FORMS =================== */
+
+.form {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.32);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+  padding: 24px;
+}
+
+.form.show {
+  display: flex;
+}
+
+/* hai form – chỉ form .active hiển thị */
+.form-customer,
+.form-supplier {
+  width: 880px;
+  max-width: 100%;
+  display: none;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 20px;
+  background: #ffffff;
+  border-radius: 18px;
+  box-shadow: 0 30px 80px rgba(15, 23, 42, 0.45);
+  padding: 24px 26px 22px;
+}
+
+.form-customer.active,
+.form-supplier.active {
+  display: grid;
+}
+
+/* left panel */
+.form-customer__detail,
+.form-supplier__detail {
+  padding-right: 6px;
+}
+
+.intro-form {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 4px;
+}
+
+.icon-cus-form,
+.icon-sup-form {
+  width: 26px;
+  height: 26px;
+}
+
+.name-form__customer,
+.name-form__supplier {
+  margin: 0;
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.desc-form {
+  margin: 0 0 14px;
+  font-size: 1.3rem;
+  color: #6b7280;
+}
+
+.information-customer__detail,
+.information-supplier__detail {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.customer-name-title,
+.customer-debt-title,
+.supplier-name-title,
+.supplier-id-title {
+  font-size: 1.2rem;
+  color: #6b7280;
+  margin-bottom: 2px;
+}
+
+.customer-name-data,
+.customer-debt-data,
+.supplier-name-data,
+.supplier-id-data {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #0f172a;
+  margin: 0;
+}
+
+/* mini stats */
+.statistic {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.statistic > div {
+  border-radius: 12px;
+  padding: 10px 12px;
+  font-size: 1.2rem;
+}
+
+.total-sales,
+.total-received {
+  background: #eff6ff;
+}
+
+.total-payments {
+  background: #ecfdf5;
+}
+
+.current-debts,
+.current-payable {
+  background: #fef2f2;
+}
+
+.statistic div > div:first-child {
+  color: #6b7280;
+  margin-bottom: 2px;
+}
+
+.statistic div > div:last-child {
+  color: #0f172a;
+  font-weight: 600;
+}
+
+/* right payment form */
+.form-customer__pay,
+.form-supplier__pay {
+  padding-left: 6px;
+}
+
+.name-form__pay {
+  margin: 0 0 2px;
+  font-size: 1.7rem;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.desc-name__form {
+  margin: 0 0 12px;
+  font-size: 1.3rem;
+  color: #6b7280;
+}
+
+.information-customer__pay,
+.information-supplier__pay {
+  border-radius: 12px;
+  background: #f9fafb;
+  padding: 10px 12px;
+  margin-bottom: 14px;
+}
+
+.customer-pay__title,
+.supplier-pay__title {
+  font-size: 1.2rem;
+  color: #6b7280;
+  margin: 0 0 2px;
+}
+
+.customer-pay__name,
+.supplier-pay__name {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #0f172a;
+  margin: 0;
+}
+
+.customer-pay__phone {
+  font-size: 1.3rem;
+  color: #6b7280;
+}
+
+/* form controls */
+.input-pay__customer label,
+.input-pay__supplier label {
+  font-size: 1.3rem;
+  color: #0f172a;
+}
+
+.input-pay__customer input,
+.input-pay__customer select,
+.input-pay__customer textarea,
+.input-pay__supplier input,
+.input-pay__supplier select,
+.input-pay__supplier textarea {
+  width: 100%;
+  padding: 8px 10px;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+  margin: 4px 0 10px;
+  font-size: 1.4rem;
+}
+
+.input-pay__customer textarea,
+.input-pay__supplier textarea {
+  min-height: 70px;
+  resize: vertical;
+}
+
+.action-pay {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.action-pay .cancel {
+  padding: 7px 16px;
+  border-radius: 999px;
+  border: 1px solid #e5e7eb;
+  background: #fff;
+  color: #111827;
+  font-size: 1.4rem;
+  cursor: pointer;
+}
+
+.action-pay .accpet {
+  padding: 7px 18px;
+  border-radius: 999px;
+  border: none;
+  background: #0ea5e9;
+  color: #fff;
+  font-size: 1.4rem;
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: 0 10px 25px rgba(14, 165, 233, 0.4);
+}
+
+.action-pay .accpet:hover {
+  background: #0284c7;
+}
+
+/* ==================== PAGER ==================== */
+.pager {
+  margin-top: 24px;
+  padding: 16px 20px;
+  background: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 18px 45px rgba(15, 23, 42, 0.06);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.3rem;
+  color: #475569;
+}
+
+.pager-info {
+  font-size: 1.3rem;
+  color: #6b7280;
+}
+
+.page-nav {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.page-nav label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 1.3rem;
+  color: #475569;
+}
+
+.page-nav select {
+  padding: 4px 8px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  background: #fff;
+  font-size: 1.3rem;
+  cursor: pointer;
+}
+
+.page-no {
+  font-size: 1.3rem;
+  color: #0f172a;
+  font-weight: 500;
+}
+
+.page-nav .btn.ghost {
+  padding: 5px 10px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+  font-size: 1.3rem;
+  color: #0f172a;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.page-nav .btn.ghost:hover:not([disabled]) {
+  background: #f1f5f9;
+}
+
+.page-nav .btn.ghost:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+.layout-supplier__list td.txt-right {
+  white-space: nowrap;
+}
+
+/* Hai nút View + Pay: nhỏ lại, đều nhau, căn giữa */
+.table-debt .view,
+.table-debt .collect-pay {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 32px; /* chiều cao đồng đều */
+  padding: 0 12px; /* thu nhỏ padding cho gọn */
+  border-radius: 999px;
+  font-size: 1.3rem;
+}
+
+/* View: viền nhạt, nền sáng */
+.table-debt .view {
+  margin-right: 6px;
+}
+
+/* Text trong nút bỏ margin mặc định của <p> */
+.view-desc,
+.pay-desc {
+  margin: 0;
+}
+
+/* Icon nhỏ lại và không bị kéo giãn */
+.icon-view,
+.icon-plus {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+.layout-supplier__list .table-debt table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed; /* chia cột đều, tránh lệch */
+}
+
+/* padding đồng nhất cho cả th + td  */
+.layout-supplier__list .table-debt th,
+.layout-supplier__list .table-debt td {
+  padding: 10px 18px;
+}
+
+/* Cột 1: Bill # */
+.layout-supplier__list .table-debt th:nth-child(1),
+.layout-supplier__list .table-debt td:nth-child(1) {
+  width: 90px;
+  text-align: left;
+}
+
+/* Cột 2: Date */
+.layout-supplier__list .table-debt th:nth-child(2),
+.layout-supplier__list .table-debt td:nth-child(2) {
+  width: 130px;
+  text-align: left;
+}
+
+/* Cột 3: Supplier */
+.layout-supplier__list .table-debt th:nth-child(3),
+.layout-supplier__list .table-debt td:nth-child(3) {
+  width: 260px;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Cột 4,5,6: tiền → canh phải */
+.layout-supplier__list .table-debt th:nth-child(4),
+.layout-supplier__list .table-debt td:nth-child(4),
+.layout-supplier__list .table-debt th:nth-child(5),
+.layout-supplier__list .table-debt td:nth-child(5),
+.layout-supplier__list .table-debt th:nth-child(6),
+.layout-supplier__list .table-debt td:nth-child(6) {
+  width: 130px;
+  text-align: right;
+  white-space: nowrap;
+}
+
+/* Cột 7: Actions */
+.layout-supplier__list .table-debt th:nth-child(7),
+.layout-supplier__list .table-debt td:nth-child(7) {
+  width: 190px;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.search-by__information input {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
+}
+
+.search-by__information input:focus {
+  outline: none !important;
+  border: none !important;
+  box-shadow: none !important;
+}
