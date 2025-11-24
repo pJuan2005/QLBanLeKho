@@ -7,7 +7,7 @@ using AdminApi.Services.Interface;
 
 namespace AdminApi.Controllers
 {
-    [Authorize(Roles="Admin")]
+    [Authorize(Roles = ("Admin"))]
     [Route("api/user")]
     [ApiController]
     public class UserController : ControllerBase
@@ -87,25 +87,33 @@ namespace AdminApi.Controllers
             {
                 var page = int.Parse(formData["pageIndex"].ToString());
                 var pageSize = int.Parse(formData["pageSize"].ToString());
+
                 string fullname = "";
-                if(formData.Keys.Contains("FullName")&& !string.IsNullOrEmpty(Convert.ToString(formData["FullName"])))
-                { fullname = Convert.ToString(formData["FullName"]); }
+                if (formData.ContainsKey("fullname"))
+                    fullname = Convert.ToString(formData["fullname"]);
+                if (formData.ContainsKey("FullName"))
+                    fullname = Convert.ToString(formData["FullName"]);
+
                 string username = "";
-                if (formData.Keys.Contains("UserName") && !string.IsNullOrEmpty(Convert.ToString(formData["UserName"]))) 
-                { username = Convert.ToString(formData["UserName"]); }
+                if (formData.Keys.Contains("UserName") && !string.IsNullOrEmpty(Convert.ToString(formData["UserName"])))
+                {
+                    username = Convert.ToString(formData["UserName"]);
+                }
+
                 long total = 0;
-                var data = _userBusiness.Search(page, pageSize, out total,fullname, username);
+                var data = _userBusiness.Search(page, pageSize, out total, fullname, username);
+
                 response.TotalItems = total;
                 response.Data = data;
                 response.Page = page;
                 response.PageSize = pageSize;
-                    
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw ex;
             }
             return response;
         }
+
     }
 }

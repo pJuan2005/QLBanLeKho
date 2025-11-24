@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <!-- font -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -12,13 +13,14 @@
     />
 
     <!-- css -->
-    <link rel="stylesheet" href="../Shared/css/customer.css" />
+    <link rel="stylesheet" href="../Shared/css/auditlog.css" />
     <script src="../Shared/angular/angular.min.js"></script>
     <script src="../Shared/angular/global.js"></script>
-    <script src="../Shared/angular/customer.js"></script>
-    <title>Customer</title>
+    <script src="../Shared/angular/auditlog.js"></script>
+    <title>Auditlog</title>
   </head>
-  <body ng-app="AppRetailPos" ng-controller="customerCtrl">
+
+  <body ng-app="AppRetailPos" ng-controller="auditlogCtrl">
     <div class="slide-bar">
       <div class="slide-bar__header">
         <div class="app-slideBar">
@@ -49,8 +51,8 @@
           </div>
         </a>
         <!-- menu button POS -->
-        <a href="../AdminFE/pos.html" ng-if="canShow('pos')"
-          ><div class="slide-bar__MenuButton">
+        <a href="../AdminFE/pos.html" ng-if="canShow('pos')">
+          <div class="slide-bar__MenuButton">
             <div class="MenuButton-left">
               <img src="../Shared/img/common/pos.svg" alt="" class="icon" />
             </div>
@@ -102,7 +104,7 @@
         </a>
         <!-- menu button Customers -->
         <a href="../AdminFE/customers.html" ng-if="canShow('customers')">
-          <div class="slide-bar__MenuButton slide-bar__MenuButton--active">
+          <div class="slide-bar__MenuButton">
             <div class="MenuButton-left">
               <img
                 src="../Shared/img/common/customer.svg"
@@ -111,7 +113,7 @@
               />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu-active">Customers</p>
+              <p class="name-menu">Customers</p>
             </div>
           </div>
         </a>
@@ -239,7 +241,7 @@
         </a>
         <!-- menu button Audit Log -->
         <a href="../AdminFE/auditlog.html" ng-if="canShow('auditLog')">
-          <div class="slide-bar__MenuButton">
+          <div class="slide-bar__MenuButton slide-bar__MenuButton--active">
             <div class="MenuButton-left">
               <img
                 src="../Shared/img/common/auditlog.svg"
@@ -248,7 +250,7 @@
               />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Audit Log</p>
+              <p class="name-menu-active">Audit Log</p>
             </div>
           </div>
         </a>
@@ -330,63 +332,46 @@
       <div class="app-layout-content">
         <div class="container-top">
           <div class="container-top--left">
-            <h1 class="name-system">Customers</h1>
-            <p class="desc-system">
-              Manage customer information and relationships
-            </p>
+            <h1 class="name-system">AuditLogs</h1>
+            <p class="desc-system">general system-wide logs</p>
           </div>
-          <div class="container-top--right">
-            <div class="control" ng-click="openImportDialog()">
-              <img
-                src="../Shared/img/common/import.svg"
-                alt=""
-                class="icon-control"
-              />
-              <p class="name-control">Import Excel</p>
-            </div>
+        </div>
+        <!-- ===== TÌM KIẾM AUDIT LOG ===== -->
+        <div class="search-auditlog">
+          <!-- Từ ngày -->
+          <div class="search-field">
+            <label>Từ ngày:</label>
+            <input type="date" ng-model="searchFromDate" class="search" />
+          </div>
+
+          <!-- Đến ngày -->
+          <div class="search-field">
+            <label>Đến ngày:</label>
+            <input type="date" ng-model="searchToDate" class="search" />
+          </div>
+
+          <!-- User ID -->
+          <div class="search-field">
+            <label>User ID:</label>
             <input
-              type="file"
-              id="fileImport"
-              accept=".xlsx,.xls"
-              style="display: none"
-              onchange="angular.element(this).scope().onImportFileChange(this)"
+              type="text"
+              ng-model="searchUserID"
+              class="search"
+              placeholder="Nhập User ID"
             />
-            <div class="control" ng-click="exportExcel()">
-              <img
-                src="../Shared/img/common/export.svg"
-                alt=""
-                class="icon-control"
-              />
-              <p class="name-control">Export Excel</p>
-            </div>
-            <div class="control add-customer" ng-click="openAdd()">
-              <img
-                src="../Shared/img/common/plus.svg"
-                alt=""
-                class="icon-control"
-              />
-              <p class="name-control">Add Customer</p>
-            </div>
           </div>
-        </div>
-        <div class="container-card">
-          <div class="card">
-            <p class="name-card">Total Customers</p>
-            <p class="data-card">{{stats.totalCustomer}}</p>
+
+          <!-- Thao tác (Operation) -->
+          <div class="search-field">
+            <label>Thao tác:</label>
+            <select ng-model="searchOperation" class="search">
+              <option value="">-- Tất cả thao tác --</option>
+              <option value="CREATE">CREATE - Tạo mới</option>
+              <option value="UPDATE">UPDATE - Cập nhật</option>
+              <option value="DELETE">DELETE - Xóa</option>
+              <option value="LOGIN">LOGIN - Đăng nhập</option>
+            </select>
           </div>
-          <div class="card">
-            <p class="name-card">Customers with Debt Limit</p>
-            <p class="data-card">{{stats.withDebt}}</p>
-          </div>
-        </div>
-        <div class="search-phone-customer">
-          <img src="../Shared/img/common/search.svg" alt="" class="icon" />
-          <input
-            class="search"
-            type="text"
-            placeholder="Search by phone customer"
-            ng-model="searchPhone"
-          />
         </div>
         <!-- phân trang -->
         <div class="pager" ng-if="pager.total>0">
@@ -435,214 +420,57 @@
             </button>
           </div>
         </div>
+        <!-- ===== BẢNG HIỂN THỊ AUDIT LOG ===== -->
         <div class="card-table">
           <div class="table-responsive">
             <table class="table">
               <thead>
                 <tr>
-                  <th class="id">Customer ID</th>
-                  <th class="name">Customer Name</th>
-                  <th class="phone">Phone</th>
-                  <th class="email">Email</th>
-                  <th class="address">Address</th>
-                  <th class="debt">Debt Limit</th>
-                  <th class="action txt-right">Actions</th>
+                  <th class="id">AuditID</th>
+                  <th class="user">UserID</th>
+                  <th class="username">Username</th>
+                  <th class="fullname">FullName</th>
+                  <th class="entity">EntityName</th>
+                  <th class="entity-id">EntityID</th>
+                  <th class="operation">Operation</th>
+                  <th class="details">Details</th>
+                  <th class="date">CreatedAt</th>
                 </tr>
               </thead>
               <tbody>
-                <tr ng-repeat="c in customers">
-                  <td>{{c.customerID}}</td>
-                  <td>{{c.customerName}}</td>
-                  <td>{{c.phone}}</td>
-                  <td>{{c.email}}</td>
-                  <td>{{c.address}}</td>
-                  <td>
-                    {{ (c.debtLimit != null ? c.debtLimit : (c.DebtLimit != null
-                    ? c.DebtLimit : 0) ) | number:0 }}đ
+                <tr ng-repeat="log in auditLogs track by log.auditID">
+                  <td class="id txt-center">{{log.auditID}}</td>
+                  <td class="user txt-center">{{log.userID || '—'}}</td>
+                  <td class="username">{{log.username || '—'}}</td>
+                  <td class="fullname">{{log.fullName || '—'}}</td>
+                  <td class="entity txt-center">
+                    <span class="tag-entity">{{log.entityName || '—'}}</span>
                   </td>
-                  <td class="txt-right">
-                    <button class="link" ng-click="edit(c)">✎ Edit</button>
-                    <button class="link danger" ng-click="remove(c)">
-                      🗑 Delete
-                    </button>
+                  <td class="entity-id txt-center">{{log.entityID || '—'}}</td>
+                  <td class="operation txt-center">
+                    <span class="tag-op tag-{{log.operation | lowercase}}">
+                      {{log.operation}}
+                    </span>
+                  </td>
+                  <td class="details">
+                    <span class="details-text" title="{{log.details}}">
+                      {{log.details ? (log.details.length > 60 ?
+                      log.details.substring(0,60) + '...' : log.details) : '—'}}
+                    </span>
+                  </td>
+                  <td class="date txt-center">
+                    {{log.createdAt | date:'dd/MM/yyyy HH:mm:ss'}}
                   </td>
                 </tr>
-                <tr
-                  ng-if="(customers | filter:searchAddress | filter:searchPhone).length == 0"
-                >
-                  <td colspan="7" class="empty">No Data</td>
+                <tr ng-if="!auditLogs || auditLogs.length === 0">
+                  <td colspan="9" class="empty">Không có dữ liệu</td>
                 </tr>
               </tbody>
             </table>
           </div>
         </div>
-        <!-- form -->
-        <div class="form">
-          <!-- add -->
-          <div
-            class="form-add"
-            ng-class="{open: showAdd}"
-            ng-click="closeAddOnOverlay($event)"
-          >
-            <div class="form-add__content" ng-click="$event.stopPropagation()">
-              <h3 class="title">Add New Customer</h3>
-              <p class="desc">Enter customer details</p>
-              <form name="frmAdd" ng-submit="add()">
-                <label for="name-add">Full Name</label>
-                <input
-                  type="text"
-                  id="name-add"
-                  required
-                  placeholder="Enter customer name"
-                  ng-model="newCustomer.CustomerName"
-                />
-                <div class="both">
-                  <div class="both-left">
-                    <label for="phone-add">Phone</label>
-                    <input
-                      type="text"
-                      id="phone-add"
-                      required
-                      placeholder="+84 123 456 5278"
-                      ng-model="newCustomer.CustomerPhone"
-                    />
-                  </div>
-                  <div class="both-right">
-                    <label for="mail-add">Email</label>
-                    <input
-                      type="text"
-                      id="mail-add"
-                      placeholder="phamchuan@email.com"
-                      ng-model="newCustomer.CustomerEmail"
-                    />
-                  </div>
-                </div>
-                <label for="address-add">Address</label>
-                <input
-                  type="text"
-                  id="address-add"
-                  required
-                  placeholder="123 Main City, Main Street"
-                  ng-model="newCustomer.CustomerAddress"
-                />
-                <label for="debt-add">Debt Limit</label>
-                <input
-                  type="number"
-                  id="debt-add"
-                  required
-                  placeholder="Enter debt limit for customer"
-                  ng-model="newCustomer.CustomerDebt"
-                />
-                <div class="dialog-footer">
-                  <!-- để type button tránh submit -->
-                  <button type="button" class="cancel" ng-click="cancelAdd()">
-                    Cancel
-                  </button>
-                  <input
-                    class="submit"
-                    type="submit"
-                    value="Add New Customer"
-                    ng-disabled="frmAdd.$invalid||savingAdd"
-                  />
-                </div>
-              </form>
-            </div>
-          </div>
-          <!-- edit -->
-          <div
-            class="form-edit"
-            ng-class="{open: showEdit}"
-            ng-click="closeEditOnOverlay($event)"
-          >
-            <div class="form-edit__content" ng-click="$event.stopPropagation()">
-              <h3>class="title">Edit Customer</h3>
-              <form name="frmEdit" ng-submit="updateCustomer()">
-                <label for="name-edit">Full Name</label>
-                <input
-                  type="text"
-                  id="name-edit"
-                  required
-                  placeholder="Enter customer name"
-                  ng-model="editingCustomer.CustomerName"
-                />
-                <div class="both">
-                  <div class="both-left">
-                    <label for="phone-edit">Phone</label>
-                    <input
-                      type="text"
-                      id="phone-edit"
-                      required
-                      placeholder="+84 123 456 5278"
-                      ng-model="editingCustomer.CustomerPhone"
-                    />
-                  </div>
-                  <div class="both-right">
-                    <label for="mail-edit">Email</label>
-                    <input
-                      type="text"
-                      id="mail-edit"
-                      placeholder="phamchuan@email.com"
-                      ng-model="editingCustomer.CustomerEmail"
-                    />
-                  </div>
-                </div>
-                <label for="address-edit">Address</label>
-                <input
-                  type="text"
-                  id="address-edit"
-                  required
-                  placeholder="123 Main City, Main Street"
-                  ng-model="editingCustomer.CustomerAddress"
-                />
-                <label for="debt-edit">Debt Limit</label>
-                <input
-                  type="number"
-                  id="debt-edit"
-                  required
-                  placeholder="Enter debt limit for customer"
-                  ng-model="editingCustomer.CustomerDebt"
-                />
-                <div class="dialog-footer">
-                  <!-- để type button tránh submit -->
-                  <button type="button" class="cancel" ng-click="cancelEdit()">
-                    Cancel
-                  </button>
-                  <input
-                    class="submit"
-                    type="submit"
-                    value="Edit Customer"
-                    ng-disabled="frmEdit.$invalid||savingEdit"
-                  />
-                </div>
-              </form>
-            </div>
-          </div>
-          <!-- delete -->
-          <div
-            class="form-delete"
-            ng-class="{open:showDelete}"
-            ng-click="closeDeleteOnOverlay($event)"
-          >
-            <div class="form-delete__content">
-              <h3 class="title">Delete Customer</h3>
-              <p class="desc">
-                Are you sure you want to delete the customer
-                "{{deleting.customerName}}"? This action cannot be undone.
-              </p>
-              <div class="dialog-footer">
-                <button class="cancel" ng-click="cancelDelete($event)">
-                  Cancel
-                </button>
-                <button class="submit danger" ng-click="confirmDelete()">
-                  Delete Customer
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
-
-    <script src="../Shared/js/customer.js"></script>
+    <script src="../Shared/js/goodsissues.js"></script>
   </body>
 </html>

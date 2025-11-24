@@ -1,62 +1,67 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Model;
-using System.Reflection;
 using BLL.Interfaces;
-using BLL;
 using System.Globalization;
 using ClosedXML.Excel;
 
 namespace CoreApi.Controllers
 {
+    [Authorize] // bắt buộc phải đăng nhập với mọi endpoint
     [Route("api/goodsreceipts")]
     [ApiController]
     public class GoodsReceiptsController : ControllerBase
     {
-        private IGoodsReceiptsBusiness _goodsReceiptsBusiness;
-        private IGoodsReceiptDetailsBusiness _goodsReceiptDetailsBusiness;
+        private readonly IGoodsReceiptsBusiness _goodsReceiptsBusiness;
+        private readonly IGoodsReceiptDetailsBusiness _goodsReceiptDetailsBusiness;
 
-        public GoodsReceiptsController(IGoodsReceiptsBusiness goodsReceiptsBusiness, IGoodsReceiptDetailsBusiness goodsReceiptDetailsBusiness)
+        public GoodsReceiptsController(
+            IGoodsReceiptsBusiness goodsReceiptsBusiness,
+            IGoodsReceiptDetailsBusiness goodsReceiptDetailsBusiness)
         {
             _goodsReceiptsBusiness = goodsReceiptsBusiness;
             _goodsReceiptDetailsBusiness = goodsReceiptDetailsBusiness;
         }
 
-        [Route("create")]
-        [HttpPost]
+        // ========== CREATE ==========
+        [Authorize(Roles = "Admin,ThuKho")]
+        [HttpPost("create")]
         public IActionResult Create([FromBody] GoodsReceiptsModel model)
         {
             var receiptID = _goodsReceiptsBusiness.Create(model);
             return Ok(new { ReceiptID = receiptID });
         }
 
-
-
-        [Route("update")]
-        [HttpPost]
+        // ========== UPDATE ==========
+        [Authorize(Roles = "Admin,ThuKho")]
+        [HttpPost("update")]
         public GoodsReceiptsModel Update([FromBody] GoodsReceiptsModel model)
         {
             _goodsReceiptsBusiness.Update(model);
             return model;
         }
 
-        [Route("delete")]
-        [HttpPost]
+        // ========== DELETE ==========
+        [Authorize(Roles = "Admin,ThuKho")]
+        [HttpPost("delete")]
         public IActionResult Delete([FromBody] GoodsReceiptsModel model)
         {
             _goodsReceiptsBusiness.Delete(model);
             return Ok(new { data = "OK" });
         }
 
-        [Route("get-by-id/{id}")]
-        [HttpGet]
+        // ========== GET BY ID ==========
+        [Authorize(Roles = "Admin,ThuKho,KeToan")]
+        [HttpGet("get-by-id/{id}")]
         public GoodsReceiptsModel GetDatabyID(int id)
         {
             return _goodsReceiptsBusiness.GetDatabyID(id);
         }
 
-        [Route("search")]
-        [HttpPost]
+        // ========== SEARCH ==========
+        [Authorize(Roles = "Admin,ThuKho,KeToan")]
+        [HttpPost("search")]
         public ResponseModel Search([FromBody] Dictionary<string, object> formData)
         {
             var response = new ResponseModel();
@@ -118,12 +123,14 @@ namespace CoreApi.Controllers
             }
             catch (Exception ex)
             {
-                throw ex;   
+                throw ex;
             }
             return response;
         }
-        [Route("export-excel/{receiptID}")]
-        [HttpGet]
+
+        // ========== EXPORT EXCEL ==========
+        [Authorize(Roles = "Admin,ThuKho,KeToan")]
+        [HttpGet("export-excel/{receiptID}")]
         public IActionResult ExportGoodsReceiptExcel(int receiptID)
         {
             try
@@ -135,8 +142,6 @@ namespace CoreApi.Controllers
 
                 // Lấy dữ liệu chi tiết phiếu nhập
                 var details = _goodsReceiptDetailsBusiness.GetDatabyID(receiptID);
-
-
 
                 using var workbook = new XLWorkbook();
 
@@ -183,13 +188,13 @@ namespace CoreApi.Controllers
 
                 wsDetail.Columns().AdjustToContents();
 
-                // Xuất file
                 using var stream = new MemoryStream();
                 workbook.SaveAs(stream);
                 stream.Position = 0;
 
                 var fileName = $"goodsreceipt_{receiptID}_{DateTime.UtcNow:yyyyMMdd_HHmmss}.xlsx";
-                const string contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                const string contentType =
+                    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
 
                 return File(stream.ToArray(), contentType, fileName);
             }
@@ -198,8 +203,5 @@ namespace CoreApi.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
-
-
-
     }
 }

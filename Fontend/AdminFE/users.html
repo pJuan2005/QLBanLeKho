@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <!-- font -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -12,13 +13,14 @@
     />
 
     <!-- css -->
-    <link rel="stylesheet" href="../Shared/css/customer.css" />
+    <link rel="stylesheet" href="../Shared/css/users.css" />
     <script src="../Shared/angular/angular.min.js"></script>
     <script src="../Shared/angular/global.js"></script>
-    <script src="../Shared/angular/customer.js"></script>
-    <title>Customer</title>
+    <script src="../Shared/angular/users.js"></script>
+    <title>User</title>
   </head>
-  <body ng-app="AppRetailPos" ng-controller="customerCtrl">
+
+  <body ng-app="AppRetailPos" ng-controller="userCtrl">
     <div class="slide-bar">
       <div class="slide-bar__header">
         <div class="app-slideBar">
@@ -49,8 +51,8 @@
           </div>
         </a>
         <!-- menu button POS -->
-        <a href="../AdminFE/pos.html" ng-if="canShow('pos')"
-          ><div class="slide-bar__MenuButton">
+        <a href="../AdminFE/pos.html" ng-if="canShow('pos')">
+          <div class="slide-bar__MenuButton">
             <div class="MenuButton-left">
               <img src="../Shared/img/common/pos.svg" alt="" class="icon" />
             </div>
@@ -102,7 +104,7 @@
         </a>
         <!-- menu button Customers -->
         <a href="../AdminFE/customers.html" ng-if="canShow('customers')">
-          <div class="slide-bar__MenuButton slide-bar__MenuButton--active">
+          <div class="slide-bar__MenuButton">
             <div class="MenuButton-left">
               <img
                 src="../Shared/img/common/customer.svg"
@@ -111,7 +113,7 @@
               />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu-active">Customers</p>
+              <p class="name-menu">Customers</p>
             </div>
           </div>
         </a>
@@ -254,12 +256,12 @@
         </a>
         <!-- menu button Users -->
         <a href="../AdminFE/users.html" ng-if="canShow('users')">
-          <div class="slide-bar__MenuButton">
+          <div class="slide-bar__MenuButton slide-bar__MenuButton--active">
             <div class="MenuButton-left">
               <img src="../Shared/img/common/user.svg" alt="" class="icon" />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Users</p>
+              <p class="name-menu-active">Users</p>
             </div>
           </div>
         </a>
@@ -330,64 +332,30 @@
       <div class="app-layout-content">
         <div class="container-top">
           <div class="container-top--left">
-            <h1 class="name-system">Customers</h1>
-            <p class="desc-system">
-              Manage customer information and relationships
-            </p>
+            <h1 class="name-system">Users</h1>
+            <p class="desc-system">Manage user accounts and permissions</p>
           </div>
           <div class="container-top--right">
-            <div class="control" ng-click="openImportDialog()">
-              <img
-                src="../Shared/img/common/import.svg"
-                alt=""
-                class="icon-control"
-              />
-              <p class="name-control">Import Excel</p>
-            </div>
-            <input
-              type="file"
-              id="fileImport"
-              accept=".xlsx,.xls"
-              style="display: none"
-              onchange="angular.element(this).scope().onImportFileChange(this)"
-            />
-            <div class="control" ng-click="exportExcel()">
-              <img
-                src="../Shared/img/common/export.svg"
-                alt=""
-                class="icon-control"
-              />
-              <p class="name-control">Export Excel</p>
-            </div>
-            <div class="control add-customer" ng-click="openAdd()">
+            <div class="control add-User" ng-click="openAdd()">
               <img
                 src="../Shared/img/common/plus.svg"
                 alt=""
                 class="icon-control"
               />
-              <p class="name-control">Add Customer</p>
+              <p class="name-control">Add User</p>
             </div>
           </div>
         </div>
-        <div class="container-card">
-          <div class="card">
-            <p class="name-card">Total Customers</p>
-            <p class="data-card">{{stats.totalCustomer}}</p>
-          </div>
-          <div class="card">
-            <p class="name-card">Customers with Debt Limit</p>
-            <p class="data-card">{{stats.withDebt}}</p>
-          </div>
-        </div>
-        <div class="search-phone-customer">
+        <div class="search-username-fullname-users">
           <img src="../Shared/img/common/search.svg" alt="" class="icon" />
           <input
             class="search"
             type="text"
-            placeholder="Search by phone customer"
-            ng-model="searchPhone"
+            placeholder="Search by Username or Full Name"
+            ng-model="searchUserText"
           />
         </div>
+
         <!-- phân trang -->
         <div class="pager" ng-if="pager.total>0">
           <div class="pager-info">
@@ -440,42 +408,38 @@
             <table class="table">
               <thead>
                 <tr>
-                  <th class="id">Customer ID</th>
-                  <th class="name">Customer Name</th>
-                  <th class="phone">Phone</th>
+                  <th class="id">User ID</th>
+                  <th class="fullname">Full Name</th>
+                  <th class="role">Role</th>
                   <th class="email">Email</th>
-                  <th class="address">Address</th>
-                  <th class="debt">Debt Limit</th>
+                  <th class="phone">Phone</th>
                   <th class="action txt-right">Actions</th>
                 </tr>
               </thead>
               <tbody>
-                <tr ng-repeat="c in customers">
-                  <td>{{c.customerID}}</td>
-                  <td>{{c.customerName}}</td>
-                  <td>{{c.phone}}</td>
-                  <td>{{c.email}}</td>
-                  <td>{{c.address}}</td>
-                  <td>
-                    {{ (c.debtLimit != null ? c.debtLimit : (c.DebtLimit != null
-                    ? c.DebtLimit : 0) ) | number:0 }}đ
-                  </td>
+                <tr ng-repeat="u in users">
+                  <td>{{u.userID || u.UserID}}</td>
+                  <td>{{u.fullName || u.FullName}}</td>
+                  <td>{{u.role || u.Role}}</td>
+                  <td>{{u.email || u.Email}}</td>
+                  <td>{{u.phone || u.Phone}}</td>
                   <td class="txt-right">
-                    <button class="link" ng-click="edit(c)">✎ Edit</button>
-                    <button class="link danger" ng-click="remove(c)">
+                    <button class="link" ng-click="edit(u)">✎ Edit</button>
+                    <button class="link danger" ng-click="remove(u)">
                       🗑 Delete
                     </button>
+                    <button class="link" ng-click="detail(u)">🔍 Detail</button>
                   </td>
                 </tr>
-                <tr
-                  ng-if="(customers | filter:searchAddress | filter:searchPhone).length == 0"
-                >
-                  <td colspan="7" class="empty">No Data</td>
+
+                <tr ng-if="(users | filter:searchUserText).length == 0">
+                  <td colspan="6" class="empty">No Data</td>
                 </tr>
               </tbody>
             </table>
           </div>
         </div>
+
         <!-- form -->
         <div class="form">
           <!-- add -->
@@ -485,86 +449,161 @@
             ng-click="closeAddOnOverlay($event)"
           >
             <div class="form-add__content" ng-click="$event.stopPropagation()">
-              <h3 class="title">Add New Customer</h3>
-              <p class="desc">Enter customer details</p>
-              <form name="frmAdd" ng-submit="add()">
-                <label for="name-add">Full Name</label>
+              <h3 class="title">Add New User</h3>
+              <p class="desc">Enter user account information</p>
+
+              <form name="frmAddUser" ng-submit="addUser()">
+                <!-- Username -->
+                <label for="username-add">Username</label>
                 <input
                   type="text"
-                  id="name-add"
+                  id="username-add"
                   required
-                  placeholder="Enter customer name"
-                  ng-model="newCustomer.CustomerName"
+                  placeholder="Enter username"
+                  ng-model="newUser.Username"
                 />
+
+                <!-- Password -->
+                <label for="password-add">Password</label>
+                <input
+                  type="text"
+                  id="password-add"
+                  required
+                  placeholder="Enter password"
+                  ng-model="newUser.PasswordHash"
+                />
+
                 <div class="both">
+                  <!-- Full Name -->
+                  <div class="both-left">
+                    <label for="fullname-add">Full Name</label>
+                    <input
+                      type="text"
+                      id="fullname-add"
+                      required
+                      placeholder="Nguyen Van A"
+                      ng-model="newUser.FullName"
+                    />
+                  </div>
+
+                  <!-- Role -->
+                  <div class="both-right">
+                    <label for="role-add">Role</label>
+                    <select id="role-add" required ng-model="newUser.Role">
+                      <option value="" disabled selected>Select role</option>
+                      <option value="Admin">Admin</option>
+                      <option value="ThuNgan">Thu Ngân</option>
+                      <option value="ThuKho">Thủ Kho</option>
+                      <option value="KeToan">Kế Toán</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="both">
+                  <!-- Phone -->
                   <div class="both-left">
                     <label for="phone-add">Phone</label>
                     <input
                       type="text"
                       id="phone-add"
-                      required
-                      placeholder="+84 123 456 5278"
-                      ng-model="newCustomer.CustomerPhone"
+                      placeholder="+84 123 456 789"
+                      ng-model="newUser.Phone"
                     />
                   </div>
+
+                  <!-- Email -->
                   <div class="both-right">
-                    <label for="mail-add">Email</label>
+                    <label for="email-add">Email</label>
                     <input
-                      type="text"
-                      id="mail-add"
-                      placeholder="phamchuan@email.com"
-                      ng-model="newCustomer.CustomerEmail"
+                      type="email"
+                      id="email-add"
+                      placeholder="user@email.com"
+                      ng-model="newUser.Email"
                     />
                   </div>
                 </div>
-                <label for="address-add">Address</label>
-                <input
-                  type="text"
-                  id="address-add"
-                  required
-                  placeholder="123 Main City, Main Street"
-                  ng-model="newCustomer.CustomerAddress"
-                />
-                <label for="debt-add">Debt Limit</label>
-                <input
-                  type="number"
-                  id="debt-add"
-                  required
-                  placeholder="Enter debt limit for customer"
-                  ng-model="newCustomer.CustomerDebt"
-                />
+
                 <div class="dialog-footer">
-                  <!-- để type button tránh submit -->
                   <button type="button" class="cancel" ng-click="cancelAdd()">
                     Cancel
                   </button>
                   <input
                     class="submit"
                     type="submit"
-                    value="Add New Customer"
-                    ng-disabled="frmAdd.$invalid||savingAdd"
+                    value="Add User"
+                    ng-disabled="frmAddUser.$invalid || savingAdd"
                   />
                 </div>
               </form>
             </div>
           </div>
-          <!-- edit -->
+
+          <!-- Modal detail -->
+          <div
+            class="form-detail"
+            ng-class="{open: showDetail}"
+            ng-click="closeDetailOnOverlay($event)"
+          >
+            <div
+              class="form-detail__content"
+              ng-click="$event.stopPropagation()"
+            >
+              <h3 class="title">User Details</h3>
+              <p><strong>Username:</strong> {{detailUser.Username}}</p>
+              <p><strong>PasswordHash:</strong> {{detailUser.PasswordHash}}</p>
+              <div class="dialog-footer">
+                <button type="button" class="cancel" ng-click="cancelDetail()">
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Modal Edit User -->
           <div
             class="form-edit"
             ng-class="{open: showEdit}"
             ng-click="closeEditOnOverlay($event)"
           >
             <div class="form-edit__content" ng-click="$event.stopPropagation()">
-              <h3>class="title">Edit Customer</h3>
-              <form name="frmEdit" ng-submit="updateCustomer()">
-                <label for="name-edit">Full Name</label>
+              <h3 class="title">Edit User</h3>
+              <p class="desc">Update user details</p>
+              <form name="frmEditUser" ng-submit="updateUser()">
+                <label for="username-edit">Username</label>
                 <input
                   type="text"
-                  id="name-edit"
+                  id="username-edit"
                   required
-                  placeholder="Enter customer name"
-                  ng-model="editingCustomer.CustomerName"
+                  placeholder="Enter username"
+                  ng-model="editUser.Username"
                 />
+
+                <label for="password-edit">Password</label>
+                <input
+                  type="password"
+                  id="password-edit"
+                  placeholder="Enter new password"
+                  ng-model="editUser.PasswordHash"
+                />
+
+                <label for="role-edit">Role</label>
+                <select id="role-edit" required ng-model="editUser.Role">
+                  <option value="">Select role</option>
+                  <option value="Admin">Admin</option>
+                  <option value="ThuNgan">ThuNgan</option>
+                  <option value="ThuKho">ThuKho</option>
+                  <option value="KeToan">KeToan</option>
+                </select>
+
+                <label for="fullname-edit">Full Name</label>
+                <input
+                  type="text"
+                  id="fullname-edit"
+                  required
+                  placeholder="Enter full name"
+                  ng-model="editUser.FullName"
+                />
+
                 <div class="both">
                   <div class="both-left">
                     <label for="phone-edit">Phone</label>
@@ -572,69 +611,65 @@
                       type="text"
                       id="phone-edit"
                       required
-                      placeholder="+84 123 456 5278"
-                      ng-model="editingCustomer.CustomerPhone"
+                      placeholder="+84 123 456 789"
+                      ng-model="editUser.Phone"
                     />
                   </div>
                   <div class="both-right">
-                    <label for="mail-edit">Email</label>
+                    <label for="email-edit">Email</label>
                     <input
-                      type="text"
-                      id="mail-edit"
-                      placeholder="phamchuan@email.com"
-                      ng-model="editingCustomer.CustomerEmail"
+                      type="email"
+                      id="email-edit"
+                      placeholder="user@email.com"
+                      ng-model="editUser.Email"
                     />
                   </div>
                 </div>
-                <label for="address-edit">Address</label>
-                <input
-                  type="text"
-                  id="address-edit"
-                  required
-                  placeholder="123 Main City, Main Street"
-                  ng-model="editingCustomer.CustomerAddress"
-                />
-                <label for="debt-edit">Debt Limit</label>
-                <input
-                  type="number"
-                  id="debt-edit"
-                  required
-                  placeholder="Enter debt limit for customer"
-                  ng-model="editingCustomer.CustomerDebt"
-                />
+
                 <div class="dialog-footer">
-                  <!-- để type button tránh submit -->
                   <button type="button" class="cancel" ng-click="cancelEdit()">
                     Cancel
                   </button>
                   <input
                     class="submit"
                     type="submit"
-                    value="Edit Customer"
-                    ng-disabled="frmEdit.$invalid||savingEdit"
+                    value="Update User"
+                    ng-disabled="frmEditUser.$invalid || savingEdit"
                   />
                 </div>
               </form>
             </div>
           </div>
-          <!-- delete -->
+          <!-- Modal Delete User -->
           <div
             class="form-delete"
-            ng-class="{open:showDelete}"
+            ng-class="{open: showDelete}"
             ng-click="closeDeleteOnOverlay($event)"
           >
-            <div class="form-delete__content">
-              <h3 class="title">Delete Customer</h3>
+            <div
+              class="form-delete__content"
+              ng-click="$event.stopPropagation()"
+            >
+              <h3 class="title">Delete User</h3>
               <p class="desc">
-                Are you sure you want to delete the customer
-                "{{deleting.customerName}}"? This action cannot be undone.
+                Bạn có chắc chắn muốn xóa người dùng
+                <strong
+                  >{{deletingUser.FullName || deletingUser.Username}}</strong
+                >
+                không?
               </p>
+
               <div class="dialog-footer">
-                <button class="cancel" ng-click="cancelDelete($event)">
+                <button type="button" class="cancel" ng-click="cancelDelete()">
                   Cancel
                 </button>
-                <button class="submit danger" ng-click="confirmDelete()">
-                  Delete Customer
+                <button
+                  type="button"
+                  class="submit danger"
+                  ng-click="confirmDelete()"
+                  ng-disabled="savingDelete"
+                >
+                  Delete
                 </button>
               </div>
             </div>
@@ -643,6 +678,6 @@
       </div>
     </div>
 
-    <script src="../Shared/js/customer.js"></script>
+    <script src="../Shared/js/users.js"></script>
   </body>
 </html>

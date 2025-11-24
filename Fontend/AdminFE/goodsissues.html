@@ -98,7 +98,7 @@
                         <img src="../Shared/img/common/customer.svg" alt="" class="icon" />
                     </div>
                     <div class="MenuButton-right">
-                        <p class="name-menu-active">Customers</p>
+                        <p class="name-menu">Customers</p>
                     </div>
                 </div>
             </a>
@@ -138,7 +138,7 @@
 
             <!-- menu button Goods Receipts -->
             <a href="../AdminFE/goodsreceipts.html" ng-if="canShow('greceipts')">
-                <div class="slide-bar__MenuButton slide-bar__MenuButton--active">
+                <div class="slide-bar__MenuButton ">
                     <div class="MenuButton-left">
                         <img src="../Shared/img/common/goodReceipt.svg" alt="" class="icon" />
                     </div>
@@ -150,12 +150,12 @@
 
             <!-- menu button Goods Issues -->
             <a href="../AdminFE/goodsissues.html" ng-if="canShow('gissues')">
-                <div class="slide-bar__MenuButton ">
+                <div class="slide-bar__MenuButton slide-bar__MenuButton--active">
                     <div class="MenuButton-left">
                         <img src="../Shared/img/common/goodIssues.svg" alt="" class="icon" />
                     </div>
                     <div class="MenuButton-right">
-                        <p class="name-menu">Goods Issues</p>
+                        <p class="name-menu-active">Goods Issues</p>
                     </div>
                 </div>
             </a>
@@ -259,14 +259,14 @@
                         ng-model="searchAddress" />
                 </div>
                 <div class="top-bar__right">
-                    <p class="role">admin</p>
+                    <p class="role">{{currentUser.role}}</p>
                     <img src="../Shared/img/common/ava.svg" alt="" class="ava" id="avatar" />
                 </div>
             </div>
             <div class="top-bar__info" id="information">
                 <div class="info-top">
-                    <p class="name">John Doe</p>
-                    <p class="email">john@company.com</p>
+                    <p class="name">{{currentUser.fullname}}</p>
+                    <p class="email">{{currentUser.email}}</p>
                 </div>
                 <div class="info-mid">
                     <a href="#!">
@@ -393,6 +393,7 @@
                                         <button class="menu-toggle" ng-click="toggleActionMenu(gi)">⚙</button>
                                         <ul class="menu-list" ng-show="gi.showMenu">
                                             <li ng-click="detail(gi)">🔍 Detail</li>
+                                            <li ng-click="remove(gi)">🗑 Delete</li>
                                         </ul>
                                     </div>
                                 </td>
@@ -446,6 +447,27 @@
                         </form>
                     </div>
                 </div>
+                <!-- Modal Delete Goods Issue -->
+                <div class="form-delete" ng-class="{open: showDeleteGI}" ng-click="closeDeleteGIOnOverlay($event)">
+                    <div class="form-delete__content" ng-click="$event.stopPropagation()">
+                        <h3 class="title">Delete Goods Issue</h3>
+
+                        <p class="desc">
+                            Bạn có chắc chắn muốn xóa chứng từ xuất kho
+                            <strong>{{ deletingGI.GoodsIssueID }}</strong>
+                            ngày <strong>{{ deletingGI.Date | date:'dd/MM/yyyy' }}</strong> không?
+                        </p>
+
+                        <div class="dialog-footer">
+                            <button type="button" class="cancel" ng-click="cancelDeleteGI()">Cancel</button>
+                            <button type="button" class="submit danger" ng-click="confirmDeleteGI()"
+                                ng-disabled="savingDeleteGI">
+                                Delete
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
 
 
             </div>
@@ -532,7 +554,7 @@
     </div>
 
     </div>
-
+    <script src="../Shared/js/goodsissues.js"></script>
 </body>
 
 </html>

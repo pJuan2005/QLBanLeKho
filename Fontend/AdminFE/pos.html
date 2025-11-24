@@ -312,8 +312,8 @@
         </div>
         <div class="top-bar__info" id="information">
           <div class="info-top">
-            <p class="name">John Doe</p>
-            <p class="email">john@company.com</p>
+            <p class="name">{{currentUser.fullname}}</p>
+            <p class="email">{{currentUser.email}}</p>
           </div>
           <div class="info-mid">
             <a href="#!"><p class="set">Profile Settings</p></a>
@@ -442,9 +442,14 @@
 
                   <p class="cost-product">₫{{ p.unitPrice | number:0 }}</p>
 
-                  <!-- Nếu có khuyến mãi sau này thì bind thêm -->
-                  <div class="discount discount--empty">
-                    <!-- tạm không hiển thị gì -->
+                  <!-- Hiển thị % giảm nếu có -->
+                  <div
+                    class="discount"
+                    ng-class="{'discount--empty': !(p.discount || p.Discount)}"
+                  >
+                    <span ng-if="p.discount || p.Discount">
+                      -{{ (p.discount || p.Discount) | number:0 }}%
+                    </span>
                   </div>
                 </div>
               </div>

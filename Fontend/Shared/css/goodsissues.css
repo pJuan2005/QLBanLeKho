@@ -725,6 +725,72 @@ input:focus {
 .menu-list li:hover {
   background: #f0f0f0;
 }
+
+/* ========================= DELETE Goods Issue ======================== */
+.form-delete {
+  position: fixed;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.form-delete::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.45);
+  backdrop-filter: blur(2px);
+}
+
+.form-delete__content {
+  position: relative;
+  width: min(92vw, 420px);
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  box-shadow: 0 24px 48px rgba(2, 6, 23, 0.18);
+  padding: 24px 28px;
+  z-index: 1;
+  text-align: left;
+  animation: modalIn 0.18s ease-out;
+}
+
+.form-delete__content .title {
+  margin: 0 0 8px 0;
+  font-size: 20px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.form-delete__content .desc {
+  margin: 0;
+  color: #64748b;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* footer nút dùng lại .dialog-footer */
+.dialog-footer .danger {
+  background: #ef4444;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.2s;
+}
+.dialog-footer .danger:hover {
+  background: #dc2626;
+}
+
+/* mở modal delete */
+.form-delete.open {
+  display: flex;
+}
+
 /* ==================== FORM DETAIL GOODS ISSUES – ĐẸP NHƯ GOODSRECEIPTS ==================== */
 .form-detail {
     position: fixed;
