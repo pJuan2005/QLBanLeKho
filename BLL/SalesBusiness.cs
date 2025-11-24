@@ -30,43 +30,60 @@ namespace BLL
             if (dto.Items == null || dto.Items.Count == 0)
                 throw new Exception("Đơn hàng không có sản phẩm.");
 
-            // 1) TÍNH SUBTOTAL (không VAT – chỉ để backup)
-            decimal subTotal = 0;
-            foreach (var item in dto.Items)
+            // ==========================================================
+            // 1) LẤY ORDER TOTAL TỪ FE (ĐÃ BAO GỒM DISCOUNT + VAT)
+            // ==========================================================
+            var orderTotal = dto.ClientTotal;
+
+            // Trường hợp xấu: FE không gửi hoặc gửi 0 → fallback tính sơ bộ
+            if (orderTotal <= 0)
             {
-                if (item.Quantity <= 0)
-                    throw new Exception("Số lượng sản phẩm không hợp lệ.");
+                decimal subTotal = 0;
+                foreach (var item in dto.Items)
+                {
+                    if (item.Quantity <= 0)
+                        throw new Exception("Số lượng sản phẩm không hợp lệ.");
 
-                var discountPercent = item.Discount; // %
-                var baseLine = item.UnitPrice * item.Quantity;
-                var afterDiscount = baseLine * (1 - discountPercent / 100m);
+                    // Tạm tính theo discount FE gửi (chỉ là backup)
+                    var baseLine = item.UnitPrice * item.Quantity;
+                    var afterDiscount = baseLine * (1 - item.Discount / 100m);
+                    subTotal += afterDiscount;
+                }
 
-                subTotal += afterDiscount;
+                // Fallback: nếu không có ClientTotal thì coi subtotal này là tổng
+                orderTotal = subTotal;
             }
 
-            // ORDER TOTAL = tổng tiền thực tế (subtotal + VAT) → ưu tiên dùng số FE gửi lên
-            var orderTotal = dto.ClientTotal > 0 ? dto.ClientTotal : subTotal;
-
-            // --- TIỀN KHÁCH ĐƯA / ÁP DỤNG / TIỀN THỪA ---
+            // ==========================================================
+            // 2) TIỀN KHÁCH TRẢ & TIỀN THỪA
+            // ==========================================================
             var rawPay = dto.Prepay;
             if (rawPay < 0) rawPay = 0;
 
-            // DÙNG orderTotal, không dùng subtotal nữa
-            var appliedPay = Math.Min(rawPay, orderTotal);         // tiền thực sự dùng để thanh toán đơn này
-            var changeToReturn = Math.Max(0, rawPay - orderTotal); // tiền thừa (nếu có)
+            // Tiền thực sự áp dụng cho đơn này (không bao giờ > orderTotal)
+            var appliedPay = Math.Min(rawPay, orderTotal);
 
-            // 2) KIỂM TRA CÔNG NỢ
+            // Tiền thừa (nếu có) – hiện anh chưa dùng, nhưng để đây sau FE/BE dùng cũng được
+            var changeToReturn = Math.Max(0, rawPay - orderTotal);
+
+            // ==========================================================
+            // 3) KIỂM TRA CÔNG NỢ
+            // ==========================================================
             var beforeDebt = _arRepo.GetCurrentDebt(dto.CustomerId);
             var limit = _arRepo.GetDebtLimit(dto.CustomerId);
 
-            // phần còn thiếu của ORDER TOTAL trở thành nợ
+            // Phần còn thiếu của ORDER TOTAL trở thành nợ
             var debtIncrease = orderTotal - appliedPay;
+            if (debtIncrease < 0) debtIncrease = 0; // phòng hờ, nhưng về lý thuyết = 0 hoặc >0
+
             var projected = beforeDebt + debtIncrease;
 
             if (limit > 0 && projected > limit)
                 throw new Exception("Vượt hạn mức công nợ của khách hàng.");
 
-            // 3) TẠO SALES HEADER
+            // ==========================================================
+            // 4) TẠO SALES HEADER
+            // ==========================================================
             var saleHeader = new SalesModel
             {
                 CustomerID = dto.CustomerId,
@@ -77,7 +94,9 @@ namespace BLL
 
             int saleId = _salesRepo.CreateReturnId(saleHeader);
 
-            // 4) TẠO SALES ITEMS
+            // ==========================================================
+            // 5) TẠO SALES ITEMS (DB TRIGGER SẼ TỰ GÁN DISCOUNT + TÍNH TOTAL)
+            // ==========================================================
             foreach (var item in dto.Items)
                 item.SaleID = saleId;
 
@@ -85,14 +104,16 @@ namespace BLL
             if (!ok)
                 throw new Exception("Không thể tạo chi tiết sản phẩm cho đơn hàng.");
 
-            // 5) TẠO PAYMENT – LƯU ĐÚNG SỐ TIỀN ĐÃ ÁP DỤNG (theo ORDER TOTAL)
+            // ==========================================================
+            // 6) TẠO PAYMENT – LƯU ĐÚNG SỐ TIỀN ĐÃ ÁP DỤNG (appliedPay)
+            // ==========================================================
             if (appliedPay > 0)
             {
                 var payment = new PaymentCustomerModel
                 {
                     CustomerID = dto.CustomerId,
                     SaleID = saleId,
-                    Amount = appliedPay,          
+                    Amount = appliedPay,
                     PaymentDate = dto.PaymentDate,
                     Method = dto.PaymentMethod,
                     Description = "Thanh toán tại POS"
@@ -101,7 +122,10 @@ namespace BLL
                 _paymentDal.CreateCustomer(payment);
             }
 
-            // 6) LẤY LẠI ĐƠN VÀ NỢ MỚI
+            // ==========================================================
+            // 7) LẤY LẠI ĐƠN & NỢ MỚI
+            //    (lúc này trigger đã chạy → Sales.TotalAmount, VATAmount đã chuẩn)
+            // ==========================================================
             var savedSale = _salesRepo.GetDatabyID(saleId);
             var afterDebt = beforeDebt + debtIncrease;
 
@@ -109,10 +133,11 @@ namespace BLL
             {
                 Sale = savedSale,
                 BeforeDebt = beforeDebt,
-                NewRemainingDebt = afterDebt,
-                // ChangeToReturn = changeToReturn (nếu sau này muốn trả về)
+                NewRemainingDebt = afterDebt
+                // ChangeToReturn có thể thêm vào DTO nếu em cần
             };
         }
+
 
 
 

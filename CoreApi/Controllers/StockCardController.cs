@@ -2,11 +2,13 @@
 using Microsoft.AspNetCore.Mvc;
 using Model;
 using System;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CoreApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize] // bắt buộc đã login (có JWT)
     public class StockCardController : ControllerBase
     {
         private readonly IDStockCardBLL _stockCardBLL;
@@ -16,6 +18,9 @@ namespace CoreApi.Controllers
             _stockCardBLL = stockCardBLL;
         }
 
+        // ================== GET BY ID ==================
+        // Xem chi tiết thẻ kho: Admin + Thủ kho + Kế toán
+        [Authorize(Roles = "Admin,ThuKho,KeToan")]
         [Route("get-by-id/{id}")]
         [HttpGet]
         public StockCardModel GetByID(int id)
@@ -23,6 +28,9 @@ namespace CoreApi.Controllers
             return _stockCardBLL.GetDatabyID(id);
         }
 
+        // ================== CREATE ==================
+        // Tạo thẻ kho: Admin + Thủ kho
+        [Authorize(Roles = "Admin,ThuKho")]
         [Route("create-stockcard")]
         [HttpPost]
         public StockCardModel Create([FromBody] StockCardModel model)
@@ -31,6 +39,9 @@ namespace CoreApi.Controllers
             return model;
         }
 
+        // ================== UPDATE ==================
+        // Cập nhật thẻ kho: Admin + Thủ kho
+        [Authorize(Roles = "Admin,ThuKho")]
         [Route("update")]
         [HttpPut]
         public StockCardModel Update([FromBody] StockCardModel model)
@@ -39,8 +50,9 @@ namespace CoreApi.Controllers
             return model;
         }
 
-
-
+        // ================== DELETE ==================
+        // Xoá thẻ kho: chỉ Admin
+        [Authorize(Roles = "Admin")]
         [HttpDelete("delete/{id}")]
         public IActionResult Delete(int id)
         {
@@ -52,7 +64,9 @@ namespace CoreApi.Controllers
             return Ok(new { message = "Delete success" });
         }
 
-
+        // ================== SEARCH ==================
+        // Search thẻ kho: xem được cho Admin + Thủ kho + Kế toán
+        [Authorize(Roles = "Admin,ThuKho,KeToan")]
         [Route("search-stockcard")]
         [HttpPost]
         public ResponseModel Search([FromBody] StockCardSearchRequest request)
@@ -67,12 +81,11 @@ namespace CoreApi.Controllers
                 response.Data = data;
                 response.Page = request.page;
                 response.PageSize = request.pageSize;
-            
             }
             catch (Exception ex)
-                {
-                    throw new Exception(ex.Message);
-                }
+            {
+                throw new Exception(ex.Message);
+            }
             return response;
         }
     }

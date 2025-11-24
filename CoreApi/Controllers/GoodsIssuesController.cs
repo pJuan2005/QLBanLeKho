@@ -1,31 +1,33 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Model;
-using System.Reflection;
 using BLL.Interfaces;
 using System.Globalization;
 
 namespace CoreApi.Controllers
 {
+    [Authorize] // bắt buộc phải đăng nhập với mọi endpoint
     [Route("api/goodsissues")]
     [ApiController]
     public class GoodsIssuesController : ControllerBase
     {
-        private IGoodsIssuesBusiness _goodsIssuesBusiness;
+        private readonly IGoodsIssuesBusiness _goodsIssuesBusiness;
 
         public GoodsIssuesController(IGoodsIssuesBusiness goodsIssuesBusiness)
         {
             _goodsIssuesBusiness = goodsIssuesBusiness;
         }
 
-        [Route("create")]
-        [HttpPost]
+        // ========== CREATE ==========
+        [Authorize(Roles = "Admin,ThuKho")]
+        [HttpPost("create")]
         public IActionResult Create([FromBody] GoodsIssuesModel model)
         {
             try
             {
-                var issueID = _goodsIssuesBusiness.Create(model);  
-                return Ok(new { issueID });  
+                var issueID = _goodsIssuesBusiness.Create(model);
+                return Ok(new { issueID });
             }
             catch (Exception ex)
             {
@@ -33,31 +35,35 @@ namespace CoreApi.Controllers
             }
         }
 
-        [Route("update")]
-        [HttpPost]
+        // ========== UPDATE ==========
+        [Authorize(Roles = "Admin,ThuKho")]
+        [HttpPost("update")]
         public GoodsIssuesModel Update([FromBody] GoodsIssuesModel model)
         {
             _goodsIssuesBusiness.Update(model);
             return model;
         }
 
-        [Route("delete")]
-        [HttpPost]
+        // ========== DELETE ==========
+        [Authorize(Roles = "Admin,ThuKho")]
+        [HttpPost("delete")]
         public IActionResult Delete([FromBody] GoodsIssuesModel model)
         {
             _goodsIssuesBusiness.Delete(model);
             return Ok(new { data = "OK" });
         }
 
-        [Route("get-by-id/{id}")]
-        [HttpGet]
+        // ========== GET BY ID ==========
+        [Authorize(Roles = "Admin,ThuKho,KeToan")]
+        [HttpGet("get-by-id/{id}")]
         public GoodsIssuesModel GetDatabyID(int id)
         {
             return _goodsIssuesBusiness.GetDatabyID(id);
         }
 
-        [Route("search")]
-        [HttpPost]
+        // ========== SEARCH ==========
+        [Authorize(Roles = "Admin,ThuKho,KeToan")]
+        [HttpPost("search")]
         public ResponseModel Search([FromBody] Dictionary<string, object> formData)
         {
             var response = new ResponseModel();
@@ -123,7 +129,5 @@ namespace CoreApi.Controllers
             }
             return response;
         }
-
-
     }
 }

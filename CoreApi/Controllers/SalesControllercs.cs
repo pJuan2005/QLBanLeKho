@@ -14,7 +14,7 @@ namespace CoreApi.Controllers
 {
     [Route("api/sales")]
     [ApiController]
-    [Authorize]
+    [Authorize] // bắt buộc phải login, quyền chi tiết set ở từng action
     public class SalesController : ControllerBase
     {
         private ISalesBusiness _salesBusiness;
@@ -26,6 +26,9 @@ namespace CoreApi.Controllers
             _auditLogger = auditLogger;
         }
 
+        // ================== CREATE ==================
+        // Tạo đơn bán hàng thường (không phải POS)
+        [Authorize(Roles = "Admin,ThuNgan")]
         [Route("create")]
         [HttpPost]
         public SalesModel Create([FromBody] SalesModel model)
@@ -37,10 +40,12 @@ namespace CoreApi.Controllers
                 entityId: model.SaleID,
                 operation: "CREATE",
                 details: JsonSerializer.Serialize(model)
-                );
+            );
             return model;
         }
 
+        // ================== UPDATE ==================
+        [Authorize(Roles = "Admin,ThuNgan")]
         [Route("update")]
         [HttpPost]
         public SalesModel Update([FromBody] SalesModel model)
@@ -48,14 +53,17 @@ namespace CoreApi.Controllers
             _salesBusiness.Update(model);
             _auditLogger.Log(
                 action: $"Update sales Id: {model.SaleID}",
-                entityName:"Sales",
+                entityName: "Sales",
                 entityId: model.SaleID,
                 operation: "UPDATE",
                 details: JsonSerializer.Serialize(model)
-                );
+            );
             return model;
         }
 
+        // ================== DELETE ==================
+        // Xoá sale: thường chỉ cho Admin để tránh xoá nhầm
+        [Authorize(Roles = "Admin")]
         [Route("delete")]
         [HttpPost]
         public IActionResult Delete([FromBody] SalesModel model)
@@ -63,14 +71,16 @@ namespace CoreApi.Controllers
             _salesBusiness.Delete(model);
             _auditLogger.Log(
                 action: $"Delete sales Id: {model.SaleID}",
-                entityName:"Sales",
+                entityName: "Sales",
                 entityId: model.SaleID,
                 operation: "DELETE",
                 details: null
-                );
+            );
             return Ok(new { data = "ok" });
         }
 
+        // ================== GET BY ID ==================
+        [Authorize(Roles = "Admin,ThuNgan,KeToan")]
         [Route("get-by-id/{id}")]
         [HttpGet]
         public SalesModel GetDatabyID(int id)
@@ -78,6 +88,8 @@ namespace CoreApi.Controllers
             return _salesBusiness.GetDatabyID(id);
         }
 
+        // ================== SEARCH CƠ BẢN ==================
+        [Authorize(Roles = "Admin,ThuNgan,KeToan")]
         [Route("search")]
         [HttpPost]
         public ResponseModel Search([FromBody] Dictionary<string, object> formData)
@@ -148,23 +160,23 @@ namespace CoreApi.Controllers
             }
         }
 
+        // ================== CREATE FROM POS ==================
+        // Đây là API POS dùng nhiều nhất → ThuNgan + Admin
+        [Authorize(Roles = "Admin,ThuNgan")]
         [HttpPost]
         [Route("create-from-pos")]
         public IActionResult CreateFromPos([FromBody] PosOrderDto dto)
         {
             try
             {
-                // 1. Lấy UserId từ token (claim tên "UserId")
                 var userIdStr = User.FindFirst("UserId")?.Value;
                 if (!int.TryParse(userIdStr, out var userId))
                 {
                     throw new Exception("Không tìm thấy UserId trong token.");
                 }
 
-                // 2. Gán vào dto để BLL/DAL dùng
                 dto.UserId = userId;
 
-                // 3. Gọi BLL
                 var result = _salesBusiness.CreateFromPos(dto);
 
                 _auditLogger.Log(
@@ -175,7 +187,7 @@ namespace CoreApi.Controllers
                     details: JsonSerializer.Serialize(dto)
                 );
 
-                return Ok(result); // FE cần toàn bộ sale với debt mới
+                return Ok(result);
             }
             catch (Exception ex)
             {
@@ -183,6 +195,8 @@ namespace CoreApi.Controllers
             }
         }
 
+        // ================== DASHBOARD ==================
+        [Authorize(Roles = "Admin,ThuNgan,KeToan")]
         [Route("dashboard")]
         [HttpPost]
         public IActionResult GetDashboard([FromBody] Dictionary<string, object> formData)
@@ -192,7 +206,7 @@ namespace CoreApi.Controllers
                 decimal? minTotalAmount = null, maxTotalAmount = null;
                 string status = null;
                 DateTime? fromDate = null, toDate = null;
-                string keyword = null; // invoice hoặc customer name
+                string keyword = null;
 
                 if (formData != null)
                 {
@@ -257,6 +271,8 @@ namespace CoreApi.Controllers
             }
         }
 
+        // ================== LIST (CHO MÀN HÌNH DANH SÁCH) ==================
+        [Authorize(Roles = "Admin,ThuNgan,KeToan")]
         [Route("list")]
         [HttpPost]
         public ResponseModel GetSalesList([FromBody] Dictionary<string, object> formData)
@@ -276,24 +292,20 @@ namespace CoreApi.Controllers
                     if (formData.ContainsKey("pageSize"))
                         int.TryParse(Convert.ToString(formData["pageSize"]), out pageSize);
 
-                    // --- STATUS ---
                     if (formData.ContainsKey("status"))
                     {
                         var sVal = Convert.ToString(formData["status"]);
                         status = string.IsNullOrWhiteSpace(sVal) ? null : sVal.Trim();
                     }
 
-                    // --- FROM DATE ---
                     if (formData.ContainsKey("fromDate") &&
                         DateTime.TryParse(Convert.ToString(formData["fromDate"]), out var fd))
                         fromDate = fd;
 
-                    // --- TO DATE ---
                     if (formData.ContainsKey("toDate") &&
                         DateTime.TryParse(Convert.ToString(formData["toDate"]), out var td))
                         toDate = td;
 
-                    // --- KEYWORD ---
                     if (formData.ContainsKey("keyword"))
                     {
                         var kVal = Convert.ToString(formData["keyword"]);
@@ -319,6 +331,8 @@ namespace CoreApi.Controllers
             }
         }
 
+        // ================== DETAIL ==================
+        [Authorize(Roles = "Admin,ThuNgan,KeToan")]
         [HttpGet]
         [Route("detail")]
         public IActionResult GetDetail([FromQuery(Name = "saleId")] int saleId)
@@ -330,7 +344,6 @@ namespace CoreApi.Controllers
             if (detail == null || detail.Sale == null)
                 return NotFound(new { message = "Không tìm thấy đơn sale." });
 
-            // Trả đúng structure mà FE đang expect: sale, items, totals
             return Ok(new
             {
                 sale = detail.Sale,

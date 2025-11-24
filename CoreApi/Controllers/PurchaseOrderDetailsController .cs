@@ -4,45 +4,43 @@ using BLL;
 using System.Reflection;
 using BLL.Interfaces;
 using Model;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CoreApi.Controllers
 {
+    [Authorize(Roles = "Admin,ThuKho,KeToan")]
     [Route("api/purchaseorderdetails")]
-   
+    [ApiController]
     public class PurchaseOrderDetailsController : ControllerBase
     {
-        private IPurchaseOrderDetailsBusiness _PurchaseOrderDetailsBusiness;
+        private readonly IPurchaseOrderDetailsBusiness _PurchaseOrderDetailsBusiness;
 
         public PurchaseOrderDetailsController(IPurchaseOrderDetailsBusiness purchaseOrderDetailsBusiness)
         {
             _PurchaseOrderDetailsBusiness = purchaseOrderDetailsBusiness;
         }
 
-        [Route("create")]
-        [HttpPost]
+        // ================= CREATE MULTIPLE =================
+        [HttpPost("create")]
         public IActionResult Create([FromBody] List<PurchaseOrderDetailsModel> models)
         {
             _PurchaseOrderDetailsBusiness.CreateMultiple(models);
-            return Ok();
+            return Ok(models);
         }
 
-
-        
-
-        [Route("delete")]
-        [HttpPost]
+        // ================= DELETE ONE ROW =================
+        [HttpPost("delete")]
         public IActionResult Delete([FromBody] PurchaseOrderDetailsModel model)
         {
             _PurchaseOrderDetailsBusiness.Delete(model);
             return Ok(new { data = "ok" });
         }
-        [Route("get-by-poid/{poid}")]
-        [HttpGet]
+
+        // ================= GET BY POID =================
+        [HttpGet("get-by-poid/{poid}")]
         public List<PurchaseOrderDetailsModel> GetByPOID(int poid)
         {
             return _PurchaseOrderDetailsBusiness.GetByPOID(poid);
         }
-       
-
     }
 }

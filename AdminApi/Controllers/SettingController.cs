@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using BLL.Interfaces;
 using Model;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CoreApi.Controllers
 {
+    [Authorize]
     [Route("api/settings")]
     [ApiController]
     public class SettingsController : ControllerBase

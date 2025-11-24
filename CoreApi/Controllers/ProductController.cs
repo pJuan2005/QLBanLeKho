@@ -7,9 +7,11 @@ using BLL.Interfaces;
 using Model;
 using AdminApi.Services.Interface;
 using System.Text.Json;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CoreApi.Controllers
 {
+    [Authorize]  // bắt buộc login
     [Route("api/product")]
     [ApiController]
     public class ProductController : ControllerBase
@@ -33,6 +35,7 @@ namespace CoreApi.Controllers
         // =====================================================
         // 1️⃣ GET BY ID
         // =====================================================
+        [Authorize(Roles = "Admin,ThuKho,ThuNgan,KeToan")]
         [HttpGet("get-by-id/{id}")]
         public IActionResult GetById(int id)
         {
@@ -48,8 +51,9 @@ namespace CoreApi.Controllers
         }
 
         // =====================================================
-        // 2️⃣ CREATE PRODUCT + AUDIT
+        // 2️⃣ CREATE PRODUCT
         // =====================================================
+        [Authorize(Roles = "Admin,ThuKho")]
         [HttpPost("create-product")]
         public async Task<IActionResult> Create([FromForm] ProductModel model, IFormFile? imageFile)
         {
@@ -72,7 +76,6 @@ namespace CoreApi.Controllers
 
                 _productBLL.Create(model);
 
-                // 🔹 Audit log
                 _auditLogger.Log(
                     action: $"Create product: {model.ProductName} (SKU: {model.SKU})",
                     entityName: "Products",
@@ -95,8 +98,9 @@ namespace CoreApi.Controllers
         }
 
         // =====================================================
-        // 3️⃣ UPDATE PRODUCT + AUDIT
+        // 3️⃣ UPDATE PRODUCT
         // =====================================================
+        [Authorize(Roles = "Admin,ThuKho")]
         [HttpPut("update-product/{id}")]
         public async Task<IActionResult> Update(int id, [FromForm] ProductModel model, IFormFile? imageFile)
         {
@@ -109,7 +113,6 @@ namespace CoreApi.Controllers
                 if (imageFile != null)
                 {
                     string folder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Products");
-
                     if (!Directory.Exists(folder))
                         Directory.CreateDirectory(folder);
 
@@ -125,25 +128,18 @@ namespace CoreApi.Controllers
                 }
                 else
                 {
-                    // Giữ nguyên ảnh cũ nếu không upload ảnh mới
                     model.Image = exist.Image;
                 }
 
                 model.ProductID = id;
-
                 _productBLL.Update(model);
 
-                // 🔹 Audit log (log cả Before / After cho dễ debug)
                 _auditLogger.Log(
                     action: $"Update product: {model.ProductName} (ID: {model.ProductID})",
                     entityName: "Products",
                     entityId: model.ProductID,
                     operation: "UPDATE",
-                    details: JsonSerializer.Serialize(new
-                    {
-                        Before = exist,
-                        After = model
-                    })
+                    details: JsonSerializer.Serialize(new { Before = exist, After = model })
                 );
 
                 return Ok(new { message = "Cập nhật sản phẩm thành công!" });
@@ -155,8 +151,9 @@ namespace CoreApi.Controllers
         }
 
         // =====================================================
-        // 4️⃣ DELETE PRODUCT + AUDIT
+        // 4️⃣ DELETE PRODUCT
         // =====================================================
+        [Authorize(Roles = "Admin")]
         [HttpDelete("delete-product/{id}")]
         public IActionResult Delete(int id)
         {
@@ -168,7 +165,6 @@ namespace CoreApi.Controllers
 
                 _productBLL.Delete(id);
 
-                // 🔹 Audit log
                 _auditLogger.Log(
                     action: $"Delete product: {exist.ProductName} (ID: {exist.ProductID})",
                     entityName: "Products",
@@ -188,6 +184,7 @@ namespace CoreApi.Controllers
         // =====================================================
         // 5️⃣ SEARCH PRODUCT
         // =====================================================
+        [Authorize(Roles = "Admin,ThuKho,ThuNgan,KeToan")]
         [HttpPost("search-product")]
         public IActionResult Search([FromBody] ProductSearchRequest req)
         {
@@ -215,6 +212,5 @@ namespace CoreApi.Controllers
                 return BadRequest(ex.Message);
             }
         }
-
     }
 }

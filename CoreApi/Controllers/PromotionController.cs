@@ -7,10 +7,13 @@ using Model;
 using AdminApi.Services.Interface;
 using System.Text.Json;
 using System.Globalization;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CoreApi.Controllers
 {
+    [Authorize] // tất cả endpoint yêu cầu đăng nhập
     [Route("api/promotions")]
+    [ApiController]
     public class PromotionsController : ControllerBase
     {
         private IPromotionsBusiness _promotionsBusiness;
@@ -22,60 +25,68 @@ namespace CoreApi.Controllers
             _auditLogger = auditLogger;
         }
 
-        [Route("create")]
-        [HttpPost]
+        // ===== 1) Tạo khuyến mãi =====
+        // Chỉ Admin + Kế toán được tạo / cấu hình khuyến mãi
+        [Authorize(Roles = "Admin,KeToan")]
+        [HttpPost("create")]
         public PromotionsModel Create([FromBody] PromotionsModel model)
         {
             _promotionsBusiness.Create(model);
             _auditLogger.Log(
-                action:$"Create promotion: {model.PromotionName}",
+                action: $"Create promotion: {model.PromotionName}",
                 entityName: "Promotions",
                 entityId: model.PromotionID,
                 operation: "CREATE",
                 details: JsonSerializer.Serialize(model)
-                );
-            return (model);
+            );
+            return model;
         }
 
-        [Route("update")]
-        [HttpPost]
+        // ===== 2) Cập nhật khuyến mãi =====
+        [Authorize(Roles = "Admin,KeToan")]
+        [HttpPost("update")]
         public PromotionsModel Update([FromBody] PromotionsModel model)
         {
             _promotionsBusiness.Update(model);
             _auditLogger.Log(
-                action:$"Update promotion {model.PromotionName}",
+                action: $"Update promotion {model.PromotionName}",
                 entityName: "Promotions",
                 entityId: model.PromotionID,
-                operation:"UPDATE",
+                operation: "UPDATE",
                 details: JsonSerializer.Serialize(model)
-                );
+            );
             return model;
         }
 
-        [Route("delete")]
-        [HttpPost]
+        // ===== 3) Xoá khuyến mãi =====
+        [Authorize(Roles = "Admin,KeToan")]
+        [HttpPost("delete")]
         public IActionResult Delete([FromBody] PromotionsModel model)
         {
             _promotionsBusiness.Delete(model);
             _auditLogger.Log(
                 action: $"Delete promotion {model.PromotionName}",
-                entityName:"Promotions",
+                entityName: "Promotions",
                 entityId: model.PromotionID,
-                operation:"DELETE",
+                operation: "DELETE",
                 details: null
-                );
+            );
             return Ok(new { data = "ok" });
         }
 
-        [Route("get-by-id/{id}")]
-        [HttpGet]
+        // ===== 4) Xem chi tiết 1 khuyến mãi =====
+        // Ai cũng cần xem để biết áp dụng: Admin, Thu ngân, Thủ kho, Kế toán
+        [Authorize(Roles = "Admin,ThuNgan,ThuKho,KeToan")]
+        [HttpGet("get-by-id/{id}")]
         public PromotionsModel GetDatabyID(int id)
         {
             return _promotionsBusiness.GetDatabyID(id);
         }
 
-        [Route("search")]
-        [HttpPost]
+        // ===== 5) Search danh sách khuyến mãi =====
+        // Dùng cho màn hình quản lý + POS để check khuyến mãi còn hiệu lực
+        [Authorize(Roles = "Admin,ThuNgan,ThuKho,KeToan")]
+        [HttpPost("search")]
         public ResponseModel Search([FromBody] Dictionary<string, object> formData)
         {
             var response = new ResponseModel();
@@ -96,14 +107,13 @@ namespace CoreApi.Controllers
 
                 var data = _promotionsBusiness.Search(pageIndex, pageSize, out long total, fromDate, toDate, status);
 
-                // 🔹 Kiểm tra ngày hết hạn và đổi Status nếu cần
+                // 🔹 Tự động chuyển status sang "Expired" nếu đã hết hạn
                 foreach (var promo in data)
                 {
                     if (promo.EndDate <= DateTime.Today && promo.Status == "Active")
                     {
                         promo.Status = "Expired";
 
-                        // Nếu muốn update DB ngay để đồng bộ
                         _promotionsBusiness.Update(new PromotionsModel
                         {
                             PromotionID = promo.PromotionID,
@@ -129,11 +139,5 @@ namespace CoreApi.Controllers
             }
             return response;
         }
-
-
-
-
-
-
     }
 }
