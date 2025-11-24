@@ -49,14 +49,12 @@ namespace CoreApi.Controllers
 
 
 
-        [HttpPost("import-export")]
-        public IActionResult GetImportExportReport([FromBody] ReportRevenueRequest request)
+        
         // ==================== 2) IMPORT - EXPORT REPORT ====================
         // Admin, Thủ kho, Kế toán được xem báo cáo nhập xuất
         [Authorize(Roles = "Admin,ThuKho,KeToan")]
-        [Route("import-export")]
-        [HttpGet]
-        public IActionResult GetImportExportReport(DateTime fromDate, DateTime toDate)
+        [HttpPost("import-export")]
+        public IActionResult GetImportExportReport([FromBody] ReportRevenueRequest request)
         {
             try
             {
