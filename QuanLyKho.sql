@@ -6,6 +6,72 @@ delete Products
 drop database QLBanLeKho
 
 
+----------------------------------------------------
+-- 1. XÓA BẢNG CHI TIẾT TRƯỚC (TRÁNH LỖI FK)
+----------------------------------------------------
+DELETE FROM SalesItems;
+DBCC CHECKIDENT ('SalesItems', RESEED, 0);
+
+DELETE FROM GoodsIssueDetails;
+DBCC CHECKIDENT ('GoodsIssueDetails', RESEED, 0);
+
+DELETE FROM GoodsReceiptDetails;
+DBCC CHECKIDENT ('GoodsReceiptDetails', RESEED, 0);
+
+DELETE FROM PurchaseOrderDetails;
+DBCC CHECKIDENT ('PurchaseOrderDetails', RESEED, 0);
+
+DELETE FROM Returns;
+DBCC CHECKIDENT ('Returns', RESEED, 0);
+
+DELETE FROM Payments;
+DBCC CHECKIDENT ('Payments', RESEED, 0);
+
+DELETE FROM StockCards;
+DBCC CHECKIDENT ('StockCards', RESEED, 0);
+
+DELETE FROM Promotions;
+DBCC CHECKIDENT ('Promotions', RESEED, 0);
+
+----------------------------------------------------
+-- 2. XÓA BẢNG MASTER TRUNG GIAN
+----------------------------------------------------
+DELETE FROM Sales;
+DBCC CHECKIDENT ('Sales', RESEED, 0);
+
+DELETE FROM GoodsIssues;
+DBCC CHECKIDENT ('GoodsIssues', RESEED, 0);
+
+DELETE FROM GoodsReceipts;
+DBCC CHECKIDENT ('GoodsReceipts', RESEED, 0);
+
+DELETE FROM PurchaseOrders;
+DBCC CHECKIDENT ('PurchaseOrders', RESEED, 0);
+
+DELETE FROM Invoices;
+DBCC CHECKIDENT ('Invoices', RESEED, 0);
+
+
+
+----------------------------------------------------
+-- 3. XÓA BẢNG CHÍNH
+----------------------------------------------------
+DELETE FROM Products;
+DBCC CHECKIDENT ('Products', RESEED, 0);
+
+DELETE FROM Categories;
+DBCC CHECKIDENT ('Categories', RESEED, 0);
+
+DELETE FROM Suppliers;
+DBCC CHECKIDENT ('Suppliers', RESEED, 0);
+
+DELETE FROM Customers;
+DBCC CHECKIDENT ('Customers', RESEED, 0);
+
+DELETE FROM Users;
+DBCC CHECKIDENT ('Users', RESEED, 0);
+
+
 
 
 CREATE TABLE AuditLogs (
@@ -47,7 +113,7 @@ CREATE TABLE Categories (
     CategoryID INT IDENTITY(1,1) PRIMARY KEY, -- Mã loại hàng
     CategoryName NVARCHAR(100) NOT NULL, -- Tên loại hàng
     Description NVARCHAR(255), -- Mô tả
-	VATRate DECIMAL(5,2) NOT NULL DEFAULT 10.00
+	VATRate DECIMAL(5,2)NULL 
 );
 
 
@@ -105,6 +171,8 @@ CREATE TABLE PurchaseOrders (
     FOREIGN KEY (SupplierID) REFERENCES Suppliers(SupplierID)
 );
 
+
+
 CREATE TABLE PurchaseOrderDetails (
     POID INT, -- Mã đơn mua hàng
     ProductID INT, -- Mã sản phẩm
@@ -124,9 +192,14 @@ CREATE TABLE GoodsReceipts (
     TotalAmount DECIMAL(18,2) DEFAULT 0, -- Tổng tiền
 	UserID INT NOT NULL, -- Thêm cột mã nhân viên
 	 BatchNo VARCHAR(50), -- Số lô
+	 Status VARCHAR(20) DEFAULT 'pending',
     FOREIGN KEY (POID) REFERENCES PurchaseOrders(POID) ON DELETE CASCADE,
 	FOREIGN KEY (UserID) REFERENCES Users(UserID) -- Thiết lập khóa ngoại
 );
+ALTER TABLE GoodsReceipts
+ADD Status VARCHAR(20) DEFAULT 'pending'
+
+select * from GoodsReceipts
 
 
 CREATE TABLE GoodsReceiptDetails (
@@ -141,7 +214,7 @@ CREATE TABLE GoodsReceiptDetails (
     FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
 );
 
-
+select * from GoodsReceiptDetails
 
 
 CREATE TABLE Promotions (
@@ -322,7 +395,7 @@ VALUES
 ('user8', '123456', 'Admin', N'Tạ Văn O', 'user8@shop.com', '0901111015');
 
 
-
+select * from Users
 
 
 
@@ -520,6 +593,21 @@ INSERT INTO GoodsReceiptDetails (ReceiptID, ProductID, ProductName, Quantity, Un
 (15, 15, N'Giày Lười Nam',                 26, 540000, NULL);
 
 
+UPDATE GoodsReceiptDetails SET ExpiryDate = '2025-11-30' WHERE ProductID = 1;
+UPDATE GoodsReceiptDetails SET ExpiryDate = '2026-2-25' WHERE ProductID = 2;
+UPDATE GoodsReceiptDetails SET ExpiryDate = '2025-11-26' WHERE ProductID = 3;
+UPDATE GoodsReceiptDetails SET ExpiryDate = '2026-03-22' WHERE ProductID = 4;
+UPDATE GoodsReceiptDetails SET ExpiryDate = '2026-01-05' WHERE ProductID = 5;
+UPDATE GoodsReceiptDetails SET ExpiryDate = '2025-12-31' WHERE ProductID = 6;
+UPDATE GoodsReceiptDetails SET ExpiryDate = '2025-12-31' WHERE ProductID = 7;
+UPDATE GoodsReceiptDetails SET ExpiryDate = '2025-12-15' WHERE ProductID = 8;
+UPDATE GoodsReceiptDetails SET ExpiryDate = '2025-12-23' WHERE ProductID = 9;
+UPDATE GoodsReceiptDetails SET ExpiryDate = '2026-02-01' WHERE ProductID = 10;
+UPDATE GoodsReceiptDetails SET ExpiryDate = '2025-11-30' WHERE ProductID = 11;
+UPDATE GoodsReceiptDetails SET ExpiryDate = '2025-12-22' WHERE ProductID = 12;
+UPDATE GoodsReceiptDetails SET ExpiryDate = '2026-09-12' WHERE ProductID = 13;
+UPDATE GoodsReceiptDetails SET ExpiryDate = '2026-12-31' WHERE ProductID = 14;
+UPDATE GoodsReceiptDetails SET ExpiryDate = '2026-07-30' WHERE ProductID = 15;
 
 
 
@@ -693,13 +781,6 @@ INSERT INTO Invoices (SaleID, InvoiceNo, InvoiceDate, TotalAmount, VATAmount) VA
 
 
 
-
-
-
-
-
-
-
 INSERT INTO Payments (SaleID, CustomerID, SupplierID, ReceiptID, Amount, PaymentDate, Method, Description) VALUES
 (1,  1,  NULL, NULL, 960000,  '2025-03-01', N'Tiền mặt',     N'Thanh toán đủ'),
 (2,  2,  NULL, NULL, 495000,  '2025-03-01', N'Chuyển khoản', N'Thanh toán đủ'),
@@ -748,6 +829,54 @@ INSERT INTO StockCards (ProductID, ProductName, TransactionType, Quantity, Balan
 
 
 
+
+
+INSERT INTO Returns 
+(ReturnType, SaleID, CustomerID, PartnerName, PartnerPhone,
+ ReturnDate, Reason, ProductID, ProductName, Quantity, UnitPrice)
+VALUES
+
+(1, 2, 2,  N'Khách Hàng 2',  '0923000002', '2025-03-10', N'Không vừa size',       2,  N'Sản phẩm 2',  1, 495000),
+(1, 3, 3,  N'Khách Hàng 3',  '0923000003', '2025-03-11', N'Màu không giống hình', 3,  N'Sản phẩm 3',  1, 560000),
+(1, 4, 4,  N'Khách Hàng 4',  '0923000004', '2025-03-11', N'Lỗi đường chỉ',        4,  N'Sản phẩm 4',  1, 540000),
+(1, 5, 5,  N'Khách Hàng 5',  '0923000005', '2025-03-12', N'Bị trầy xước',          5,  N'Sản phẩm 5',  1, 560000),
+(1, 6, 6,  N'Khách Hàng 6',  '0923000006', '2025-03-12', N'Không đúng mẫu đặt',    6,  N'Sản phẩm 6',  1, 450000),
+(1, 7, 7,  N'Khách Hàng 7',  '0923000007', '2025-03-13', N'Trầy đế giày',          7,  N'Sản phẩm 7',  1, 460000),
+(1, 8, 8,  N'Khách Hàng 8',  '0923000008', '2025-03-13', N'Không hợp phong cách',  8,  N'Sản phẩm 8',  1, 700000),
+(1, 9, 9,  N'Khách Hàng 9',  '0923000009', '2025-03-14', N'Lỗi form',              9,  N'Sản phẩm 9',  1, 1050000),
+(1, 10, 10, N'Khách Hàng 10','0923000010', '2025-03-14', N'Nhăn da',              10, N'Sản phẩm 10', 1, 630000),
+(1, 11, 11, N'Khách Hàng 11','0923000011', '2025-03-15', N'Sai size khi giao',    11, N'Sản phẩm 11', 1, 520000),
+(1, 12, 12, N'Khách Hàng 12','0923000012', '2025-03-15', N'Lỗi dáng giày',        12, N'Sản phẩm 12', 1, 920000),
+(1, 13, 13, N'Khách Hàng 13','0923000013', '2025-03-16', N'Không ưng màu',        13, N'Sản phẩm 13', 1, 150000),
+(1, 14, 14, N'Khách Hàng 14','0923000014', '2025-03-16', N'Không thoải mái',      14, N'Sản phẩm 14', 1, 250000),
+(1, 15, 15, N'Khách Hàng 15','0923000015', '2025-03-17', N'Gót giày cứng',        15, N'Sản phẩm 15', 1, 580000);
+
+
+INSERT INTO Returns 
+(ReturnType, ReceiptID, SupplierID, PartnerName, PartnerPhone,
+ ReturnDate, Reason, ProductID, ProductName, Quantity, UnitPrice)
+VALUES
+(2, 1, 1,   N'Nhà Cung Cấp A', '0912000001', '2025-03-10', N'Hàng lỗi khi nhập',           1,  N'Sản phẩm 1',  2, 450000),
+(2, 2, 2,   N'Nhà Cung Cấp B', '0912000002', '2025-03-18', N'Không đúng số lượng',         2,  N'Sản phẩm 2',  3, 470000),
+(2, 3, 3,   N'Nhà Cung Cấp C', '0912000003', '2025-03-19', N'Hỏng đế giày',                3,  N'Sản phẩm 3',  1, 520000),
+(2, 4, 4,   N'Nhà Cung Cấp D', '0912000004', '2025-03-19', N'Lỗi da bề mặt',              4,  N'Sản phẩm 4',  2, 500000),
+(2, 5, 5,   N'Nhà Cung Cấp E', '0912000005', '2025-03-20', N'Móp mũi giày',               5,  N'Sản phẩm 5',  1, 530000),
+(2, 6, 6,   N'Nhà Cung Cấp F', '0912000006', '2025-03-14', N'Sai model',                   6,  N'Sản phẩm 6',  4, 410000),
+(2, 7, 7,   N'Nhà Cung Cấp G', '0912000007', '2025-06-03', N'Kém chất lượng',              7,  N'Sản phẩm 7',  3, 420000),
+(2, 8, 8,   N'Nhà Cung Cấp H', '0912000008', '2025-06-12', N'Lỗi phần đế',                8,  N'Sản phẩm 8',  2, 650000),
+(2, 9, 9,   N'Nhà Cung Cấp I', '0912000009', '2025-06-22', N'Giày thấm nước',             9,  N'Sản phẩm 9',  1, 980000),
+(2, 10, 10, N'Nhà Cung Cấp J', '0912000010', '2025-09-22', N'Lỗi màu sắc',               10, N'Sản phẩm 10', 3, 590000),
+(2, 11, 11, N'Nhà Cung Cấp K', '0912000011', '2025-09-28', N'Lỗi keo dán',               11, N'Sản phẩm 11', 2, 480000),
+(2, 12, 12, N'Nhà Cung Cấp L', '0912000012', '2025-09-16', N'Suốt chỉ',                  12, N'Sản phẩm 12', 1, 880000),
+(2, 13, 13, N'Nhà Cung Cấp M', '0912000013', '2025-09-24', N'Lỗi form giày',             13, N'Sản phẩm 13', 5, 120000),
+(2, 14, 14, N'Nhà Cung Cấp N', '0912000014', '2025-10-02', N'Giày nứt đế',               14, N'Sản phẩm 14', 4, 220000),
+(2, 15, 15, N'Nhà Cung Cấp O', '0912000015', '2025-10-16', N'Lỗi cao su đế',             15, N'Sản phẩm 15', 2, 540000);
+
+
+
+
+
+
 EXEC sp_product_create 
   @SKU='gggg', 
   @Barcode='gggg', 
@@ -764,6 +893,7 @@ SELECT * FROM Customers;
 SELECT * FROM Products;
 SELECT * FROM PurchaseOrders;
 SELECT * FROM PurchaseOrderDetails;
+SELECT * FROM GoodsReceiptDetails;
 SELECT * FROM GoodsReceipts;
 SELECT * FROM GoodsReceiptDetails;
 SELECT * FROM Promotions;
@@ -777,7 +907,32 @@ SELECT * FROM Payments;
 SELECT * FROM StockCards;
 select * from SystemSettings
 
-DELETE FROM products;
+DELETE FROM Payments;
+
+SELECT TOP 10 ProductID, UnitPrice 
+FROM GoodsReceiptDetails
+ORDER BY ReceiptID DESC
+
+
+SELECT * FROM Categories;
+SELECT * FROM Suppliers;
+SELECT * FROM Products;
+SELECT * FROM Sales;
+SELECT * FROM SalesItems;
+
+
+
+DELETE GoodsIssues;
+DELETE GoodsIssueDetails
+DELETE StockCards;
+DELETE Returns;
+DELETE Payments;
+DELETE Invoices;
+DELETE GoodsReceipts;
+DELETE GoodsReceiptDetails;
+DELETE Sales;
+DELETE SalesItems;
+
 
 -- 1. Xóa chi tiết bán hàng trước
 DELETE FROM SalesItems;
@@ -808,341 +963,6 @@ DELETE FROM Sales;
 DELETE FROM Users;
 
 
-CREATE PROCEDURE [dbo].[sp_product_get_by_id]
-    @ProductID INT
-AS
-BEGIN
-    SET NOCOUNT ON;
-
-    SELECT *
-    FROM Products
-    WHERE ProductID = @ProductID;
-END;
-GO
-
-
-DROP PROCEDURE [dbo].[sp_product_create]
-
-
-CREATE PROCEDURE [dbo].[sp_product_create]
-(
-    @SKU         VARCHAR(50),
-    @Barcode     VARCHAR(50) = NULL,
-    @ProductName NVARCHAR(100),
-    @CategoryID  INT = NULL,
-    @UnitPrice   DECIMAL(18,2) = 0,
-    @Unit        NVARCHAR(20) = NULL,
-    @MinStock    INT = 0,
-    @Status      NVARCHAR(20) = 'Active',
-    @VATRate     DECIMAL(5,2) = NULL,
-    @Quantity    INT = 0,
-    @ImageData   VARBINARY(MAX) = NULL
-)
-AS
-BEGIN
-    SET NOCOUNT ON;
-
-    BEGIN TRY
-        -- 🧩 Kiểm tra SKU trùng
-        IF EXISTS (SELECT 1 FROM Products WHERE SKU = @SKU)
-        BEGIN
-            RAISERROR(N'SKU "%s" đã tồn tại trong hệ thống.', 16, 1, @SKU);
-            RETURN;
-        END
-
-        -- 🧩 Kiểm tra Barcode trùng
-        IF (@Barcode IS NOT NULL AND @Barcode <> '')
-           AND EXISTS (SELECT 1 FROM Products WHERE Barcode = @Barcode)
-        BEGIN
-            RAISERROR(N'Barcode "%s" đã tồn tại trong hệ thống.', 16, 1, @Barcode);
-            RETURN;
-        END
-
-        -- 🧩 Đảm bảo ProductName, SKU, CategoryID có giá trị
-        IF (@ProductName IS NULL OR LTRIM(RTRIM(@ProductName)) = '')
-        BEGIN
-            RAISERROR(N'ProductName không được để trống.', 16, 1);
-            RETURN;
-        END
-
-        IF (@SKU IS NULL OR LTRIM(RTRIM(@SKU)) = '')
-        BEGIN
-            RAISERROR(N'SKU không được để trống.', 16, 1);
-            RETURN;
-        END
-
-        IF (@CategoryID IS NULL)
-        BEGIN
-            RAISERROR(N'CategoryID không được để trống.', 16, 1);
-            RETURN;
-        END
-
-        -- ✅ Gán giá trị mặc định nếu rỗng
-        SET @UnitPrice = ISNULL(@UnitPrice, 0);
-        SET @Unit = ISNULL(@Unit, N'');
-        SET @MinStock = ISNULL(@MinStock, 0);
-        SET @Status = ISNULL(@Status, N'Active');
-        SET @Quantity = ISNULL(@Quantity, 0);
-
-        -- ✅ Thêm dữ liệu
-        INSERT INTO Products
-        (
-            SKU,
-            Barcode,
-            ProductName,
-            CategoryID,
-            UnitPrice,
-            Unit,
-            MinStock,
-            Status,
-            ImageData,
-            VATRate,
-            Quantity
-        )
-        VALUES
-        (
-            @SKU,
-            @Barcode,
-            @ProductName,
-            @CategoryID,
-            @UnitPrice,
-            @Unit,
-            @MinStock,
-            @Status,
-            @ImageData,
-            @VATRate,
-            @Quantity
-        );
-
-        -- Trả về ID sản phẩm mới
-        SELECT SCOPE_IDENTITY() AS NewProductID;
-    END TRY
-    BEGIN CATCH
-        DECLARE @Err NVARCHAR(4000);
-        SELECT @Err = ERROR_MESSAGE();
-        RAISERROR(@Err, 16, 1);
-    END CATCH
-END;
-GO
-
-
-
-
-drop PROCEDURE [dbo].[sp_product_update]
-
-CREATE OR ALTER PROCEDURE [dbo].[sp_product_update]
-(
-    @ProductID   INT,
-    @SKU         VARCHAR(50) = NULL,
-    @Barcode     VARCHAR(50) = NULL,
-    @ProductName NVARCHAR(100) = NULL,
-    @CategoryID  INT = NULL,
-    @UnitPrice   DECIMAL(18,2) = NULL,
-    @Unit        NVARCHAR(20) = NULL,
-    @MinStock    INT = NULL,
-    @Status      NVARCHAR(20) = NULL,
-    @ImageData   VARBINARY(MAX) = NULL,
-    @VATRate     DECIMAL(5,2) = NULL,
-    @Quantity    INT = NULL
-)
-AS
-BEGIN
-    SET NOCOUNT ON;
-    BEGIN TRY
-        IF NOT EXISTS (SELECT 1 FROM Products WHERE ProductID = @ProductID)
-            THROW 50010, N'ProductID không tồn tại.', 1;
-
-        IF @CategoryID IS NOT NULL
-            IF NOT EXISTS (SELECT 1 FROM Categories WHERE CategoryID = @CategoryID)
-                THROW 50011, N'CategoryID không tồn tại.', 1;
-
-        IF @SKU IS NOT NULL AND EXISTS (SELECT 1 FROM Products WHERE SKU = @SKU AND ProductID <> @ProductID)
-            THROW 50012, N'SKU đã tồn tại cho sản phẩm khác.', 1;
-
-        IF @Barcode IS NOT NULL AND EXISTS (SELECT 1 FROM Products WHERE Barcode = @Barcode AND ProductID <> @ProductID)
-            THROW 50013, N'Barcode đã tồn tại cho sản phẩm khác.', 1;
-
-        IF @UnitPrice IS NOT NULL AND @UnitPrice < 0  THROW 50014, N'UnitPrice không được âm.', 1;
-        IF @MinStock IS NOT NULL AND @MinStock < 0    THROW 50015, N'MinStock không được âm.', 1;
-        IF @Quantity IS NOT NULL AND @Quantity < 0    THROW 50016, N'Quantity không được âm.', 1;
-        IF @VATRate IS NOT NULL AND (@VATRate < 0 OR @VATRate > 100)
-            THROW 50017, N'VATRate phải trong khoảng 0–100.', 1;
-
-        UPDATE Products
-        SET
-            SKU         = COALESCE(@SKU,        SKU),
-            Barcode     = COALESCE(@Barcode,    Barcode),
-            ProductName = COALESCE(@ProductName,ProductName),
-            CategoryID  = COALESCE(@CategoryID, CategoryID),
-            UnitPrice   = COALESCE(@UnitPrice,  UnitPrice),
-            Unit        = COALESCE(@Unit,       Unit),
-            MinStock    = COALESCE(@MinStock,   MinStock),
-            Status      = COALESCE(@Status,     Status),
-            ImageData   = COALESCE(@ImageData,  ImageData),
-            VATRate     = COALESCE(@VATRate,    VATRate),
-            Quantity    = COALESCE(@Quantity,   Quantity)
-        WHERE ProductID = @ProductID;
-
-        SELECT 'OK' AS Message;
-    END TRY
-    BEGIN CATCH
-        THROW;
-    END CATCH
-END;
-GO
-
-
-select * from Products
-
-
-drop PROCEDURE [dbo].[sp_product_search]
-
-
-
-
-drop PROCEDURE [dbo].[sp_product_search]
-
-select *from Products
-
-CREATE PROCEDURE [dbo].[sp_product_search]
-(
-    @page_index  INT, 
-    @page_size   INT,
-    @ProductID   INT = NULL,
-    @SKU         VARCHAR(50) = '',
-	@Barcode     VARCHAR(50) = '',
-    @ProductName NVARCHAR(100) = '',
-    @CategoryID  INT = NULL,
-    @Status      NVARCHAR(20) = ''
-)
-AS
-BEGIN
-    DECLARE @RecordCount BIGINT;
-
-    IF(@page_size <> 0)
-    BEGIN
-        SET NOCOUNT ON;
-
-        SELECT 
-            ROW_NUMBER() OVER (ORDER BY p.ProductID ASC) AS RowNumber,
-			   p.ProductID,
-               p.SKU,
-               p.Barcode,
-               p.ProductName,
-               p.CategoryID,
-			   p.UnitPrice,
-               p.Unit,
-               p.MinStock,
-               p.Status,
-			   p.ImageData,
-			   p.VATRate,
-			   p.Quantity 
-        INTO #Results1
-        FROM Products AS p
-        WHERE (@ProductID IS NULL OR p.ProductID = @ProductID)
-          AND (@SKU = '' OR p.SKU LIKE '%' + @SKU + '%')
-		  AND (@Barcode = '' OR p.Barcode LIKE '%' + @Barcode + '%')
-          AND (@ProductName = '' OR p.ProductName LIKE N'%' + @ProductName + '%')
-          AND (@CategoryID IS NULL OR p.CategoryID = @CategoryID)
-          AND (@Status = '' OR p.Status = @Status)
-
-
-        SELECT @RecordCount = COUNT(*) FROM #Results1;
-
-        SELECT *, @RecordCount AS RecordCount
-        FROM #Results1
-        WHERE RowNumber BETWEEN(@page_index - 1) * @page_size + 1 
-                            AND (((@page_index - 1) * @page_size + 1) + @page_size) - 1
-           OR @page_index = -1;
-
-        DROP TABLE #Results1; 
-    END
-    ELSE
-    BEGIN
-        SET NOCOUNT ON;
-
-        SELECT 
-            ROW_NUMBER() OVER (ORDER BY p.ProductID ASC) AS RowNumber,
-		       p.ProductID,
-               p.SKU,
-               p.Barcode,
-               p.ProductName,
-               p.CategoryID,
-			   p.UnitPrice,
-               p.Unit,
-               p.MinStock,
-               p.Status,
-			   p.ImageData,
-			   p.VATRate,
-			   p.Quantity 
-        INTO #Results2
-        FROM Products AS p
-        WHERE (@ProductID IS NULL OR p.ProductID = @ProductID)
-          AND (@SKU = '' OR p.SKU LIKE '%' + @SKU + '%')
-		  AND (@Barcode = '' OR p.Barcode LIKE '%' + @Barcode + '%')
-          AND (@ProductName = '' OR p.ProductName LIKE N'%' + @ProductName + '%')
-          AND (@CategoryID IS NULL OR p.CategoryID = @CategoryID)
-          AND (@Status = '' OR p.Status = @Status);
-
-        SELECT @RecordCount = COUNT(*) FROM #Results2;
-
-        SELECT *, @RecordCount AS RecordCount
-        FROM #Results2;
-
-        DROP TABLE #Results2;
-    END;
-END;
-GO
-
-
-
-
-
-
-CREATE PROCEDURE [dbo].[sp_product_delete]
-    @ProductID INT
-AS
-BEGIN
-    SET NOCOUNT ON;
-
-    -- Xóa dữ liệu liên quan trước (nếu bạn muốn xóa tất cả dấu vết của sản phẩm)
-    DELETE FROM SalesItems WHERE ProductID = @ProductID;
-    DELETE FROM StockCards WHERE ProductID = @ProductID;
-    DELETE FROM GoodsReceiptDetails WHERE ProductID = @ProductID;
-    DELETE FROM PurchaseOrderDetails WHERE ProductID = @ProductID;
-	DELETE FROM GoodsIssueDetails WHERE ProductID = @ProductID;
-
-    -- Cuối cùng xóa trong bảng Products
-    DELETE FROM Products
-    WHERE ProductID = @ProductID;
-
-    SELECT 'Xóa sản phẩm thành công (cứng)' AS Message;
-END;
-GO
-
-select * from Products
-EXEC sp_product_delete @ProductID = 16;
-DROP PROCEDURE [dbo].[sp_product_delete];
-
-
-
-
-
-CREATE TRIGGER dbo.trg_Products_Insert_VATRate
-ON dbo.Products
-AFTER INSERT
-AS
-BEGIN
-    SET NOCOUNT ON;
-
-    UPDATE p
-    SET p.VATRate = c.VATRate
-    FROM dbo.Products   AS p
-    JOIN inserted       AS i ON p.ProductID = i.ProductID
-    JOIN dbo.Categories AS c ON i.CategoryID = c.CategoryID
-    WHERE p.VATRate IS NULL; -- ✅ cập nhật khi giá trị trên bảng Products đang NULL
-END;
-GO
 
 
 
@@ -1619,175 +1439,7 @@ GO
 
 
 
--- =============================================
--- Báo cáo doanh thu & lợi nhuận gộp
--- =============================================
 
-DROP PROCEDURE [dbo].[sp_report_revenue]
-
-CREATE PROCEDURE sp_report_revenue
-(
-    @FromDate DATE,
-    @ToDate   DATE,
-    @Option   NVARCHAR(10) -- 'DAY' | 'MONTH'
-)
-AS
-BEGIN
-    SET NOCOUNT ON;
-
-    IF @Option = 'DAY'
-    BEGIN
-        SELECT 
-            CAST(s.SaleDate AS DATE) AS [Date],
-            SUM(si.Quantity * (si.UnitPrice - si.Discount)) AS Revenue,
-            SUM(si.Quantity * (si.UnitPrice - si.Discount) - ISNULL(grd.UnitPrice,0) * si.Quantity) AS GrossProfit
-        FROM Sales s
-        INNER JOIN SalesItems si ON s.SaleID = si.SaleID
-        LEFT JOIN (
-            SELECT ProductID, AVG(UnitPrice) AS UnitPrice
-            FROM GoodsReceiptDetails
-            GROUP BY ProductID
-        ) grd ON si.ProductID = grd.ProductID
-        WHERE CAST(s.SaleDate AS DATE) BETWEEN @FromDate AND @ToDate
-        GROUP BY CAST(s.SaleDate AS DATE)
-        ORDER BY [Date];
-    END
-
-    ELSE IF @Option = 'MONTH'
-    BEGIN
-        SELECT 
-            FORMAT(s.SaleDate, 'yyyy-MM') AS [Date],
-            SUM(si.Quantity * (si.UnitPrice - si.Discount)) AS Revenue,
-            SUM(si.Quantity * (si.UnitPrice - si.Discount) - ISNULL(grd.UnitPrice,0) * si.Quantity) AS GrossProfit
-        FROM Sales s
-        INNER JOIN SalesItems si ON s.SaleID = si.SaleID
-        LEFT JOIN (
-            SELECT ProductID, AVG(UnitPrice) AS UnitPrice
-            FROM GoodsReceiptDetails
-            GROUP BY ProductID
-        ) grd ON si.ProductID = grd.ProductID
-        WHERE CAST(s.SaleDate AS DATE) BETWEEN @FromDate AND @ToDate
-        GROUP BY FORMAT(s.SaleDate, 'yyyy-MM')
-        ORDER BY [Date];
-    END
-END;
-
-
-
-
-
-
-EXEC sp_report_revenue 
-    @FromDate = '2025-02-01', 
-    @ToDate   = '2025-02-28', 
-    @Option   = 'DAY';
-
-
-
--- =============================================
--- Báo cáo nhập / xuất
--- =============================================
-drop PROCEDURE [dbo].[sp_report_import_export]
-
---2
-CREATE  PROCEDURE [dbo].[sp_report_import_export] -- Dùng CREATE OR ALTER để có thể chạy lại mà không cần xóa SP cũ
-(
-    @FromDate DATETIME,
-    @ToDate DATETIME
-)
-AS
-BEGIN
-    SET NOCOUNT ON;
-
-    DECLARE @ToDateEnd DATETIME = DATEADD(DAY, 1, CAST(@ToDate AS DATE));
-
-    SELECT 
-        d.Date, -- FIX: Đổi từ d.DateValue thành d.Date
-        ISNULL(SUM(d.ImportQty), 0) AS ImportQty,
-        ISNULL(SUM(d.ExportQty), 0) AS ExportQty
-    FROM
-    (
-        -- Nhập kho
-        SELECT 
-            CONVERT(DATE, pn.ReceiptDate) AS Date, -- FIX: Đổi alias từ DateValue thành Date
-            SUM(ct.Quantity) AS ImportQty, 
-            0 AS ExportQty
-        FROM GoodsReceipts pn
-        INNER JOIN GoodsReceiptDetails ct ON pn.ReceiptID = ct.ReceiptID
-        WHERE pn.ReceiptDate >= @FromDate AND pn.ReceiptDate < @ToDateEnd
-        GROUP BY CONVERT(DATE, pn.ReceiptDate)
-
-        UNION ALL
-
-        -- Xuất kho (bán hàng)
-        SELECT 
-            CONVERT(DATE, s.SaleDate) AS Date, -- FIX: Đổi alias từ DateValue thành Date
-            0 AS ImportQty, 
-            SUM(si.Quantity) AS ExportQty
-        FROM Sales s
-        INNER JOIN SalesItems si ON s.SaleID = si.SaleID
-        WHERE s.SaleDate >= @FromDate AND s.SaleDate < @ToDateEnd
-        GROUP BY CONVERT(DATE, s.SaleDate)
-    ) d
-    GROUP BY d.Date -- FIX: Đổi từ d.DateValue thành d.Date
-    ORDER BY d.Date; -- FIX: Đổi từ d.DateValue thành d.Date
-END;
-GO
-
-
-
-
--- =============================================
--- Báo cáo tồn kho & tuổi hàng
--- =============================================
-drop PROCEDURE [dbo].[sp_report_stock]
-
-
-CREATE PROCEDURE [dbo].[sp_report_stock]
-AS
-BEGIN
-    SET NOCOUNT ON;
-
-    -- CTE để tính toán tồn kho hiện tại từ bảng StockCards
-    WITH StockCalculations AS (
-        SELECT
-            ProductID,
-            SUM(CASE WHEN TransactionType = 'IN' THEN Quantity ELSE -Quantity END) AS CalculatedStock
-        FROM StockCards
-        GROUP BY ProductID
-    ),
-    -- CTE để tìm ngày nhập hàng đầu tiên (lô hàng cũ nhất)
-    OldestReceiptDate AS (
-        SELECT
-            grd.ProductID,
-            MIN(gr.ReceiptDate) AS FirstReceiptDate
-        FROM GoodsReceipts gr
-        INNER JOIN GoodsReceiptDetails grd ON gr.ReceiptID = grd.ReceiptID
-        GROUP BY grd.ProductID
-    )
-    
-    -- Truy vấn chính để tạo báo cáo
-    SELECT 
-        p.ProductID,
-        p.SKU,
-        p.ProductName,
-        p.MinStock,
-        ISNULL(sc.CalculatedStock, 0) AS CurrentStock,
-        -- Tính tuổi của lô hàng cũ nhất còn tồn
-        ISNULL(DATEDIFF(DAY, ord.FirstReceiptDate, GETDATE()), 0) AS AgeInDays
-    FROM 
-        Products p
-    -- Join với CTE tồn kho
-    LEFT JOIN 
-        StockCalculations sc ON p.ProductID = sc.ProductID
-    -- Join với CTE ngày nhập cũ nhất
-    LEFT JOIN 
-        OldestReceiptDate ord ON p.ProductID = ord.ProductID
-    ORDER BY 
-        p.ProductName;
-
-END;
-GO
 
 
 
@@ -2235,25 +1887,6 @@ EXEC dbo.sp_category_create
 
 
 
-
-
-
-
-CREATE   PROCEDURE [dbo].[sp_category_create]
-(
-    @CategoryName NVARCHAR(100),
-    @Description  NVARCHAR(255)
-)
-AS
-BEGIN
-    SET NOCOUNT ON;
-
-    INSERT INTO Categories (CategoryName, [Description])
-    VALUES (@CategoryName, @Description);
-
-    SELECT '';
-END
-GO
 
 
 
@@ -3528,16 +3161,6 @@ select * from Products
 
 
 
-
-
-
-
-
-
-
-
-
-
 -----------------------------------------------------
 -- phần sét tinh
 -----------------------------------------------------
@@ -3599,7 +3222,7 @@ CREATE TABLE Languages (
 
 INSERT INTO Languages (LangCode, LangName)
 VALUES ('EN', 'English'),
-       ('VI', N'Ti?ng Vi?t');
+       ('VI', N'Tiếng Việt');
 
 
 	   ALTER TABLE Settings
@@ -3681,3 +3304,656 @@ BEGIN
         LastUpdated = GETDATE()
     WHERE SettingID = @SettingID;
 END
+
+
+
+
+
+
+
+
+
+
+
+-----------------------------------------------------
+-- phần sờ tóc car
+-----------------------------------------------------
+
+IF OBJECT_ID('dbo.sp_report_revenue', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.sp_report_revenue;
+GO
+
+IF OBJECT_ID('dbo.sp_report_revenue', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.sp_report_revenue;
+GO
+
+CREATE PROCEDURE dbo.sp_report_revenue
+(
+    @FromDate DATETIME,
+    @ToDate   DATETIME,
+    @Option   NVARCHAR(10)  -- 'DAY' | 'MONTH'
+)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    DECLARE @ToDateEnd DATETIME = DATEADD(DAY, 1, CAST(@ToDate AS DATETIME));
+
+    ----------------------------------------------------------------------
+    -- 1. ReceiptBase: tập IN
+    ----------------------------------------------------------------------
+    ;WITH ReceiptBase AS
+    (
+        SELECT 
+            grd.ProductID,
+            grd.ProductName,
+            gr.ReceiptID,
+            gr.ReceiptDate,
+            gr.BatchNo,
+            CAST(grd.Quantity AS DECIMAL(18,4)) AS QtyIn,
+            grd.UnitPrice
+        FROM GoodsReceipts gr
+        INNER JOIN GoodsReceiptDetails grd 
+            ON gr.ReceiptID = grd.ReceiptID
+        WHERE gr.ReceiptDate < @ToDateEnd
+    ),
+    ReceiptRanges AS
+    (
+        SELECT 
+            rb.*,
+            SUM(rb.QtyIn) OVER (
+                PARTITION BY rb.ProductID
+                ORDER BY rb.ReceiptDate, rb.ReceiptID
+            ) AS CumIn,
+            SUM(rb.QtyIn) OVER (
+                PARTITION BY rb.ProductID
+                ORDER BY rb.ReceiptDate, rb.ReceiptID
+            ) - rb.QtyIn AS CumInPrev
+        FROM ReceiptBase rb
+    ),
+
+    ----------------------------------------------------------------------
+    -- 2. SalesBase: tập OUT
+    ----------------------------------------------------------------------
+    SalesBase AS
+    (
+        SELECT 
+            s.SaleID,
+            s.SaleDate,
+            si.ProductID,
+            si.ProductName,
+            CAST(si.Quantity AS DECIMAL(18,4)) AS QtyOut,
+            si.UnitPrice,
+            si.Discount
+        FROM Sales s
+        INNER JOIN SalesItems si 
+            ON s.SaleID = si.SaleID
+        WHERE s.SaleDate < @ToDateEnd
+    ),
+    SalesRanges AS
+    (
+        SELECT 
+            sb.*,
+            SUM(sb.QtyOut) OVER (
+                PARTITION BY sb.ProductID
+                ORDER BY sb.SaleDate, sb.SaleID
+            ) AS CumOut,
+            SUM(sb.QtyOut) OVER (
+                PARTITION BY sb.ProductID
+                ORDER BY sb.SaleDate, sb.SaleID
+            ) - sb.QtyOut AS CumOutPrev
+        FROM SalesBase sb
+    ),
+
+    ----------------------------------------------------------------------
+    -- 3. FIFO Allocation
+    ----------------------------------------------------------------------
+    FifoAlloc AS
+    (
+        SELECT
+            o.SaleID,
+            o.SaleDate,
+            o.ProductID,
+            o.ProductName,
+            i.ReceiptID,
+            i.BatchNo,
+            i.UnitPrice AS ReceiptUnitPrice,
+            AllocQty =
+                CASE WHEN
+                    (CASE WHEN i.CumIn <= o.CumOut THEN i.CumIn ELSE o.CumOut END)
+                    >
+                    (CASE WHEN i.CumInPrev >= o.CumOutPrev THEN i.CumInPrev ELSE o.CumOutPrev END)
+                THEN
+                    (CASE WHEN i.CumIn <= o.CumOut THEN i.CumIn ELSE o.CumOut END)
+                    -
+                    (CASE WHEN i.CumInPrev >= o.CumOutPrev THEN i.CumInPrev ELSE o.CumOutPrev END)
+                ELSE 0 END
+        FROM SalesRanges o
+        INNER JOIN ReceiptRanges i
+            ON i.ProductID = o.ProductID
+           AND i.CumIn     > o.CumOutPrev
+           AND i.CumInPrev < o.CumOut
+    ),
+
+    FifoAllocFiltered AS
+    (
+        SELECT *
+        FROM FifoAlloc
+        WHERE AllocQty > 0
+    ),
+
+    ----------------------------------------------------------------------
+    -- 4. COGS theo sale
+    ----------------------------------------------------------------------
+    CogsPerSale AS
+    (
+        SELECT 
+            SaleID,
+            SUM(AllocQty * ReceiptUnitPrice) AS COGS
+        FROM FifoAllocFiltered
+        GROUP BY SaleID
+    ),
+
+    ----------------------------------------------------------------------
+    -- 5. Revenue theo sale
+    ----------------------------------------------------------------------
+    RevenuePerSale AS
+    (
+        SELECT 
+            si.SaleID,
+            SUM(si.Quantity * (si.UnitPrice - si.Discount)) AS Revenue
+        FROM SalesItems si
+        GROUP BY si.SaleID
+    ),
+
+    ----------------------------------------------------------------------
+-- 6. Best Category (FIXED)
+----------------------------------------------------------------------
+BestCategory AS
+(
+    SELECT TOP 1
+        c.CategoryID,
+        c.CategoryName,
+        SUM(si.Quantity) AS TotalQty
+    FROM Sales s
+    INNER JOIN SalesItems si ON s.SaleID = si.SaleID
+    INNER JOIN Products p ON si.ProductID = p.ProductID
+    INNER JOIN Categories c ON p.CategoryID = c.CategoryID
+    WHERE CAST(s.SaleDate AS DATE) BETWEEN @FromDate AND @ToDate
+    GROUP BY c.CategoryID, c.CategoryName
+    ORDER BY TotalQty DESC
+),
+
+
+    ----------------------------------------------------------------------
+    -- 7. Top Product
+    ----------------------------------------------------------------------
+    TopProduct AS
+    (
+        SELECT TOP 1
+            si.ProductName,
+            SUM(si.Quantity) AS TotalQty
+        FROM Sales s
+        INNER JOIN SalesItems si ON s.SaleID = si.SaleID
+        WHERE CAST(s.SaleDate AS DATE) BETWEEN @FromDate AND @ToDate
+        GROUP BY si.ProductName
+        ORDER BY TotalQty DESC
+    )
+    SELECT
+        CASE 
+            WHEN @Option = 'DAY'   THEN CONVERT(NVARCHAR(10), CAST(s.SaleDate AS DATE), 23)
+            WHEN @Option = 'MONTH' THEN FORMAT(s.SaleDate, 'yyyy-MM')
+            ELSE CONVERT(NVARCHAR(10), CAST(s.SaleDate AS DATE), 23)
+        END AS [Date],
+
+        SUM(rps.Revenue) AS Revenue,
+        SUM(rps.Revenue - ISNULL(cps.COGS, 0)) AS GrossProfit,
+
+        -- KPI bổ sung
+        (SELECT TOP 1 CategoryName FROM BestCategory) AS BestCategory,
+        (SELECT TOP 1 ProductName FROM TopProduct) AS TopProduct
+
+    FROM Sales s
+    INNER JOIN RevenuePerSale rps ON s.SaleID = rps.SaleID
+    LEFT JOIN  CogsPerSale     cps ON s.SaleID = cps.SaleID
+    WHERE CAST(s.SaleDate AS DATE) BETWEEN @FromDate AND @ToDate
+    GROUP BY
+        CASE 
+            WHEN @Option = 'DAY'   THEN CONVERT(NVARCHAR(10), CAST(s.SaleDate AS DATE), 23)
+            WHEN @Option = 'MONTH' THEN FORMAT(s.SaleDate, 'yyyy-MM')
+            ELSE CONVERT(NVARCHAR(10), CAST(s.SaleDate AS DATE), 23)
+        END
+    ORDER BY [Date];
+
+END;
+GO
+
+
+
+
+
+
+
+
+IF OBJECT_ID('dbo.sp_report_import_export', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.sp_report_import_export;
+GO
+
+IF OBJECT_ID('dbo.sp_report_import_export', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.sp_report_import_export;
+GO
+
+CREATE PROCEDURE dbo.sp_report_import_export
+(
+    @FromDate DATETIME,
+    @ToDate   DATETIME,
+    @Option   NVARCHAR(10)   -- 'DAY' | 'MONTH'
+)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    -- Chuẩn hoá option, nếu null thì mặc định = 'DAY'
+    SET @Option = UPPER(ISNULL(@Option, 'DAY'));
+
+    -- Lấy đến hết ngày @ToDate (dạng [ToDate, ToDateEnd) )
+    DECLARE @ToDateEnd DATETIME = DATEADD(DAY, 1, CAST(@ToDate AS DATE));
+
+    ----------------------------------------------------------------------
+    -- 1) Import CTE
+    ----------------------------------------------------------------------
+    ;WITH ImportCTE AS
+    (
+        SELECT
+            CONVERT(DATE, gr.ReceiptDate) AS [Date],
+            grd.ProductID,
+            grd.ProductName,
+            SUM(grd.Quantity) AS ImportQty
+        FROM GoodsReceipts gr
+        INNER JOIN GoodsReceiptDetails grd 
+            ON gr.ReceiptID = grd.ReceiptID
+        WHERE gr.ReceiptDate >= @FromDate
+          AND gr.ReceiptDate <  @ToDateEnd
+        GROUP BY CONVERT(DATE, gr.ReceiptDate), grd.ProductID, grd.ProductName
+    ),
+
+    ----------------------------------------------------------------------
+    -- 2) Export CTE
+    ----------------------------------------------------------------------
+    ExportCTE AS
+    (
+        SELECT
+            CONVERT(DATE, s.SaleDate) AS [Date],
+            si.ProductID,
+            si.ProductName,
+            SUM(si.Quantity) AS ExportQty
+        FROM Sales s
+        INNER JOIN SalesItems si
+            ON s.SaleID = si.SaleID
+        WHERE s.SaleDate >= @FromDate
+          AND s.SaleDate <  @ToDateEnd
+        GROUP BY CONVERT(DATE, s.SaleDate), si.ProductID, si.ProductName
+    ),
+
+    ----------------------------------------------------------------------
+    -- 3) Merge Import & Export theo Ngày + Sản phẩm
+    ----------------------------------------------------------------------
+    Merged AS
+    (
+        SELECT
+            COALESCE(i.[Date], e.[Date])          AS [Date],
+            COALESCE(i.ProductID, e.ProductID)    AS ProductID,
+            COALESCE(i.ProductName, e.ProductName) AS ProductName,
+            ISNULL(i.ImportQty, 0) AS ImportQty,
+            ISNULL(e.ExportQty, 0) AS ExportQty
+        FROM ImportCTE i
+        FULL OUTER JOIN ExportCTE e
+            ON i.[Date]     = e.[Date]
+           AND i.ProductID  = e.ProductID
+    ),
+
+    ----------------------------------------------------------------------
+    -- 4) KPI tổng (tính một lần cho cả khoảng thời gian)
+    ----------------------------------------------------------------------
+    TotalStats AS
+    (
+        SELECT
+            SUM(ImportQty) AS TotalImportQty,
+            SUM(ExportQty) AS TotalExportQty
+        FROM Merged
+    ),
+
+    ----------------------------------------------------------------------
+    -- 5) KPI sản phẩm nhập nhiều / ít nhất
+    ----------------------------------------------------------------------
+    TopImport AS
+    (
+        SELECT TOP 1
+            ProductName,
+            SUM(ImportQty) AS Qty
+        FROM Merged
+        GROUP BY ProductName
+        HAVING SUM(ImportQty) > 0          -- ⭐ BẮT BUỘC > 0
+        ORDER BY Qty DESC
+    ),
+    LeastImport AS
+    (
+        SELECT TOP 1
+            ProductName,
+            SUM(ImportQty) AS Qty
+        FROM Merged
+        GROUP BY ProductName
+        HAVING SUM(ImportQty) > 0          -- chỉ tính những sp có nhập
+        ORDER BY Qty ASC
+    ),
+
+    ----------------------------------------------------------------------
+    -- 6) KPI sản phẩm xuất nhiều / ít nhất
+    ----------------------------------------------------------------------
+    TopExport AS
+    (
+        SELECT TOP 1
+            ProductName,
+            SUM(ExportQty) AS Qty
+        FROM Merged
+        GROUP BY ProductName
+        HAVING SUM(ExportQty) > 0          -- tránh chọn sản phẩm có 0 xuất
+        ORDER BY Qty DESC
+    ),
+    LeastExport AS
+    (
+        SELECT TOP 1
+            ProductName,
+            SUM(ExportQty) AS Qty
+        FROM Merged
+        GROUP BY ProductName
+        HAVING SUM(ExportQty) > 0          -- chỉ tính những sp có xuất
+        ORDER BY Qty ASC
+    )
+
+    ----------------------------------------------------------------------
+    -- 7) Kết quả cuối theo DAY hoặc MONTH
+    ----------------------------------------------------------------------
+    SELECT
+        CASE 
+            WHEN @Option = 'DAY'   THEN CONVERT(NVARCHAR(10), [Date], 23)   -- yyyy-MM-dd
+            WHEN @Option = 'MONTH' THEN FORMAT([Date], 'yyyy-MM')           -- yyyy-MM
+            ELSE CONVERT(NVARCHAR(10), [Date], 23)
+        END AS [Date],
+
+        SUM(ImportQty) AS ImportQty,
+        SUM(ExportQty) AS ExportQty,
+
+        -- KPI: lặp lại cho mỗi dòng (cùng giai đoạn)
+        (SELECT TotalImportQty FROM TotalStats) AS TotalImportQty,
+        (SELECT TotalExportQty FROM TotalStats) AS TotalExportQty,
+
+        (SELECT TOP 1 ProductName FROM TopImport)   AS TopImportedProduct,
+        (SELECT TOP 1 ProductName FROM LeastImport) AS LeastImportedProduct,
+        (SELECT TOP 1 ProductName FROM TopExport)   AS TopExportedProduct,
+        (SELECT TOP 1 ProductName FROM LeastExport) AS LeastExportedProduct
+
+    FROM Merged
+    GROUP BY
+        CASE 
+            WHEN @Option = 'DAY'   THEN CONVERT(NVARCHAR(10), [Date], 23)
+            WHEN @Option = 'MONTH' THEN FORMAT([Date], 'yyyy-MM')
+            ELSE CONVERT(NVARCHAR(10), [Date], 23)
+        END
+    ORDER BY [Date];
+END;
+GO
+
+
+
+
+
+
+CREATE PROCEDURE dbo.sp_report_stock
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    DECLARE @AsOfDate DATE = CAST(GETDATE() AS DATE);
+    DECLARE @AsOfDateEnd DATETIME = DATEADD(DAY, 1, @AsOfDate);
+
+    ----------------------------------------------------------------------
+    -- 1. Receipt (IN)
+    ----------------------------------------------------------------------
+    ;WITH ReceiptBase AS
+    (
+        SELECT 
+            grd.ProductID,
+            grd.ProductName,
+            gr.ReceiptID,
+            gr.ReceiptDate,
+            gr.BatchNo,
+            grd.UnitPrice,                    -- ⭐ giá nhập theo lô
+            grd.ExpiryDate,                   -- ⭐ hạn dùng theo lô
+            CAST(grd.Quantity AS INT) AS QtyIn
+        FROM GoodsReceipts gr
+        INNER JOIN GoodsReceiptDetails grd 
+            ON gr.ReceiptID = grd.ReceiptID
+        WHERE gr.ReceiptDate < @AsOfDateEnd
+    ),
+    ReceiptRanges AS
+    (
+        SELECT
+            rb.*,
+            SUM(rb.QtyIn) OVER (
+                PARTITION BY rb.ProductID 
+                ORDER BY rb.ReceiptDate, rb.ReceiptID
+            ) AS CumIn,
+            SUM(rb.QtyIn) OVER (
+                PARTITION BY rb.ProductID 
+                ORDER BY rb.ReceiptDate, rb.ReceiptID
+            ) - rb.QtyIn AS CumInPrev
+        FROM ReceiptBase rb
+    ),
+
+    ----------------------------------------------------------------------
+    -- 2. Sales (OUT)
+    ----------------------------------------------------------------------
+    SalesBase AS
+    (
+        SELECT 
+            si.ProductID,
+            si.ProductName,
+            s.SaleID,
+            s.SaleDate,
+            CAST(si.Quantity AS INT) AS QtyOut
+        FROM SalesItems si
+        INNER JOIN Sales s ON s.SaleID = si.SaleID
+        WHERE s.SaleDate < @AsOfDateEnd
+    ),
+    SalesRanges AS
+    (
+        SELECT
+            sb.*,
+            SUM(sb.QtyOut) OVER (
+                PARTITION BY sb.ProductID
+                ORDER BY sb.SaleDate, sb.SaleID
+            ) AS CumOut,
+            SUM(sb.QtyOut) OVER (
+                PARTITION BY sb.ProductID
+                ORDER BY sb.SaleDate, sb.SaleID
+            ) - sb.QtyOut AS CumOutPrev
+        FROM SalesBase sb
+    ),
+
+    ----------------------------------------------------------------------
+    -- 3. FIFO Allocation
+    ----------------------------------------------------------------------
+    FifoAlloc AS
+    (
+        SELECT
+            o.ProductID,
+            o.ProductName,
+            i.ReceiptID,
+            i.BatchNo,
+            i.ReceiptDate,
+            i.UnitPrice,
+            i.ExpiryDate,
+
+            AllocQty =
+            CASE 
+                WHEN 
+                    (CASE WHEN i.CumIn <= o.CumOut THEN i.CumIn ELSE o.CumOut END)
+                    >
+                    (CASE WHEN i.CumInPrev >= o.CumOutPrev THEN i.CumInPrev ELSE o.CumOutPrev END)
+                THEN 
+                    (CASE WHEN i.CumIn <= o.CumOut THEN i.CumIn ELSE o.CumOut END)
+                    -
+                    (CASE WHEN i.CumInPrev >= o.CumOutPrev THEN i.CumInPrev ELSE o.CumOutPrev END)
+                ELSE 0
+            END
+        FROM SalesRanges o
+        INNER JOIN ReceiptRanges i
+            ON i.ProductID = o.ProductID
+           AND i.CumIn     > o.CumOutPrev
+           AND i.CumInPrev < o.CumOut
+    ),
+    FifoFiltered AS
+    (
+        SELECT 
+            ProductID,
+            ReceiptID,
+            CAST(AllocQty AS INT) AS AllocQty
+        FROM FifoAlloc
+        WHERE AllocQty > 0
+    ),
+
+    ----------------------------------------------------------------------
+    -- 4. Tồn theo lô
+    ----------------------------------------------------------------------
+    StockByBatch AS
+    (
+        SELECT
+            r.ProductID,
+            r.ProductName,
+            r.ReceiptID,
+            r.BatchNo,
+            r.ReceiptDate,
+            r.UnitPrice,
+            r.ExpiryDate,
+            SUM(r.QtyIn) AS QtyIn,
+            SUM(ISNULL(a.AllocQty, 0)) AS QtyAllocated
+        FROM ReceiptBase r
+        LEFT JOIN FifoFiltered a
+            ON a.ProductID = r.ProductID
+           AND a.ReceiptID = r.ReceiptID
+        GROUP BY 
+            r.ProductID,
+            r.ProductName,
+            r.ReceiptID,
+            r.BatchNo,
+            r.ReceiptDate,
+            r.UnitPrice,
+            r.ExpiryDate
+    ),
+
+    ----------------------------------------------------------------------
+    -- 5. Bảng tồn có QtyRemain
+    ----------------------------------------------------------------------
+    StockFinal AS
+    (
+        SELECT
+			p.ProductID,
+			p.SKU,
+			sb.ProductName,
+			sb.BatchNo,
+			sb.ReceiptDate AS FirstReceiptDate,
+			sb.QtyIn,
+			sb.QtyIn - sb.QtyAllocated AS QtyRemain,
+			sb.UnitPrice,              -- ⭐ THÊM DÒNG NÀY
+			sb.ExpiryDate,             -- ⭐ THÊM DÒNG NÀY
+			DATEDIFF(DAY, sb.ReceiptDate, GETDATE()) AS AgeInDays,
+			p.MinStock
+		FROM StockByBatch sb
+		JOIN Products p ON p.ProductID = sb.ProductID
+		WHERE (sb.QtyIn - sb.QtyAllocated) > 0
+
+    ),
+
+    ----------------------------------------------------------------------
+    -- 6. KPI
+    ----------------------------------------------------------------------
+    KPI AS
+    (
+        SELECT
+            SUM(sf.QtyRemain * sf.UnitPrice) AS TotalStockValue,
+            
+            (SELECT COUNT(*)
+             FROM (
+                 SELECT ProductID, SUM(QtyRemain) AS TotalRemain
+                 FROM StockFinal
+                 GROUP BY ProductID
+             ) x
+             JOIN Products p ON p.ProductID = x.ProductID
+             WHERE x.TotalRemain < p.MinStock) AS LowStockCount,
+
+            MIN(DATEDIFF(DAY, @AsOfDate, sf.ExpiryDate)) AS MinDaysToExpire
+        FROM StockFinal sf
+    )
+
+    ----------------------------------------------------------------------
+    -- 7. OUTPUT CUỐI
+    ----------------------------------------------------------------------
+    SELECT
+        sf.ProductID,
+        p.SKU,
+        sf.ProductName,
+        sf.BatchNo,
+        sf.FirstReceiptDate AS FirstReceiptDate,
+        sf.QtyIn,
+        sf.QtyRemain,
+		sf.UnitPrice,       -- ⭐ THÊM
+		sf.ExpiryDate, 
+        DATEDIFF(DAY, sf.FirstReceiptDate, GETDATE()) AS AgeInDays,
+        p.MinStock,
+
+        -- KPI gắn vào mọi dòng cho dễ đọc FE
+        k.TotalStockValue,
+        k.LowStockCount,
+        k.MinDaysToExpire
+
+    FROM StockFinal sf
+    JOIN Products p ON p.ProductID = sf.ProductID
+    CROSS JOIN KPI k
+    ORDER BY sf.ProductName, sf.FirstReceiptDate;
+
+END;
+GO
+
+
+
+
+
+
+
+
+
+
+USE [QLBanLeKho]
+GO
+
+/****** Object:  StoredProcedure [dbo].[sp_user_get_by_username_password]    Script Date: 11/21/2025 9:26:47 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+create procedure [dbo].[sp_user_get_by_username_password](@username varchar(50), @password varchar(255))
+as
+begin
+select [UserID],
+Username,
+PasswordHash,
+Role,
+FullName,
+Email,
+Phone
+from Users where UserName = @username and PasswordHash = @password
+end
+GO

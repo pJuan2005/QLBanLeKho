@@ -20,10 +20,12 @@ namespace BLL
             return _res.GetRevenueReport(fromDate, toDate, option);
         }
 
-        public List<ReportImportExportResponse> GetImportExportReport(DateTime fromDate, DateTime toDate)
+        public List<ReportImportExportResponse> GetImportExportReport(
+                            DateTime fromDate, DateTime toDate, string option)
         {
-            return _res.GetImportExportReport(fromDate, toDate);
+            return _res.GetImportExportReport(fromDate, toDate, option);
         }
+
 
         public List<ReportStockResponse> GetStockReport()
         {

@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+    rel="stylesheet" />
+
+  <!-- css -->
+  <link rel="stylesheet" href="../Shared/css/reports.css" />
+  <script src="../Shared/angular/angular.min.js"></script>
+  <script src="../Shared/angular/global.js"></script>
+  <script src="../Shared/angular/reports.js"></script>
+  <script src="../Shared/angular/translation.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- Thư viện ExcelJS và FileSaver -->
+  <script src="https://cdn.jsdelivr.net/npm/exceljs@4.3.0/dist/exceljs.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+
+
+
+
+  <title>Reports</title>
+</head>
+
+<body ng-app="AppRetailPos" ng-controller="reportCtrl">
+  <div class="app-content">
+    <div class="slide-bar">
+      <div class="slide-bar__header">
+        <div class="app-slideBar">
+          <div class="app-slideBar__left">
+            <img src="../Shared/img/common/wheel.svg" alt="" class="icon" />
+          </div>
+          <div class="app-slideBar__right">
+            <h1 class="name-app">RetailPro</h1>
+            <p class="title-nameApp">Inventory & POS</p>
+          </div>
+        </div>
+      </div>
+      <div class="slide-bar__Content">
+        <p class="slide-bar__label">{{ t('NAVIGATION') }}</p>
+        <!-- menu button Dashboard -->
+        <a href="../AdminFE/dashboard.html" ng-if="canShow('dashboard')">
+          <div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img src="../Shared/img/common/dashboard.svg" alt="" class="icon" />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">{{ t('NAV_DASHBOARD') }}</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button POS -->
+        <a href="../AdminFE/pos.html" ng-if="canShow('pos')">
+          <div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img src="../Shared/img/common/pos.svg" alt="" class="icon" />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">{{ t('NAV_POS') }}</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button Products -->
+        <a href="../AdminFE/products.html" ng-if="canShow('products')">
+          <div class="slide-bar__MenuButton ">
+            <div class="MenuButton-left">
+              <img src="../Shared/img/common/product.svg" alt="" class="icon" />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">{{ t('NAV_PRODUCTS') }}</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button Categories -->
+        <a href="../AdminFE/categories.html" ng-if="canShow('categories')">
+          <div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img src="../Shared/img/common/category.svg" alt="" class="icon" />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">{{ t('NAV_CATEGORIES') }}</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button Promotions -->
+        <a href="../AdminFE/promotions.html" ng-if="canShow('promotions')">
+          <div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img src="../Shared/img/common/promotion.svg" alt="" class="icon" />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">{{ t('NAV_PROMOTIONS') }}</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button Customers -->
+        <a href="../AdminFE/customers.html" ng-if="canShow('customers')">
+          <div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img src="../Shared/img/common/customer.svg" alt="" class="icon" />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">{{ t('NAV_CUSTOMERS') }}</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button Suppliers -->
+        <a href="../AdminFE/suppliers.html" ng-if="canShow('suppliers')">
+          <div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img src="../Shared/img/common/supplier.svg" alt="" class="icon" />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">{{ t('NAV_SUPPLIERS') }}</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button Purchase Orders -->
+        <a href="../AdminFE/purchaseorders.html" ng-if="canShow('purchaseOrders')">
+          <div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img src="../Shared/img/common/purchaseorder.svg" alt="" class="icon" />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu"> {{ t('NAV_PURCHASE_ORDERS') }}</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button stock -->
+        <a href="../AdminFE/stockcard.html" ng-if="canShow('stock')">
+          <div class="slide-bar__MenuButton ">
+            <div class="MenuButton-left">
+              <img src="../Shared/img/common/stock.svg" alt="" class="icon" />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">{{ t('NAV_STOCK') }}</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button Goods Receipts -->
+        <a href="../AdminFE/goodsreceipts.html" ng-if="canShow('greceipts')">
+          <div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img src="../Shared/img/common/goodReceipt.svg" alt="" class="icon" />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">{{ t('GOODS_RECEIPTS') }}</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button Goods Issues -->
+        <a href="../AdminFE/goodsissues.html" ng-if="canShow('gissues')">
+          <div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img src="../Shared/img/common/goodIssues.svg" alt="" class="icon" />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">{{ t('GOODS_ISSUES') }}</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button Sales -->
+        <a href="../AdminFE/sales.html" ng-if="canShow('sales')">
+          <div class="slide-bar__MenuButton ">
+            <div class="MenuButton-left">
+              <img src="../Shared/img/common/sales.svg" alt="" class="icon" />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">{{ t('NAV_SALES') }}</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button Returns -->
+        <a href="../AdminFE/returns.html" ng-if="canShow('returns')">
+          <div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img src="../Shared/img/common/return.svg" alt="" class="icon" />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">{{ t('NAV_RETURNS') }}</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button Payments & Debts -->
+        <a href="../AdminFE/payments.html" ng-if="canShow('payments')">
+          <div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img src="../Shared/img/common/payments.svg" alt="" class="icon" />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">{{ t('NAV_PAYMENTS') }}</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button Reports -->
+        <a href="../AdminFE/reports.html" ng-if="canShow('reports')">
+          <div class="slide-bar__MenuButton slide-bar__MenuButton--active">
+            <div class="MenuButton-left">
+              <img src="../Shared/img/common/report.svg" alt="" class="icon" />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu-active">{{ t('NAV_REPORTS') }}</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button Audit Log -->
+        <a href="../AdminFE/auditlog.html" ng-if="canShow('auditLog')">
+          <div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img src="../Shared/img/common/auditlog.svg" alt="" class="icon" />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">{{ t('NAV_AUDIT_LOG') }}</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button Users -->
+        <a href="../AdminFE/users.html" ng-if="canShow('users')">
+          <div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img src="../Shared/img/common/user.svg" alt="" class="icon" />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">{{ t('NAV_USERS') }}</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button Settings -->
+        <a href="../AdminFE/settings.html" ng-if="canShow('settings')">
+          <div class="slide-bar__MenuButton ">
+            <div class="MenuButton-left">
+              <img src="../Shared/img/common/setting.svg" alt="" class="icon" />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">{{ t('NAV_SETTINGS') }}</p>
+            </div>
+          </div>
+        </a>
+      </div>
+      <div class="slide-bar__footer">
+        <div class="app-slide-bar">
+          <div class="ava">
+            <img class="ava" src="../Shared/img/common/ava.svg" alt="" />
+          </div>
+          <div class="info">
+            <p class="name">{{currentUser.fullname}}</p>
+            <p class="role">{{currentUser.role}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="app-layout">
+      <div class="top-bar">
+        <div class="top-bar__content">
+          <div class="top-bar__left">
+
+          </div>
+          <div class="top-bar__right">
+            <p class="role">{{currentUser.role}}</p>
+            <img src="../Shared/img/common/ava.svg" alt="" class="ava" id="avatar" />
+          </div>
+        </div>
+        <div class="top-bar__info" id="information">
+          <div class="info-top">
+            <p class="name">John Doe</p>
+            <p class="email">john@company.com</p>
+          </div>
+          <div class="info-mid">
+            <a href="#!">
+              <p class="set">Profile Settings</p>
+            </a>
+          </div>
+          <div class="info-bottom">
+            <img src="" alt="" class="icon" />
+            <a href="../AuthFE/login.html">
+              <p class="logout">Logout</p>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="report-container">
+
+        <!-- TITLE -->
+        <div class="report-title">
+          <!-- <img src="../Shared/img/common/chart.svg" class="icon-title" /> -->
+          <h2>Business Reports</h2>
+        </div>
+
+        <!-- TABS -->
+        <div class="report-tabs">
+          <button class="tab" ng-class="{active: activeTab=='sales'}" ng-click="activeTab='sales'">
+            Sales Summary
+          </button>
+
+          <button class="tab" ng-class="{active: activeTab=='import'}" ng-click="activeTab='import'; filterByMonth();">
+            Import_Export
+          </button>
+
+          <button class="tab" ng-class="{active: activeTab=='stock'}" ng-click="activeTab='stock';">
+            Report_Stock
+          </button>
+        </div>
+
+        <div ng-show="activeTab=='sales'">
+          <!-- KPI CARDS -->
+          <div class="kpi-row">
+            <div class="kpi-card">
+              <p class="kpi-label">Total Revenue</p>
+              <span class="kpi-icon">$</span>
+              <h1 class="kpi-value">{{ totalRevenue | number:0 }}₫</h1>
+              <p class="kpi-desc" ng-class="{'green-text': revenueChange > 0, 'red-text': revenueChange < 0}">
+                {{ revenueChange }}% vs last month
+              </p>
+            </div>
+
+            <div class="kpi-card">
+              <p class="kpi-label">Total Profit</p>
+              <span class="kpi-icon green">📈</span>
+              <h1 class="kpi-value">{{ totalProfit | number:0 }}₫</h1>
+              <p class="kpi-desc" ng-class="{'green-text': profitChange > 0, 'red-text': profitChange < 0}">
+                {{ profitChange }}% vs last month
+              </p>
+            </div>
+
+            <div class="kpi-card">
+              <p class="kpi-label">Best Category</p>
+              <span class="kpi-icon purple">⭐</span>
+              <h2 class="kpi-value-small">{{ bestCategory }}</h2>
+            </div>
+
+            <div class="kpi-card">
+              <p class="kpi-label">Most Sold Product</p>
+              <span class="kpi-icon orange">📦</span>
+              <h2 class="kpi-value-small">{{ topProduct }}</h2>
+            </div>
+          </div>
+
+          <!-- CHART -->
+          <div class="chart-box">
+            <div style="display:flex; justify-content:space-between;">
+              <p class="chart-title">Daily Revenue (By Month)</p>
+
+              <!-- chọn tháng -->
+              <input type="month" ng-model="selectedMonth" ng-change="loadMonthlyRevenue()"
+                ng-model-options="{ timezone: 'UTC', allowInvalid: true }">
+
+            </div>
+
+            <div class="chart-wrapper">
+              <canvas id="revenueChart" style="height: 200px !important;"></canvas>
+            </div>
+          </div>
+
+        </div>
+
+
+
+
+
+        <div ng-show="activeTab=='import'">
+
+          <div class="kpi-row">
+
+            <div class="kpi-card">
+              <p class="kpi-label">Total Import</p>
+              <span class="kpi-icon green">⬆</span>
+              <h1 class="kpi-value">{{ totalImport | number }}</h1>
+              <p class="kpi-desc">Least: {{ leastImportProduct }}</p>
+            </div>
+
+            <div class="kpi-card">
+              <p class="kpi-label">Total Export</p>
+              <span class="kpi-icon orange">⬇</span>
+              <h1 class="kpi-value">{{ totalExport | number }}</h1>
+              <p class="kpi-desc">Least: {{ leastExportProduct }}</p>
+            </div>
+
+            <div class="kpi-card">
+              <p class="kpi-label">Most Imported Product</p>
+              <span class="kpi-icon purple">📦</span>
+              <h2 class="kpi-value-small">{{ mostImportedName }}</h2>
+            </div>
+
+            <div class="kpi-card">
+              <p class="kpi-label">Most Exported Product</p>
+              <span class="kpi-icon blue">🚚</span>
+              <h2 class="kpi-value-small">{{ mostExportedName }}</h2>
+            </div>
+          </div>
+
+
+          <div class="chart-box">
+            <div style="display:flex; justify-content:space-between;">
+              <p class="chart-title">Import / Export</p>
+              <input type="month" ng-model="searchMonth" ng-change="filterByMonth()" class="search-box">
+
+
+            </div>
+
+            <div class="chart-wrapper">
+              <canvas id="importExportChart" style="height: 200px !important;"></canvas>
+            </div>
+          </div>
+        </div>
+
+
+
+
+        <div ng-show="activeTab=='stock'">
+
+          <div class="kpi-row-stock">
+
+            <!-- 1) Tổng số lượng -->
+            <div class="kpi-card-stock">
+              <p class="kpi-label">Total Quantity</p>
+              <span class="kpi-icon green">📦</span>
+              <h1 class="kpi-value">{{ stockStats.totalQty | number }}</h1>
+            </div>
+
+            <!-- 2) Sản phẩm dưới MinStock -->
+            <div class="kpi-card-stock">
+              <p class="kpi-label">Below Minimum Stock</p>
+              <span class="kpi-icon purple">⚠️</span>
+              <h1 class="kpi-value">{{ stockStats.lowStock }}</h1>
+            </div>
+
+            <!-- 3) Tổng giá trị tồn kho -->
+            <div class="kpi-card-stock">
+              <p class="kpi-label">Total Stock Value</p>
+              <span class="kpi-icon orange">💰</span>
+              <h1 class="kpi-value">{{ stockStats.totalStockValue | number }}</h1>
+            </div>
+
+            <!-- 4) Hạn sử dụng ≤ 30 ngày -->
+            <div class="kpi-card-stock">
+              <p class="kpi-label">Expiring Soon (≤ 30 days)</p>
+              <span class="kpi-icon blue">⏳</span>
+              <h1 class="kpi-value">{{ stockStats.expiringSoon }}</h1>
+            </div>
+
+          </div>
+
+
+
+          <!-- TABLE STOCK -->
+          <div class="chart-box-stock" style="height: auto; padding-bottom: 5px;">
+            <div style="margin-top: 5px">Stock by Batch (FIFO)</div>
+
+            <table class="stock-table">
+              <thead>
+                <tr>
+                  <th>Product</th>
+                  <th>SKU</th>
+                  <th>Batch No</th>
+                  <th>First Receipt</th>
+                  <th>Qty In</th>
+                  <th>Qty Remain</th>
+                  <th>Age (Days)</th>
+                  <th>Min Stock</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="x in stockList">
+                  <td>{{ x.productName }}</td>
+                  <td>{{ x.sku }}</td>
+                  <td>{{ x.batchNo }}</td>
+                  <td>{{ x.firstReceiptDate | date:'yyyy-MM-dd' }}</td>
+                  <td>{{ x.qtyIn | number }}</td>
+                  <td ng-class="{'red-text': x.qtyRemain < x.minStock}">
+                    {{ x.qtyRemain | number }}
+                  </td>
+                  <td>{{ x.ageInDays }}</td>
+                  <td>{{ x.minStock }}</td>
+                </tr>
+              </tbody>
+            </table>
+            <div style="margin-top: 20px">MinDaysToExpire</div>
+            <table class="stock-table" >
+              <thead>
+                <tr>
+                  <th>Product</th>
+                  <th>SKU</th>
+                  <th>Batch No</th>
+                  <th>Expiry Date</th>
+                  <th>Days Left</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="e in expiringList">
+                  <td>{{ e.productName }}</td>
+                  <td>{{ e.sku }}</td>
+                  <td>{{ e.batchNo }}</td>
+                  <td>{{ e.expiryDate | date:'yyyy-MM-dd' }}</td>
+                  <td ng-class="{'red-text': e.daysLeft <= 30}">
+                    {{ e.daysLeft }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      </div>
+    </div>
+  </div>
+
+
+  <!-- <script src="../Shared/js/reports.js"></script> -->
+
+
+  <!-- Đây là FileSaver.js — thư viện giúp bạn tải file từ trình duyệt (client-side). -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+</body>
+
+</html>
