@@ -95,5 +95,27 @@ namespace CoreApi.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+
+
+        [Authorize(Roles = "Admin,KeToan,ThuNgan")]
+        [HttpPost("top-products")]
+        public IActionResult GetTopProducts([FromBody] ReportRevenueRequest request)
+        {
+            try
+            {
+                var from = DateTime.ParseExact(request.FromDate, "yyyy-MM-dd", null);
+                var to = DateTime.ParseExact(request.ToDate, "yyyy-MM-dd", null);
+
+                var data = _reportBusiness.GetTopProducts(from, to);
+
+                return Ok(new { data });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
     }
 }

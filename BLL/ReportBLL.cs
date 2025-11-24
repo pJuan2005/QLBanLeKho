@@ -31,5 +31,12 @@ namespace BLL
         {
             return _res.GetStockReport();
         }
+
+
+        public List<ReportTopProductResponse> GetTopProducts(DateTime fromDate, DateTime toDate)
+        {
+            return _res.GetTopProducts(fromDate, toDate);
+        }
+
     }
 }

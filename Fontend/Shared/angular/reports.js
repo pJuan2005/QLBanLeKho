@@ -9,7 +9,6 @@ app.controller("reportCtrl", function ($scope, $http, $timeout, AuthService, Per
     applyLanguage(localStorage.getItem("appLang") || "EN");
 
     $scope.activeTab = 'sales';
-    $scope.activeTab = 'import';
 
     $scope.currentUser = AuthService.getCurrentUser(); // lấy user 
     $scope.reports = [];
@@ -706,22 +705,14 @@ app.controller("reportCtrl", function ($scope, $http, $timeout, AuthService, Per
         }
     });
 
-
+    $scope.loadKPI();
     // CHẠY HÀM
     $scope.loadReport();
+    $scope.loadMonthlyRevenue();
+
 
     // Khi user thay tháng → gọi hàm hợp nhất
     $scope.$watch("selectedMonth", function () {
         $scope.loadReport();
     });
-
-
-
-
-
-
-
-
-    $scope.loadMonthlyRevenue();
-    $scope.loadKPI();
 })

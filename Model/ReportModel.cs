@@ -62,3 +62,14 @@
 
     }
 }
+
+
+namespace Model
+{
+    public class ReportTopProductResponse
+    {
+        public string ProductName { get; set; }
+        public int TotalQty { get; set; }
+        public decimal Percent { get; set; }
+    }
+}
