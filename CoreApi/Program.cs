@@ -134,6 +134,8 @@ builder.Services.AddTransient<IDReportDAL, ReportDAL>();
 builder.Services.AddTransient<IDReportBLL, ReportBLL>();
 
 
+builder.Services.AddMemoryCache();
+
 
 
 builder.Services.AddControllers();
