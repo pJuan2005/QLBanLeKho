@@ -6,7 +6,7 @@ using BLL.Interfaces;
 
 namespace AdminApi.Controllers
 {
-    
+    [Authorize(Roles = "Admin,KeToan")]
     [Route("api/auditlogs")]
     [ApiController]
     public class AuditLogController : ControllerBase

@@ -1,5 +1,6 @@
 ﻿using AdminApi.Services.Interface;
 using BLL.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Model;
 using System;
@@ -7,6 +8,7 @@ using System.Text.Json;
 
 namespace CoreApi.Controllers
 {
+    [Authorize] // tất cả endpoint trong controller này đều yêu cầu login
     [Route("api/payments")]
     [ApiController]
     public class PaymentController : ControllerBase
@@ -20,22 +22,27 @@ namespace CoreApi.Controllers
             _auditLogger = auditLogger;
         }
 
-        [Route("create-payment-customer")]
-        [HttpPost]
+        // ========== 1. Tạo payment cho KH (AR) ==========
+        // ThuNgan + KeToan + Admin đều có thể thu tiền khách
+        [Authorize(Roles = "Admin,ThuNgan,KeToan")]
+        [HttpPost("create-payment-customer")]
         public PaymentCustomerModel CreateCustomer([FromBody] PaymentCustomerModel model)
         {
             _paymentBLL.CreateCustomer(model);
             _auditLogger.Log(
-                action:$"Create payment for customer by Id: {model.PaymentID}",
-                entityName:"Payments",
+                action: $"Create payment for customer by Id: {model.PaymentID}",
+                entityName: "Payments",
                 entityId: model.PaymentID,
-                operation:"CREATE",
+                operation: "CREATE",
                 details: JsonSerializer.Serialize(model)
-                );
+            );
             return model;
         }
-        [Route("create-payment-supplier")]
-        [HttpPost]
+
+        // ========== 2. Tạo payment cho NCC (AP) ==========
+        // Thường chỉ KeToan + Admin mới được trả tiền NCC
+        [Authorize(Roles = "Admin,KeToan")]
+        [HttpPost("create-payment-supplier")]
         public PaymentSupplierModel CreateSupplier([FromBody] PaymentSupplierModel model)
         {
             _paymentBLL.CreateSupplier(model);
@@ -45,49 +52,57 @@ namespace CoreApi.Controllers
                 entityId: model.PaymentID,
                 operation: "CREATE",
                 details: JsonSerializer.Serialize(model)
-                );
+            );
             return model;
         }
 
-        [Route("update-payment")]
-        [HttpPost]
+        // ========== 3. Cập nhật payment ==========
+        // Hạn chế: Admin + KeToan
+        [Authorize(Roles = "Admin,KeToan")]
+        [HttpPost("update-payment")]
         public PaymentModel Update([FromBody] PaymentModel model)
         {
             _paymentBLL.Update(model);
             _auditLogger.Log(
-                action:$"Update payment Id: {model.PaymentID}",
-                entityName:"Payments",
+                action: $"Update payment Id: {model.PaymentID}",
+                entityName: "Payments",
                 entityId: model.PaymentID,
                 operation: "UPDATE",
                 details: JsonSerializer.Serialize(model)
-                );
+            );
             return model;
         }
 
-        [Route("delete-payment/{id}")]
-        [HttpDelete]
+        // ========== 4. Xoá payment ==========
+        // Rất nhạy cảm → chỉ Admin
+        [Authorize(Roles = "Admin")]
+        [HttpDelete("delete-payment/{id}")]
         public IActionResult Delete(int id)
         {
             _paymentBLL.Delete(id);
             _auditLogger.Log(
-                action:$"Delete payment Id: {id}",
+                action: $"Delete payment Id: {id}",
                 entityName: "Payments",
                 entityId: id,
-                operation:"DELETE",
+                operation: "DELETE",
                 details: null
-                );
+            );
             return Ok(new { data = "OK" });
         }
 
-        [Route("get-by-id/{id}")]
-        [HttpGet]
+        // ========== 5. Xem chi tiết 1 payment ==========
+        // Admin + ThuNgan + KeToan đều cần xem được
+        [Authorize(Roles = "Admin,ThuNgan,KeToan")]
+        [HttpGet("get-by-id/{id}")]
         public PaymentModel GetByID(int id)
         {
             return _paymentBLL.GetByID(id);
         }
 
-        [Route("search-payment")]
-        [HttpPost]
+        // ========== 6. Search payments (lọc theo KH/NCC/hoá đơn...) ==========
+        // Xem lịch sử thanh toán → Admin + ThuNgan + KeToan
+        [Authorize(Roles = "Admin,ThuNgan,KeToan")]
+        [HttpPost("search-payment")]
         public ResponseModel Search([FromBody] PaymentSearchRequest request)
         {
             var response = new ResponseModel();
@@ -95,8 +110,17 @@ namespace CoreApi.Controllers
             {
                 long total = 0;
                 var data = _paymentBLL.Search(
-                    request.page, request.pageSize, out total,
-                    request.CustomerID,request.SupplierID, request.SaleID,request.ReceiptID, request.Method, request.FromDate, request.ToDate);
+                    request.page,
+                    request.pageSize,
+                    out total,
+                    request.CustomerID,
+                    request.SupplierID,
+                    request.SaleID,
+                    request.ReceiptID,
+                    request.Method,
+                    request.FromDate,
+                    request.ToDate
+                );
 
                 response.TotalItems = total;
                 response.Data = data;
@@ -109,9 +133,11 @@ namespace CoreApi.Controllers
             }
             return response;
         }
-        // ============= 1) Lấy danh sách hóa đơn còn nợ (AR) =============
-        [HttpPost]
-        [Route("ar-open-invoices")]
+
+        // ============= 7. AR: danh sách hoá đơn KH còn nợ =============
+        // Màn hình công nợ khách: ThuNgan thu tiền + KeToan + Admin
+        [Authorize(Roles = "Admin,ThuNgan,KeToan")]
+        [HttpPost("ar-open-invoices")]
         public ResponseModel GetArOpenInvoices([FromBody] OpenPaymentSearchRequest request)
         {
             var response = new ResponseModel();
@@ -140,9 +166,10 @@ namespace CoreApi.Controllers
             }
         }
 
-        // ============= 2) Lấy danh sách phiếu nhập còn nợ (AP) =============
-        [HttpPost]
-        [Route("ap-open-bills")]
+        // ============= 8. AP: danh sách phiếu nhập còn nợ NCC =============
+        // Màn hình công nợ NCC: KeToan + Admin
+        [Authorize(Roles = "Admin,KeToan")]
+        [HttpPost("ap-open-bills")]
         public ResponseModel GetApOpenBills([FromBody] OpenPaymentSearchRequest request)
         {
             var response = new ResponseModel();
