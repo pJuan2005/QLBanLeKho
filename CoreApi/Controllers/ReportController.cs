@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Model;
 using System;
 using System.Collections.Generic;
+using Model;
 
 namespace CoreApi.Controllers
 {
@@ -19,6 +20,7 @@ namespace CoreApi.Controllers
             _reportBusiness = reportBusiness;
         }
 
+
         // ==================== 1) REVENUE REPORT ====================
         // Admin, Kế toán, Thu ngân được xem báo cáo doanh thu
         [Authorize(Roles = "Admin,KeToan,ThuNgan")]
@@ -28,13 +30,16 @@ namespace CoreApi.Controllers
         {
             try
             {
-                var data = _reportBusiness.GetRevenueReport(
-                    request.FromDate,
-                    request.ToDate,
-                    request.Option
-                );
+                // Chuyển string → DateTime (chống lệch timezone)
+                var from = DateTime.ParseExact(request.FromDate, "yyyy-MM-dd", null);
+                var to = DateTime.ParseExact(request.ToDate, "yyyy-MM-dd", null);
 
-                return Ok(new { Data = data });
+                // Bao gồm full ngày cuối cùng
+                to = to.AddDays(1).AddSeconds(-1);
+
+                var data = _reportBusiness.GetRevenueReport(from, to, request.Option);
+
+                return Ok(new { data });
             }
             catch (Exception ex)
             {
@@ -42,6 +47,10 @@ namespace CoreApi.Controllers
             }
         }
 
+
+
+        [HttpPost("import-export")]
+        public IActionResult GetImportExportReport([FromBody] ReportRevenueRequest request)
         // ==================== 2) IMPORT - EXPORT REPORT ====================
         // Admin, Thủ kho, Kế toán được xem báo cáo nhập xuất
         [Authorize(Roles = "Admin,ThuKho,KeToan")]
@@ -51,14 +60,25 @@ namespace CoreApi.Controllers
         {
             try
             {
-                var data = _reportBusiness.GetImportExportReport(fromDate, toDate);
-                return Ok(new { Data = data });
+                // Parse chuẩn
+                var from = DateTime.ParseExact(request.FromDate, "yyyy-MM-dd", null);
+                var to = DateTime.ParseExact(request.ToDate, "yyyy-MM-dd", null);
+
+                // Bao gồm full ngày cuối
+                to = to.AddDays(1).AddSeconds(-1);
+
+                // TRUYỀN from, to CHUẨN XUỐNG BUSINESS
+                var data = _reportBusiness.GetImportExportReport(from, to, request.Option);
+
+                return Ok(new { data });
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
         }
+
+
 
         // ==================== 3) STOCK REPORT ====================
         // Tồn kho: Admin + Thủ kho + Kế toán

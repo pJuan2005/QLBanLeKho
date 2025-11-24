@@ -21,6 +21,7 @@ namespace DAL
             string msgError = "";
             try
             {
+
                 var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "sp_report_revenue",
                     "@FromDate", fromDate,
                     "@ToDate", toDate,
@@ -33,29 +34,28 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw;
             }
         }
 
-        public List<ReportImportExportResponse> GetImportExportReport(DateTime fromDate, DateTime toDate)
+        public List<ReportImportExportResponse> GetImportExportReport(
+                DateTime fromDate, DateTime toDate, string option)
         {
             string msgError = "";
-            try
-            {
-                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "sp_report_import_export",
-                    "@FromDate", fromDate,
-                    "@ToDate", toDate);
 
-                if (!string.IsNullOrEmpty(msgError))
-                    throw new Exception(msgError);
+            var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError,
+                "sp_report_import_export",
+                "@FromDate", fromDate,
+                "@ToDate", toDate,
+                "@Option", option
+            );
 
-                return dt.ConvertTo<ReportImportExportResponse>().ToList();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            if (!string.IsNullOrEmpty(msgError))
+                throw new Exception(msgError);
+
+            return dt.ConvertTo<ReportImportExportResponse>().ToList();
         }
+
 
         public List<ReportStockResponse> GetStockReport()
         {
@@ -71,7 +71,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw;
             }
         }
     }
