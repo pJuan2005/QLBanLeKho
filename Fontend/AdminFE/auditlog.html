@@ -202,7 +202,7 @@
             </a>
             <!-- menu button Audit Log -->
             <a href="../AdminFE/auditlog.html" ng-if="canShow('auditLog')">
-                <div class="slide-bar__MenuButton">
+                <div class="slide-bar__MenuButton slide-bar__MenuButton--active">
                     <div class="MenuButton-left">
                         <img src="../Shared/img/common/auditlog.svg" alt="" class="icon" />
                     </div>
@@ -213,7 +213,7 @@
             </a>
             <!-- menu button Users -->
             <a href="../AdminFE/users.html" ng-if="canShow('users')">
-                <div class="slide-bar__MenuButton slide-bar__MenuButton--active">
+                <div class="slide-bar__MenuButton ">
                     <div class="MenuButton-left">
                         <img src="../Shared/img/common/user.svg" alt="" class="icon" />
                     </div>
@@ -280,9 +280,9 @@
         <div class="app-layout-content">
             <div class="container-top">
                 <div class="container-top--left">
-                    <h1 class="name-system">GoodsIssues</h1>
+                    <h1 class="name-system">AuditLogs</h1>
                     <p class="desc-system">
-                        Manage warehouse outbound transactions and inventory issues
+                        general system-wide logs
                     </p>
                 </div>
 

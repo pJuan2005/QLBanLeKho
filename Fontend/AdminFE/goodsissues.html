@@ -393,6 +393,7 @@
                                         <button class="menu-toggle" ng-click="toggleActionMenu(gi)">⚙</button>
                                         <ul class="menu-list" ng-show="gi.showMenu">
                                             <li ng-click="detail(gi)">🔍 Detail</li>
+                                            <li ng-click="remove(gi)">🗑 Delete</li>
                                         </ul>
                                     </div>
                                 </td>
@@ -446,6 +447,27 @@
                         </form>
                     </div>
                 </div>
+                <!-- Modal Delete Goods Issue -->
+                <div class="form-delete" ng-class="{open: showDeleteGI}" ng-click="closeDeleteGIOnOverlay($event)">
+                    <div class="form-delete__content" ng-click="$event.stopPropagation()">
+                        <h3 class="title">Delete Goods Issue</h3>
+
+                        <p class="desc">
+                            Bạn có chắc chắn muốn xóa chứng từ xuất kho
+                            <strong>{{ deletingGI.GoodsIssueID }}</strong>
+                            ngày <strong>{{ deletingGI.Date | date:'dd/MM/yyyy' }}</strong> không?
+                        </p>
+
+                        <div class="dialog-footer">
+                            <button type="button" class="cancel" ng-click="cancelDeleteGI()">Cancel</button>
+                            <button type="button" class="submit danger" ng-click="confirmDeleteGI()"
+                                ng-disabled="savingDeleteGI">
+                                Delete
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
 
 
             </div>
