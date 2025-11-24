@@ -377,6 +377,67 @@ app.controller(
                 });
         };
 
+        // ---------- DELETE GOODS ISSUE ----------
+        $scope.showDeleteGI = false;
+        $scope.deletingGI = null;
+
+        // Mở modal Delete
+        $scope.remove = function (gi) {
+            $scope.deletingGI = {
+                IssueID: gi.issueID || gi.IssueID,
+                Date: gi.issueDate || gi.IssueDate,
+                UserID: gi.userID || gi.UserID,
+                TotalAmount: gi.totalAmount || gi.TotalAmount
+            };
+            $scope.showDeleteGI = true;
+            syncBodyClass();
+        };
+
+        // Đóng modal khi click overlay
+        $scope.closeDeleteGIOnOverlay = function (e) {
+            if (e.target.classList.contains("form-delete")) {
+                $scope.cancelDeleteGI(e);
+                $scope.$applyAsync();
+            }
+        };
+
+        // Cancel Delete
+        $scope.cancelDeleteGI = function (e) {
+            if (e) e.stopPropagation();
+            $scope.showDeleteGI = false;
+            syncBodyClass();
+        };
+
+        // Xác nhận Delete
+        $scope.confirmDeleteGI = function () {
+            if (!$scope.deletingGI) return;
+
+            var id = $scope.deletingGI.IssueID;
+            $scope.savingDeleteGI = true;
+
+            $http({
+                method: "POST",
+                url: current_url + "/api-core/goodsissues/delete",
+                data: { issueID: id }
+            }).then(
+                function (res) {
+                    $scope.savingDeleteGI = false;
+                    alert(res.data.message || "Xóa phiếu xuất kho thành công!");
+
+                    $scope.showDeleteGI = false;
+                    syncBodyClass();
+
+                    $scope.LoadGoodIssues();  // load lại bảng
+                },
+                function (err) {
+                    $scope.savingDeleteGI = false;
+                    console.error(err);
+                    alert("Xóa phiếu xuất kho không thành công!");
+                }
+            );
+        };
+
+
 
         // ========== KHỞI TẠO ==========
         $scope.LoadGoodIssues();
