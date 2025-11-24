@@ -70,6 +70,16 @@ public class ReportBLL : IDReportBLL
                 AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(10)
             });
 
-        return data;
+        public List<ReportStockResponse> GetStockReport()
+        {
+            return _res.GetStockReport();
+        }
+
+
+        public List<ReportTopProductResponse> GetTopProducts(DateTime fromDate, DateTime toDate)
+        {
+            return _res.GetTopProducts(fromDate, toDate);
+        }
+
     }
 }

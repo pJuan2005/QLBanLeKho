@@ -905,7 +905,6 @@ SELECT * FROM Returns;
 SELECT * FROM Invoices;
 SELECT * FROM Payments;
 SELECT * FROM StockCards;
-select * from SystemSettings
 
 DELETE FROM Payments;
 
@@ -3173,7 +3172,7 @@ CREATE TABLE Settings (
 INSERT INTO Settings (VATRate, DefaultLanguage) 
 VALUES (10.00, 'EN');
 
-
+select * from Languages
 ALTER TABLE Categories 
 ALTER COLUMN VATRate DECIMAL(5,2) NULL;
 
@@ -3323,10 +3322,6 @@ IF OBJECT_ID('dbo.sp_report_revenue', 'P') IS NOT NULL
     DROP PROCEDURE dbo.sp_report_revenue;
 GO
 
-IF OBJECT_ID('dbo.sp_report_revenue', 'P') IS NOT NULL
-    DROP PROCEDURE dbo.sp_report_revenue;
-GO
-
 CREATE PROCEDURE dbo.sp_report_revenue
 (
     @FromDate DATETIME,
@@ -3434,7 +3429,6 @@ BEGIN
            AND i.CumIn     > o.CumOutPrev
            AND i.CumInPrev < o.CumOut
     ),
-
     FifoAllocFiltered AS
     (
         SELECT *
@@ -3467,23 +3461,22 @@ BEGIN
     ),
 
     ----------------------------------------------------------------------
--- 6. Best Category (FIXED)
-----------------------------------------------------------------------
-BestCategory AS
-(
-    SELECT TOP 1
-        c.CategoryID,
-        c.CategoryName,
-        SUM(si.Quantity) AS TotalQty
-    FROM Sales s
-    INNER JOIN SalesItems si ON s.SaleID = si.SaleID
-    INNER JOIN Products p ON si.ProductID = p.ProductID
-    INNER JOIN Categories c ON p.CategoryID = c.CategoryID
-    WHERE CAST(s.SaleDate AS DATE) BETWEEN @FromDate AND @ToDate
-    GROUP BY c.CategoryID, c.CategoryName
-    ORDER BY TotalQty DESC
-),
-
+    -- 6. Best Category
+    ----------------------------------------------------------------------
+    BestCategory AS
+    (
+        SELECT TOP 1
+            c.CategoryID,
+            c.CategoryName,
+            SUM(si.Quantity) AS TotalQty
+        FROM Sales s
+        INNER JOIN SalesItems si ON s.SaleID = si.SaleID
+        INNER JOIN Products p ON si.ProductID = p.ProductID
+        INNER JOIN Categories c ON p.CategoryID = c.CategoryID
+        WHERE CAST(s.SaleDate AS DATE) BETWEEN @FromDate AND @ToDate
+        GROUP BY c.CategoryID, c.CategoryName
+        ORDER BY TotalQty DESC
+    ),
 
     ----------------------------------------------------------------------
     -- 7. Top Product
@@ -3498,36 +3491,54 @@ BestCategory AS
         WHERE CAST(s.SaleDate AS DATE) BETWEEN @FromDate AND @ToDate
         GROUP BY si.ProductName
         ORDER BY TotalQty DESC
+    ),
+
+    ----------------------------------------------------------------------
+    -- 8. FinalData: dữ liệu theo ngày thực
+    ----------------------------------------------------------------------
+    FinalData AS
+    (
+        SELECT
+            CAST(s.SaleDate AS DATE) AS [Date],
+            SUM(rps.Revenue) AS Revenue,
+            SUM(rps.Revenue - ISNULL(cps.COGS,0)) AS GrossProfit
+        FROM Sales s
+        INNER JOIN RevenuePerSale rps ON s.SaleID = rps.SaleID
+        LEFT JOIN CogsPerSale cps ON s.SaleID = cps.SaleID
+        WHERE CAST(s.SaleDate AS DATE) BETWEEN @FromDate AND @ToDate
+        GROUP BY CAST(s.SaleDate AS DATE)
+    ),
+
+    ----------------------------------------------------------------------
+    -- 9. DateRange: sinh đủ ngày
+    ----------------------------------------------------------------------
+    DateRange AS
+    (
+        SELECT @FromDate AS [Date]
+        UNION ALL
+        SELECT DATEADD(DAY, 1, [Date])
+        FROM DateRange
+        WHERE DATEADD(DAY, 1, [Date]) <= @ToDate
     )
+
+    ----------------------------------------------------------------------
+    -- 10. OUTPUT FINAL
+    ----------------------------------------------------------------------
     SELECT
-        CASE 
-            WHEN @Option = 'DAY'   THEN CONVERT(NVARCHAR(10), CAST(s.SaleDate AS DATE), 23)
-            WHEN @Option = 'MONTH' THEN FORMAT(s.SaleDate, 'yyyy-MM')
-            ELSE CONVERT(NVARCHAR(10), CAST(s.SaleDate AS DATE), 23)
-        END AS [Date],
+        CONVERT(NVARCHAR(10), d.Date, 23) AS [Date],
+        ISNULL(f.Revenue, 0) AS Revenue,
+        ISNULL(f.GrossProfit, 0) AS GrossProfit,
 
-        SUM(rps.Revenue) AS Revenue,
-        SUM(rps.Revenue - ISNULL(cps.COGS, 0)) AS GrossProfit,
-
-        -- KPI bổ sung
         (SELECT TOP 1 CategoryName FROM BestCategory) AS BestCategory,
         (SELECT TOP 1 ProductName FROM TopProduct) AS TopProduct
 
-    FROM Sales s
-    INNER JOIN RevenuePerSale rps ON s.SaleID = rps.SaleID
-    LEFT JOIN  CogsPerSale     cps ON s.SaleID = cps.SaleID
-    WHERE CAST(s.SaleDate AS DATE) BETWEEN @FromDate AND @ToDate
-    GROUP BY
-        CASE 
-            WHEN @Option = 'DAY'   THEN CONVERT(NVARCHAR(10), CAST(s.SaleDate AS DATE), 23)
-            WHEN @Option = 'MONTH' THEN FORMAT(s.SaleDate, 'yyyy-MM')
-            ELSE CONVERT(NVARCHAR(10), CAST(s.SaleDate AS DATE), 23)
-        END
-    ORDER BY [Date];
+    FROM DateRange d
+    LEFT JOIN FinalData f ON d.Date = f.Date
+    ORDER BY d.Date
+    OPTION (MAXRECURSION 0);
 
 END;
 GO
-
 
 
 
@@ -3931,6 +3942,36 @@ GO
 
 
 
+CREATE PROCEDURE sp_dashboard_top_products
+(
+    @FromDate DATE,
+    @ToDate   DATE
+)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    ;WITH SalesData AS (
+        SELECT 
+            si.ProductName,
+            SUM(si.Quantity) AS TotalQty
+        FROM Sales s
+        INNER JOIN SalesItems si ON s.SaleID = si.SaleID
+        WHERE CAST(s.SaleDate AS DATE) BETWEEN @FromDate AND @ToDate
+        GROUP BY si.ProductName
+    ),
+    Total AS (
+        SELECT SUM(TotalQty) AS TotalAll
+        FROM SalesData
+    )
+    SELECT TOP 5
+        s.ProductName,
+        s.TotalQty,
+        CAST((s.TotalQty * 100.0) / t.TotalAll AS DECIMAL(5,2)) AS [Percent]
+    FROM SalesData s CROSS JOIN Total t
+    ORDER BY s.TotalQty DESC;
+END;
+GO
 
 
 

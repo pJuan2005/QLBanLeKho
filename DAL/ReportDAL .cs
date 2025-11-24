@@ -74,5 +74,23 @@ namespace DAL
                 throw;
             }
         }
+
+
+        public List<ReportTopProductResponse> GetTopProducts(DateTime fromDate, DateTime toDate)
+        {
+            string msgError = "";
+
+            var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError,
+                "sp_dashboard_top_products",
+                "@FromDate", fromDate,
+                "@ToDate", toDate
+            );
+
+            if (!string.IsNullOrEmpty(msgError))
+                throw new Exception(msgError);
+
+            return dt.ConvertTo<ReportTopProductResponse>().ToList();
+        }
+
     }
 }

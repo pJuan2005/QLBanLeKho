@@ -315,3 +315,203 @@ input:focus {
 .top-bar__info.active {
   display: block;
 }
+
+/* --------------------------------------------- */
+
+
+
+.report-container {
+  padding-top:15px;
+  padding-right:15px;
+  padding-left:15px
+}
+
+/* Title */
+.report-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.report-title h2 {
+  /* font-size: 2rem; */
+  font-weight: 500;
+  color: #0f172a;
+  margin: 0;
+}
+.icon-title {
+  width: 22px;
+  height: 22px;
+}
+
+
+/* Tabs */
+.report-tabs {
+  display: flex;
+  gap: 12px;
+  margin-top: 10px;
+}
+.report-tabs .tab {
+  padding: 8px 16px;
+  font-size: 1.4rem;
+  border-radius: 20px;
+  border: 1px solid #e2e8f0;
+  background: #fff;
+  cursor: pointer;
+}
+.report-tabs .tab.active {
+  background: #0ea5e9;
+  color: white;
+  border-color: #0ea5e9;
+}
+
+/* ==================== KPI SMALLER ==================== */
+
+.kpi-row {
+  margin-top: 12px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  height: auto;
+}
+
+.kpi-card {
+  background: #fff;
+  padding: 12px 16px;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+}
+
+/* Label nhỏ lại */
+.kpi-label {
+  font-size: 1.2rem;
+  margin: 0;
+}
+
+/* Icon nhỏ lại */
+.kpi-icon {
+  padding: 3px 8px;
+  font-size: 1.2rem;
+  margin: 6px 0;
+}
+
+/* Số to nhưng không quá khổng lồ */
+.kpi-value {
+  font-size: 2.2rem;
+  margin: 0;
+  font-weight: 600;
+}
+
+/* Dòng mô tả */
+.kpi-desc {
+  font-size: 1.2rem;
+  margin-top: 2px;
+}
+
+/* KPI giá trị nhỏ */
+.kpi-value-small {
+  font-size: 1.6rem;
+  font-weight: 600;
+}
+
+
+
+/* ==================== STOCK KPI (nhỏ lại) ==================== */
+.kpi-row-stock {
+  margin-top: 5px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  height: auto;
+}
+
+.kpi-card-stock {
+  background: #fff;
+  padding: 10px 14px;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+}
+
+
+
+/* ==================== CHART SMALLER ==================== */
+
+.chart-wrapper {
+  height: 260px;
+}
+
+#revenueChart {
+  height: 260px !important;
+}
+
+
+
+/* ==================== TABLE SMALLER ==================== */
+
+.stock-table th {
+  padding: 8px;
+  font-size: 1.3rem;
+}
+
+.stock-table td {
+  padding: 8px;
+  font-size: 1.3rem;
+}
+
+
+/* ---------------------------------------------------------- */
+.chart-section {
+    margin-top: 10px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+
+.chart-title {
+    font-size: 1.3rem;
+    font-weight: 500;
+    margin-bottom: 10px;
+    margin-top: 0px;
+    color: #334155;
+}
+
+.chart-box:hover {
+    box-shadow: 0 8px 20px rgba(0,0,0,0.07);
+}
+
+
+.chart-canvas {
+    flex: 1;
+    height: 100% !important;
+}
+
+
+.chart-box {
+    background: #ffffff;
+    border-radius: 16px;
+    padding-top: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 40px;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transition: 0.25s;
+    height: 220px;
+    overflow: hidden; 
+}
+
+
+.chart-box-1{
+  background: #ffffff;
+    border-radius: 16px;
+    padding-top: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 40px;
+    margin-top: 10px;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transition: 0.25s;
+    height: 290px;
+
+}
