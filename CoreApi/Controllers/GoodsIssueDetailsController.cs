@@ -4,10 +4,12 @@ using Model;
 using System.Reflection;
 using BLL.Interfaces;
 using BLL;
+using Microsoft.AspNetCore.Authorization;
 
 
 namespace CoreApi.Controllers
 {
+    [Authorize]
     [Route("api/GoodsIssueDetails")]
     [ApiController]
     public class GoodsIssueDetailsController : ControllerBase
@@ -19,6 +21,7 @@ namespace CoreApi.Controllers
             _goodsIssueDetailsBusiness = goodsIssueDetailsBusiness;
         }
 
+        [Authorize(Roles = "Admin,ThuKho")]
         [Route("create")]
         [HttpPost]
         public IActionResult Create([FromBody] List<GoodsIssueDetailsModel> models)
@@ -27,7 +30,7 @@ namespace CoreApi.Controllers
             return Ok(models);
         }
 
-       
+        [Authorize(Roles = "Admin,ThuKho")]
 
         [Route("delete")]
         [HttpPost]
@@ -37,13 +40,14 @@ namespace CoreApi.Controllers
             return Ok(new { data = "OK" });
         }
 
-        [Route("get-by-id/{issueID}/{productID}")]
+        [Authorize(Roles = "Admin,ThuKho")]
+        [Route("get-by-id/{issueID}")]
         [HttpGet]
-        public GoodsIssueDetailsModel GetDatabyID(int issueID, int productID)
+        public IEnumerable<GoodsIssueDetailsModel> GetDatabyID(int issueID)
         {
-            return _goodsIssueDetailsBusiness.GetDatabyID(issueID, productID);
+            return _goodsIssueDetailsBusiness.GetDatabyID(issueID);
         }
 
-        
+
     }
 }

@@ -1,15 +1,10 @@
-﻿// File: BLL/Interfaces/ISystemBLL.cs
-using Model;
-using System.Collections.Generic;
+﻿using Model;
 
 namespace BLL.Interfaces
 {
-    public interface ISystemBLL
+    public interface IDSettingsBLL
     {
-        bool Create(SystemSettingModel model);
-        bool Delete(int id);
-        bool Update(SystemSettingModel model);
-        SystemSettingModel GetDatabyID(int systemId);
-        List<SystemSettingModel> Search(SystemSettingSearchRequest request, out long total);
+        SettingsModel GetSettings();
+        bool UpdateSettings(SettingsModel model);
     }
 }

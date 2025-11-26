@@ -315,3 +315,651 @@ input:focus {
 .top-bar__info.active {
   display: block;
 }
+
+/* --------------------------------------------- */
+
+.report-container {
+  padding-top: 15px;
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+/* Title */
+.report-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.report-title h2 {
+  /* font-size: 2rem; */
+  font-weight: 500;
+  color: #0f172a;
+  margin: 0;
+}
+.icon-title {
+  width: 22px;
+  height: 22px;
+}
+
+/* Tabs */
+.report-tabs {
+  display: flex;
+  gap: 12px;
+  margin-top: 10px;
+}
+.report-tabs .tab {
+  padding: 8px 16px;
+  font-size: 1.4rem;
+  border-radius: 20px;
+  border: 1px solid #e2e8f0;
+  background: #fff;
+  cursor: pointer;
+}
+.report-tabs .tab.active {
+  background: #0ea5e9;
+  color: white;
+  border-color: #0ea5e9;
+}
+
+/* ==================== KPI SMALLER ==================== */
+
+.kpi-row {
+  margin-top: 12px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  height: auto;
+}
+
+.kpi-card {
+  background: #fff;
+  padding: 12px 16px;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+}
+
+/* Label nhỏ lại */
+.kpi-label {
+  font-size: 1.2rem;
+  margin: 0;
+}
+
+/* Icon nhỏ lại */
+.kpi-icon {
+  padding: 3px 8px;
+  font-size: 1.2rem;
+  margin: 6px 0;
+}
+
+/* Số to nhưng không quá khổng lồ */
+.kpi-value {
+  font-size: 2.2rem;
+  margin: 0;
+  font-weight: 600;
+}
+
+/* Dòng mô tả */
+.kpi-desc {
+  font-size: 1.2rem;
+  margin-top: 2px;
+}
+
+/* KPI giá trị nhỏ */
+.kpi-value-small {
+  font-size: 1.6rem;
+  font-weight: 600;
+}
+
+/* ==================== STOCK KPI (nhỏ lại) ==================== */
+.kpi-row-stock {
+  margin-top: 5px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  height: auto;
+}
+
+.kpi-card-stock {
+  background: #fff;
+  padding: 10px 14px;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+}
+
+/* ==================== CHART SMALLER ==================== */
+
+.chart-wrapper {
+  height: 260px;
+}
+
+#revenueChart {
+  height: 260px !important;
+}
+
+/* ==================== TABLE SMALLER ==================== */
+
+.stock-table th {
+  padding: 8px;
+  font-size: 1.3rem;
+}
+
+.stock-table td {
+  padding: 8px;
+  font-size: 1.3rem;
+}
+
+/* ---------------------------------------------------------- */
+.chart-section {
+  margin-top: 10px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.chart-title {
+  font-size: 1.3rem;
+  font-weight: 500;
+  margin-bottom: 10px;
+  margin-top: 0px;
+  color: #334155;
+}
+
+.chart-box:hover {
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.07);
+}
+
+.chart-canvas {
+  flex: 1;
+  height: 100% !important;
+}
+
+.chart-box {
+  background: #ffffff;
+  border-radius: 16px;
+  padding-top: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 40px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: 0.25s;
+  height: 220px;
+  overflow: hidden;
+}
+
+.chart-box-1 {
+  background: #ffffff;
+  border-radius: 16px;
+  padding-top: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 40px;
+  margin-top: 10px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: 0.25s;
+  height: auto;
+  min-height: 290px;
+  margin-bottom: 20px;
+}
+
+/* =========================================== */
+/*         DASHBOARD – RECENT TRANSACTIONS    */
+/* =========================================== */
+
+/* bảng */
+.list-sales__table {
+  margin-top: 12px;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+}
+
+.list-sales__table table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 1.35rem;
+}
+
+.list-sales__table thead td {
+  background: #f8fafc;
+  padding: 10px 14px;
+  color: #64748b;
+  font-weight: 500;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.list-sales__table tbody td {
+  padding: 12px 14px;
+  border-bottom: 1px solid #e2e8f0;
+  white-space: nowrap;
+  color: #0f172a;
+}
+
+.list-sales__table tbody tr:hover {
+  background: #f8fafc;
+}
+
+.list-sales__table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* cột */
+.invoice-id,
+.date-invoice,
+.customer-name,
+.total-order,
+.payment-method,
+.status-sale,
+.action {
+  text-align: left;
+}
+
+/* chip status */
+.color {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 1.2rem;
+  min-width: 52px;
+  font-weight: 500;
+  background: #e0f2fe;
+  color: #0ea5e9;
+}
+
+.color.status-paid {
+  background: #e0f2fe;
+  color: #0ea5e9;
+}
+.color.status-unpaid {
+  background: #fee2e2;
+  color: #ef4444;
+}
+.color.status-partial {
+  background: #fef9c3;
+  color: #ca8a04;
+}
+
+/* ================== Action Dropdown ================== */
+.action {
+  position: relative;
+}
+
+.icon-dot {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+.open-action {
+  position: absolute;
+  right: 0;
+  top: 28px;
+  width: 180px;
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.1);
+  padding: 8px 0;
+  z-index: 40;
+}
+
+.open-action .detail,
+.open-action .print {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.open-action .detail:hover,
+.open-action .print:hover {
+  background: #f8fafc;
+}
+
+.open-action img {
+  width: 16px;
+  height: 16px;
+}
+
+.name-action,
+.printer-action {
+  margin: 0;
+  font-size: 1.3rem;
+  color: #0f172a;
+}
+
+/* ================== PAGINATION ================== */
+.pager {
+  margin-top: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.3rem;
+  color: #64748b;
+}
+
+.pager-info {
+  white-space: nowrap;
+}
+
+.page-nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.page-nav select {
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  padding: 4px 6px;
+  background: #ffffff;
+  font-size: 1.3rem;
+}
+
+.btn.ghost {
+  padding: 4px 10px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+  cursor: pointer;
+  color: #0f172a;
+}
+
+.btn.ghost:hover:not(:disabled) {
+  background: #f8fafc;
+}
+
+.btn.ghost:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.page-no {
+  min-width: 40px;
+  text-align: center;
+}
+
+/* ================== NO DATA ================== */
+.no-data {
+  padding: 16px;
+  text-align: center;
+  color: #94a3b8;
+}
+
+/* ===== MODALS (overlay + card) ===== */
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.35);
+  z-index: 80;
+}
+
+.modal-root {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  z-index: 90;
+}
+
+/* card chung: cho phép scroll nếu content dài */
+.modal-card {
+  width: 720px;
+  max-height: calc(100vh - 80px);
+  background: #ffffff;
+  border-radius: 18px;
+  box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.35);
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* card bản in hóa đơn, hẹp hơn */
+.modal-card--narrow {
+  width: 560px;
+}
+
+.modal-header {
+  padding: 16px 24px;
+  border-bottom: 1px solid #e2e8f0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.modal-title {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.modal-title .icon {
+  width: 22px;
+  height: 22px;
+}
+
+.title-top {
+  margin: 0;
+  font-size: 1.2rem;
+  color: #64748b;
+}
+
+.title-main {
+  margin: 0;
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.title-sub {
+  margin: 0;
+  font-size: 1.2rem;
+  color: #94a3b8;
+}
+
+.modal-close {
+  border: none;
+  background: transparent;
+  font-size: 1.8rem;
+  cursor: pointer;
+  color: #94a3b8;
+}
+
+.modal-section {
+  padding: 12px 24px;
+}
+
+.modal-info-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px 40px;
+}
+
+.info-block .info-label {
+  margin: 0;
+  font-size: 1.2rem;
+  color: #94a3b8;
+}
+
+.info-block .info-value {
+  margin: 2px 0 0;
+  font-size: 1.4rem;
+  color: #0f172a;
+}
+
+.info-sub {
+  font-size: 1.2rem;
+  color: #94a3b8;
+}
+
+.info-value.link {
+  color: #0ea5e9;
+  cursor: pointer;
+}
+
+/* detail table trong modal */
+.detail-table-wrapper {
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  overflow: hidden;
+}
+
+.detail-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 1.3rem;
+}
+
+.detail-table thead {
+  background: #f8fafc;
+}
+
+.detail-table th,
+.detail-table td {
+  padding: 8px 12px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.detail-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.detail-table th {
+  text-align: left;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.detail-table td {
+  color: #0f172a;
+}
+
+.col-item {
+  max-width: 220px;
+}
+
+.line-discount {
+  display: block;
+  font-size: 1.2rem;
+  color: #ef4444;
+}
+
+/* totals */
+.modal-totals {
+  border-top: 1px solid #e2e8f0;
+  margin-top: 4px;
+  padding-top: 12px;
+}
+
+.totals-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.3rem;
+  color: #0f172a;
+  margin-bottom: 4px;
+}
+
+.totals-row--bold {
+  font-weight: 600;
+}
+
+.totals-row--highlight {
+  color: #16a34a;
+  font-weight: 600;
+}
+
+/* invoice specific */
+.invoice-header {
+  text-align: center;
+  padding: 16px 24px 8px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.store-name {
+  margin: 0;
+  font-size: 1.8rem;
+  font-weight: 600;
+}
+
+.store-sub {
+  margin: 4px 0 0;
+  font-size: 1.2rem;
+  color: #64748b;
+}
+
+.invoice-title {
+  text-align: center;
+  padding: 12px 24px 0;
+}
+
+.invoice-caption {
+  margin: 0;
+  font-size: 1.3rem;
+  color: #64748b;
+}
+
+.invoice-link {
+  margin: 4px 0 0;
+  font-size: 1.4rem;
+  color: #0ea5e9;
+  text-decoration: none;
+}
+
+.invoice-info-grid {
+  padding: 8px 24px 4px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px 40px;
+}
+
+/* KHUNG TABLE HÓA ĐƠN – cho scroll nếu nhiều items */
+.detail-table-wrapper.invoice-table {
+  margin: 12px 24px 0;
+  max-height: 260px;
+  overflow-y: auto;
+}
+
+/* totals khu vực invoice */
+.invoice-totals {
+  padding-top: 8px;
+}
+
+.invoice-footnote {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #94a3b8;
+  margin: 8px 24px 12px;
+}
+
+.btn-print {
+  margin: 0 24px 20px;
+  width: calc(100% - 48px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 999px;
+  border: none;
+  padding: 10px 16px;
+  background: #0ea5e9;
+  color: #ffffff;
+  font-size: 1.4rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.btn-print .printer-icon {
+  width: 16px;
+  height: 16px;
+}

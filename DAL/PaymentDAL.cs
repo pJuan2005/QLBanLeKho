@@ -41,8 +41,7 @@ namespace DAL
                 var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_payment_create",
                     "@CustomerID", model.CustomerID,
                     "@SaleID", model.SaleID,
-                    "@Amount", model.Amount,
-                    "@PaymentDate", model.PaymentDate,
+                    "@Amount", model.Amount,              
                     "@Method", model.Method,
                     "@Description", model.Description
                 );
@@ -70,7 +69,6 @@ namespace DAL
                     "@SupplierID", model.SupplierID,
                     "@ReceiptID", model.ReceiptID,
                     "@Amount", model.Amount,
-                    "@PaymentDate", model.PaymentDate,
                     "@Method", model.Method,
                     "@Description", model.Description
                 );
@@ -159,6 +157,77 @@ namespace DAL
                     throw new Exception(msgError);
                 if (dt.Rows.Count > 0) total = (long)dt.Rows[0]["RecordCount"];
                 return dt.ConvertTo<PaymentModel>().ToList();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        // ================= AR OPEN INVOICES =================
+        public List<ArOpenInvoiceDto> GetArOpenInvoices(
+            int pageIndex, int pageSize, out long total,
+            string search, DateTime? fromDate, DateTime? toDate)
+        {
+            string msgError = "";
+            total = 0;
+
+            try
+            {
+                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(
+                    out msgError,
+                    "sp_ar_open_invoices",
+                    "@page_index", pageIndex,
+                    "@page_size", pageSize,
+                    "@search", search,
+                    "@from_date", fromDate,
+                    "@to_date", toDate
+                );
+
+                if (!string.IsNullOrEmpty(msgError))
+                    throw new Exception(msgError);
+
+                if (dt.Rows.Count > 0 && dt.Columns.Contains("TotalItems"))
+                {
+                    total = Convert.ToInt64(dt.Rows[0]["TotalItems"]);
+                }
+
+                return dt.ConvertTo<ArOpenInvoiceDto>().ToList();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        // ================= AP OPEN BILLS =================
+        public List<ApOpenBillDto> GetApOpenBills(
+            int pageIndex, int pageSize, out long total,
+            string search, DateTime? fromDate, DateTime? toDate)
+        {
+            string msgError = "";
+            total = 0;
+
+            try
+            {
+                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(
+                    out msgError,
+                    "sp_ap_open_bills",
+                    "@page_index", pageIndex,
+                    "@page_size", pageSize,
+                    "@search", search,
+                    "@from_date", fromDate,
+                    "@to_date", toDate
+                );
+
+                if (!string.IsNullOrEmpty(msgError))
+                    throw new Exception(msgError);
+
+                if (dt.Rows.Count > 0 && dt.Columns.Contains("TotalItems"))
+                {
+                    total = Convert.ToInt64(dt.Rows[0]["TotalItems"]);
+                }
+
+                return dt.ConvertTo<ApOpenBillDto>().ToList();
             }
             catch (Exception ex)
             {

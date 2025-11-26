@@ -28,8 +28,8 @@ builder.Services.AddTransient<IAuditLogBusiness, AuditLogBusiness>();
 builder.Services.AddTransient<IAuditLogRepository, AuditLogRepository>();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddTransient<IAuditLogger, AuditLogger>();
-builder.Services.AddTransient<ISystemDAL, SystemDAL>();
-builder.Services.AddTransient<ISystemBLL, SystemBLL>();
+builder.Services.AddScoped<IDSettingsDAL, SettingsDAL>();
+builder.Services.AddScoped<IDSettingsBLL, SettingsBLL>();
 // Đăng ký cho System
 
 IConfiguration configuration = builder.Configuration;

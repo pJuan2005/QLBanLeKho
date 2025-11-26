@@ -7,9 +7,11 @@ using System.Globalization;
 using System.Text;
 using System.IO;
 using ClosedXML.Excel;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CoreApi.Controllers
 {
+    [Authorize]
     [Route("api/category")]
     [ApiController]
     public class CategoryController : ControllerBase
@@ -20,6 +22,7 @@ namespace CoreApi.Controllers
             _categoryBusiness = categoryBusiness;
         }
 
+        [Authorize(Roles = "Admin,ThuKho")]
         [Route("update-category")]
         [HttpPost]
         public CategoryModel Update([FromBody]CategoryModel model)
@@ -27,7 +30,7 @@ namespace CoreApi.Controllers
             _categoryBusiness.Update(model);
             return model;
         }
-
+        [Authorize(Roles="Admin,ThuKho,KeToan")]
         [Route("get-by-id/{id}")]
         [HttpGet]
         public CategoryModel GetDatabyId(int id)
@@ -35,7 +38,7 @@ namespace CoreApi.Controllers
             return _categoryBusiness.GetDatabyID(id);
 
         }
-
+        [Authorize(Roles = "Admin,ThuKho")]
         [Route("create-category")]
         [HttpPost]
         public CategoryModel Create([FromBody]CategoryModel model)
@@ -43,7 +46,7 @@ namespace CoreApi.Controllers
              _categoryBusiness.Create(model);
              return model;
         }
-
+        [Authorize(Roles="Admin")]
         [Route("delete-category")]
         [HttpPost]
         public IActionResult Delete([FromBody]int Id)
@@ -58,6 +61,7 @@ namespace CoreApi.Controllers
                 return Ok(new { message = "Xoá không thành công", Id });
             }
         }
+        [Authorize(Roles="Admin,ThuKho,KeToan")]
         [Route("search")]
         [HttpPost]
         public ResponseModel Search([FromBody] Dictionary<string, object> formData)
@@ -148,6 +152,7 @@ namespace CoreApi.Controllers
             }
         }
 
+        [Authorize(Roles="Admin,ThuKho")]
         //export excel
         [Route("export-excel")]
         [HttpPost]
@@ -260,6 +265,7 @@ namespace CoreApi.Controllers
 
         //import excel
         // import excel
+        [Authorize(Roles="Admin,ThuKho")]
         [Route("import-excel")]
         [HttpPost]
         [Consumes("multipart/form-data")]

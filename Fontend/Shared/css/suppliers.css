@@ -171,6 +171,7 @@ input:focus {
   background: #f8fafc;
 }
 
+
 /* ====================app-layout================== */
 .app-layout {
   margin-left: 255px;
@@ -774,7 +775,7 @@ body.modal-open {
   overflow: hidden;
 }
 
-/* ========================= DELETE CUSTOMER ======================== */
+/* ========================= DELETE supplier ======================== */
 .form-delete {
   position: fixed;
   inset: 0;

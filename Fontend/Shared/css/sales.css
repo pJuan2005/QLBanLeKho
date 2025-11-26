@@ -1,0 +1,1018 @@
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+/* khôi phục font chữ */
+body {
+  font-size: 1.6rem;
+  font-family: "Inter", sans-serif;
+  margin: 0;
+}
+
+/* =====================common==================== */
+a {
+  text-decoration: none;
+}
+
+input,
+textarea,
+select,
+button {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+input:focus {
+  outline: none;
+  border: 1px solid #0ea5e9;
+  border-bottom: none;
+  box-shadow: 0 0 0 2px rgba(14, 165, 233, 0.3);
+}
+
+/* ====================main====================== */
+.app-content {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* ====================slide-bar===================== */
+.slide-bar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  width: 255px;
+  border-right: 1px solid #000;
+  background: #fff;
+}
+
+.slide-bar__header {
+  padding: 16px;
+  border: 1px solid #ccc;
+  border-right: none;
+}
+
+.slide-bar__header .app-slideBar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.app-slideBar__left {
+  width: 40px;
+  height: 40px;
+  border-radius: 16px;
+  background: #0ea5e9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.app-slideBar__right .name-app {
+  color: #0f172a;
+  font-size: 2rem;
+  font-weight: 500;
+  margin: 0;
+}
+
+.app-slideBar__right .title-nameApp {
+  color: #64748b;
+  font-family: Inter;
+  font-size: 1.2rem;
+  margin: 0;
+  margin-top: 2px;
+}
+
+.slide-bar__Content {
+  padding: 8px;
+  flex: 1 1 auto;
+  overflow-y: auto;
+}
+
+.slide-bar__label {
+  padding: 0 8px;
+  color: rgba(15, 23, 42, 0.7);
+  font-size: 1.2rem;
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+.slide-bar__MenuButton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-left: 8px;
+}
+
+.MenuButton-right {
+  color: #0f172a;
+  font-size: 1.4rem;
+  line-height: 1.43;
+}
+
+.name-menu-active {
+  font-weight: 500;
+}
+
+.slide-bar__MenuButton--active {
+  border-radius: 10px;
+  background: #f8fafc;
+}
+
+.slide-bar__MenuButton:hover {
+  border-radius: 10px;
+  background: #f8fafc;
+}
+.slide-bar__footer {
+  border-top: 1px solid #ccc;
+  padding: 16px;
+}
+
+.slide-bar__footer .app-slide-bar {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  gap: 12px;
+}
+
+.app-slide-bar .ava {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.app-slide-bar .info .name {
+  color: #0f172a;
+  font-size: 1.4rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.app-slide-bar .info .role {
+  color: #64748b;
+  font-size: 1.2rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.app-slide-bar {
+  border-radius: 12px;
+  background: #f8fafc;
+}
+
+/* ====================app-layout================== */
+.app-layout {
+  margin-left: 255px;
+  height: 100vh;
+  width: calc(100vw - 255px);
+  overflow: auto;
+  min-width: 0;
+}
+
+.top-bar {
+  position: relative;
+  padding: 8px 0px;
+  border-bottom: 1px solid #ccc;
+}
+
+.top-bar__content {
+  padding: 0 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.top-bar__left {
+  position: relative;
+}
+
+.top-bar__left .search {
+  width: 448px;
+  height: 36px;
+  padding: 4px 12px 4px 40px;
+  border-radius: 10px;
+  border: 0.889px solid #e2e8f0;
+  background: rgba(248, 250, 252, 0.5);
+}
+
+.top-bar__left .icon {
+  position: absolute;
+  top: 10px;
+  bottom: 10px;
+  left: 12px;
+  right: 12px;
+}
+
+.top-bar__right {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
+
+.top-bar__right .role {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 21px;
+  padding: 2px 8px;
+  border-radius: 10px;
+  border: 0.889px solid rgba(14, 165, 233, 0.2);
+  background: rgba(14, 165, 233, 0.1);
+  color: #0ea5e9;
+  font-size: 1.2rem;
+  font-weight: 500;
+  line-height: 1.3;
+  cursor: default;
+}
+
+.top-bar__right .ava {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.top-bar__info {
+  display: none;
+  position: absolute;
+  z-index: 1;
+  right: 32px;
+  width: 224px;
+  height: 130px;
+  border-radius: 10px;
+  border: 0.889px solid #e2e8f0;
+  background: #fff;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -2px rgba(0, 0, 0, 0.1);
+}
+
+.info-top {
+  padding: 10px 12px;
+  border-bottom: 1px solid #ccc;
+}
+
+.info-top .name {
+  color: #0f172a;
+  font-size: 1.6rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.info-top .email {
+  color: #64748b;
+  font-size: 1.4rem;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.info-mid {
+  padding: 4px;
+}
+
+.set {
+  color: #0f172a;
+  font-size: 1.4rem;
+  line-height: 1.43;
+  padding-left: 8px;
+  padding-right: 8px;
+  margin: 0;
+}
+
+.info-bottom {
+  display: flex;
+  align-items: center;
+  padding-top: 7px;
+  padding-bottom: 7px;
+  padding-left: 8px;
+  gap: 16px;
+  border-top: 1px solid #ccc;
+}
+
+.info-bottom .icon {
+  margin: 0;
+}
+
+.logout {
+  margin: 0;
+  color: #ef4444;
+  font-size: 1.4rem;
+  line-height: 1.43;
+}
+
+.top-bar__info.active {
+  display: block;
+}
+
+/* ====================SALES PAGE================== */
+
+.app-layout__content {
+  padding: 24px 32px 40px;
+}
+
+.sales {
+  max-width: 1200px;
+  margin: 0 auto 40px;
+}
+
+/* ====== Sales top (title + KPI cards) ====== */
+
+.sales-top {
+  margin-bottom: 24px;
+}
+
+.container-intro {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.container-intro .icon {
+  width: 24px;
+  height: 24px;
+}
+
+.name-page {
+  margin: 0;
+  color: #0f172a;
+  font-size: 2.2rem;
+  font-weight: 600;
+}
+
+.container-card {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.card-block {
+  position: relative;
+  padding: 18px 20px 16px;
+  border-radius: 18px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 10px 15px -3px rgba(15, 23, 42, 0.06),
+    0 4px 6px -4px rgba(15, 23, 42, 0.04);
+}
+
+.card-block .title {
+  color: #64748b;
+  font-size: 1.3rem;
+  font-weight: 500;
+  margin: 0 0 24px;
+}
+
+.card-block .decor {
+  position: absolute;
+  right: 16px;
+  top: 16px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: #e0f2fe;
+}
+
+.card-block .icon-decor {
+  width: 18px;
+  height: 18px;
+}
+
+.card-block .data {
+  margin: 0;
+  margin-bottom: 4px;
+  color: #0f172a;
+  font-size: 2.8rem;
+  font-weight: 600;
+}
+
+.card-block .compare {
+  margin: 0;
+  color: #64748b;
+  font-size: 1.2rem;
+}
+
+/* ====== All Sales block ====== */
+
+.sales-content .list-sales {
+  padding: 20px 24px 24px;
+  border-radius: 18px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 10px 15px -3px rgba(15, 23, 42, 0.06),
+    0 4px 6px -4px rgba(15, 23, 42, 0.04);
+}
+
+.list-sales .desc {
+  margin: 0;
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+/* filters line */
+
+.filters {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 16px;
+  margin-bottom: 12px;
+}
+
+.filters-block {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid #e2e8f0;
+  background: #f8fafc;
+  font-size: 1.3rem;
+  color: #64748b;
+}
+
+.filters-block .icon-date,
+.filters-block .icon-search {
+  width: 16px;
+  height: 16px;
+}
+
+.date-input {
+  border: none;
+  background: transparent;
+  font-size: 1.3rem;
+  color: #0f172a;
+}
+
+.date-input::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+}
+
+/* select status – bỏ viền đen, dùng style container */
+.search-status {
+  border: none;
+  background: transparent;
+  font-size: 1.3rem;
+  color: #0f172a;
+  padding-right: 16px;
+  appearance: auto; /* ẩn style native 1 số browser */
+  outline: none; /* bỏ outline đen */
+}
+
+/* cho chắc: khi focus cũng không có outline riêng */
+.search-status:focus {
+  outline: none;
+}
+
+/* filter search by invoice / customer */
+.filters-invoice__customer {
+  flex: 1 1 auto;
+  justify-content: flex-start;
+}
+
+.filters-block input:focus,
+.filters-block select:focus {
+  border: none;
+  box-shadow: none;
+  outline: none;
+}
+
+.filters-block:focus-within {
+  border-color: #0ea5e9;
+  box-shadow: 0 0 0 2px rgba(14, 165, 233, 0.2);
+  background: #ffffff;
+}
+
+.searchByInvoiceOrCustomerName {
+  border: none;
+  background: transparent;
+  width: 100%;
+  font-size: 1.3rem;
+  color: #0f172a;
+}
+
+/* ====== table ====== */
+
+.list-sales__table {
+  margin-top: 8px;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
+}
+
+.list-sales__table table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #ffffff;
+  font-size: 1.4rem;
+}
+
+.list-sales__table thead tr,
+.list-sales__table thead td {
+  font-weight: 500;
+  color: #64748b;
+  background: #f8fafc;
+}
+
+.list-sales__table thead td {
+  padding: 10px 16px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.list-sales__table tbody td {
+  padding: 14px 16px;
+  border-bottom: 1px solid #e2e8f0;
+  color: #0f172a;
+  white-space: nowrap;
+}
+
+.list-sales__table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.action-cell {
+  position: relative;
+  display: inline-block;
+}
+
+.invoice-id,
+.date-invoice,
+.customer-name,
+.total-order,
+.payment-method,
+.status-sale,
+.action {
+  text-align: left;
+}
+
+/* chip status */
+.color {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 52px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 1.2rem;
+  font-weight: 500;
+  background: #e0f2fe;
+  color: #0ea5e9;
+}
+
+/* có thể gán thêm class theo trạng thái nếu muốn */
+.color.status-paid {
+  background: #e0f2fe;
+  color: #0ea5e9;
+}
+.color.status-unpaid {
+  background: #fee2e2;
+  color: #ef4444;
+}
+.color.status-partial {
+  background: #fef9c3;
+  color: #ca8a04;
+}
+
+/* action icon */
+.icon-dot {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+/* dropdown action */
+.open-action {
+  position: absolute;
+  right: 0;
+  margin-top: 8px;
+  width: 190px;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+  box-shadow: 0 10px 15px -3px rgba(15, 23, 42, 0.1),
+    0 4px 6px -4px rgba(15, 23, 42, 0.1);
+  padding: 8px 0;
+  z-index: 20;
+}
+
+.open-action .detail,
+.open-action .print {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.open-action .detail:hover,
+.open-action .print:hover {
+  background: #f8fafc;
+}
+
+.icon-view,
+.printer-icon {
+  width: 16px;
+  height: 16px;
+}
+
+.name-action,
+.printer-action {
+  margin: 0;
+  font-size: 1.3rem;
+  color: #0f172a;
+}
+
+/* ====== pager ====== */
+
+.pager {
+  margin-top: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.3rem;
+  color: #64748b;
+}
+
+.pager-info {
+  white-space: nowrap;
+}
+
+.page-nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.page-nav select {
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  padding: 3px 6px;
+  background: #ffffff;
+}
+
+.btn.ghost {
+  padding: 4px 10px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+  cursor: pointer;
+  font-size: 1.3rem;
+}
+
+.btn.ghost:disabled,
+.btn.ghost[ng-disabled="true"] {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.page-no {
+  min-width: 40px;
+  text-align: center;
+}
+
+/* action cell chỉnh lại để dropdown bám theo */
+.action {
+  position: relative;
+}
+
+/* no data row */
+.no-data {
+  text-align: center;
+  padding: 16px;
+  color: #94a3b8;
+}
+
+/* ===== MODALS (overlay + card) ===== */
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.35);
+  z-index: 80;
+}
+
+.modal-root {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  z-index: 90;
+}
+
+/* card chung: cho phép scroll nếu content dài */
+.modal-card {
+  width: 720px;
+  max-height: calc(100vh - 80px);
+  background: #ffffff;
+  border-radius: 18px;
+  box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.35);
+  overflow-y: auto; /* <--- cho cuộn theo chiều dọc */
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* card bản in hóa đơn, hẹp hơn */
+.modal-card--narrow {
+  width: 560px;
+}
+
+.modal-header {
+  padding: 16px 24px;
+  border-bottom: 1px solid #e2e8f0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.modal-title {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.modal-title .icon {
+  width: 22px;
+  height: 22px;
+}
+
+.title-top {
+  margin: 0;
+  font-size: 1.2rem;
+  color: #64748b;
+}
+
+.title-main {
+  margin: 0;
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.title-sub {
+  margin: 0;
+  font-size: 1.2rem;
+  color: #94a3b8;
+}
+
+.modal-close {
+  border: none;
+  background: transparent;
+  font-size: 1.8rem;
+  cursor: pointer;
+  color: #94a3b8;
+}
+
+.modal-section {
+  padding: 12px 24px;
+}
+
+.modal-info-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px 40px;
+}
+
+.info-block .info-label {
+  margin: 0;
+  font-size: 1.2rem;
+  color: #94a3b8;
+}
+
+.info-block .info-value {
+  margin: 2px 0 0;
+  font-size: 1.4rem;
+  color: #0f172a;
+}
+
+.info-sub {
+  font-size: 1.2rem;
+  color: #94a3b8;
+}
+
+.info-value.link {
+  color: #0ea5e9;
+  cursor: pointer;
+}
+
+/* detail table */
+.detail-table-wrapper {
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  overflow: hidden;
+}
+
+.detail-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 1.3rem;
+}
+
+.detail-table thead {
+  background: #f8fafc;
+}
+
+.detail-table th,
+.detail-table td {
+  padding: 8px 12px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.detail-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.detail-table th {
+  text-align: left;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.detail-table td {
+  color: #0f172a;
+}
+
+.col-item {
+  max-width: 220px;
+}
+
+.line-discount {
+  display: block;
+  font-size: 1.2rem;
+  color: #ef4444;
+}
+
+/* totals */
+.modal-totals {
+  border-top: 1px solid #e2e8f0;
+  margin-top: 4px;
+  padding-top: 12px;
+}
+
+.totals-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.3rem;
+  color: #0f172a;
+  margin-bottom: 4px;
+}
+
+.totals-row--bold {
+  font-weight: 600;
+}
+
+.totals-row--highlight {
+  color: #16a34a;
+  font-weight: 600;
+}
+
+/* invoice specific */
+.invoice-header {
+  text-align: center;
+  padding: 16px 24px 8px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.store-name {
+  margin: 0;
+  font-size: 1.8rem;
+  font-weight: 600;
+}
+
+.store-sub {
+  margin: 4px 0 0;
+  font-size: 1.2rem;
+  color: #64748b;
+}
+
+.invoice-title {
+  text-align: center;
+  padding: 12px 24px 0;
+}
+
+.invoice-caption {
+  margin: 0;
+  font-size: 1.3rem;
+  color: #64748b;
+}
+
+.invoice-link {
+  margin: 4px 0 0;
+  font-size: 1.4rem;
+  color: #0ea5e9;
+  text-decoration: none;
+}
+
+.invoice-info-grid {
+  padding: 8px 24px 4px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px 40px;
+}
+
+/* KHUNG TABLE HÓA ĐƠN – cho scroll nếu nhiều items */
+.detail-table-wrapper.invoice-table {
+  margin: 12px 24px 0;
+  max-height: 260px; /* chỉnh theo ý nếu muốn cao hơn */
+  overflow-y: auto;
+}
+
+/* nếu có rule .invoice-table cũ phía trên thì rule này sẽ override */
+
+/* totals khu vực invoice */
+.invoice-totals {
+  padding-top: 8px;
+}
+
+.invoice-footnote {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #94a3b8;
+  margin: 8px 24px 12px;
+}
+
+.btn-print {
+  margin: 0 24px 20px;
+  width: calc(100% - 48px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 999px;
+  border: none;
+  padding: 10px 16px;
+  background: #0ea5e9;
+  color: #ffffff;
+  font-size: 1.4rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.btn-print .printer-icon {
+  width: 16px;
+  height: 16px;
+}
+
+/* ================== FIX INVOICE TABLE WIDTH ================== */
+
+/* Wrapper của bảng invoice: cho phép scroll ngang nếu bị tràn */
+.invoice-table {
+  margin: 12px 16px 0;
+  overflow-x: auto; /* nếu vẫn tràn -> xuất hiện thanh cuộn ngang */
+}
+
+/* Bảng bên trong: chia cột cố định + thu nhỏ padding, font */
+.invoice-table .detail-table {
+  table-layout: fixed; /* chia đều theo width đã set */
+  width: 100%;
+}
+
+/* Thu nhỏ padding + font cho invoice để đủ chỗ hiển thị */
+.invoice-table .detail-table th,
+.invoice-table .detail-table td {
+  padding: 4px 6px;
+  font-size: 1.2rem;
+}
+
+/* Chia tỉ lệ 4 cột: Item / Qty / Price / Total  */
+.invoice-table .detail-table th:nth-child(1),
+.invoice-table .detail-table td:nth-child(1) {
+  width: 55%; /* Item */
+}
+
+.invoice-table .detail-table th:nth-child(2),
+.invoice-table .detail-table td:nth-child(2) {
+  width: 10%; /* Qty */
+  text-align: center;
+}
+
+.invoice-table .detail-table th:nth-child(3),
+.invoice-table .detail-table td:nth-child(3),
+.invoice-table .detail-table th:nth-child(4),
+.invoice-table .detail-table td:nth-child(4) {
+  width: 17.5%; /* Price + Total */
+  text-align: right;
+}
+
+/* Tên hàng có thể xuống dòng, không bị đẩy rộng cả bảng */
+.invoice-table .col-item {
+  max-width: 100%;
+  white-space: normal;
+  word-break: break-word;
+}

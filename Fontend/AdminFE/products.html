@@ -1,374 +1,545 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+      rel="stylesheet"
+    />
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <!-- font -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
-    rel="stylesheet" />
+    <!-- css -->
+    <link rel="stylesheet" href="../Shared/css/product.css" />
+    <script src="../Shared/angular/angular.min.js"></script>
+    <script src="../Shared/angular/global.js"></script>
+    <script src="../Shared/angular/product.js"></script>
+    <script src="../Shared/angular/translation.js"></script>
 
-  <!-- css -->
-  <link rel="stylesheet" href="../Shared/css/product.css" />
-  <script src="../Shared/angular/angular.min.js"></script>
-  <script src="../Shared/angular/global.js"></script>
-  <script src="../Shared/angular/product.js"></script>
-  <!-- Thư viện ExcelJS và FileSaver -->
-<script src="https://cdn.jsdelivr.net/npm/exceljs@4.3.0/dist/exceljs.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    <!-- Thư viện ExcelJS và FileSaver -->
+    <script src="https://cdn.jsdelivr.net/npm/exceljs@4.3.0/dist/exceljs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 
+    <title>Products</title>
+  </head>
 
-
-
-  <title>Products</title>
-</head>
-
-<body ng-app="AppRetailPos" ng-controller="productCtrl">
-  <div class="app-content">
-    <div class="slide-bar">
-      <div class="slide-bar__header">
-        <div class="app-slideBar">
-          <div class="app-slideBar__left">
-            <img src="../Shared/img/common/wheel.svg" alt="" class="icon" />
+  <body ng-app="AppRetailPos" ng-controller="productCtrl">
+    <div class="app-content">
+      <div class="slide-bar">
+        <div class="slide-bar__header">
+          <div class="app-slideBar">
+            <div class="app-slideBar__left">
+              <img src="../Shared/img/common/wheel.svg" alt="" class="icon" />
+            </div>
+            <div class="app-slideBar__right">
+              <h1 class="name-app">RetailPro</h1>
+              <p class="title-nameApp">Inventory & POS</p>
+            </div>
           </div>
-          <div class="app-slideBar__right">
-            <h1 class="name-app">RetailPro</h1>
-            <p class="title-nameApp">Inventory & POS</p>
+        </div>
+        <div class="slide-bar__Content">
+          <p class="slide-bar__label">{{ t('NAVIGATION') }}</p>
+          <!-- menu button Dashboard -->
+          <a href="../AdminFE/dashboard.html" ng-if="canShow('dashboard')">
+            <div class="slide-bar__MenuButton">
+              <div class="MenuButton-left">
+                <img
+                  src="../Shared/img/common/dashboard.svg"
+                  alt=""
+                  class="icon"
+                />
+              </div>
+              <div class="MenuButton-right">
+                <p class="name-menu">{{ t('NAV_DASHBOARD') }}</p>
+              </div>
+            </div>
+          </a>
+          <!-- menu button POS -->
+          <a href="../AdminFE/pos.html" ng-if="canShow('pos')"
+            ><div class="slide-bar__MenuButton">
+              <div class="MenuButton-left">
+                <img src="../Shared/img/common/pos.svg" alt="" class="icon" />
+              </div>
+              <div class="MenuButton-right">
+                <p class="name-menu">{{ t('NAV_POS') }}</p>
+              </div>
+            </div>
+          </a>
+          <!-- menu button Products -->
+          <a href="../AdminFE/products.html" ng-if="canShow('products')">
+            <div class="slide-bar__MenuButton slide-bar__MenuButton--active">
+              <div class="MenuButton-left">
+                <img
+                  src="../Shared/img/common/product.svg"
+                  alt=""
+                  class="icon"
+                />
+              </div>
+              <div class="MenuButton-right">
+                <p class="name-menu-active">{{ t('NAV_PRODUCTS') }}</p>
+              </div>
+            </div>
+          </a>
+          <!-- menu button Categories -->
+          <a href="../AdminFE/categories.html" ng-if="canShow('categories')">
+            <div class="slide-bar__MenuButton">
+              <div class="MenuButton-left">
+                <img
+                  src="../Shared/img/common/category.svg"
+                  alt=""
+                  class="icon"
+                />
+              </div>
+              <div class="MenuButton-right">
+                <p class="name-menu">{{ t('NAV_CATEGORIES') }}</p>
+              </div>
+            </div>
+          </a>
+          <!-- menu button Promotions -->
+          <a href="../AdminFE/promotions.html" ng-if="canShow('promotions')">
+            <div class="slide-bar__MenuButton">
+              <div class="MenuButton-left">
+                <img
+                  src="../Shared/img/common/promotion.svg"
+                  alt=""
+                  class="icon"
+                />
+              </div>
+              <div class="MenuButton-right">
+                <p class="name-menu">{{ t('NAV_PROMOTIONS') }}</p>
+              </div>
+            </div>
+          </a>
+          <!-- menu button Customers -->
+          <a href="../AdminFE/customers.html" ng-if="canShow('customers')">
+            <div class="slide-bar__MenuButton">
+              <div class="MenuButton-left">
+                <img
+                  src="../Shared/img/common/customer.svg"
+                  alt=""
+                  class="icon"
+                />
+              </div>
+              <div class="MenuButton-right">
+                <p class="name-menu">{{ t('NAV_CUSTOMERS') }}</p>
+              </div>
+            </div>
+          </a>
+          <!-- menu button Suppliers -->
+          <a href="../AdminFE/suppliers.html" ng-if="canShow('suppliers')">
+            <div class="slide-bar__MenuButton">
+              <div class="MenuButton-left">
+                <img
+                  src="../Shared/img/common/supplier.svg"
+                  alt=""
+                  class="icon"
+                />
+              </div>
+              <div class="MenuButton-right">
+                <p class="name-menu">{{ t('NAV_SUPPLIERS') }}</p>
+              </div>
+            </div>
+          </a>
+          <!-- menu button Purchase Orders -->
+          <a
+            href="../AdminFE/purchaseorders.html"
+            ng-if="canShow('purchaseOrders')"
+          >
+            <div class="slide-bar__MenuButton">
+              <div class="MenuButton-left">
+                <img
+                  src="../Shared/img/common/purchaseorder.svg"
+                  alt=""
+                  class="icon"
+                />
+              </div>
+              <div class="MenuButton-right">
+                <p class="name-menu">{{ t('NAV_PURCHASE_ORDERS') }}</p>
+              </div>
+            </div>
+          </a>
+          <!-- menu button stock -->
+          <a href="../AdminFE/stockcard.html" ng-if="canShow('stock')">
+            <div class="slide-bar__MenuButton">
+              <div class="MenuButton-left">
+                <img src="../Shared/img/common/stock.svg" alt="" class="icon" />
+              </div>
+              <div class="MenuButton-right">
+                <p class="name-menu">{{ t('NAV_STOCK') }}</p>
+              </div>
+            </div>
+          </a>
+          <!-- menu button Goods Receipts -->
+          <a href="../AdminFE/goodsreceipts.html" ng-if="canShow('greceipts')">
+            <div class="slide-bar__MenuButton">
+              <div class="MenuButton-left">
+                <img
+                  src="../Shared/img/common/goodReceipt.svg"
+                  alt=""
+                  class="icon"
+                />
+              </div>
+              <div class="MenuButton-right">
+                <p class="name-menu">{{ t('GOODS_RECEIPTS') }}</p>
+              </div>
+            </div>
+          </a>
+          <!-- menu button Goods Issues -->
+          <a href="../AdminFE/goodsissues.html" ng-if="canShow('gissues')">
+            <div class="slide-bar__MenuButton">
+              <div class="MenuButton-left">
+                <img
+                  src="../Shared/img/common/goodIssues.svg"
+                  alt=""
+                  class="icon"
+                />
+              </div>
+              <div class="MenuButton-right">
+                <p class="name-menu">{{ t('GOODS_ISSUES') }}</p>
+              </div>
+            </div>
+          </a>
+          <!-- menu button Sales -->
+          <a href="../AdminFE/sales.html" ng-if="canShow('sales')">
+            <div class="slide-bar__MenuButton">
+              <div class="MenuButton-left">
+                <img src="../Shared/img/common/sales.svg" alt="" class="icon" />
+              </div>
+              <div class="MenuButton-right">
+                <p class="name-menu">{{ t('NAV_SALES') }}</p>
+              </div>
+            </div>
+          </a>
+          <!-- menu button Returns -->
+          <a href="../AdminFE/returns.html" ng-if="canShow('returns')">
+            <div class="slide-bar__MenuButton">
+              <div class="MenuButton-left">
+                <img
+                  src="../Shared/img/common/return.svg"
+                  alt=""
+                  class="icon"
+                />
+              </div>
+              <div class="MenuButton-right">
+                <p class="name-menu">{{ t('NAV_RETURNS') }}</p>
+              </div>
+            </div>
+          </a>
+          <!-- menu button Payments & Debts -->
+          <a href="../AdminFE/payments.html" ng-if="canShow('payments')">
+            <div class="slide-bar__MenuButton">
+              <div class="MenuButton-left">
+                <img
+                  src="../Shared/img/common/payments.svg"
+                  alt=""
+                  class="icon"
+                />
+              </div>
+              <div class="MenuButton-right">
+                <p class="name-menu">{{ t('NAV_PAYMENTS') }}</p>
+              </div>
+            </div>
+          </a>
+          <!-- menu button Reports -->
+          <a href="../AdminFE/reports.html" ng-if="canShow('reports')">
+            <div class="slide-bar__MenuButton">
+              <div class="MenuButton-left">
+                <img
+                  src="../Shared/img/common/report.svg"
+                  alt=""
+                  class="icon"
+                />
+              </div>
+              <div class="MenuButton-right">
+                <p class="name-menu">{{ t('NAV_REPORTS') }}</p>
+              </div>
+            </div>
+          </a>
+          <!-- menu button Audit Log -->
+          <a href="../AdminFE/auditlog.html" ng-if="canShow('auditLog')">
+            <div class="slide-bar__MenuButton">
+              <div class="MenuButton-left">
+                <img
+                  src="../Shared/img/common/auditlog.svg"
+                  alt=""
+                  class="icon"
+                />
+              </div>
+              <div class="MenuButton-right">
+                <p class="name-menu">{{ t('NAV_AUDIT_LOG') }}</p>
+              </div>
+            </div>
+          </a>
+          <!-- menu button Users -->
+          <a href="../AdminFE/users.html" ng-if="canShow('users')">
+            <div class="slide-bar__MenuButton">
+              <div class="MenuButton-left">
+                <img src="../Shared/img/common/user.svg" alt="" class="icon" />
+              </div>
+              <div class="MenuButton-right">
+                <p class="name-menu">{{ t('NAV_USERS') }}</p>
+              </div>
+            </div>
+          </a>
+          <!-- menu button Settings -->
+          <a href="../AdminFE/settings.html" ng-if="canShow('settings')">
+            <div class="slide-bar__MenuButton">
+              <div class="MenuButton-left">
+                <img
+                  src="../Shared/img/common/setting.svg"
+                  alt=""
+                  class="icon"
+                />
+              </div>
+              <div class="MenuButton-right">
+                <p class="name-menu">{{ t('NAV_SETTINGS') }}</p>
+              </div>
+            </div>
+          </a>
+        </div>
+        <div class="slide-bar__footer">
+          <div class="app-slide-bar">
+            <div class="ava">
+              <img class="ava" src="../Shared/img/common/ava.svg" alt="" />
+            </div>
+            <div class="info">
+              <p class="name">{{currentUser.fullname}}</p>
+              <p class="role">{{currentUser.role}}</p>
+            </div>
           </div>
         </div>
       </div>
-      <div class="slide-bar__Content">
-        <p class="slide-bar__label">Navigation</p>
-        <!-- menu button 1 -->
-        <a href="../AdminFE/dashboard.html" ng-if="canShow('dashboard')"></a>
-        <div class="slide-bar__MenuButton">
-          <div class="MenuButton-left">
-            <img src="../Shared/img/common/dashboard.svg" alt="" class="icon" />
+
+      <div class="app-layout">
+        <div class="top-bar">
+          <div class="top-bar__content">
+            <div class="top-bar__left">
+              <img src="../Shared/img/common/search.svg" alt="" class="icon" />
+              <input
+                class="search"
+                type="text"
+                placeholder="Search by product name"
+                ng-model="searchProduct"
+              />
+            </div>
+            <div class="top-bar__right">
+              <p class="role">{{currentUser.role}}</p>
+              <img
+                src="../Shared/img/common/ava.svg"
+                alt=""
+                class="ava"
+                id="avatar"
+              />
+            </div>
           </div>
-          <div class="MenuButton-right">
-            <p class="name-menu">Dashboard</p>
+          <div class="top-bar__info" id="information">
+            <div class="info-top">
+              <p class="name">{{currentUser.fullname}}</p>
+              <p class="email">{{currentUser.email}}</p>
+            </div>
+            <div class="info-mid">
+              <a href="#!"><p class="set">Profile Settings</p></a>
+            </div>
+            <div class="info-bottom">
+              <img
+                src="../Shared/img/categories/logout.svg"
+                alt=""
+                class="icon"
+              />
+              <a href="../AuthFE/login.html"><p class="logout">Logout</p></a>
+            </div>
           </div>
         </div>
-        </a>
-        <!-- menu button 2 -->
-        <a href="../AdminFE/pos.html" ng-if="canShow('pos')">
-          <div class="slide-bar__MenuButton">
-            <div class="MenuButton-left">
-              <img src="../Shared/img/common/pos.svg" alt="" class="icon" />
+
+        <div class="app-layout-content">
+          <h1 class="name-menu">{{ t('PRODUCT') }}</h1>
+          <p class="desc">{{ t('PRODUCT_DESC') }}</p>
+          <div class="display-container">
+            <div class="total farme">
+              <p class="name-display">{{ t('TOTAL_PRODUCTS') }}</p>
+              <p class="data">{{stats.total}}</p>
             </div>
-            <div class="MenuButton-right">
-              <p class="name-menu">POS</p>
+            <div class="avg farme">
+              <p class="name-display">{{ t('IN_STOCK') }}</p>
+              <p class="data">{{stats.instock}}</p>
             </div>
-          </div>
-        </a>
-        <!-- menu button 3 -->
-        <a href="../AdminFE/product.html" ng-if="canShow('products')">
-          <div class="slide-bar__MenuButton slide-bar__MenuButton--active">
-            <div class="MenuButton-left">
-              <img src="../Shared/img/common/product.svg" alt="" class="icon" />
-            </div>
-            <div class="MenuButton-right">
-              <p class="name-menu-active">Products</p>
+            <div class="most-common farme">
+              <p class="name-display">{{ t('OUT_STOCK') }}</p>
+              <p class="data">{{stats.outstock}}</p>
             </div>
           </div>
-        </a>
-        <!-- menu button 4 -->
-        <a href="../AdminFE/categories.html" ng-if="canShow('categories')">
-          <div class="slide-bar__MenuButton ">
-            <div class="MenuButton-left">
-              <img src="../Shared/img/common/category.svg" alt="" class="icon" />
+          <div class="control">
+            <div class="control-left">
+              <img src="../Shared/img/common/search.svg" alt="" class="icon" />
+              <input
+                class="search"
+                type="text"
+                placeholder="Search by SKU"
+                ng-model="searchSKU"
+              />
             </div>
-            <div class="MenuButton-right">
-              <p class="name-menu">Categories</p>
+            <!-- phân trang -->
+            <div class="pager" ng-if="pager.total>0">
+              <div class="pager-info">
+                {{ t('PAGING_SHOWING') }}
+                {{((pager.page-1)*pager.size)+1}}-{{Math.min(pager.page*pager.size,pager.total)}}
+                {{ t('PAGING_OF') }} {{pager.total}} {{ t('PAGING_ITEMS') }}
+              </div>
+              <div class="page-nav">
+                <label>
+                  {{ t('PAGING_PAGE_SIZE') }}:
+                  <select ng-model="pager.size" ng-change="changeSize()">
+                    <option value="0">{{ t('PAGING_ALL') }}</option>
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                    <option value="30">30</option>
+                  </select>
+                </label>
+                <button
+                  class="btn ghost"
+                  ng-disabled="pager.page === 1"
+                  ng-click="go(1)"
+                >
+                  «
+                </button>
+                <button
+                  class="btn ghost"
+                  ng-disabled="pager.page === 1"
+                  ng-click="go(pager.page-1)"
+                >
+                  {{ t('PAGING_PREV') }}
+                </button>
+                <span class="page-no"></span>
+                <button
+                  class="btn ghost"
+                  ng-disabled="pager.page >= pager.pages"
+                  ng-click="go(pager.page+1)"
+                >
+                  {{ t('PAGING_NEXT') }}
+                </button>
+                <button
+                  class="btn ghost"
+                  ng-disabled="pager.page >= pager.pages"
+                  ng-click="go(pager.pages)"
+                >
+                  »
+                </button>
+              </div>
             </div>
-          </div>
-        </a>
-        <!-- menu button 5 -->
-        <a href="../AdminFE/customers.html" ng-if="canShow('customers')">
-          <div class="slide-bar__MenuButton">
-            <div class="MenuButton-left">
-              <img src="../Shared/img/common/customer.svg" alt="" class="icon" />
-            </div>
-            <div class="MenuButton-right">
-              <p class="name-menu">Customers</p>
-            </div>
-          </div>
-        </a>
-        <!-- menu button 6 -->
-        <a href="../AdminFE/suppliers.html" ng-if="canShow('suppliers')"></a>
-        <div class="slide-bar__MenuButton">
-          <div class="MenuButton-left">
-            <img src="../Shared/img/common/supplier.svg" alt="" class="icon" />
-          </div>
-          <div class="MenuButton-right">
-            <p class="name-menu">Suppliers</p>
-          </div>
-        </div>
-        </a>
-        <!-- menu button 7 -->
-        <a href="../AdminFE/purchaseorders.html" ng-if="canShow('purchaseOrders')">
-          <div class="slide-bar__MenuButton">
-            <div class="MenuButton-left">
-              <img src="../Shared/img/common/purchaseorder.svg" alt="" class="icon" />
-            </div>
-            <div class="MenuButton-right">
-              <p class="name-menu">Purchase Orders</p>
-            </div>
-          </div>
-        </a>
-        <!-- menu button 8 -->
-        <a href="../AdminFE/stockcard.html" ng-if="canShow('stock')">
-          <div class="slide-bar__MenuButton">
-            <div class="MenuButton-left">
-              <img src="../Shared/img/common/stock.svg" alt="" class="icon" />
-            </div>
-            <div class="MenuButton-right">
-              <p class="name-menu">Stock Management</p>
-            </div>
-          </div>
-        </a>
-        <!-- menu button 9 -->
-        <a href="../AdminFE/sales.html" ng-if="canShow('sales')">
-          <div class="slide-bar__MenuButton">
-            <div class="MenuButton-left">
-              <img src="../Shared/img/common/sales.svg" alt="" class="icon" />
-            </div>
-            <div class="MenuButton-right">
-              <p class="name-menu">Sales</p>
-            </div>
-          </div>
-        </a>
-        <!-- menu button 10 -->
-        <a href="../AdminFE/returns.html" ng-if="canShow('returns')">
-          <div class="slide-bar__MenuButton">
-            <div class="MenuButton-left">
-              <img src="../Shared/img/common/return.svg" alt="" class="icon" />
-            </div>
-            <div class="MenuButton-right">
-              <p class="name-menu">Returns</p>
-            </div>
-          </div>
-        </a>
-        <!-- menu button 11 -->
-        <a href="../AdminFE/payments.html" ng-if="canShow('returns')">
-          <div class="slide-bar__MenuButton">
-            <div class="MenuButton-left">
-              <img src="../Shared/img/common/payments.svg" alt="" class="icon" />
-            </div>
-            <div class="MenuButton-right">
-              <p class="name-menu">Payments & Debts</p>
-            </div>
-          </div>
-        </a>
-        <!-- menu button 12 -->
-        <a href="../AdminFE/reports.html" ng-if="canShow('reports')">
-          <div class="slide-bar__MenuButton">
-            <div class="MenuButton-left">
-              <img src="../Shared/img/common/report.svg" alt="" class="icon" />
-            </div>
-            <div class="MenuButton-right">
-              <p class="name-menu">Reports</p>
-            </div>
-          </div>
-        </a>
-        <!-- menu button 13 -->
-        <a href="../AdminFE/auditlog.html" ng-if="canShow('auditLog')"></a>
-        <div class="slide-bar__MenuButton">
-          <div class="MenuButton-left">
-            <img src="../Shared/img/common/auditlog.svg" alt="" class="icon" />
-          </div>
-          <div class="MenuButton-right">
-            <p class="name-menu">Audit Log</p>
-          </div>
-        </div>
-        </a>
-        <!-- menu button 14 -->
-        <a href="../AdminFE/users.html" ng-if="canShow('users')">
-          <div class="slide-bar__MenuButton">
-            <div class="MenuButton-left">
-              <img src="../Shared/img/common/user.svg" alt="" class="icon" />
-            </div>
-            <div class="MenuButton-right">
-              <p class="name-menu">Users</p>
-            </div>
-          </div>
-        </a>
-        <!-- menu button 15 -->
-        <a href="../AdminFE/settings.html" ng-if="canShow('settings')">
-          <div class="slide-bar__MenuButton">
-            <div class="MenuButton-left">
-              <img src="../Shared/img/common/setting.svg" alt="" class="icon" />
-            </div>
-            <div class="MenuButton-right">
-              <p class="name-menu">Settings</p>
-            </div>
-          </div>
-        </a>
-      </div>
-      <div class="slide-bar__footer">
-        <div class="app-slide-bar">
-          <div class="ava">
-            <img class="ava" src="../Shared/img/common/ava.svg" alt="" />
-          </div>
-          <div class="info">
-            <p class="name">{{currentUser.fullname}}</p>
-            <p class="role">{{currentUser.role}}</p>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="app-layout">
-      <div class="top-bar">
-        <div class="top-bar__content">
-          <div class="top-bar__left">
-            <img src="../Shared/img/common/search.svg" alt="" class="icon" />
-            <input class="search" type="text" placeholder="Search by product name" ng-model="searchProduct" />
-          </div>
-          <div class="top-bar__right">
-            <p class="role">admin</p>
-            <img src="../Shared/img/common/ava.svg" alt="" class="ava" id="avatar" />
-          </div>
-        </div>
-        <div class="top-bar__info" id="information">
-          <div class="info-top">
-            <p class="name">John Doe</p>
-            <p class="email">john@company.com</p>
-          </div>
-          <div class="info-mid">
-            <a href="#!">
-              <p class="set">Profile Settings</p>
-            </a>
-          </div>
-          <div class="info-bottom">
-            <img src="" alt="" class="icon" />
-            <a href="../AuthFE/login.html">
-              <p class="logout">Logout</p>
-            </a>
-          </div>
-        </div>
-      </div>
+            <div class="control-right">
+              <!-- <div class="import" ng-click="triggerImportFile()">
+                <img
+                  src="../Shared/img/common/import.svg"
+                  alt=""
+                  class="icon"
+                />
+              </div>
+              
 
 
-      <div class="app-layout-content">
-        <h1 class="name-menu">Product </h1>
-        <p class="desc">
-          Manage product inventory and pricing
-        </p>
-        <div class="display-container">
-          <div class="total farme">
-            <p class="name-display">Total Products</p>
-            <p class="data">{{stats.total}}</p>
-          </div>
-          <div class="avg farme">
-            <p class="name-display">In stock</p>
-            <p class="data">{{stats.instock}}</p>
-          </div>
-          <div class="most-common farme">
-            <p class="name-display">Out of Stock</p>
-            <p class="data">{{stats.outstock}}</p>
-          </div>
-        </div>
-        <div class="control">
-          <div class="control-left">
-            <img src="../Shared/img/common/search.svg" alt="" class="icon" />
-            <input class="search" type="text" placeholder="Search by SKU" ng-model="searchSKU" />
-          </div>
-          <!-- phân trang -->
-          <div class="pager" ng-if="pager.total>0">
-            <div class="pager-info">
-              Showing
-              {{((pager.page-1)*pager.size)+1}}-{{Math.min(pager.page*pager.size,pager.total)}}
-              of {{pager.total}} items
-            </div>
-            <div class="page-nav">
-              <label>
-                Page size:
-                <select ng-model="pager.size" ng-change="changeSize()">
-                  <option value="0">ALL</option>
-                  <option value="10">10</option>
-                  <option value="20">20</option>
-                  <option value="30">30</option>
-                </select>
-              </label>
-              <button class="btn ghost" ng-disabled="pager.page === 1" ng-click="go(1)">
-                «
-              </button>
-              <button class="btn ghost" ng-disabled="pager.page === 1" ng-click="go(pager.page-1)">
-                Prev
-              </button>
-              <span class="page-no"></span>
-              <button class="btn ghost" ng-disabled="pager.page >= pager.pages" ng-click="go(pager.page+1)">
-                Next
-              </button>
-              <button class="btn ghost" ng-disabled="pager.page >= pager.pages" ng-click="go(pager.pages)">
-                »
-              </button>
+              <input 
+    type="file"
+    id="fileImport"
+    accept=".xlsx,.xls"
+    style="display:none"
+    onchange="angular.element(this).scope().handleImportFile(this)"
+> -->
+
+              {{ t('PRICE_FROM') }}
+              <div class="control-left">
+                <input
+                  class="searchPrice"
+                  type="number"
+                  placeholder="{{ t('MIN_PRICE_PLACEHOLDER') }}"
+                  ng-model="MinPrice"
+                />
+              </div>
+              {{ t('PRICE_TO') }}
+              <div class="control-left">
+                <input
+                  class="searchPrice"
+                  type="number"
+                  placeholder="{{ t('MAX_PRICE_PLACEHOLDER') }}"
+                  ng-model="MaxPrice"
+                />
+              </div>
+
+              <div class="export" ng-click="exportExcel()">
+                <img
+                  src="../Shared/img/common/export.svg"
+                  alt=""
+                  class="icon"
+                />
+              </div>
+
+              <div class="add" id="btnOpenAdd">
+                <img src="../Shared/img/common/plus.svg" alt="" class="plus" />
+                <p class="add-product">{{ t('ADD_PRODUCT') }}</p>
+              </div>
             </div>
           </div>
-          <div class="control-right">
+          <!-- table -->
+          <div class="card">
+            <div class="table-responsive">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th class="id">{{ t('TB_ID') }}</th>
+                    <th class="name">{{ t('TB_PRODUCT_NAME') }}</th>
+                    <th class="sku">{{ t('TB_SKU') }}</th>
+                    <th class="barcode">{{ t('TB_BARCODE') }}</th>
+                    <th class="categoryid">{{ t('TB_CATEGORY_ID') }}</th>
+                    <th class="unitprice">{{ t('TB_PRICE') }}</th>
+                    <th class="unit">{{ t('TB_UNIT') }}</th>
+                    <th class="minstock">{{ t('TB_MIN_STOCK') }}</th>
+                    <th class="qty">{{ t('TB_QUANTITY') }}</th>
+                    <th class="vat">{{ t('TB_VAT_RATE') }}</th>
+                    <th class="status">{{ t('TB_STATUS') }}</th>
+                    <th class="img">{{ t('TB_IMAGE') }}</th>
+                    <th class="action txt-right">{{ t('ACTIONS') }}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="p in products" style="font-weight: 600">
+                    <td>{{p.productID}}</td>
+                    <td>{{p.productName}}</td>
+                    <td>{{p.sku}}</td>
+                    <td>{{p.barcode}}</td>
+                    <td><span class="stock">{{p.categoryID}}</span></td>
+                    <td>{{p.unitPrice}}</td>
+                    <td>{{p.unit}}</td>
+                    <td>{{p.minStock}}</td>
 
-            <div class="export" ng-click="exportExcel()">
-              <img src="../Shared/img/common/export.svg" alt="" class="icon" />
-            </div>
-            <div class="add" id="btnOpenAdd">
-              <img src="../Shared/img/common/plus.svg" alt="" class="plus" />
-              <p class="add-product">Add Product</p>
-            </div>
-          </div>
-        </div>
-        <!-- table -->
-        <div class="card">
-          <div class="table-responsive">
-            <table class="table">
-              <thead>
-                <tr>
-                  <th class="id">ID</th>
-                  <th class="name">Product Name</th>
-                  <th class="sku">SKU</th>
-                  <th class="barcode">Barcode</th>
-                  <th class="categoryid">CategoryID</th>
-                  <th class="unitprice">Price</th>
-                  <th class="unit">Unit</th>
-                  <th class="minstock">MinStock</th>
-                  <th class="qty">Quantity</th>
-                  <th class="vat">VAT Rate</th>
-                  <th class="status">Status</th>
-                  <th class="img">Image</th>
-                  <th class="action txt-right">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr ng-repeat="p in products" style="font-weight: 600;">
-                  <td>{{p.productID}}</td>
-                  <td>{{p.productName}}</td>
-                  <td>{{p.sku}}</td>
-                  <td>{{p.barcode}}</td>
-                  <td><span class="stock">{{p.categoryID}}</span></td>
-                  <td>{{p.unitPrice}}</td>
-                  <td>{{p.unit}}</td>
-                  <td>{{p.minStock}}</td>
+                    <td>
+                      <span
+                        class="stock"
+                        ng-class="p.quantity > p.minStock ? 'good' : 'low'"
+                      >
+                        {{p.quantity}}
+                      </span>
+                    </td>
 
-                  <td>
-                    <span class="stock" ng-class="p.quantity > p.minStock ? 'good' : 'low'">
-                      {{p.quantity}}
-                    </span>
-                  </td>
+                    <td>{{p.vatRate}}%</td>
 
-                  <td>{{p.vatRate}}%</td>
+                    <td>
+                      <span
+                        class="stock"
+                        ng-class="p.status === 'Active' ? 'good' : 'low'"
+                      >
+                        {{p.status}}
+                      </span>
+                    </td>
 
-                  <td>
-                    <span class="stock" ng-class="p.status === 'Active' ? 'good' : 'low'">
-                      {{p.status}}
-                    </span>
-                  </td>
-
-                  <!-- ✅ Hiển thị ảnh sản phẩm -->
-                  <td style="text-align:center;">
-                    <img ng-if="p.image" ng-src="{{p.image}}" alt="Product Image" ng-click="openImageModal(p.image)"
-                      style="
+                    <!-- ✅ Hiển thị ảnh sản phẩm -->
+                    <td style="text-align: center">
+                      <img
+                        ng-if="p.image"
+                        ng-src="{{p.image}}"
+                        alt="Product Image"
+                        ng-click="openImageModal(p.image)"
+                        style="
                           width: 60px;
                           height: 60px;
                           border-radius: 6px;
@@ -377,227 +548,368 @@
                           background-color: #f8f8f8;
                           padding: 2px;
                           cursor: zoom-in;
-                        " onerror="this.src='assets/img/no-image.png'; this.onerror=null;" />
-                    <span ng-if="!p.image" style="color: #999;">No image</span>
-                  </td>
+                        "
+                        onerror="this.src='assets/img/no-image.png'; this.onerror=null;"
+                      />
+                      <span ng-if="!p.image" style="color: #999"
+                        >{{ t('NAV_SETTINGS') }}</span
+                      >
+                    </td>
 
-                  <td class="txt-right">
-                    <button class="link" ng-click="edit(p)">✎</button>
-                    <button class="link danger" ng-click="remove(p)">🗑</button>
-                  </td>
-                </tr>
+                    <td class="txt-right">
+                      <button class="link" ng-click="edit(p)">✎</button>
+                      <button class="link danger" ng-click="remove(p)">
+                        🗑
+                      </button>
+                    </td>
+                  </tr>
 
-
-                <!-- <tr
+                  <!-- <tr
                     ng-if="(categories | filter:searchCategories | filter:searchVAT).length == 0"
                   >
                     <td colspan="5" class="empty">No Data</td>
                   </tr> -->
 
-                <tr ng-if="!products || products.length === 0">
-                  <td colspan="11" class="empty">No Data</td>
-                </tr>
-
-              </tbody>
-            </table>
-          </div>
-        </div>
-        <!-- form -->
-        <div class="form">
-          <!-- add -->
-          <!-- ========== IMAGE VIEWER MODAL ========== -->
-          <div class="image-viewer" ng-if="showImageModal" ng-click="closeImageModal($event)">
-            <div class="image-viewer__content">
-              <img ng-src="{{selectedImage}}" alt="Full Image">
+                  <tr ng-if="!products || products.length === 0">
+                    <td colspan="11" class="empty">{{ t('NO_DATA') }}</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
+          <!-- form -->
+          <div class="form">
+            <!-- add -->
+            <!-- ========== IMAGE VIEWER MODAL ========== -->
+            <div
+              class="image-viewer"
+              ng-if="showImageModal"
+              ng-click="closeImageModal($event)"
+            >
+              <div class="image-viewer__content">
+                <img ng-src="{{selectedImage}}" alt="Full Image" />
+              </div>
+            </div>
 
-          <div class="form-add">
-            <div class="form-add__content">
-              <h3 class="title">Add Product</h3>
-              <p class="desc">Create a new product </p>
-              <form name="frmAdd" ng-submit="add()">
+            <div class="form-add">
+              <div class="form-add__content">
+                <h3 class="title">{{ t('ADD_TITLE') }}</h3>
+                <p class="desc">{{ t('ADD_DESC') }}</p>
+                <form name="frmAdd" ng-submit="add()">
+                  <!-- Cột trái -->
+                  <div>
+                    <label for="name-add">{{ t('LABEL_PRODUCT_NAME') }}*</label>
+                    <input
+                      type="text"
+                      id="name-add"
+                      required
+                      ng-model="newProduct.productName"
+                    />
 
-                <!-- Cột trái -->
-                <div>
-                  <label for="name-add">Product Name *</label>
-                  <input type="text" id="name-add" required placeholder="Enter product name"
-                    ng-model="newProduct.productName" />
+                    <label for="sku-add">{{ t('LABEL_SKU') }}*</label>
+                    <input
+                      type="text"
+                      id="sku-add"
+                      required
+                      ng-model="newProduct.sku"
+                    />
 
-                  <label for="sku-add">SKU*</label>
-                  <input type="text" id="sku-add" required placeholder="Enter SKU" ng-model="newProduct.sku" />
+                    <label for="barcode-add">{{ t('LABEL_BARCODE') }}*</label>
+                    <div style="display: flex; gap: 10px">
+                      <input
+                        type="text"
+                        id="barcode-add"
+                        required
+                        ng-model="newProduct.barcode"
+                      />
 
-                  <label for="barcode-add">Barcode*</label>
-                  <input type="text" id="barcode-add" required placeholder="Enter Barcode"
-                    ng-model="newProduct.barcode" />
+                      <button
+                        type="button"
+                        class="btn small"
+                        ng-click="generateBarcode()"
+                      >
+                        ↻
+                      </button>
+                    </div>
 
-                  <label for="unitprice-add">Price*</label>
-                  <input type="text" id="unitprice-add" placeholder="Enter " ng-model="newProduct.unitPrice" />
+                    <label for="unitprice-add">{{ t('LABEL_PRICE') }}*</label>
+                    <input
+                      type="text"
+                      id="unitprice-add"
+                      ng-model="newProduct.unitPrice"
+                    />
 
+                    <label for="unit-add">{{ t('LABEL_UNIT') }}</label>
+                    <input
+                      type="text"
+                      id="unit-add"
+                      ng-model="newProduct.unit"
+                    />
 
-                  <label for="unit-add">Unit</label>
-                  <input type="text" id="unit-add" placeholder="Enter Unit" ng-model="newProduct.unit" />
+                    <label for="vat-add">{{ t('LABEL_VAT_RATE') }}(%)</label>
+                    <input
+                      type="number"
+                      id="vat-add"
+                      placeholder="0.00"
+                      ng-model="newProduct.vatRate"
+                      min="0"
+                      step="0.01"
+                    />
+                  </div>
 
-                  <label for="vat-add">VAT Rate(%)</label>
-                  <input type="number" id="vat-add" placeholder="0.00" ng-model="newProduct.vatRate" min="0"
-                    step="0.01" />
-                  <label class="standard">
-                    Standard VAT rates: 10% (most products), 9% (special items)
-                  </label>
-                </div>
+                  <!-- Cột phải -->
+                  <div>
+                    <label for="categoryid-add"
+                      >{{ t('LABEL_CATEGORY') }}*</label
+                    >
+                    <select
+                      id="categoryid-add"
+                      required
+                      ng-model="newProduct.categoryID"
+                      ng-options="c.categoryID as c.categoryName for c in categories"
+                    >
+                      <option value="">{{ t('PH_SELECT_CATEGORY') }}</option>
+                    </select>
 
-                <!-- Cột phải -->
-                <div>
-                  <label for="categoryid-add">CategoryName*</label>
-                  <select id="categoryid-add" required ng-model="newProduct.categoryID"
-                    ng-options="c.categoryID as c.categoryName for c in categories">
-                    <option value="">Select Category</option>
-                  </select>
+                    <label for="minstock-add">{{ t('LABEL_MIN_STOCK') }}</label>
+                    <input
+                      type="number"
+                      id="minstock-add"
+                      ng-model="newProduct.minStock"
+                      min="0"
+                      step="1"
+                    />
 
-                  <label for="minstock-add">MinStock</label>
-                  <input type="number" id="minstock-add" placeholder="Enter MinStock" ng-model="newProduct.minStock"
-                    min="0" step="1" />
+                    <label for="quantity-add">{{ t('LABEL_QUANTITY') }}</label>
+                    <input
+                      type="number"
+                      id="quantity-add"
+                      ng-model="newProduct.quantity"
+                      min="0"
+                      step="1"
+                    />
 
-                  <label for="quantity-add">Quantity</label>
-                  <input type="number" id="quantity-add" placeholder="Enter Quantity" ng-model="newProduct.quantity"
-                    min="0" step="1" />
+                    <label for="status-add">{{ t('LABEL_STATUS') }}</label>
+                    <select id="status-add" ng-model="newProduct.status">
+                      <option value="Active">{{ t('STATUS_ACTIVE') }}</option>
+                      <option value="Inactive">
+                        {{ t('STATUS_INACTIVE') }}
+                      </option>
+                    </select>
 
-                  <label for="status-add">Status</label>
-                  <select id="status-add" ng-model="newProduct.status">
-                    <option value="Active">Active</option>
-                    <option value="Inactive">Inactive</option>
-                  </select>
+                    <label for="imageInputAdd">{{ t('LABEL_IMAGE') }}</label>
+                    <input
+                      type="file"
+                      id="imageInputAdd"
+                      accept="image/*"
+                      onchange="angular.element(this).scope().previewImageAdd(this)"
+                    />
+                    <img
+                      id="previewAdd"
+                      style="
+                        width: 60px;
+                        height: 60px;
+                        margin-top: 5px;
+                        border-radius: 6px;
+                      "
+                      ng-if="newProduct.image"
+                      ng-src="{{newProduct.image}}"
+                    />
+                  </div>
 
-                  <label for="imageInputAdd">Image</label>
-                  <input type="file" id="imageInputAdd" accept="image/*"
-                    onchange="angular.element(this).scope().previewImageAdd(this)">
-                  <img id="previewAdd" style="width:60px;height:60px;margin-top:5px;border-radius:6px;"
-                    ng-if="newProduct.image" ng-src="{{newProduct.image}}" />
+                  <!-- Footer -->
+                  <div class="dialog-footer">
+                    <button type="button" class="cancel">
+                      {{ t('BTN_CANCEL') }}
+                    </button>
+                    <input
+                      class="submit"
+                      type="submit"
+                      value="{{ t('BTN_ADD_PRODUCT') }}"
+                      ng-disabled="frmAdd.$invalid||savingAdd"
+                    />
+                  </div>
+                </form>
+              </div>
+            </div>
+            <!-- edit -->
 
-                </div>
+            <!-- =================== FORM EDIT =================== -->
+            <div class="form-edit">
+              <div class="form-edit__content">
+                <h3 class="title">{{ t('EDIT_TITLE') }}</h3>
+                <p class="desc">{{ t('EDIT_DESC') }}</p>
 
-                <!-- Footer -->
+                <form name="frmEdit" ng-submit="updateProduct()">
+                  <!-- ===== Cột trái ===== -->
+                  <div>
+                    <label for="name-edit"
+                      >{{ t('LABEL_PRODUCT_NAME') }}*</label
+                    >
+                    <input
+                      type="text"
+                      id="name-edit"
+                      required
+                      ng-model="editingProduct.productName"
+                    />
+
+                    <label for="sku-edit">{{ t('LABEL_SKU') }}*</label>
+                    <input
+                      type="text"
+                      id="sku-edit"
+                      required
+                      ng-model="editingProduct.sku"
+                    />
+
+                    <label for="barcode-edit">{{ t('LABEL_BARCODE') }}*</label>
+                    <input
+                      type="text"
+                      id="barcode-edit"
+                      required
+                      ng-model="editingProduct.barcode"
+                    />
+
+                    <label for="unit-edit">{{ t('LABEL_UNIT') }}</label>
+                    <input
+                      type="text"
+                      id="unit-edit"
+                      ng-model="editingProduct.unit"
+                    />
+
+                    <label for="unitprice-edit">{{ t('LABEL_PRICE') }}*</label>
+                    <input
+                      type="number"
+                      id="unitprice-edit"
+                      ng-model="editingProduct.unitPrice"
+                      min="0"
+                      step="1000"
+                    />
+
+                    <label for="vat-edit">{{ t('LABEL_VAT_RATE') }}(%)</label>
+                    <input
+                      type="number"
+                      id="vat-edit"
+                      placeholder="0.00"
+                      ng-model="editingProduct.vatRate"
+                      min="0"
+                      step="0.01"
+                    />
+                  </div>
+
+                  <!-- ===== Cột phải ===== -->
+                  <div>
+                    <label for="categoryid-edit"
+                      >{{ t('LABEL_CATEGORY') }}*</label
+                    >
+                    <select
+                      id="categoryid-edit"
+                      ng-model="editingProduct.categoryID"
+                      ng-options="c.categoryID as c.categoryName for c in categories"
+                      required
+                    >
+                      <option value="">{{ t('PH_SELECT_CATEGORY') }}</option>
+                    </select>
+
+                    <label for="minstock-edit"
+                      >{{ t('LABEL_MIN_STOCK') }}</label
+                    >
+                    <input
+                      type="number"
+                      id="minstock-edit"
+                      ng-model="editingProduct.minStock"
+                      min="0"
+                      step="1"
+                    />
+
+                    <label for="quantity-edit">{{ t('LABEL_QUANTITY') }}</label>
+                    <input
+                      type="number"
+                      id="quantity-edit"
+                      ng-model="editingProduct.quantity"
+                      min="0"
+                      step="1"
+                    />
+
+                    <label for="status-edit">{{ t('LABEL_STATUS') }}</label>
+                    <select id="status-edit" ng-model="editingProduct.status">
+                      <option value="Active">{{ t('STATUS_ACTIVE') }}</option>
+                      <option value="Inactive">
+                        {{ t('STATUS_INACTIVE') }}
+                      </option>
+                    </select>
+
+                    <label for="imageInputEdit">{{ t('LABEL_IMAGE') }}</label>
+                    <input
+                      type="file"
+                      id="imageInputEdit"
+                      accept="image/*"
+                      onchange="angular.element(this).scope().previewImageEdit(this)"
+                    />
+                    <img
+                      id="previewEdit"
+                      style="
+                        width: 60px;
+                        height: 60px;
+                        margin-top: 5px;
+                        border-radius: 6px;
+                      "
+                      ng-if="editingProduct.image"
+                      ng-src="{{editingProduct.image}}"
+                    />
+                  </div>
+
+                  <!-- ===== Footer ===== -->
+                  <div class="dialog-footer">
+                    <button type="button" class="cancel">
+                      {{ t('BTN_CANCEL') }}
+                    </button>
+                    <input
+                      class="submit"
+                      type="submit"
+                      value="{{ t('BTN_UPDATE_PRODUCT') }}"
+                      ng-disabled="frmEdit.$invalid || savingEdit"
+                    />
+                  </div>
+                </form>
+              </div>
+            </div>
+
+            <!-- delete -->
+            <div
+              class="form-delete"
+              ng-class="{open:showDelete}"
+              ng-click="closeDeleteOnOverlay($event)"
+            >
+              <div class="form-delete__content">
+                <h3 class="title">{{ t('DELETE_TITLE') }}</h3>
+                <p class="desc">
+                  {{ t('DELETE_CONFIRM1') }} "{{deleting.productName}}"? {{
+                  t('DELETE_CONFIRM2') }}
+                </p>
                 <div class="dialog-footer">
-                  <button type="button" class="cancel">Cancel</button>
-                  <input class="submit" type="submit" value="Add Product" ng-disabled="frmAdd.$invalid||savingAdd" />
+                  <button class="cancel" ng-click="cancelDelete($event)">
+                    {{ t('BTN_CANCEL') }}
+                  </button>
+                  <button
+                    type="button"
+                    class="submit danger"
+                    ng-click="confirmDelete()"
+                    ng-disabled="deletingBusy"
+                  >
+                    {{ t('BTN_DELETE_PRODUCT') }}
+                  </button>
                 </div>
-              </form>
-
-            </div>
-          </div>
-          <!-- edit -->
-
-          <!-- =================== FORM EDIT =================== -->
-          <div class="form-edit">
-            <div class="form-edit__content">
-              <h3 class="title">Edit Product</h3>
-              <p class="desc">Update product information</p>
-
-              <form name="frmEdit" ng-submit="updateProduct()">
-                <!-- ===== Cột trái ===== -->
-                <div>
-                  <label for="name-edit">Product Name *</label>
-                  <input type="text" id="name-edit" required placeholder="Enter product name"
-                    ng-model="editingProduct.productName" />
-
-                  <label for="sku-edit">SKU*</label>
-                  <input type="text" id="sku-edit" required placeholder="Enter SKU" ng-model="editingProduct.sku" />
-
-                  <label for="barcode-edit">Barcode*</label>
-                  <input type="text" id="barcode-edit" required placeholder="Enter Barcode"
-                    ng-model="editingProduct.barcode" />
-
-                  <label for="unit-edit">Unit</label>
-                  <input type="text" id="unit-edit" placeholder="Enter Unit" ng-model="editingProduct.unit" />
-
-
-                  <label for="unitprice-edit">Price*</label>
-                  <input type="number" id="unitprice-edit" placeholder="Enter price" ng-model="editingProduct.unitPrice" min="0" step="1000" />
-
-
-
-                  <label for="vat-edit">VAT Rate(%)</label>
-                  <input type="number" id="vat-edit" placeholder="0.00" ng-model="editingProduct.vatRate" min="0"
-                    step="0.01" />
-                  <label class="standard">
-                    Standard VAT rates: 10% (most products), 9% (special items)
-                  </label>
-                </div>
-
-                <!-- ===== Cột phải ===== -->
-                <div>
-                  <label for="categoryid-edit">CategoryName*</label>
-                  <select id="categoryid-edit" ng-model="editingProduct.categoryID"
-                    ng-options="c.categoryID as c.categoryName for c in categories" required>
-                    <option value="">Select Category</option>
-                  </select>
-
-
-
-                  <label for="minstock-edit">MinStock</label>
-                  <input type="number" id="minstock-edit" placeholder="Enter MinStock"
-                    ng-model="editingProduct.minStock" min="0" step="1" />
-
-                  <label for="quantity-edit">Quantity</label>
-                  <input type="number" id="quantity-edit" placeholder="Enter Quantity"
-                    ng-model="editingProduct.quantity" min="0" step="1" />
-
-                  <label for="status-edit">Status</label>
-                  <select id="status-edit" ng-model="editingProduct.status">
-                    <option value="Active">Active</option>
-                    <option value="Inactive">Inactive</option>
-                  </select>
-
-
-                  <label for="imageInputEdit">Image</label>
-                  <input type="file" id="imageInputEdit" accept="image/*"
-                    onchange="angular.element(this).scope().previewImageEdit(this)">
-                  <img id="previewEdit" style="width:60px;height:60px;margin-top:5px;border-radius:6px;"
-                    ng-if="editingProduct.image" ng-src="{{editingProduct.image}}" />
-
-                </div>
-
-                <!-- ===== Footer ===== -->
-                <div class="dialog-footer">
-                  <button type="button" class="cancel">Cancel</button>
-                  <input class="submit" type="submit" value="Update Product"
-                    ng-disabled="frmEdit.$invalid || savingEdit" />
-                </div>
-              </form>
-            </div>
-          </div>
-
-          <!-- delete -->
-          <div class="form-delete" ng-class="{open:showDelete}" ng-click="closeDeleteOnOverlay($event)">
-            <div class="form-delete__content">
-              <h3 class="title">Delete Product</h3>
-              <p class="desc">
-                Are you sure you want to delete the Product
-                "{{deleting.productName}}"? This action cannot be undone.
-              </p>
-              <div class="dialog-footer">
-                <button class="cancel" ng-click="cancelDelete($event)">
-                  Cancel
-                </button>
-                <button type="button" class="submit danger" ng-click="confirmDelete()" ng-disabled="deletingBusy">
-                  Delete Product
-                </button>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  
 
-  <script src="../Shared/js/product.js"></script>\
+    <script src="../Shared/js/product.js"></script>
+    \
 
-
-  <!-- Đây là FileSaver.js — thư viện giúp bạn tải file từ trình duyệt (client-side). -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
-</body>
-
+    <!-- Đây là FileSaver.js — thư viện giúp bạn tải file từ trình duyệt (client-side). -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+  </body>
 </html>
-
-

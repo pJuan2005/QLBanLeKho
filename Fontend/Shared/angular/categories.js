@@ -25,7 +25,7 @@ app.controller(
     $scope.deleting = null;
 
     // ------Kiểm tra đăng nhập, logout và chia màn hình theo quyền---------
-    
+
     if (!$scope.currentUser) {
       $window.location.href = "../AuthFE/login.html";
       return;
@@ -75,10 +75,10 @@ app.controller(
     // thêm mới category
     $scope.add = function () {
       var vat = parseFloat($scope.newCategory.VATRate);
-      if (isNaN(vat)) {
-        alert("VAT không hợp lệ.");
-        return;
-      }
+      // if (isNaN(vat)) {
+      //   alert("VAT không hợp lệ.");
+      //   return;
+      // }
 
       // Chuẩn model giống CategoryModel bên C#
       var model = {
@@ -269,7 +269,6 @@ app.controller(
       $scope.LoadCategories();
     };
 
-    
     $scope.CalculateStats = function () {
       if (!$scope.categories || $scope.categories.length === 0) {
         $scope.stats = { total: 0, avgVat: 0, mostCommon: "" };

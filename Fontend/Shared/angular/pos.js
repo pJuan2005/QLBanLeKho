@@ -1,7 +1,3 @@
-// pos.js
-// LƯU Ý: module AppRetailPos đã được tạo trong global.js:
-// angular.module("AppRetailPos", [...]);
-// Ở đây chỉ lấy lại module, KHÔNG tạo mới.
 var app = angular.module("AppRetailPos");
 
 app.controller(
@@ -188,7 +184,7 @@ app.controller(
       totalPages: 1,
     };
 
-    // cart: item = { ProductID, ProductName, UnitPrice, VATRate, Quantity, LineTotal, LineVat }
+    // cart: item = { ProductID, ProductName, UnitPrice, VATRate, Discount, Quantity, LineTotal, LineVat }
     $scope.cartItems = [];
     $scope.subtotal = 0;
     $scope.vatTotal = 0;
@@ -261,8 +257,11 @@ app.controller(
         var qty = Number(item.Quantity) || 0;
         var vatRate = Number(item.VATRate) || 0;
 
-        var base = price * qty;
-        var lineVat = base * (vatRate / 100);
+        // 👉 MỚI: áp Discount giống trigger SQL
+        var discount = Number(item.Discount || 0); // %
+        var base = price * qty * (1 - discount / 100.0);
+
+        var lineVat = base * (vatRate / 100.0);
 
         item.LineTotal = base;
         item.LineVat = lineVat;
@@ -297,6 +296,10 @@ app.controller(
           ProductName: p.productName || p.ProductName,
           UnitPrice: p.unitPrice || p.UnitPrice || 0,
           VATRate: p.vatRate || p.VATRate || 0,
+
+          // 👉 MỚI: mang discount từ BE xuống cart
+          Discount: p.discount || p.Discount || 0,
+
           Quantity: 1,
           LineTotal: 0,
           LineVat: 0,
@@ -452,12 +455,16 @@ app.controller(
             productName: it.ProductName,
             quantity: it.Quantity,
             unitPrice: it.UnitPrice,
-            discount: 0,
+
+            // 👉 MỚI: gửi đúng discount xuống BLL
+            discount: it.Discount || 0,
           };
         }),
         prepay: pay,
         paymentMethod: $scope.payment.method,
         paymentDate: new Date(),
+
+        // Tổng tiền đơn FE tính – giờ đã giống trigger vì đã trừ discount
         clientTotal: total,
       };
 
@@ -541,6 +548,7 @@ app.controller(
 
       $scope.showPaymentSuccess = false;
     };
+
     // ---------- 3.3 In hoá đơn ----------
     $scope.printInvoice = function ($event) {
       if ($event) $event.preventDefault();

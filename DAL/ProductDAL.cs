@@ -32,34 +32,31 @@ namespace DAL
         public bool Create(ProductModel model)
         {
             string msgError = "";
-            try
-            {
-                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_product_create",
-                    "@SKU", model.SKU,
-                    "@Barcode", model.Barcode,
-                    "@ProductName", model.ProductName,
-                    "@CategoryID", model.CategoryID,
-                    "@UnitPrice", model.UnitPrice,
-                    "@Unit", model.Unit,
-                    "@MinStock", model.MinStock,
-                    "@Status", model.Status,
-                    "@ImageData", model.ImageData,
-                    "@VATRate", model.VATRate,
-                    "@Quantity", model.Quantity
-                );
 
-                if (!string.IsNullOrEmpty(msgError))
-                    throw new Exception(msgError);
+            var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(
+                out msgError,
+                "sp_product_create",
+                "@SKU", model.SKU,
+                "@Barcode", model.Barcode,
+                "@ProductName", model.ProductName,
+                "@CategoryID", model.CategoryID,
+                "@UnitPrice", model.UnitPrice,
+                "@Unit", model.Unit,
+                "@MinStock", model.MinStock,
+                "@Status", model.Status,
+                "@Image", model.Image,
+                "@VATRate", model.VATRate,
+                "@Quantity", model.Quantity
+            );
 
-                if (result != null && int.TryParse(result.ToString(), out int newId))
-                    model.ProductID = newId;
+            if (!string.IsNullOrEmpty(msgError))
+                throw new Exception(msgError);
 
-                return true;
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
+            if (result != null && int.TryParse(result.ToString(), out int newId))
+                model.ProductID = newId;
+
+            return true;
+
         }
 
         public bool Update(ProductModel model)
@@ -89,6 +86,9 @@ namespace DAL
             return true;
         }
 
+
+
+        
         public bool Delete(int productId)
         {
             string msgError = "";
@@ -131,4 +131,5 @@ namespace DAL
             return dt.ConvertTo<ProductModel>().ToList();
         }
     }
+
 }

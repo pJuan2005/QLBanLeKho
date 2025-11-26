@@ -87,6 +87,9 @@ builder.Services.AddScoped<IReturnDAL, ReturnDAL>();
 
 
 
+
+
+
 // configure strongly typed settings objects
 IConfiguration configuration = builder.Configuration;
 var appSettingsSection = configuration.GetSection("AppSettings");
@@ -130,6 +133,8 @@ builder.Services.AddTransient<IDStockCardBLL, StockCardBLL>();
 builder.Services.AddTransient<IDReportDAL, ReportDAL>();
 builder.Services.AddTransient<IDReportBLL, ReportBLL>();
 
+
+builder.Services.AddMemoryCache();
 
 
 

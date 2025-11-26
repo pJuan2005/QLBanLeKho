@@ -6,72 +6,82 @@ using System.Reflection;
 using BLL.Interfaces;
 using System.Globalization;
 using ClosedXML.Excel;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CoreApi.Controllers
 {
-
+    [Authorize] // yêu cầu đăng nhập
     [Route("api/purchaseorder")]
+    [ApiController]
     public class PurchaseOrderController : ControllerBase
     {
-        private IPurchaseOrderBusiness _purchaseOrderBusiness;
-        private IPurchaseOrderDetailsBusiness _purchaseOrderDetailsBusiness;
+        private readonly IPurchaseOrderBusiness _purchaseOrderBusiness;
+        private readonly IPurchaseOrderDetailsBusiness _purchaseOrderDetailsBusiness;
 
-
-        public PurchaseOrderController(IPurchaseOrderBusiness donMuaHangBusiness , IPurchaseOrderDetailsBusiness chiTietDonMuaHangBusiness)
+        public PurchaseOrderController(
+            IPurchaseOrderBusiness donMuaHangBusiness,
+            IPurchaseOrderDetailsBusiness chiTietDonMuaHangBusiness)
         {
             _purchaseOrderBusiness = donMuaHangBusiness;
             _purchaseOrderDetailsBusiness = chiTietDonMuaHangBusiness;
         }
 
-        [Route("create")]
-        [HttpPost]
+        // ================= CREATE =================
+        [Authorize(Roles = "Admin,ThuKho,KeToan")]
+        [HttpPost("create")]
         public IActionResult Create([FromBody] List<PurchaseOrderModel> models)
         {
             _purchaseOrderBusiness.CreateMultiple(models);
             return Ok(models);
         }
 
-        [Route("update")]
-        [HttpPost]
+        // ================= UPDATE =================
+        [Authorize(Roles = "Admin,ThuKho,KeToan")]
+        [HttpPost("update")]
         public PurchaseOrderModel Update([FromBody] PurchaseOrderModel model)
         {
             _purchaseOrderBusiness.Update(model);
             return model;
         }
 
-        [Route("delete")]
-        [HttpPost]
+        // ================= DELETE =================
+        [Authorize(Roles = "Admin")] // chỉ Admin được xoá
+        [HttpPost("delete")]
         public IActionResult Delete([FromBody] PurchaseOrderModel model)
         {
             _purchaseOrderBusiness.Delete(model);
             return Ok(new { data = "OK" });
         }
 
-        [Route("get-by-id/{id}")]
-        [HttpGet]
+        // ================= GET-BY-ID =================
+        [Authorize(Roles = "Admin,ThuKho,KeToan")]
+        [HttpGet("get-by-id/{id}")]
         public PurchaseOrderModel GetDatabyID(int id)
         {
             return _purchaseOrderBusiness.GetDatabyID(id);
         }
 
-        [Route("search")]
-        [HttpPost]
+        // ================= SEARCH =================
+        [Authorize(Roles = "Admin,ThuKho,KeToan")]
+        [HttpPost("search")]
         public ResponseModel Search([FromBody] Dictionary<string, object> formData)
         {
             var response = new ResponseModel();
             try
             {
-                // --- PAGING ---
                 int page = 1, pageSize = 10;
+
                 if (formData != null)
                 {
-                    if (formData.ContainsKey("page") && int.TryParse(Convert.ToString(formData["page"]), out var p) && p > 0)
+                    if (formData.ContainsKey("page") &&
+                        int.TryParse(Convert.ToString(formData["page"]), out var p) && p > 0)
                         page = p;
-                    if (formData.ContainsKey("pageSize") && int.TryParse(Convert.ToString(formData["pageSize"]), out var ps) && ps > 0)
+
+                    if (formData.ContainsKey("pageSize") &&
+                        int.TryParse(Convert.ToString(formData["pageSize"]), out var ps) && ps > 0)
                         pageSize = ps;
                 }
 
-                // --- FILTERS ---
                 decimal? minTotalAmount = null, maxTotalAmount = null;
                 string status = null;
                 DateTime? fromDate = null, toDate = null;
@@ -92,21 +102,14 @@ namespace CoreApi.Controllers
                     }
                     if (formData.ContainsKey("status"))
                         status = Convert.ToString(formData["status"])?.Trim();
-                    if (formData.ContainsKey("fromDate"))
-                    {
-                        var val = Convert.ToString(formData["fromDate"]);
-                        if (DateTime.TryParse(val, out var d))
-                            fromDate = d;
-                    }
-                    if (formData.ContainsKey("toDate"))
-                    {
-                        var val = Convert.ToString(formData["toDate"]);
-                        if (DateTime.TryParse(val, out var d))
-                            toDate = d;
-                    }
+                    if (formData.ContainsKey("fromDate") &&
+                        DateTime.TryParse(Convert.ToString(formData["fromDate"]), out var fd))
+                        fromDate = fd;
+                    if (formData.ContainsKey("toDate") &&
+                        DateTime.TryParse(Convert.ToString(formData["toDate"]), out var td))
+                        toDate = td;
                 }
 
-                // --- CALL BLL ---
                 long total = 0;
                 var data = _purchaseOrderBusiness.Search(
                     page, pageSize, out total,
@@ -116,32 +119,29 @@ namespace CoreApi.Controllers
                 response.Data = data;
                 response.Page = page;
                 response.PageSize = pageSize;
+
                 return response;
             }
             catch (Exception ex)
             {
-                // log nếu cần
                 throw new Exception(ex.Message);
             }
         }
 
-        [Route("export-excel/{poid}")]
-        [HttpGet]
+        // ================= EXPORT EXCEL =================
+        [Authorize(Roles = "Admin,ThuKho,KeToan")]
+        [HttpGet("export-excel/{poid}")]
         public IActionResult ExportExcel(int poid)
         {
             try
             {
-                // Lấy dữ liệu đơn hàng
                 var po = _purchaseOrderBusiness.GetDatabyID(poid);
-
                 if (po == null) return NotFound("Không tìm thấy đơn hàng");
 
-                // Lấy dữ liệu chi tiết đơn hàng
                 var details = _purchaseOrderDetailsBusiness.GetByPOID(poid);
 
                 using var workbook = new XLWorkbook();
 
-                // Sheet 1: Thông tin đơn hàng
                 var wsPO = workbook.Worksheets.Add("PurchaseOrder");
                 wsPO.Cell(1, 1).Value = "POID";
                 wsPO.Cell(1, 2).Value = "SupplierID";
@@ -157,7 +157,6 @@ namespace CoreApi.Controllers
 
                 wsPO.Columns().AdjustToContents();
 
-                // Sheet 2: Chi tiết đơn hàng
                 var wsDetail = workbook.Worksheets.Add("Details");
                 wsDetail.Cell(1, 1).Value = "POID";
                 wsDetail.Cell(1, 2).Value = "ProductID";
@@ -178,7 +177,6 @@ namespace CoreApi.Controllers
 
                 wsDetail.Columns().AdjustToContents();
 
-                // Xuất file
                 using var stream = new MemoryStream();
                 workbook.SaveAs(stream);
                 stream.Position = 0;
@@ -193,6 +191,5 @@ namespace CoreApi.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
-
     }
 }
