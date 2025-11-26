@@ -339,8 +339,8 @@ input:focus {
 .display-container {
   margin-top: 26px;
   display: flex;
-  justify-content: space-between;   /* giống categories */
-  gap: 20px;                         /* khoảng cách đều */
+  justify-content: space-between; /* giống categories */
+  gap: 20px; /* khoảng cách đều */
 }
 
 .farme {
@@ -348,7 +348,7 @@ input:focus {
   padding-left: 24px;
   padding-right: 24px;
   display: flex;
-  width: 320px;                      /* giảm từ 368px xuống 320px để 4 cái vừa 1 hàng */
+  width: 320px; /* giảm từ 368px xuống 320px để 4 cái vừa 1 hàng */
   height: 108px;
   flex-direction: column;
   border-radius: 16px;
@@ -379,7 +379,7 @@ input:focus {
   gap: 15px;
   flex-wrap: nowrap;
   overflow-x: auto;
-  padding: 13px 20px;              
+  padding: 13px 20px;
   border-radius: 20px;
   box-sizing: border-box;
 }
@@ -453,15 +453,13 @@ input:valid ~ .placeholder-label {
   background: rgba(248, 250, 252, 0.5);
 }
 
-
-
 /* ======================== BOTTOM CONTROL: PHÂN TRANG + EXPORT + ADD PO ======================== */
 .bottom-control {
   margin-top: 32px;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: space-between;  /* ← Đẩy 2 bên: control-right sang PHẢI */
+  justify-content: space-between; /* ← Đẩy 2 bên: control-right sang PHẢI */
   position: relative;
   padding: 20px;
   min-height: 70px; /* ← Tăng lên để pager absolute không bị cắt */
@@ -476,12 +474,12 @@ input:valid ~ .placeholder-label {
   transform: translate(-50%, -50%); /* ← Căn giữa dọc + ngang 100% */
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 5px;
   z-index: 10;
   background: #fff;
   padding: 8px 5px;
   border-radius: 12px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1); /* ← Thêm nhẹ để nổi bật */
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* ← Thêm nhẹ để nổi bật */
 }
 
 /* Export + Add nằm BÊN PHẢI */
@@ -492,9 +490,6 @@ input:valid ~ .placeholder-label {
   gap: 12px;
   z-index: 2;
 }
-
-
-
 
 .pager-info {
   color: #0f172a;
@@ -536,8 +531,6 @@ input:valid ~ .placeholder-label {
   font-weight: 500;
 }
 
-
-
 .control-right .add {
   cursor: pointer;
   height: 36px;
@@ -562,7 +555,7 @@ input:valid ~ .placeholder-label {
 .table {
   border: 1px solid #e2e8f0;
   width: 100%;
-  table-layout: auto;  /* <<< THAY ĐỔI DUY NHẤT */
+  table-layout: auto; /* <<< THAY ĐỔI DUY NHẤT */
   border-collapse: collapse;
   color: #0f172a;
   font-size: 1.4rem;
@@ -576,8 +569,8 @@ input:valid ~ .placeholder-label {
   vertical-align: middle;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;  
-  z-index: 1000;         /* thêm để chữ dài không xuống dòng */
+  white-space: nowrap;
+  z-index: 1000; /* thêm để chữ dài không xuống dòng */
 }
 
 /* viền + header */
@@ -585,7 +578,7 @@ input:valid ~ .placeholder-label {
   border: 1px solid #e2e8f0;
   font-weight: 600;
   color: #0f172a;
-  background: #f8fafc;           /* giống categories */
+  background: #f8fafc; /* giống categories */
 }
 .table tbody tr + tr td {
   border-top: 1px solid #f1f5f9;
@@ -617,22 +610,38 @@ input:valid ~ .placeholder-label {
 
 /* ==================== ĐIỀU CHỈNH ĐỘ RỘNG CỘT CHO PO (fit 6 cột + Actions) ==================== */
 .table thead th.id:nth-child(1),          /* POID */
-.table tbody td:nth-child(1) { width: 110px; text-align: center; }
+.table tbody td:nth-child(1) {
+  width: 110px;
+  text-align: center;
+}
 
 .table thead th.id:nth-child(2),          /* SupplierID */
-.table tbody td:nth-child(2) { width: 130px; text-align: center; }
+.table tbody td:nth-child(2) {
+  width: 130px;
+  text-align: center;
+}
 
 .table thead th.Date,                     /* OrderDate */
-.table tbody td:nth-child(3) { width: 120px; text-align: center; }
+.table tbody td:nth-child(3) {
+  width: 120px;
+  text-align: center;
+}
 
 .table thead th.Total,                    /* TotalAmount */
-.table tbody td:nth-child(4) { width: 160px; }
+.table tbody td:nth-child(4) {
+  width: 160px;
+}
 
 .table thead th.Status,                  /* Status */
-.table tbody td:nth-child(5) { width: 120px; text-align: center; }
+.table tbody td:nth-child(5) {
+  width: 120px;
+  text-align: center;
+}
 
 .table thead th.action,                   /* Actions */
-.table tbody td:nth-child(6) { width: 220px; }  /* đủ cho 3 nút + View */
+.table tbody td:nth-child(6) {
+  width: 220px;
+} /* đủ cho 3 nút + View */
 
 /* ==================== BADGE STATUS - ĐẸP HƠN CATEGORIES ==================== */
 .badge {
@@ -645,11 +654,31 @@ input:valid ~ .placeholder-label {
   min-width: 80px;
   text-align: center;
 }
-.badge.pending    { background: #fffbeb; color: #d97706; border: 1px solid #fcd34d; }
-.badge.approved   { background: #ecfdf5; color: #065f46; border: 1px solid #6ee7b7; }
-.badge.processing { background: #eff6ff; color: #1d4ed8; border: 1px solid #93c5fd; }
-.badge.cancelled  { background: #fef2f2; color: #991b1b; border: 1px solid #fca5a5; }
-.badge.completed  { background: #f0fdf4; color: #166534; border: 1px solid #86efac; }
+.badge.pending {
+  background: #fffbeb;
+  color: #d97706;
+  border: 1px solid #fcd34d;
+}
+.badge.approved {
+  background: #ecfdf5;
+  color: #065f46;
+  border: 1px solid #6ee7b7;
+}
+.badge.processing {
+  background: #eff6ff;
+  color: #1d4ed8;
+  border: 1px solid #93c5fd;
+}
+.badge.cancelled {
+  background: #fef2f2;
+  color: #991b1b;
+  border: 1px solid #fca5a5;
+}
+.badge.completed {
+  background: #f0fdf4;
+  color: #166534;
+  border: 1px solid #86efac;
+}
 
 /* ==================== NO DATA - GIỐNG CATEGORIES ==================== */
 .table .empty {
@@ -664,7 +693,7 @@ input:valid ~ .placeholder-label {
 .table-responsive {
   overflow-x: auto;
   border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
   margin-top: 20px;
 }
 
@@ -1177,7 +1206,7 @@ body.modal-open {
 
 /* Nút Delete trong form hoặc bảng */
 button.danger {
-  background: #ef4444;       /* đỏ nổi bật */
+  background: #ef4444; /* đỏ nổi bật */
   border: none;
   border-radius: 6px;
   padding: 8px 14px;
@@ -1189,12 +1218,12 @@ button.danger {
 }
 
 button.danger:hover {
-  background: #dc2626;       /* đỏ đậm hơn khi hover */
-  transform: scale(1.05);    /* hơi phóng to nhẹ */
+  background: #dc2626; /* đỏ đậm hơn khi hover */
+  transform: scale(1.05); /* hơi phóng to nhẹ */
 }
 
 button.danger:disabled {
-  background: #fca5a5;       /* đỏ nhạt khi disabled */
+  background: #fca5a5; /* đỏ nhạt khi disabled */
   cursor: not-allowed;
 }
 
@@ -1212,5 +1241,3 @@ button.link.danger {
 button.link.danger:hover {
   color: #dc2626;
 }
-
-

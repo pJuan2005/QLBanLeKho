@@ -37,14 +37,12 @@ app.controller(
 
       let yesterdayStr = getYesterday();
 
-      // --- Gọi API hôm nay ---
       let todayAPI = $http.post(current_url + "/api-core/report/revenue", {
         fromDate: todayStr,
         toDate: todayStr,
         option: "DAY",
       });
 
-      // --- Gọi API hôm qua ---
       let yesterdayAPI = $http.post(current_url + "/api-core/report/revenue", {
         fromDate: yesterdayStr,
         toDate: yesterdayStr,
@@ -55,27 +53,23 @@ app.controller(
         let todayData = results[0].data.data || [];
         let yesterdayData = results[1].data.data || [];
 
-        // Giá trị hôm nay
         let todayRev = todayData.length ? todayData[0].revenue : 0;
         let todayProf = todayData.length ? todayData[0].grossProfit : 0;
 
-        // Giá trị hôm qua
         let yRev = yesterdayData.length ? yesterdayData[0].revenue : 0;
         let yProf = yesterdayData.length ? yesterdayData[0].grossProfit : 0;
 
-        // Set KPI
+        // KPI
         $scope.totalRevenue = todayRev;
         $scope.totalProfit = todayProf;
         $scope.bestCategory = todayData[0]?.bestCategory || "—";
-        $scope.topProduct = todayData[0]?.topProduct || "—";
+        $scope.topProduct =
+          todayData[0]?.dailyTopProduct ||
+          todayData[0]?.monthlyTopProduct ||
+          "—";
 
-        // ============================
-        // ⭐ TÍNH % THAY ĐỔI
-        // ============================
         function percentChange(today, yesterday) {
-          if (yesterday === 0) {
-            return today > 0 ? 100 : 0; // tránh chia 0
-          }
+          if (yesterday === 0) return today > 0 ? 100 : 0;
           return (((today - yesterday) / yesterday) * 100).toFixed(1);
         }
 

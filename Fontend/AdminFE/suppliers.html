@@ -402,77 +402,79 @@
                   <input type="email" id="mail-add" placeholder="supplier@email.com" ng-model="newSupplier.Email" />
                 </div>
               </div>
-          </div>
 
-          <label for="address-add">Address</label>
-          <input type="text" id="address-add" placeholder="123 Main Street, City" ng-model="newSupplier.Address" />
 
-          <div class="dialog-footer">
-            <button type="button" class="cancel" ng-click="cancelAdd()">
-              Cancel
-            </button>
-            <input class="submit" type="submit" value="Add New Supplier"
-              ng-disabled="frmAddSupplier.$invalid || savingAdd" />
+              <label for="address-add">Address</label>
+              <input type="text" id="address-add" placeholder="123 Main Street, City" ng-model="newSupplier.Address" />
+
+              <div class="dialog-footer">
+                <button type="button" class="cancel" ng-click="cancelAdd()">
+                  Cancel
+                </button>
+                <input class="submit" type="submit" value="Add New Supplier"
+                  ng-disabled="frmAddSupplier.$invalid || savingAdd" />
+              </div>
+            </form>
           </div>
-          </form>
         </div>
-      </div>
 
-      <!-- Modal Edit Supplier -->
-      <div class="form-add" ng-class="{open: showEdit}" ng-click="closeEditOnOverlay($event)">
-        <div class="form-add__content" ng-click="$event.stopPropagation()">
-          <h3 class="title">Edit Supplier</h3>
-          <p class="desc">Update supplier details</p>
-          <form name="frmEditSupplier" ng-submit="updateSupplier()">
-            <label for="name-edit">Supplier Name</label>
-            <input type="text" id="name-edit" required placeholder="Enter supplier name"
-              ng-model="editSupplier.SupplierName" />
+        <!-- Modal Edit Supplier -->
+        <div class="form-add" ng-class="{open: showEdit}" ng-click="closeEditOnOverlay($event)">
+          <div class="form-add__content" ng-click="$event.stopPropagation()">
+            <h3 class="title">Edit Supplier</h3>
+            <p class="desc">Update supplier details</p>
+            <form name="frmEditSupplier" ng-submit="updateSupplier()">
+              <label for="name-edit">Supplier Name</label>
+              <input type="text" id="name-edit" required placeholder="Enter supplier name"
+                ng-model="editSupplier.SupplierName" />
 
-            <div class="both">
-              <div class="both-left">
-                <label for="phone-edit">Phone</label>
-                <input type="text" id="phone-edit" required placeholder="+84 123 456 789"
-                  ng-model="editSupplier.Phone" />
+              <div class="both">
+                <div class="both-left">
+                  <label for="phone-edit">Phone</label>
+                  <input type="text" id="phone-edit" required placeholder="+84 123 456 789"
+                    ng-model="editSupplier.Phone" />
+                </div>
+                <div class="both-right">
+                  <label for="mail-edit">Email</label>
+                  <input type="email" id="mail-edit" placeholder="supplier@email.com" ng-model="editSupplier.Email" />
+                </div>
               </div>
-              <div class="both-right">
-                <label for="mail-edit">Email</label>
-                <input type="email" id="mail-edit" placeholder="supplier@email.com" ng-model="editSupplier.Email" />
+
+
+              <label for="address-edit">Address</label>
+<input type="text" id="address-edit" placeholder="123 Main Street, City"
+                ng-model="editSupplier.Address" />
+
+              <div class="dialog-footer">
+                <button type="button" class="cancel" ng-click="cancelEdit()">
+                  Cancel
+                </button>
+                <input class="submit" type="submit" value="Save Changes"
+                  ng-disabled="frmEditSupplier.$invalid || savingEdit" />
               </div>
+            </form>
+          </div>
+        </div>
+        <!-- Modal Delete Supplier -->
+        <div class="form-delete" ng-class="{open: showDelete}" ng-click="closeDeleteOnOverlay($event)">
+          <div class="form-delete__content" ng-click="$event.stopPropagation()">
+            <h3 class="title">Delete Supplier</h3>
+            <p class="desc">
+              Bạn có chắc chắn muốn xóa nhà cung cấp
+              <strong>{{deleting.SupplierName}}</strong> không?
+            </p>
+
+            <div class="dialog-footer">
+              <button type="button" class="cancel" ng-click="cancelDelete()">
+                Cancel
+              </button>
+              <button type="button" class="submit danger" ng-click="confirmDelete()" ng-disabled="savingDelete">
+                Delete
+              </button>
             </div>
-        </div>
-
-        <label for="address-edit">Address</label>
-        <input type="text" id="address-edit" placeholder="123 Main Street, City" ng-model="editSupplier.Address" />
-
-        <div class="dialog-footer">
-          <button type="button" class="cancel" ng-click="cancelEdit()">
-            Cancel
-          </button>
-          <input class="submit" type="submit" value="Save Changes"
-            ng-disabled="frmEditSupplier.$invalid || savingEdit" />
-        </div>
-        </form>
-      </div>
-    </div>
-    <!-- Modal Delete Supplier -->
-    <div class="form-delete" ng-class="{open: showDelete}" ng-click="closeDeleteOnOverlay($event)">
-      <div class="form-delete__content" ng-click="$event.stopPropagation()">
-        <h3 class="title">Delete Supplier</h3>
-        <p class="desc">
-          Bạn có chắc chắn muốn xóa nhà cung cấp
-          <strong>{{deleting.SupplierName}}</strong> không?
-        </p>
-
-        <div class="dialog-footer">
-          <button type="button" class="cancel" ng-click="cancelDelete()">
-            Cancel
-          </button>
-          <button type="button" class="submit danger" ng-click="confirmDelete()" ng-disabled="savingDelete">
-            Delete
-          </button>
+          </div>
         </div>
       </div>
-    </div>
   </div>
   </div>
   </div>

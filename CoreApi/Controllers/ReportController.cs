@@ -4,8 +4,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Model;
 using System;
-using System.Collections.Generic;
-using Model;
 
 namespace CoreApi.Controllers
 {
@@ -20,9 +18,7 @@ namespace CoreApi.Controllers
             _reportBusiness = reportBusiness;
         }
 
-
         // ==================== 1) REVENUE REPORT ====================
-        // Admin, Kế toán, Thu ngân được xem báo cáo doanh thu
         [Authorize(Roles = "Admin,KeToan,ThuNgan")]
         [Route("revenue")]
         [HttpPost]
@@ -30,12 +26,11 @@ namespace CoreApi.Controllers
         {
             try
             {
-                // Chuyển string → DateTime (chống lệch timezone)
                 var from = DateTime.ParseExact(request.FromDate, "yyyy-MM-dd", null);
                 var to = DateTime.ParseExact(request.ToDate, "yyyy-MM-dd", null);
 
-                // Bao gồm full ngày cuối cùng
-                to = to.AddDays(1).AddSeconds(-1);
+                // ❌ KHÔNG cộng thêm 1 ngày nữa
+                // to = to.AddDays(1).AddSeconds(-1);
 
                 var data = _reportBusiness.GetRevenueReport(from, to, request.Option);
 
@@ -47,25 +42,19 @@ namespace CoreApi.Controllers
             }
         }
 
-
-
-        
         // ==================== 2) IMPORT - EXPORT REPORT ====================
-        // Admin, Thủ kho, Kế toán được xem báo cáo nhập xuất
         [Authorize(Roles = "Admin,ThuKho,KeToan")]
         [HttpPost("import-export")]
         public IActionResult GetImportExportReport([FromBody] ReportRevenueRequest request)
         {
             try
             {
-                // Parse chuẩn
                 var from = DateTime.ParseExact(request.FromDate, "yyyy-MM-dd", null);
                 var to = DateTime.ParseExact(request.ToDate, "yyyy-MM-dd", null);
 
-                // Bao gồm full ngày cuối
-                to = to.AddDays(1).AddSeconds(-1);
+                // ❌ Bỏ đoạn này
+                // to = to.AddDays(1).AddSeconds(-1);
 
-                // TRUYỀN from, to CHUẨN XUỐNG BUSINESS
                 var data = _reportBusiness.GetImportExportReport(from, to, request.Option);
 
                 return Ok(new { data });
@@ -76,10 +65,7 @@ namespace CoreApi.Controllers
             }
         }
 
-
-
         // ==================== 3) STOCK REPORT ====================
-        // Tồn kho: Admin + Thủ kho + Kế toán
         [Authorize(Roles = "Admin,ThuKho,KeToan")]
         [Route("stock")]
         [HttpGet]
@@ -96,8 +82,7 @@ namespace CoreApi.Controllers
             }
         }
 
-
-
+        // ==================== 4) TOP PRODUCTS (dashboard donut) ====================
         [Authorize(Roles = "Admin,KeToan,ThuNgan")]
         [HttpPost("top-products")]
         public IActionResult GetTopProducts([FromBody] ReportRevenueRequest request)
@@ -116,6 +101,5 @@ namespace CoreApi.Controllers
                 return BadRequest(ex.Message);
             }
         }
-
     }
 }

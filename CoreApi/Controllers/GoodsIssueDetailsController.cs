@@ -21,7 +21,7 @@ namespace CoreApi.Controllers
             _goodsIssueDetailsBusiness = goodsIssueDetailsBusiness;
         }
 
-        [Authorize("Roles=Admin,ThuKho")]
+        [Authorize(Roles = "Admin,ThuKho")]
         [Route("create")]
         [HttpPost]
         public IActionResult Create([FromBody] List<GoodsIssueDetailsModel> models)
@@ -30,8 +30,8 @@ namespace CoreApi.Controllers
             return Ok(models);
         }
 
-        [Authorize("Roles=Admin,ThuKho")]       
-        
+        [Authorize(Roles = "Admin,ThuKho")]
+
         [Route("delete")]
         [HttpPost]
         public IActionResult Delete([FromBody] GoodsIssueDetailsModel model)
@@ -40,7 +40,7 @@ namespace CoreApi.Controllers
             return Ok(new { data = "OK" });
         }
 
-        [Authorize("Roles=Admin,ThuKho,KeToan")]
+        [Authorize(Roles = "Admin,ThuKho")]
         [Route("get-by-id/{issueID}")]
         [HttpGet]
         public IEnumerable<GoodsIssueDetailsModel> GetDatabyID(int issueID)
