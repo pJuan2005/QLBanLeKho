@@ -31,8 +31,6 @@ app.controller(
         // ========== FILTER TÌM KIẾM ==========
         $scope.searchFromDate = "";
         $scope.searchToDate = "";
-        $scope.searchMinAmount = "";
-        $scope.searchMaxAmount = "";
         $scope.searchUserID = "";
 
         // ========== LOAD DỮ LIỆU TỪ API ==========
@@ -45,8 +43,6 @@ app.controller(
                     pageSize: $scope.pager.size,
                     fromDate: $scope.searchFromDate || null,
                     toDate: $scope.searchToDate || null,
-                    minTotalAmount: $scope.searchMinAmount || null,
-                    maxTotalAmount: $scope.searchMaxAmount || null,
                     userId: $scope.searchUserID ? parseInt($scope.searchUserID, 10) : null
                 }
             }).then(
@@ -78,8 +74,6 @@ app.controller(
 
         $scope.$watch("searchFromDate", triggerSearch);
         $scope.$watch("searchToDate", triggerSearch);
-        $scope.$watch("searchMinAmount", triggerSearch);
-        $scope.$watch("searchMaxAmount", triggerSearch);
         $scope.$watch("searchUserID", triggerSearch);  // ← theo dõi UserID
 
         // ========== PHÂN TRANG ==========
@@ -144,8 +138,8 @@ app.controller(
         $scope.addDetailRowForNewIssue = function () {
             $scope.newIssueDetails.push({
                 ProductID: null,
-                Quantity: null,
-                UnitPrice: null
+                Quantity: null
+
             });
         };
 
@@ -176,8 +170,8 @@ app.controller(
                         return {
                             IssueID: issueID,
                             ProductID: item.ProductID,
-                            Quantity: item.Quantity,
-                            UnitPrice: item.UnitPrice
+                            Quantity: item.Quantity
+
                         };
                     });
 
@@ -221,16 +215,16 @@ app.controller(
                 return;
             }
 
-            if ($scope.newDetail.Quantity <= 0 || $scope.newDetail.UnitPrice < 0) {
-                alert("Số lượng phải > 0, đơn giá phải ≥ 0!");
+            if ($scope.newDetail.Quantity <= 0) {
+                alert("Số lượng phải > 0!");
                 return;
             }
 
             var payload = [{
                 IssueID: $scope.detailIssue.IssueID,
                 ProductID: parseInt($scope.newDetail.ProductID),
-                Quantity: parseInt($scope.newDetail.Quantity),
-                UnitPrice: parseFloat($scope.newDetail.UnitPrice)
+                Quantity: parseInt($scope.newDetail.Quantity)
+
             }];
 
             $scope.savingAddDetail = true;
@@ -309,8 +303,8 @@ app.controller(
                         return {
                             ProductID: item.ProductID || item.productID,
                             ProductName: item.ProductName || item.productName || '—',
-                            Quantity: item.Quantity || item.quantity || 0,
-                            UnitPrice: item.UnitPrice || item.unitPrice || 0
+                            Quantity: item.Quantity || item.quantity || 0
+                            
                         };
                     });
                 })
