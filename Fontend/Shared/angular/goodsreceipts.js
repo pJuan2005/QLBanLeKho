@@ -191,11 +191,10 @@ app.controller(
                         return {
                             ReceiptID: receiptID,
                             ProductID: d.ProductID,
-                            Quantity: d.Quantity,
-                            UnitPrice: d.UnitPrice,
                             ExpiryDate: d.ExpiryDate || null
                         };
                     });
+
 
                     return $scope.createGoodsReceiptDetails(details);
                 })
@@ -403,17 +402,17 @@ app.controller(
 
         // Thêm chi tiết vào phiếu cũ
         $scope.addGoodsReceiptDetail = function () {
-            if (!$scope.newDetail.ProductID || !$scope.newDetail.Quantity || !$scope.newDetail.UnitPrice) {
-                return alert("Vui lòng nhập đầy đủ thông tin!");
+            if (!$scope.newDetail.ProductID) {
+                return alert("Vui lòng nhập ProductID!");
             }
+
 
             var payload = [{
                 ReceiptID: $scope.detailReceipt.ReceiptID,
                 ProductID: $scope.newDetail.ProductID,
-                Quantity: $scope.newDetail.Quantity,
-                UnitPrice: $scope.newDetail.UnitPrice,
                 ExpiryDate: $scope.newDetail.ExpiryDate || null
             }];
+
 
             $scope.savingAddDetail = true;
 

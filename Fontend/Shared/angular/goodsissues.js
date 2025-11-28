@@ -210,7 +210,7 @@ app.controller(
 
         $scope.addGoodsIssueDetail = function () {
             // Validate
-            if (!$scope.newDetail.ProductID || !$scope.newDetail.Quantity || !$scope.newDetail.UnitPrice) {
+            if (!$scope.newDetail.ProductID ) {
                 alert("Vui lòng nhập đầy đủ Product ID, Quantity và Unit Price!");
                 return;
             }

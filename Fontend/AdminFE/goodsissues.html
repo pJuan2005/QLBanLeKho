@@ -477,7 +477,7 @@
                                 required />
                         </div>
                         <button class="add-btn" ng-click="addGoodsIssueDetail()"
-                            ng-disabled="savingAddDetail || !newDetail.ProductID || !newDetail.Quantity || !newDetail.UnitPrice">
+                            ng-disabled="savingAddDetail || !newDetail.ProductID ">
                             <span ng-if="savingAddDetail">Adding...</span>
                             <span ng-if="!savingAddDetail">Add Product</span>
                         </button>

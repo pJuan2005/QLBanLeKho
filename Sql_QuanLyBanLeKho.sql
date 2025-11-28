@@ -3041,39 +3041,32 @@ SET QUOTED_IDENTIFIER ON
 GO
 
 
-CREATE PROCEDURE [dbo].[sp_GoodsReceiptDetails_create_multiple]
+create PROCEDURE [dbo].[sp_GoodsReceiptDetails_create_multiple]
     @JsonData NVARCHAR(MAX)
 AS
 BEGIN
     SET NOCOUNT ON;
 
-    -- Bảng tạm chứa dữ liệu JSON
+    -- JSON chỉ cần ReceiptID + ProductID + ExpiryDate
     DECLARE @TempDetails TABLE (
         ReceiptID INT,
         ProductID INT,
-        Quantity INT,
-        UnitPrice DECIMAL(18,2),
         ExpiryDate DATE
     );
 
-    -- Đổ dữ liệu từ JSON vào bảng tạm
     INSERT INTO @TempDetails
     SELECT 
         ReceiptID,
         ProductID,
-        Quantity,
-        UnitPrice,
         ExpiryDate
     FROM OPENJSON(@JsonData)
     WITH (
         ReceiptID INT,
         ProductID INT,
-        Quantity INT,
-        UnitPrice DECIMAL(18,2),
         ExpiryDate DATE
     );
 
-    -- Thêm vào bảng chính, tự động lấy ProductName từ bảng Products
+    -- Chèn dữ liệu, tự động lấy Quantity, Price, ProductName
     INSERT INTO GoodsReceiptDetails (
         ReceiptID, ProductID, ProductName, Quantity, UnitPrice, ExpiryDate
     )
@@ -3081,16 +3074,24 @@ BEGIN
         td.ReceiptID,
         td.ProductID,
         p.ProductName,
-        td.Quantity,
-        td.UnitPrice,
+        pod.Quantity,               -- LẤY TỪ PURCHASEORDERDETAILS
+        pod.UnitPrice,              -- LẤY TỪ PURCHASEORDERDETAILS
         td.ExpiryDate
     FROM @TempDetails td
-    INNER JOIN Products p ON td.ProductID = p.ProductID;
+    INNER JOIN GoodsReceipts gr 
+        ON td.ReceiptID = gr.ReceiptID        -- Lấy POID từ GoodsReceipts
+    INNER JOIN PurchaseOrderDetails pod 
+        ON pod.POID = gr.POID 
+       AND pod.ProductID = td.ProductID       -- JOIN vào sản phẩm đúng của đơn hàng
+    INNER JOIN Products p 
+        ON td.ProductID = p.ProductID;        -- Lấy ProductName
 
-    SELECT ''; -- Tránh lỗi trong C#
+    SELECT '';
 END;
 GO
 
+
+drop procedure [dbo].[sp_GoodsReceiptDetails_create_multiple]
 
 USE [QLBanLeKho]
 GO
@@ -4353,10 +4354,10 @@ BEGIN
         RecordCount
     FROM OrderedPO
     WHERE RowNum BETWEEN @StartRow AND @EndRow
-    ORDER BY OrderDate DESC;
+    ORDER BY POID DESC;
 END
 GO
-
+drop procedure [dbo].[sp_PurchaseOrders_search]
 
 USE [QLBanLeKho]
 GO

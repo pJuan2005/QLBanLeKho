@@ -439,11 +439,7 @@
                 <label>Product ID</label>
                 <input type="number" ng-model="item.ProductID" required placeholder="Product ID" />
 
-                <label>Quantity</label>
-                <input type="number" ng-model="item.Quantity" required placeholder="Quantity" />
-
-                <label>Unit Price</label>
-                <input type="number" ng-model="item.UnitPrice" required placeholder="Unit Price" />
+                
 
                 <label>Expiry Date</label>
                 <input type="date" ng-model="item.ExpiryDate" />
@@ -526,20 +522,13 @@
               <label>Product ID:</label>
               <input type="number" ng-model="newDetail.ProductID" required />
             </div>
-            <div class="form-row">
-              <label>Quantity:</label>
-              <input type="number" ng-model="newDetail.Quantity" required />
-            </div>
-            <div class="form-row">
-              <label>Unit Price:</label>
-              <input type="number" ng-model="newDetail.UnitPrice" required />
-            </div>
+            
             <div class="form-row">
               <label>Expiry Date:</label>
               <input type="date" ng-model="newDetail.ExpiryDate" />
             </div>
             <button class="add-btn" ng-click="addGoodsReceiptDetail()"
-              ng-disabled="savingAddDetail || !newDetail.ProductID || !newDetail.Quantity || !newDetail.UnitPrice">
+              ng-disabled="savingAddDetail || !newDetail.ProductID">
               <span ng-if="savingAddDetail">Adding...</span>
               <span ng-if="!savingAddDetail">Add Product</span>
             </button>
