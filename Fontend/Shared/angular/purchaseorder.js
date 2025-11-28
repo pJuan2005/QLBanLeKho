@@ -27,8 +27,8 @@ app.controller(
 
     // ====== MODEL CHO FORM ADD ======
     $scope.newPurchaseOrder = {
-      SupplierID: "",
-      Status: ""
+      SupplierID: ""
+      
     };
     $scope.savingAdd = false;
 
@@ -152,7 +152,7 @@ app.controller(
       // Chuẩn model giống PurchaseOrderModel bên C#
       var model = {
         SupplierID: $scope.newPurchaseOrder.SupplierID,
-        Status: $scope.newPurchaseOrder.Status
+        
         // POID và OrderDate không cần nhập vì SQL tự tăng / tự tạo
       };
 
@@ -191,7 +191,7 @@ app.controller(
     $scope.resetAddForm = function () {
       $scope.newPurchaseOrder = {
         SupplierID: "",
-        Status: ""
+        
       };
       if ($scope.frmAddPO) {
         $scope.frmAddPO.$setPristine();
