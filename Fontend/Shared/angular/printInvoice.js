@@ -29,15 +29,18 @@ app.controller("printInvoiceCtrl", function ($scope, $window) {
     var price = Number(it.UnitPrice) || 0;
     var qty = Number(it.Quantity) || 0;
     var vatRate = Number(it.VATRate) || 0;
+    var discount = Number(it.Discount || 0); // <--- NEW
 
-    var base = price * qty;
-    var lineVat = base * (vatRate / 100);
+    // áp dụng discount
+    var baseAfterDiscount = price * qty * (1 - discount / 100);
 
-    it._lineBase = base;
+    var lineVat = baseAfterDiscount * (vatRate / 100);
+
+    it._lineBase = baseAfterDiscount;
     it._lineVat = lineVat;
-    it._lineTotal = base + lineVat;
+    it._lineTotal = baseAfterDiscount + lineVat;
 
-    subtotal += base;
+    subtotal += baseAfterDiscount;
     vatTotal += lineVat;
   });
 

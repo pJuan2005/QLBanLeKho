@@ -2219,12 +2219,13 @@ GO
 USE [QLBanLeKho]
 GO
 
-/****** Object:  StoredProcedure [dbo].[sp_ar_open_invoices]    Script Date: 11/26/2025 2:07:23 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_ar_open_invoices]    Script Date: 11/28/2025 2:24:59 PM ******/
 SET ANSI_NULLS ON
 GO
 
 SET QUOTED_IDENTIFIER ON
 GO
+
 
 CREATE PROCEDURE [dbo].[sp_ar_open_invoices]
 (
@@ -2241,7 +2242,8 @@ BEGIN
     ;WITH Invoice AS (
         SELECT 
             s.SaleID,
-            s.SaleDate,
+            -- ưu tiên ngày hóa đơn, nếu chưa có thì lấy SaleDate
+            SaleDate     = ISNULL(i.InvoiceDate, s.SaleDate),
             s.CustomerID,
             c.CustomerName,
             c.Phone,
@@ -2260,17 +2262,21 @@ BEGIN
                     WHERE p.SaleID = s.SaleID
                 ), 0),
 
-            s.PaymentStatus
+            s.PaymentStatus,
+            i.InvoiceNo        -- 🔥 thêm mã hóa đơn
         FROM Sales s
         LEFT JOIN Customers c ON c.CustomerID = s.CustomerID
+        LEFT JOIN Invoices  i ON i.SaleID     = s.SaleID   -- 🔥 join bảng Invoices
         WHERE
-            (@search = N''
+            (
+                @search = N''
                 OR c.CustomerName LIKE N'%'+@search+N'%'
-                OR c.Phone LIKE N'%'+@search+N'%'
+                OR c.Phone       LIKE N'%'+@search+N'%'
                 OR CAST(s.SaleID AS NVARCHAR(20)) LIKE N'%'+@search+N'%'
+                OR i.InvoiceNo   LIKE N'%'+@search+N'%'  -- 🔥 search theo InvoiceNo
             )
-            AND (@from_date IS NULL OR s.SaleDate >= @from_date)
-            AND (@to_date   IS NULL OR s.SaleDate < DATEADD(DAY, 1, @to_date))
+            AND (@from_date IS NULL OR ISNULL(i.InvoiceDate, s.SaleDate) >= @from_date)
+            AND (@to_date   IS NULL OR ISNULL(i.InvoiceDate, s.SaleDate) <  DATEADD(DAY, 1, @to_date))
     )
 
     SELECT 
@@ -2283,7 +2289,8 @@ BEGIN
         TotalAmount,
         PaidAmount,
         Remaining,
-        PaymentStatus
+        PaymentStatus,
+        InvoiceNo           -- 🔥 trả thêm về cho FE
     FROM Invoice
     WHERE Remaining > 0    -- chỉ hóa đơn còn nợ
     ORDER BY SaleDate DESC, SaleID DESC
@@ -2291,6 +2298,9 @@ BEGIN
     FETCH NEXT @page_size ROWS ONLY;
 END;
 GO
+
+
+
 
 
 USE [QLBanLeKho]
