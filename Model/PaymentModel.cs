@@ -67,7 +67,10 @@ namespace Model
         public decimal Remaining { get; set; }
 
         public string PaymentStatus { get; set; }
+
+        public string InvoiceNo { get; set; }  
     }
+
 
     // ====== DTO cho AP: danh sách phiếu nhập chưa trả đủ ======
     public class ApOpenBillDto

@@ -120,6 +120,7 @@ app.controller(
     // ==========================================================
     // 4. LOAD AR – HÓA ĐƠN BÁN CÒN NỢ
     // ==========================================================
+    // 4. LOAD AR – HÓA ĐƠN BÁN CÒN NỢ
     $scope.loadArOpenInvoices = function () {
       var req = $scope.buildRequest();
 
@@ -129,8 +130,18 @@ app.controller(
           var res = resp.data || {};
           var list = res.data || res.Data || [];
 
-          // Gắn status tính từ paidAmount/remaining
           list.forEach(function (x) {
+            // chuẩn hoá tên field, lỡ BE trả PascalCase
+            x.invoiceNo = x.invoiceNo || x.InvoiceNo;
+            x.saleID = x.saleID || x.SaleID;
+            x.saleDate = x.saleDate || x.SaleDate;
+            x.customerName = x.customerName || x.CustomerName;
+            x.phone = x.phone || x.Phone;
+            x.totalAmount = x.totalAmount || x.TotalAmount;
+            x.paidAmount = x.paidAmount || x.PaidAmount;
+            x.remaining = x.remaining || x.Remaining;
+
+            // Gắn status tính từ paidAmount/remaining
             if (!x.paidAmount || x.paidAmount === 0) {
               x._status = "unpaid";
             } else {
