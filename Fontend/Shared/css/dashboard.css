@@ -963,3 +963,12 @@ input:focus {
   width: 16px;
   height: 16px;
 }
+
+.green-text {
+  color: green;
+  font-weight: 600;
+}
+.red-text {
+  color: #ef4444;
+  font-weight: 600;
+}
