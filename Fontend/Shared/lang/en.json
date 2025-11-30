@@ -48,6 +48,7 @@
   "PAGING_ALL": "ALL",
   "PAGING_PREV": "Prev",
   "PAGING_NEXT": "Next",
+  "PAGING_PAGE": "Page",
 
   "PRICE_FROM": "From",
   "PRICE_TO": "To",
@@ -202,5 +203,138 @@
   "DELETE_STOCKCARD_CONFIRM": "Are you sure you want to delete this stockcard? This action cannot be undone.",
   "BTN_DELETE_STOCKCARD": "Delete Stockcard",
 
-  "NO_STOCK_DATA": "No stock data available"
+  "NO_STOCK_DATA": "No stock data available",
+
+
+
+
+
+
+
+  
+  "DASHBOARD": "Dashboard",
+  "DASHBOARD_TITLE": "Dashboard",
+  "DASHBOARD_SUBTITLE": "Overview of business performance",
+
+  "KPI_TOTAL_REVENUE": "Total Revenue today",
+  "KPI_TOTAL_PROFIT": "Total GrossProfit today",
+  "KPI_BEST_CATEGORY": "Best Category today",
+  "KPI_TOP_PRODUCT": "Most Sold Product today",
+  "KPI_VS_YESTERDAY": "vs yesterday",
+
+  "CHART_DAILY_SALES_PROFIT": "Revenue & GrossProfit Last 7 Days",
+  "CHART_TOP_PRODUCTS": "Top 5 best selling products in the past 7 days",
+  "CHART_RECENT_TRANSACTIONS": "Recent Transactions",
+
+  "TB_INVOICE_ID": "Invoice #",
+  "TB_DATE": "Date",
+  "TB_CUSTOMER": "Customer",
+  "TB_TOTAL": "Total",
+  "TB_PAYMENT_METHOD": "Payment Method",
+  "TB_STATUS": "Status",
+  "TB_ACTION": "Action",
+  "NO_SALES_FOUND": "No sales found.",
+
+  "SALE_DETAIL_TITLE": "Sale Details",
+  "SALE_DETAIL_SUB": "View complete information about this sale transaction",
+
+  "LABEL_INVOICE_NO": "Invoice Number",
+  "LABEL_DATETIME": "Date & Time",
+  "LABEL_CUSTOMER": "Customer",
+  "LABEL_CASHIER": "Cashier",
+  "LABEL_PAYMENT_METHOD": "Payment Method",
+  "LABEL_STATUS": "Status",
+
+  "SECTION_ITEMS_PURCHASED": "Items Purchased",
+
+  "TH_PRODUCT": "Product",
+  "TH_SKU": "SKU",
+  "TH_QTY": "Qty",
+  "TH_PRICE": "Price",
+  "TH_DISCOUNT": "Discount",
+  "TH_VAT": "VAT %",
+  "TH_SUBTOTAL": "Subtotal",
+
+  "TOTAL_SUBTOTAL": "Subtotal",
+  "TOTAL_VAT_AMOUNT": "VAT Amount",
+  "TOTAL_FINAL": "Total",
+  "TOTAL_CUSTOMER_PAID": "Customer Paid",
+
+  "INVOICE_TITLE": "SALES INVOICE",
+  "INVOICE_STORE_NAME": "RetailPro Store",
+  "INVOICE_ADDRESS": "99 Duc Minh, Thanh Binh, Hai Duong",
+
+  "LABEL_INVOICE": "Invoice",
+  "LABEL_PAYMENT_STATUS": "Payment Status",
+
+  "INVOICE_TH_ITEM": "Item",
+  "INVOICE_TH_QTY": "Qty",
+  "INVOICE_TH_PRICE": "Price",
+  "INVOICE_TH_TOTAL": "Total",
+
+  "INVOICE_FOOTER1": "Thank you for your purchase!",
+  "INVOICE_FOOTER2":"Please keep this invoice for warranty purposes.",
+
+  "BTN_PRINT_PDF": "Print PDF (A5)",
+  "BTN_VIEW_DETAILS": "View Sale Details",
+  "BTN_PRINT_INVOICE": "Print Invoice",
+  "Sun":"Sun", 
+  "Mon":"Mon", 
+  "Tue":"Tue", 
+  "Wed":"Wed", 
+  "Thu":"Thu", 
+  "Fri":"Fri", 
+  "Sat":"Sat",
+
+
+
+
+
+
+  "REPORT_TITLE": "Business Reports",
+
+  "TAB_SALES_SUMMARY": "Sales Summary",
+  "TAB_IMPORT_EXPORT": "Import / Sale",
+  "TAB_STOCK_REPORT": "Stock Report",
+
+  "TOTAL_REVENUE": "Total Revenue",
+  "TOTAL_PROFIT": "Total GrossProfit",
+  "BEST_CATEGORY": "Best Category",
+  "MOST_SOLD_PRODUCT": "Most Sold Product",
+  "VS_LAST_MONTH": "vs last month",
+
+  "DAILY_REVENUE_BY_MONTH": "Daily Revenue (By Month)",
+
+  "TOTAL_IMPORT": "Total Import",
+  "TOTAL_EXPORT": "Total Sale",
+  "LEAST": "Least",
+
+  "MOST_IMPORTED_PRODUCT": "Most Imported Product",
+  "MOST_EXPORTED_PRODUCT": "Most Saled Product",
+
+  "IMPORT_EXPORT_TITLE": "Import / Sale",
+
+  "TOTAL_QUANTITY": "Total Quantity",
+  "BELOW_MIN_STOCK": "Below Minimum Stock",
+  "TOTAL_STOCK_VALUE": "Total Stock Value",
+  "EXPIRING_SOON": "Product is about to expire",
+
+  "STOCK_BY_BATCH": "Top 5 longest lasting products",
+  "MIN_DAYS_EXPIRE": "Top 5 products with the nearest expiration date",
+  "PRODUCT_BELOW_MIN": "Product Below Minimum Stock",
+
+  "TB_PRODUCT": "Product",
+  "TB_SKU": "SKU",
+  "TB_BATCH_NO": "Batch No",
+  "TB_FIRST_RECEIPT": "First Receipt",
+  "TB_QTY_IN": "Quantity In",
+  "TB_QTY_REMAIN": "Quantity Remain",
+  "TB_BALANCE": "Balance",
+  "TB_AGE_DAYS": "Age (Days)",
+  "TB_MIN_STOCK": "Min Stock",
+  "TB_EXPIRY_DATE": "Expiry Date",
+  "TB_DAYS_LEFT": "Days Left"
 }
+
+
+

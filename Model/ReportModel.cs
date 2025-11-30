@@ -16,17 +16,13 @@
         public decimal Revenue { get; set; }
         public decimal GrossProfit { get; set; }
 
-        // BestCategory vẫn là theo tháng
         public string BestCategory { get; set; }
 
-        // GIỮ LẠI nếu muốn, hoặc bỏ nếu FE không dùng nữa
         public string TopProduct { get; set; }
 
-        public string BestSupplier { get; set; }
-
         // ====== THÊM MỚI ======
-        public string DailyTopProduct { get; set; }     // map từ cột DailyTopProduct
-        public string MonthlyTopProduct { get; set; }   // map từ cột MonthlyTopProduct
+        //public string DailyTopProduct { get; set; }     // map từ cột DailyTopProduct
+        //public string MonthlyTopProduct { get; set; }   // map từ cột MonthlyTopProduct
     }
 
 
@@ -59,6 +55,7 @@
         public int QtyIn { get; set; }
         public int QtyRemain { get; set; }
         public int AgeInDays { get; set; }
+        public int Balance { get; set; }
         public int MinStock { get; set; }
 
 
