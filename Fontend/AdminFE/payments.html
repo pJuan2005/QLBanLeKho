@@ -456,7 +456,9 @@
 
                 <tbody>
                   <tr ng-repeat="inv in arInvoices | filter: filterByStatus">
-                    <td>#{{inv.saleID}}</td>
+                    <td>#{{inv.invoiceNo || inv.saleID}}</td>
+                    <!-- nếu chưa có invoiceNo thì fallback về saleID -->
+
                     <td>{{inv.saleDate | date:'dd/MM/yyyy'}}</td>
                     <td>{{inv.customerName}}</td>
                     <td>{{inv.phone}}</td>

@@ -12,6 +12,6 @@ namespace Model
         public int IssueID { get; set; }      
         public DateTime IssueDate { get; set; }     
         public int UserID { get; set; }                
-        public decimal TotalAmount { get; set; }
+       
     }
 }

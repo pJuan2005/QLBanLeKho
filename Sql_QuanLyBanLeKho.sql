@@ -103,7 +103,7 @@ CREATE TABLE [dbo].[GoodsIssueDetails](
 	[ProductID] [int] NOT NULL,
 	[ProductName] [nvarchar](100) NOT NULL,
 	[Quantity] [int] NOT NULL,
-	[UnitPrice] [decimal](18, 2) NOT NULL,
+	
 PRIMARY KEY CLUSTERED 
 (
 	[IssueID] ASC,
@@ -118,6 +118,7 @@ ON DELETE CASCADE
 GO
 
 
+
 USE [QLBanLeKho]
 GO
 
@@ -129,29 +130,31 @@ SET QUOTED_IDENTIFIER ON
 GO
 
 CREATE TABLE [dbo].[GoodsIssues](
-	[IssueID] [int] IDENTITY(1,1) NOT NULL,
-	[IssueDate] [datetime] NOT NULL,
-	[UserID] [int] NOT NULL,
-	[TotalAmount] [decimal](18, 2) NULL,
+    [IssueID] [int] IDENTITY(1,1) NOT NULL,
+    [IssueDate] [datetime] NOT NULL,
+    [UserID] [int] NOT NULL,
 PRIMARY KEY CLUSTERED 
 (
-	[IssueID] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+    [IssueID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, 
+       ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) 
+       ON [PRIMARY]
 ) ON [PRIMARY]
 GO
 
-ALTER TABLE [dbo].[GoodsIssues] ADD  DEFAULT (getdate()) FOR [IssueDate]
+-- Default constraint cho IssueDate vẫn còn
+ALTER TABLE [dbo].[GoodsIssues] ADD DEFAULT (getdate()) FOR [IssueDate]
 GO
 
-ALTER TABLE [dbo].[GoodsIssues] ADD  DEFAULT ((0)) FOR [TotalAmount]
-GO
-
-ALTER TABLE [dbo].[GoodsIssues]  WITH CHECK ADD  CONSTRAINT [FK_GoodsIssues_Users] FOREIGN KEY([UserID])
+-- Khóa ngoại tới bảng Users vẫn còn
+ALTER TABLE [dbo].[GoodsIssues] WITH CHECK ADD CONSTRAINT [FK_GoodsIssues_Users] FOREIGN KEY([UserID])
 REFERENCES [dbo].[Users] ([UserID])
 GO
 
 ALTER TABLE [dbo].[GoodsIssues] CHECK CONSTRAINT [FK_GoodsIssues_Users]
 GO
+
+
 
 
 USE [QLBanLeKho]
@@ -870,51 +873,8 @@ ALTER TABLE [dbo].[GoodsIssueDetails] ENABLE TRIGGER [trg_UpdateProductsQuantity
 GO
 
 
-USE [QLBanLeKho]
-GO
-
-/****** Object:  Trigger [dbo].[trg_UpdateTotalAmount_AfterDetailChange]    Script Date: 11/26/2025 2:01:01 PM ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
 
 
-CREATE TRIGGER [dbo].[trg_UpdateTotalAmount_AfterDetailChange]
-ON [dbo].[GoodsIssueDetails]
-AFTER INSERT
-AS
-BEGIN
-    SET NOCOUNT ON;
-
-    DECLARE @ChangedIssues TABLE (IssueID INT);
-
-    -- Lấy danh sách các IssueID bị ảnh hưởng
-    INSERT INTO @ChangedIssues
-    SELECT DISTINCT IssueID FROM inserted
-    UNION
-    SELECT DISTINCT IssueID FROM deleted;
-
-    -- Tính TotalAmount cho tất cả các IssueID (cộng thêm VAT)
-    UPDATE gi
-    SET gi.TotalAmount = ISNULL(t.TotalAmount, 0)
-    FROM GoodsIssues gi
-    INNER JOIN @ChangedIssues ci ON gi.IssueID = ci.IssueID
-    INNER JOIN (
-        SELECT 
-            d.IssueID,
-            SUM(d.Quantity * d.UnitPrice * (1 + ISNULL(p.VATRate, 0) / 100)) AS TotalAmount
-        FROM GoodsIssueDetails d
-        INNER JOIN Products p ON d.ProductID = p.ProductID
-        GROUP BY d.IssueID
-    ) t ON gi.IssueID = t.IssueID;
-
-END;
-GO
-
-ALTER TABLE [dbo].[GoodsIssueDetails] ENABLE TRIGGER [trg_UpdateTotalAmount_AfterDetailChange]
-GO
 
 
 USE [QLBanLeKho]
@@ -2259,12 +2219,13 @@ GO
 USE [QLBanLeKho]
 GO
 
-/****** Object:  StoredProcedure [dbo].[sp_ar_open_invoices]    Script Date: 11/26/2025 2:07:23 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_ar_open_invoices]    Script Date: 11/28/2025 2:24:59 PM ******/
 SET ANSI_NULLS ON
 GO
 
 SET QUOTED_IDENTIFIER ON
 GO
+
 
 CREATE PROCEDURE [dbo].[sp_ar_open_invoices]
 (
@@ -2281,7 +2242,8 @@ BEGIN
     ;WITH Invoice AS (
         SELECT 
             s.SaleID,
-            s.SaleDate,
+            -- ưu tiên ngày hóa đơn, nếu chưa có thì lấy SaleDate
+            SaleDate     = ISNULL(i.InvoiceDate, s.SaleDate),
             s.CustomerID,
             c.CustomerName,
             c.Phone,
@@ -2300,17 +2262,21 @@ BEGIN
                     WHERE p.SaleID = s.SaleID
                 ), 0),
 
-            s.PaymentStatus
+            s.PaymentStatus,
+            i.InvoiceNo        -- 🔥 thêm mã hóa đơn
         FROM Sales s
         LEFT JOIN Customers c ON c.CustomerID = s.CustomerID
+        LEFT JOIN Invoices  i ON i.SaleID     = s.SaleID   -- 🔥 join bảng Invoices
         WHERE
-            (@search = N''
+            (
+                @search = N''
                 OR c.CustomerName LIKE N'%'+@search+N'%'
-                OR c.Phone LIKE N'%'+@search+N'%'
+                OR c.Phone       LIKE N'%'+@search+N'%'
                 OR CAST(s.SaleID AS NVARCHAR(20)) LIKE N'%'+@search+N'%'
+                OR i.InvoiceNo   LIKE N'%'+@search+N'%'  -- 🔥 search theo InvoiceNo
             )
-            AND (@from_date IS NULL OR s.SaleDate >= @from_date)
-            AND (@to_date   IS NULL OR s.SaleDate < DATEADD(DAY, 1, @to_date))
+            AND (@from_date IS NULL OR ISNULL(i.InvoiceDate, s.SaleDate) >= @from_date)
+            AND (@to_date   IS NULL OR ISNULL(i.InvoiceDate, s.SaleDate) <  DATEADD(DAY, 1, @to_date))
     )
 
     SELECT 
@@ -2323,7 +2289,8 @@ BEGIN
         TotalAmount,
         PaidAmount,
         Remaining,
-        PaymentStatus
+        PaymentStatus,
+        InvoiceNo           -- 🔥 trả thêm về cho FE
     FROM Invoice
     WHERE Remaining > 0    -- chỉ hóa đơn còn nợ
     ORDER BY SaleDate DESC, SaleID DESC
@@ -2331,6 +2298,9 @@ BEGIN
     FETCH NEXT @page_size ROWS ONLY;
 END;
 GO
+
+
+
 
 
 USE [QLBanLeKho]
@@ -2801,12 +2771,11 @@ AS
 BEGIN
     SET NOCOUNT ON;
 
-    -- Bảng tạm chứa dữ liệu JSON (không còn BatchNo)
+    -- Bảng tạm chứa dữ liệu JSON (không còn BatchNo, cũng không còn UnitPrice)
     DECLARE @TempDetails TABLE (
         IssueID INT,
         ProductID INT,
-        Quantity INT,
-        UnitPrice DECIMAL(18,2)
+        Quantity INT
     );
 
     -- Đổ dữ liệu từ JSON vào bảng tạm
@@ -2814,32 +2783,31 @@ BEGIN
     SELECT 
         IssueID,
         ProductID,
-        Quantity,
-        UnitPrice
+        Quantity
     FROM OPENJSON(@JsonData)
     WITH (
         IssueID INT,
         ProductID INT,
-        Quantity INT,
-        UnitPrice DECIMAL(18,2)
+        Quantity INT
     );
 
     -- Thêm vào bảng chính, tự động lấy ProductName từ bảng Products
     INSERT INTO GoodsIssueDetails (
-        IssueID, ProductID, ProductName, Quantity, UnitPrice
+        IssueID, ProductID, ProductName, Quantity
     )
     SELECT 
         td.IssueID,
         td.ProductID,
         p.ProductName,
-        td.Quantity,
-        td.UnitPrice
+        td.Quantity
     FROM @TempDetails td
     INNER JOIN Products p ON td.ProductID = p.ProductID;
 
     SELECT '' AS message;
 END;
 GO
+
+
 
 
 USE [QLBanLeKho]
@@ -2890,14 +2858,14 @@ BEGIN
     SELECT 
         gid.ProductID,
         p.ProductName,
-        gid.Quantity,
-        gid.UnitPrice
+        gid.Quantity
+        
     FROM GoodsIssueDetails gid
     INNER JOIN Products p ON gid.ProductID = p.ProductID
     WHERE gid.IssueID = @IssueID
     ORDER BY gid.ProductID;
 END
-drop procedure [dbo].[sp_GoodsIssueDetails_get_by_id];
+
 
 --
 SET QUOTED_IDENTIFIER ON
@@ -2923,14 +2891,17 @@ BEGIN
 
     DECLARE @NewID INT;
 
-    INSERT INTO GoodsIssues (UserID, IssueDate, TotalAmount)
-    VALUES (@UserID, GETDATE(), 0);
+    -- Chỉ còn 2 cột để insert
+    INSERT INTO GoodsIssues (UserID, IssueDate)
+    VALUES (@UserID, GETDATE());
 
     SET @NewID = SCOPE_IDENTITY();
 
-    SELECT @NewID AS IssueID;  -- ← TRẢ VỀ ID
+    SELECT @NewID AS IssueID;  -- Trả về ID mới tạo
 END
 GO
+
+
 
 
 USE [QLBanLeKho]
@@ -2985,8 +2956,8 @@ BEGIN
     SELECT 
         IssueID,
         IssueDate,
-        UserID,
-        TotalAmount
+        UserID
+        
     FROM GoodsIssues
     WHERE IssueID = @IssueID;
 END;
@@ -3007,8 +2978,6 @@ GO
 CREATE PROCEDURE [dbo].[sp_GoodsIssues_search]
     @page_index INT,
     @page_size INT,
-    @MinTotalAmount DECIMAL(18,2) = NULL,
-    @MaxTotalAmount DECIMAL(18,2) = NULL,
     @UserID INT = NULL,
     @FromDate DATE = NULL,
     @ToDate DATE = NULL
@@ -3021,13 +2990,10 @@ BEGIN
             gi.IssueID,
             gi.IssueDate,
             gi.UserID,
-            gi.TotalAmount,
             COUNT(*) OVER() AS RecordCount
         FROM GoodsIssues gi
         WHERE 
-            (@MinTotalAmount IS NULL OR gi.TotalAmount >= @MinTotalAmount)
-            AND (@MaxTotalAmount IS NULL OR gi.TotalAmount <= @MaxTotalAmount)
-            AND (@UserID IS NULL OR gi.UserID = @UserID)
+            (@UserID IS NULL OR gi.UserID = @UserID)
             AND (@FromDate IS NULL OR gi.IssueDate >= @FromDate)
             AND (@ToDate IS NULL OR gi.IssueDate <= @ToDate)
     )
@@ -3038,6 +3004,8 @@ BEGIN
     FETCH NEXT @page_size ROWS ONLY;
 END;
 GO
+
+
 
 
 USE [QLBanLeKho]
@@ -4300,6 +4268,7 @@ BEGIN
 END
 GO
 
+drop procedure 
 
 USE [QLBanLeKho]
 GO

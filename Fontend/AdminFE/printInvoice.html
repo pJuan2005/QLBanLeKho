@@ -94,7 +94,7 @@
                       <td class="data name">{{ it.ProductName }}</td>
                       <td class="data qty">{{ it.Quantity }}</td>
                       <td class="data price">{{ formatVnd(it.UnitPrice) }}</td>
-                      <td class="data discount">0%</td>
+                      <td class="data discount">{{ it.Discount || 0 }}%</td>
                       <td class="data vat">{{ it.VATRate || 0 }}%</td>
                       <td class="data total">{{ formatVnd(it._lineTotal) }}</td>
                     </tr>
