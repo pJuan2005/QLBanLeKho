@@ -324,7 +324,9 @@
               alt=""
               class="icon"
             />
-            <a href="../AuthFE/login.html"><p class="logout">{{ t('LOGOUT') }}</p></a>
+            <a href="../AuthFE/login.html"
+              ><p class="logout">{{ t('LOGOUT') }}</p></a
+            >
           </div>
         </div>
       </div>
@@ -332,9 +334,7 @@
         <div class="container-top">
           <div class="container-top--left">
             <h1 class="name-system">{{ t('CUSTOMER_TITLE') }}</h1>
-            <p class="desc-system">
-              {{ t('CUSTOMER_DESC') }}
-            </p>
+            <p class="desc-system">{{ t('CUSTOMER_DESC') }}</p>
           </div>
           <div class="container-top--right">
             <div class="control" ng-click="openImportDialog()">
@@ -462,7 +462,9 @@
                     ? c.DebtLimit : 0) ) | number:0 }}đ
                   </td>
                   <td class="txt-right">
-                    <button class="link" ng-click="edit(c)">✎ {{ t('EDIT_RETURN5') }}</button>
+                    <button class="link" ng-click="edit(c)">
+                      ✎ {{ t('EDIT_RETURN5') }}
+                    </button>
                     <button class="link danger" ng-click="remove(c)">
                       🗑 {{ t('DELETE_TITLE5') }}
                     </button>
@@ -556,7 +558,7 @@
             ng-click="closeEditOnOverlay($event)"
           >
             <div class="form-edit__content" ng-click="$event.stopPropagation()">
-              <h3>class="title">{{ t('FORM_EDIT_TITLE') }}</h3>
+              <h3 class="title">{{ t('FORM_EDIT_TITLE') }}</h3>
               <form name="frmEdit" ng-submit="updateCustomer()">
                 <label for="name-edit">{{ t('LABEL_FULL_NAME') }}</label>
                 <input
@@ -627,8 +629,8 @@
             <div class="form-delete__content">
               <h3 class="title">{{ t('FORM_DELETE_TITLE') }}</h3>
               <p class="desc">
-                {{ t('FORM_DELETE_DESC1') }}
-                "{{deleting.customerName}}"? {{ t('FORM_DELETE_DESC2') }}
+                {{ t('FORM_DELETE_DESC1') }} "{{deleting.customerName}}"? {{
+                t('FORM_DELETE_DESC2') }}
               </p>
               <div class="dialog-footer">
                 <button class="cancel" ng-click="cancelDelete($event)">

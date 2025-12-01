@@ -92,9 +92,8 @@ namespace CoreApi.Controllers
                     maxTotalAmount = maxAmt;
                 }
 
-                if (formData.Keys.Contains("POID") &&
-                    !string.IsNullOrEmpty(Convert.ToString(formData["POID"])) &&
-                    int.TryParse(Convert.ToString(formData["POID"]), out var pid))
+                if ((formData.Keys.Contains("POID") || formData.Keys.Contains("poid")) &&
+                    int.TryParse(Convert.ToString(formData.ContainsKey("POID") ? formData["POID"] : formData["poid"]), out var pid))
                 {
                     poid = pid;
                 }

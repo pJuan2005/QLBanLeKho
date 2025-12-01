@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <!-- font -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
-        rel="stylesheet" />
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+      rel="stylesheet"
+    />
 
     <!-- css -->
     <link rel="stylesheet" href="../Shared/css/promotions.css" />
@@ -19,241 +19,283 @@
     <script src="../Shared/angular/promotions.js"></script>
     <script src="../Shared/angular/translation.js"></script>
     <title>Promotion</title>
+  </head>
 
-</head>
-
-<body ng-app="AppRetailPos" ng-controller="promotionCtrl">
+  <body ng-app="AppRetailPos" ng-controller="promotionCtrl">
     <div class="slide-bar">
-        <div class="slide-bar__header">
-            <div class="app-slideBar">
-                <div class="app-slideBar__left">
-                    <img src="../Shared/img/common/wheel.svg" alt="" class="icon" />
-                </div>
-                <div class="app-slideBar__right">
-                    <h1 class="name-app">RetailPro</h1>
-                    <p class="title-nameApp">Inventory & POS</p>
-                </div>
+      <div class="slide-bar__header">
+        <div class="app-slideBar">
+          <div class="app-slideBar__left">
+            <img src="../Shared/img/common/wheel.svg" alt="" class="icon" />
+          </div>
+          <div class="app-slideBar__right">
+            <h1 class="name-app">RetailPro</h1>
+            <p class="title-nameApp">Inventory & POS</p>
+          </div>
+        </div>
+      </div>
+      <div class="slide-bar__Content">
+        <p class="slide-bar__label">{{ t('NAVIGATION') }}</p>
+        <!-- menu button Dashboard -->
+        <a href="../AdminFE/dashboard.html" ng-if="canShow('dashboard')">
+          <div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img
+                src="../Shared/img/common/dashboard.svg"
+                alt=""
+                class="icon"
+              />
             </div>
-        </div>
-        <div class="slide-bar__Content">
-            <p class="slide-bar__label">{{ t('NAVIGATION') }}</p>
-            <!-- menu button Dashboard -->
-            <a href="../AdminFE/dashboard.html" ng-if="canShow('dashboard')">
-                <div class="slide-bar__MenuButton">
-                    <div class="MenuButton-left">
-                        <img src="../Shared/img/common/dashboard.svg" alt="" class="icon" />
-                    </div>
-                    <div class="MenuButton-right">
-                        <p class="name-menu">{{ t('NAV_DASHBOARD') }}</p>
-                    </div>
-                </div>
-            </a>
-            <!-- menu button POS -->
-            <a href="../AdminFE/pos.html" ng-if="canShow('pos')">
-                <div class="slide-bar__MenuButton">
-                    <div class="MenuButton-left">
-                        <img src="../Shared/img/common/pos.svg" alt="" class="icon" />
-                    </div>
-                    <div class="MenuButton-right">
-                        <p class="name-menu">{{ t('NAV_POS') }}</p>
-                    </div>
-                </div>
-            </a>
-            <!-- menu button Products -->
-            <a href="../AdminFE/products.html" ng-if="canShow('products')">
-                <div class="slide-bar__MenuButton">
-                    <div class="MenuButton-left">
-                        <img src="../Shared/img/common/product.svg" alt="" class="icon" />
-                    </div>
-                    <div class="MenuButton-right">
-                        <p class="name-menu">P{{ t('NAV_PRODUCTS') }}</p>
-                    </div>
-                </div>
-            </a>
-            <!-- menu button Categories -->
-            <a href="../AdminFE/categories.html" ng-if="canShow('categories')">
-                <div class="slide-bar__MenuButton">
-                    <div class="MenuButton-left">
-                        <img src="../Shared/img/common/category.svg" alt="" class="icon" />
-                    </div>
-                    <div class="MenuButton-right">
-                        <p class="name-menu">{{ t('NAV_CATEGORIES') }}</p>
-                    </div>
-                </div>
-            </a>
-
-            <!-- menu button Promotions -->
-            <a href="../AdminFE/promotions.html" ng-if="canShow('promotions')">
-                <div class="slide-bar__MenuButton slide-bar__MenuButton--active">
-                    <div class="MenuButton-left">
-                        <img src="../Shared/img/common/promotion.svg" alt="" class="icon" />
-                    </div>
-                    <div class="MenuButton-right">
-                        <p class="name-menu-active">{{ t('NAV_PROMOTIONS') }}</p>
-                    </div>
-                </div>
-            </a>
-            <!-- menu button Customers -->
-            <a href="../AdminFE/customers.html" ng-if="canShow('customers')">
-                <div class="slide-bar__MenuButton ">
-                    <div class="MenuButton-left">
-                        <img src="../Shared/img/common/customer.svg" alt="" class="icon" />
-                    </div>
-                    <div class="MenuButton-right">
-                        <p class="name-menu">{{ t('NAV_CUSTOMERS') }}</p>
-                    </div>
-                </div>
-            </a>
-            <!-- menu button Suppliers -->
-            <a href="../AdminFE/suppliers.html" ng-if="canShow('suppliers')">
-                <div class="slide-bar__MenuButton">
-                    <div class="MenuButton-left">
-                        <img src="../Shared/img/common/supplier.svg" alt="" class="icon" />
-                    </div>
-                    <div class="MenuButton-right">
-                        <p class="name-menu">{{ t('NAV_SUPPLIERS') }}</p>
-                    </div>
-                </div>
-            </a>
-            <!-- menu button Purchase Orders -->
-            <a href="../AdminFE/purchaseorders.html" ng-if="canShow('purchaseOrders')">
-                <div class="slide-bar__MenuButton">
-                    <div class="MenuButton-left">
-                        <img src="../Shared/img/common/purchaseorder.svg" alt="" class="icon" />
-                    </div>
-                    <div class="MenuButton-right">
-                        <p class="name-menu">{{ t('NAV_PURCHASE_ORDERS') }}</p>
-                    </div>
-                </div>
-            </a>
-            <!-- menu button StockCard -->
-            <a href="../AdminFE/stockcard.html" ng-if="canShow('stock')">
-                <div class="slide-bar__MenuButton">
-                    <div class="MenuButton-left">
-                        <img src="../Shared/img/common/stock.svg" alt="" class="icon" />
-                    </div>
-                    <div class="MenuButton-right">
-                        <p class="name-menu">{{ t('NAV_STOCK') }}</p>
-                    </div>
-                </div>
-            </a>
-
-            <!-- menu button Goods Receipts -->
-            <a href="../AdminFE/goodsreceipts.html" ng-if="canShow('greceipts')">
-                <div class="slide-bar__MenuButton">
-                    <div class="MenuButton-left">
-                        <img src="../Shared/img/common/goodReceipt.svg" alt="" class="icon" />
-                    </div>
-                    <div class="MenuButton-right">
-                        <p class="name-menu">{{ t('GOODS_RECEIPTS') }}</p>
-                    </div>
-                </div>
-            </a>
-
-            <!-- menu button Goods Issues -->
-            <a href="../AdminFE/goodsissues.html" ng-if="canShow('gissues')">
-                <div class="slide-bar__MenuButton ">
-                    <div class="MenuButton-left">
-                        <img src="../Shared/img/common/goodIssues.svg" alt="" class="icon" />
-                    </div>
-                    <div class="MenuButton-right">
-                        <p class="name-menu">{{ t('GOODS_ISSUES') }}</p>
-                    </div>
-                </div>
-            </a>
-
-            <!-- menu button Sales -->
-            <a href="../AdminFE/sales.html" ng-if="canShow('sales')">
-                <div class="slide-bar__MenuButton">
-                    <div class="MenuButton-left">
-                        <img src="../Shared/img/common/sales.svg" alt="" class="icon" />
-                    </div>
-                    <div class="MenuButton-right">
-                        <p class="name-menu">{{ t('NAV_SALES') }}</p>
-                    </div>
-                </div>
-            </a>
-            <!-- menu button Returns -->
-            <a href="../AdminFE/returns.html" ng-if="canShow('returns')">
-                <div class="slide-bar__MenuButton">
-                    <div class="MenuButton-left">
-                        <img src="../Shared/img/common/return.svg" alt="" class="icon" />
-                    </div>
-                    <div class="MenuButton-right">
-                        <p class="name-menu">{{ t('NAV_RETURNS') }}</p>
-                    </div>
-                </div>
-            </a>
-            <!-- menu button Payments & Debts -->
-            <a href="../AdminFE/payments.html" ng-if="canShow('payments')">
-                <div class="slide-bar__MenuButton">
-                    <div class="MenuButton-left">
-                        <img src="../Shared/img/common/payments.svg" alt="" class="icon" />
-                    </div>
-                    <div class="MenuButton-right">
-                        <p class="name-menu">{{ t('NAV_PAYMENTS') }}</p>
-                    </div>
-                </div>
-            </a>
-            <!-- menu button Reports -->
-            <a href="../AdminFE/reports.html" ng-if="canShow('reports')">
-                <div class="slide-bar__MenuButton">
-                    <div class="MenuButton-left">
-                        <img src="../Shared/img/common/report.svg" alt="" class="icon" />
-                    </div>
-                    <div class="MenuButton-right">
-                        <p class="name-menu">{{ t('NAV_REPORTS') }}</p>
-                    </div>
-                </div>
-            </a>
-            <!-- menu button Audit Log -->
-            <a href="../AdminFE/auditlog.html" ng-if="canShow('auditLog')">
-                <div class="slide-bar__MenuButton">
-                    <div class="MenuButton-left">
-                        <img src="../Shared/img/common/auditlog.svg" alt="" class="icon" />
-                    </div>
-                    <div class="MenuButton-right">
-                        <p class="name-menu">{{ t('NAV_AUDIT_LOG') }}</p>
-                    </div>
-                </div>
-            </a>
-            <!-- menu button Users -->
-            <a href="../AdminFE/users.html" ng-if="canShow('users')">
-                <div class="slide-bar__MenuButton">
-                    <div class="MenuButton-left">
-                        <img src="../Shared/img/common/user.svg" alt="" class="icon" />
-                    </div>
-                    <div class="MenuButton-right">
-                        <p class="name-menu">{{ t('NAV_USERS') }}</p>
-                    </div>
-                </div>
-            </a>
-            <!-- menu button Settings -->
-            <a href="../AdminFE/settings.html" ng-if="canShow('settings')">
-                <div class="slide-bar__MenuButton">
-                    <div class="MenuButton-left">
-                        <img src="../Shared/img/common/setting.svg" alt="" class="icon" />
-                    </div>
-                    <div class="MenuButton-right">
-                        <p class="name-menu">{{ t('NAV_SETTINGS') }}</p>
-                    </div>
-                </div>
-            </a>
-        </div>
-        <div class="slide-bar__footer">
-            <div class="app-slide-bar">
-                <div class="ava">
-                    <img class="ava" src="../Shared/img/common/ava.svg" alt="" />
-                </div>
-                <div class="info">
-                    <p class="name">{{currentUser.fullname}}</p>
-                    <p class="role">{{currentUser.role}}</p>
-                </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">{{ t('NAV_DASHBOARD') }}</p>
             </div>
+          </div>
+        </a>
+        <!-- menu button POS -->
+        <a href="../AdminFE/pos.html" ng-if="canShow('pos')">
+          <div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img src="../Shared/img/common/pos.svg" alt="" class="icon" />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">{{ t('NAV_POS') }}</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button Products -->
+        <a href="../AdminFE/products.html" ng-if="canShow('products')">
+          <div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img src="../Shared/img/common/product.svg" alt="" class="icon" />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">{{ t('NAV_PRODUCTS') }}</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button Categories -->
+        <a href="../AdminFE/categories.html" ng-if="canShow('categories')">
+          <div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img
+                src="../Shared/img/common/category.svg"
+                alt=""
+                class="icon"
+              />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">{{ t('NAV_CATEGORIES') }}</p>
+            </div>
+          </div>
+        </a>
+
+        <!-- menu button Promotions -->
+        <a href="../AdminFE/promotions.html" ng-if="canShow('promotions')">
+          <div class="slide-bar__MenuButton slide-bar__MenuButton--active">
+            <div class="MenuButton-left">
+              <img
+                src="../Shared/img/common/promotion.svg"
+                alt=""
+                class="icon"
+              />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu-active">{{ t('NAV_PROMOTIONS') }}</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button Customers -->
+        <a href="../AdminFE/customers.html" ng-if="canShow('customers')">
+          <div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img
+                src="../Shared/img/common/customer.svg"
+                alt=""
+                class="icon"
+              />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">{{ t('NAV_CUSTOMERS') }}</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button Suppliers -->
+        <a href="../AdminFE/suppliers.html" ng-if="canShow('suppliers')">
+          <div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img
+                src="../Shared/img/common/supplier.svg"
+                alt=""
+                class="icon"
+              />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">{{ t('NAV_SUPPLIERS') }}</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button Purchase Orders -->
+        <a
+          href="../AdminFE/purchaseorders.html"
+          ng-if="canShow('purchaseOrders')"
+        >
+          <div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img
+                src="../Shared/img/common/purchaseorder.svg"
+                alt=""
+                class="icon"
+              />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">{{ t('NAV_PURCHASE_ORDERS') }}</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button StockCard -->
+        <a href="../AdminFE/stockcard.html" ng-if="canShow('stock')">
+          <div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img src="../Shared/img/common/stock.svg" alt="" class="icon" />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">{{ t('NAV_STOCK') }}</p>
+            </div>
+          </div>
+        </a>
+
+        <!-- menu button Goods Receipts -->
+        <a href="../AdminFE/goodsreceipts.html" ng-if="canShow('greceipts')">
+          <div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img
+                src="../Shared/img/common/goodReceipt.svg"
+                alt=""
+                class="icon"
+              />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">{{ t('GOODS_RECEIPTS') }}</p>
+            </div>
+          </div>
+        </a>
+
+        <!-- menu button Goods Issues -->
+        <a href="../AdminFE/goodsissues.html" ng-if="canShow('gissues')">
+          <div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img
+                src="../Shared/img/common/goodIssues.svg"
+                alt=""
+                class="icon"
+              />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">{{ t('GOODS_ISSUES') }}</p>
+            </div>
+          </div>
+        </a>
+
+        <!-- menu button Sales -->
+        <a href="../AdminFE/sales.html" ng-if="canShow('sales')">
+          <div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img src="../Shared/img/common/sales.svg" alt="" class="icon" />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">{{ t('NAV_SALES') }}</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button Returns -->
+        <a href="../AdminFE/returns.html" ng-if="canShow('returns')">
+          <div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img src="../Shared/img/common/return.svg" alt="" class="icon" />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">{{ t('NAV_RETURNS') }}</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button Payments & Debts -->
+        <a href="../AdminFE/payments.html" ng-if="canShow('payments')">
+          <div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img
+                src="../Shared/img/common/payments.svg"
+                alt=""
+                class="icon"
+              />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">{{ t('NAV_PAYMENTS') }}</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button Reports -->
+        <a href="../AdminFE/reports.html" ng-if="canShow('reports')">
+          <div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img src="../Shared/img/common/report.svg" alt="" class="icon" />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">{{ t('NAV_REPORTS') }}</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button Audit Log -->
+        <a href="../AdminFE/auditlog.html" ng-if="canShow('auditLog')">
+          <div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img
+                src="../Shared/img/common/auditlog.svg"
+                alt=""
+                class="icon"
+              />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">{{ t('NAV_AUDIT_LOG') }}</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button Users -->
+        <a href="../AdminFE/users.html" ng-if="canShow('users')">
+          <div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img src="../Shared/img/common/user.svg" alt="" class="icon" />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">{{ t('NAV_USERS') }}</p>
+            </div>
+          </div>
+        </a>
+        <!-- menu button Settings -->
+        <a href="../AdminFE/settings.html" ng-if="canShow('settings')">
+          <div class="slide-bar__MenuButton">
+            <div class="MenuButton-left">
+              <img src="../Shared/img/common/setting.svg" alt="" class="icon" />
+            </div>
+            <div class="MenuButton-right">
+              <p class="name-menu">{{ t('NAV_SETTINGS') }}</p>
+            </div>
+          </div>
+        </a>
+      </div>
+      <div class="slide-bar__footer">
+        <div class="app-slide-bar">
+          <div class="ava">
+            <img class="ava" src="../Shared/img/common/ava.svg" alt="" />
+          </div>
+          <div class="info">
+            <p class="name">{{currentUser.fullname}}</p>
+            <p class="role">{{currentUser.role}}</p>
+          </div>
         </div>
+      </div>
     </div>
     <div class="app-layout">
-        <div class="top-bar">
+      <div class="top-bar">
         <div class="top-bar__content">
           <div class="top-bar__left" style="visibility: hidden">
             <img src="../Shared/img/common/search.svg" alt="" class="icon" />
@@ -288,266 +330,383 @@
               alt=""
               class="icon"
             />
-            <a href="../AuthFE/login.html"><p class="logout">{{ t('LOGOUT') }}</p></a>
+            <a href="../AuthFE/login.html"
+              ><p class="logout">{{ t('LOGOUT') }}</p></a
+            >
           </div>
         </div>
       </div>
-        <div class="app-layout-content">
-            <div class="container-top">
-                <div class="container-top--left">
-                    <h1 class="name-system">{{ t('PROMO_TITLE') }}</h1>
-                    <p class="desc-system">
-                        {{ t('PROMO_DESC') }}
-                    </p>
-                </div>
-                <div class="container-top--right">
-
-                    <div class="control add-promotion" ng-click="openAdd()">
-                        <img src="../Shared/img/common/plus.svg" alt="" class="icon-control" />
-                        <p class="name-control">{{ t('PROMO_ADD') }}</p>
-                    </div>
-                </div>
+      <div class="app-layout-content">
+        <div class="container-top">
+          <div class="container-top--left">
+            <h1 class="name-system">{{ t('PROMO_TITLE') }}</h1>
+            <p class="desc-system">{{ t('PROMO_DESC') }}</p>
+          </div>
+          <div class="container-top--right">
+            <div class="control add-promotion" ng-click="openAdd()">
+              <img
+                src="../Shared/img/common/plus.svg"
+                alt=""
+                class="icon-control"
+              />
+              <p class="name-control">{{ t('PROMO_ADD') }}</p>
             </div>
-            <div class="container-card">
-                <div class="card">
-                    <p class="name-card">{{ t('PROMO_TOTAL') }}</p>
-                    <p class="data-card">{{stats.totalPromotion}}</p>
-                </div>
-                <div class="card">
-                    <p class="name-card">{{ t('PROMO_TOTAL_ACTIVE') }}</p>
-                    <p class="data-card">{{stats.totalActive}}</p>
-                </div>
-                <div class="card">
-                    <p class="name-card">{{ t('PROMO_TOTAL_EXPIRED') }}</p>
-                    <p class="data-card">{{stats.totalExpired}}</p>
-                </div>
-            </div>
-
-            <div class="search-promotion">
-                <div class="search-group">
-                    <label for="startDate">{{ t('SEARCH_START_DATE') }}</label>
-                    <input type="date" id="startDate" ng-model="search.fromDate" class="search-input" />
-                </div>
-
-                <div class="search-group">
-                    <label for="endDate">{{ t('SEARCH_END_DATE') }}</label>
-                    <input type="date" id="endDate" ng-model="search.toDate" class="search-input" />
-                </div>
-
-                <div class="search-group">
-                    <label for="status">{{ t('SEARCH_STATUS') }}</label>
-                    <select id="status" ng-model="search.status" class="search-input">
-                        <option value="">-- {{ t('STATUS_ALL') }} --</option>
-                        <option value="Active">{{ t('STATUS_ACTIVE') }}</option>
-                        <option value="Expired">{{ t('STATUS_EXPIRED') }}</option>
-                    </select>
-                </div>
-            </div>
-            <!-- phân trang -->
-            <div class="pager" ng-if="pager.total>0">
-                <div class="pager-info">
-                    {{ t('SHOWING') }}
-                    {{((pager.page-1)*pager.size)+1}}-{{Math.min(pager.page*pager.size,pager.total)}}
-                    {{ t('PAGING_OF') }} {{pager.total}} {{ t('PAGING_ITEMS') }}
-                </div>
-                <div class="page-nav">
-                    <label>
-                        {{ t('PAGE_SIZE') }}:
-                        <select ng-model="pager.size" ng-change="changeSize()">
-                            <option value="10">10</option>
-                            <option value="20">20</option>
-                            <option value="30">30</option>
-                        </select>
-                    </label>
-                    <button class="btn ghost" ng-disable="pager.page === 1" ng-click="go(1)">
-                        «
-                    </button>
-                    <button class="btn ghost" ng-disabled="pager.page === 1" ng-click="go(pager.page-1)">
-                        {{ t('PAGING_PREV') }}
-                    </button>
-                    <span class="page-no"></span>
-                    <button class="btn ghost" ng-disabled="pager.page >= pager.pages" ng-click="go(pager.page+1)">
-                        {{ t('PAGING_NEXT') }}
-                    </button>
-                    <button class="btn ghost" ng-disabled="pager.page >= pager.pages" ng-click="go(pager.pages)">
-                        »
-                    </button>
-                </div>
-            </div>
-
-            <div class="card-table">
-                <div class="table-responsive">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th class="id">{{ t('PROMO_ID') }}</th>
-                                <th class="name">{{ t('PROMO_NAME') }}</th>
-                                <th class="type">{{ t('PROMO_TYPE') }}</th>
-                                <th class="value">{{ t('PROMO_VALUE') }}</th>
-                                <th class="start">{{ t('PROMO_START') }}</th>
-                                <th class="end">{{ t('PROMO_END') }}</th>
-                                <th class="category">{{ t('PROMO_CATEGORY') }}</th>
-                                <th class="status">{{ t('PROMO_STATUS') }}</th>
-                                <th class="action txt-right">{{ t('PROMO_ACTIONS') }}</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr ng-repeat="p in promotions">
-                                <td>{{p.promotionID || p.PromotionID}}</td>
-                                <td>{{p.promotionName || p.PromotionName}}</td>
-                                <td>{{p.type || p.Type}}</td>
-                                <td>{{p.value || p.Value | number:0}}</td>
-                                <td>{{p.startDate || p.StartDate | date:'yyyy-MM-dd'}}</td>
-                                <td>{{p.endDate || p.EndDate | date:'yyyy-MM-dd'}}</td>
-                                <td>{{p.categoryID || p.CategoryID}}</td>
-                                <td>{{p.status || p.Status}}</td>
-                                <td class="txt-right">
-                                    <button class="link" ng-click="edit(p)">✎ {{ t('EDIT_RETURN5') }}</button>
-                                    <button class="link danger" ng-click="remove(p)">🗑 {{ t('DELETE_TITLE5') }}</button>
-                                </td>
-                            </tr>
-                            <tr ng-if="promotions.length == 0">
-                                <td colspan="9" class="empty">{{ t('PROMO_NO_DATA') }}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <!-- form -->
-            <div class="form">
-                <!-- Modal Add Promotion -->
-                <div class="form-add" ng-class="{open: showAdd}" ng-click="closeAddOnOverlay($event)">
-                    <div class="form-add__content" ng-click="$event.stopPropagation()">
-                        <h3 class="title">{{ t('FORM_ADD_PROMO_TITLE') }}</h3>
-                        <p class="desc">{{ t('FORM_ADD_PROMO_DESC') }}</p>
-                        <form name="frmAddPromotion" ng-submit="addPromotion()">
-                            <label for="name-add">{{ t('LABEL_PROMO_NAME') }}</label>
-                            <input type="text" id="name-add" required placeholder="{{ t('ENTER1') }}"
-                                ng-model="newPromotion.promotionName" />
-
-                            <div class="both">
-                                <div class="both-left">
-                                    <label for="type-add">{{ t('LABEL_PROMO_TYPE') }}</label>
-                                    <select id="type-add" required ng-model="newPromotion.type">
-                                        <option value="percent">{{ t('TYPE_PERCENT') }}</option>
-                                        <option value="amount">{{ t('TYPE_AMOUNT') }}</option>
-                                    </select>
-                                </div>
-                                <div class="both-right">
-                                    <label for="value-add">{{ t('LABEL_PROMO_VALUE') }}</label>
-                                    <input type="number" id="value-add" required placeholder="{{ t('ENTER2') }}"
-                                        ng-model="newPromotion.value" />
-                                </div>
-                            </div>
-
-                            <div class="both">
-                                <div class="both-left">
-                                    <label for="startDate-add">{{ t('LABEL_PROMO_START') }}</label>
-                                    <input type="date" id="startDate-add" required ng-model="newPromotion.startDate" />
-                                </div>
-                                <div class="both-right">
-                                    <label for="endDate-add">{{ t('LABEL_PROMO_END') }}</label>
-                                    <input type="date" id="endDate-add" required ng-model="newPromotion.endDate" />
-                                </div>
-                            </div>
-
-                            <label for="category-add">{{ t('LABEL_PROMO_CATEGORY_ID') }}</label>
-                            <input type="number" id="category-add" required placeholder="{{ t('ENTER3') }}"
-                                ng-model="newPromotion.categoryID" />
-
-                            <div class="dialog-footer">
-                                <button type="button" class="cancel" ng-click="cancelAdd()">{{ t('BTN_CANCEL') }}</button>
-                                <input class="submit" type="submit" value="{{ t('ADD_PROMO') }}"
-                                    ng-disabled="frmAddPromotion.$invalid || savingAdd" />
-                            </div>
-                        </form>
-                    </div>
-                </div>
-                <!-- edit promotion -->
-                <div class="form-edit" ng-class="{open: showEdit}" ng-click="closeEditOnOverlay($event)">
-                    <div class="form-edit__content" ng-click="$event.stopPropagation()">
-                        <h3 class="title">{{ t('FORM_EDIT_PROMO_TITLE') }}</h3>
-                        <form name="frmEditPromotion" ng-submit="updatePromotion()">
-                            <label for="name-edit">{{ t('LABEL_PROMO_NAME') }}</label>
-                            <input type="text" id="name-edit" required placeholder="{{ t('ENTER1') }}"
-                                ng-model="editingPromotion.PromotionName" />
-
-                            <div class="both">
-                                <div class="both-left">
-                                    <label for="type-edit">{{ t('LABEL_PROMO_TYPE') }}</label>
-                                    <select id="type-edit" required ng-model="editingPromotion.Type">
-                                        <option value="percent">{{ t('TYPE_PERCENT') }}</option>
-                                        <option value="amount">{{ t('TYPE_AMOUNT') }}</option>
-                                    </select>
-                                </div>
-                                <div class="both-right">
-                                    <label for="value-edit">{{ t('LABEL_PROMO_VALUE') }}</label>
-                                    <input type="number" id="value-edit" required placeholder="{{ t('ENTER2') }}"
-                                        ng-model="editingPromotion.Value" />
-                                </div>
-                            </div>
-
-                            <div class="both">
-                                <div class="both-left">
-                                    <label for="startDate-edit">{{ t('LABEL_PROMO_START') }}</label>
-                                    <input type="date" id="startDate-edit" required
-                                        ng-model="editingPromotion.StartDate" />
-                                </div>
-                                <div class="both-right">
-                                    <label for="endDate-edit">{{ t('LABEL_PROMO_END') }}</label>
-                                    <input type="date" id="endDate-edit" required ng-model="editingPromotion.EndDate" />
-                                </div>
-                            </div>
-
-                            <label for="category-edit">{{ t('LABEL_PROMO_CATEGORY_ID') }}</label>
-                            <input type="number" id="category-edit" required placeholder="{{ t('ENTER3') }}"
-                                ng-model="editingPromotion.CategoryID" />
-
-                            <label for="status-edit">{{ t('PROMO_STATUS') }}</label>
-                            <select id="status-edit" required ng-model="editingPromotion.Status">
-                                <option value="Active">{{ t('ACTION') }}</option>
-                                <option value="Expired">{{ t('STATUS_EXPIRED') }}</option>
-                            </select>
-
-                            <div class="dialog-footer">
-                                <button type="button" class="cancel" ng-click="cancelEdit()">{{ t('BTN_CANCEL') }}</button>
-                                <input class="submit" type="submit" value="{{ t('EDIT_PROMO') }}"
-                                    ng-disabled="frmEditPromotion.$invalid || savingEdit" />
-                            </div>
-                        </form>
-                    </div>
-                </div>
-
-                <!-- delete promotion -->
-                <div class="form-delete" ng-class="{open:showDelete}" ng-click="closeDeleteOnOverlay($event)">
-                    <div class="form-delete__content" ng-click="$event.stopPropagation()">
-                        <h3 class="title">{{ t('FORM_DELETE_PROMO_TITLE') }}</h3>
-                        <p class="desc">
-                            {{ t('FORM_DELETE_PROMO_DESC1') }}
-                            "{{deleting.promotionName || deleting.PromotionName}}"? {{ t('FORM_DELETE_PROMO_DESC2') }}
-                        </p>
-                        <div class="dialog-footer">
-                            <button class="cancel" ng-click="cancelDelete($event)">
-                                {{ t('BTN_CANCEL') }}
-                            </button>
-                            <button class="submit danger" ng-click="confirmDelete()">
-                                {{ t('BTN_DELETE_PROMO') }}
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-
-
-
-            </div>
-
+          </div>
+        </div>
+        <div class="container-card">
+          <div class="card">
+            <p class="name-card">{{ t('PROMO_TOTAL') }}</p>
+            <p class="data-card">{{stats.totalPromotion}}</p>
+          </div>
+          <div class="card">
+            <p class="name-card">{{ t('PROMO_TOTAL_ACTIVE') }}</p>
+            <p class="data-card">{{stats.totalActive}}</p>
+          </div>
+          <div class="card">
+            <p class="name-card">{{ t('PROMO_TOTAL_EXPIRED') }}</p>
+            <p class="data-card">{{stats.totalExpired}}</p>
+          </div>
         </div>
 
+        <div class="search-promotion">
+          <div class="search-group">
+            <label for="startDate">{{ t('SEARCH_START_DATE') }}</label>
+            <input
+              type="date"
+              id="startDate"
+              ng-model="search.fromDate"
+              class="search-input"
+            />
+          </div>
+
+          <div class="search-group">
+            <label for="endDate">{{ t('SEARCH_END_DATE') }}</label>
+            <input
+              type="date"
+              id="endDate"
+              ng-model="search.toDate"
+              class="search-input"
+            />
+          </div>
+
+          <div class="search-group">
+            <label for="status">{{ t('SEARCH_STATUS') }}</label>
+            <select id="status" ng-model="search.status" class="search-input">
+              <option value="">-- {{ t('STATUS_ALL') }} --</option>
+              <option value="Active">{{ t('STATUS_ACTIVE') }}</option>
+              <option value="Expired">{{ t('STATUS_EXPIRED') }}</option>
+            </select>
+          </div>
+        </div>
+        <!-- phân trang -->
+        <div class="pager" ng-if="pager.total>0">
+          <div class="pager-info">
+            {{ t('SHOWING') }}
+            {{((pager.page-1)*pager.size)+1}}-{{Math.min(pager.page*pager.size,pager.total)}}
+            {{ t('PAGING_OF') }} {{pager.total}} {{ t('PAGING_ITEMS') }}
+          </div>
+          <div class="page-nav">
+            <label>
+              {{ t('PAGE_SIZE') }}:
+              <select ng-model="pager.size" ng-change="changeSize()">
+                <option value="10">10</option>
+                <option value="20">20</option>
+                <option value="30">30</option>
+              </select>
+            </label>
+            <button
+              class="btn ghost"
+              ng-disable="pager.page === 1"
+              ng-click="go(1)"
+            >
+              «
+            </button>
+            <button
+              class="btn ghost"
+              ng-disabled="pager.page === 1"
+              ng-click="go(pager.page-1)"
+            >
+              {{ t('PAGING_PREV') }}
+            </button>
+            <span class="page-no"></span>
+            <button
+              class="btn ghost"
+              ng-disabled="pager.page >= pager.pages"
+              ng-click="go(pager.page+1)"
+            >
+              {{ t('PAGING_NEXT') }}
+            </button>
+            <button
+              class="btn ghost"
+              ng-disabled="pager.page >= pager.pages"
+              ng-click="go(pager.pages)"
+            >
+              »
+            </button>
+          </div>
+        </div>
+
+        <div class="card-table">
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th class="id">{{ t('PROMO_ID') }}</th>
+                  <th class="name">{{ t('PROMO_NAME') }}</th>
+                  <th class="type">{{ t('PROMO_TYPE') }}</th>
+                  <th class="value">{{ t('PROMO_VALUE') }}</th>
+                  <th class="start">{{ t('PROMO_START') }}</th>
+                  <th class="end">{{ t('PROMO_END') }}</th>
+                  <th class="category">{{ t('PROMO_CATEGORY') }}</th>
+                  <th class="status">{{ t('PROMO_STATUS') }}</th>
+                  <th class="action txt-right">{{ t('PROMO_ACTIONS') }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="p in promotions">
+                  <td>{{p.promotionID || p.PromotionID}}</td>
+                  <td>{{p.promotionName || p.PromotionName}}</td>
+                  <td>{{p.type || p.Type}}</td>
+                  <td>{{p.value || p.Value | number:0}}</td>
+                  <td>{{p.startDate || p.StartDate | date:'yyyy-MM-dd'}}</td>
+                  <td>{{p.endDate || p.EndDate | date:'yyyy-MM-dd'}}</td>
+                  <td>{{p.categoryID || p.CategoryID}}</td>
+                  <td>{{p.status || p.Status}}</td>
+                  <td class="txt-right">
+                    <button class="link" ng-click="edit(p)">
+                      ✎ {{ t('EDIT_RETURN5') }}
+                    </button>
+                    <button class="link danger" ng-click="remove(p)">
+                      🗑 {{ t('DELETE_TITLE5') }}
+                    </button>
+                  </td>
+                </tr>
+                <tr ng-if="promotions.length == 0">
+                  <td colspan="9" class="empty">{{ t('PROMO_NO_DATA') }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <!-- form -->
+        <div class="form">
+          <!-- Modal Add Promotion -->
+          <div
+            class="form-add"
+            ng-class="{open: showAdd}"
+            ng-click="closeAddOnOverlay($event)"
+          >
+            <div class="form-add__content" ng-click="$event.stopPropagation()">
+              <h3 class="title">{{ t('FORM_ADD_PROMO_TITLE') }}</h3>
+              <p class="desc">{{ t('FORM_ADD_PROMO_DESC') }}</p>
+              <form name="frmAddPromotion" ng-submit="addPromotion()">
+                <label for="name-add">{{ t('LABEL_PROMO_NAME') }}</label>
+                <input
+                  type="text"
+                  id="name-add"
+                  required
+                  placeholder="{{ t('ENTER1') }}"
+                  ng-model="newPromotion.promotionName"
+                />
+
+                <div class="both">
+                  <div class="both-left">
+                    <label for="type-add">{{ t('LABEL_PROMO_TYPE') }}</label>
+                    <select id="type-add" required ng-model="newPromotion.type">
+                      <option value="percent">{{ t('TYPE_PERCENT') }}</option>
+                      
+                    </select>
+                  </div>
+                  <div class="both-right">
+                    <label for="value-add">{{ t('LABEL_PROMO_VALUE') }}</label>
+                    <input
+                      type="number"
+                      id="value-add"
+                      required
+                      placeholder="{{ t('ENTER2') }}"
+                      ng-model="newPromotion.value"
+                    />
+                  </div>
+                </div>
+
+                <div class="both">
+                  <div class="both-left">
+                    <label for="startDate-add"
+                      >{{ t('LABEL_PROMO_START') }}</label
+                    >
+                    <input
+                      type="date"
+                      id="startDate-add"
+                      required
+                      ng-model="newPromotion.startDate"
+                    />
+                  </div>
+                  <div class="both-right">
+                    <label for="endDate-add">{{ t('LABEL_PROMO_END') }}</label>
+                    <input
+                      type="date"
+                      id="endDate-add"
+                      required
+                      ng-model="newPromotion.endDate"
+                    />
+                  </div>
+                </div>
+
+                <label for="category-add"
+                  >{{ t('LABEL_PROMO_CATEGORY_ID') }}</label
+                >
+                <input
+                  type="number"
+                  id="category-add"
+                  required
+                  placeholder="{{ t('ENTER3') }}"
+                  ng-model="newPromotion.categoryID"
+                />
+
+                <div class="dialog-footer">
+                  <button type="button" class="cancel" ng-click="cancelAdd()">
+                    {{ t('BTN_CANCEL') }}
+                  </button>
+                  <input
+                    class="submit"
+                    type="submit"
+                    value="{{ t('ADD_PROMO') }}"
+                    ng-disabled="frmAddPromotion.$invalid || savingAdd"
+                  />
+                </div>
+              </form>
+            </div>
+          </div>
+          <!-- edit promotion -->
+          <div
+            class="form-edit"
+            ng-class="{open: showEdit}"
+            ng-click="closeEditOnOverlay($event)"
+          >
+            <div class="form-edit__content" ng-click="$event.stopPropagation()">
+              <h3 class="title">{{ t('FORM_EDIT_PROMO_TITLE') }}</h3>
+              <form name="frmEditPromotion" ng-submit="updatePromotion()">
+                <label for="name-edit">{{ t('LABEL_PROMO_NAME') }}</label>
+                <input
+                  type="text"
+                  id="name-edit"
+                  required
+                  placeholder="{{ t('ENTER1') }}"
+                  ng-model="editingPromotion.PromotionName"
+                />
+
+                <div class="both">
+                  <div class="both-left">
+                    <label for="type-edit">{{ t('LABEL_PROMO_TYPE') }}</label>
+                    <select
+                      id="type-edit"
+                      required
+                      ng-model="editingPromotion.Type"
+                    >
+                      <option value="percent">{{ t('TYPE_PERCENT') }}</option>
+                      <option value="amount">{{ t('TYPE_AMOUNT') }}</option>
+                    </select>
+                  </div>
+                  <div class="both-right">
+                    <label for="value-edit">{{ t('LABEL_PROMO_VALUE') }}</label>
+                    <input
+                      type="number"
+                      id="value-edit"
+                      required
+                      placeholder="{{ t('ENTER2') }}"
+                      ng-model="editingPromotion.Value"
+                    />
+                  </div>
+                </div>
+
+                <div class="both">
+                  <div class="both-left">
+                    <label for="startDate-edit"
+                      >{{ t('LABEL_PROMO_START') }}</label
+                    >
+                    <input
+                      type="date"
+                      id="startDate-edit"
+                      required
+                      ng-model="editingPromotion.StartDate"
+                    />
+                  </div>
+                  <div class="both-right">
+                    <label for="endDate-edit">{{ t('LABEL_PROMO_END') }}</label>
+                    <input
+                      type="date"
+                      id="endDate-edit"
+                      required
+                      ng-model="editingPromotion.EndDate"
+                    />
+                  </div>
+                </div>
+
+                <label for="category-edit"
+                  >{{ t('LABEL_PROMO_CATEGORY_ID') }}</label
+                >
+                <input
+                  type="number"
+                  id="category-edit"
+                  required
+                  placeholder="{{ t('ENTER3') }}"
+                  ng-model="editingPromotion.CategoryID"
+                />
+
+                <label for="status-edit">{{ t('PROMO_STATUS') }}</label>
+                <select
+                  id="status-edit"
+                  required
+                  ng-model="editingPromotion.Status"
+                >
+                  <option value="Active">{{ t('ACTION') }}</option>
+                  <option value="Expired">{{ t('STATUS_EXPIRED') }}</option>
+                </select>
+
+                <div class="dialog-footer">
+                  <button type="button" class="cancel" ng-click="cancelEdit()">
+                    {{ t('BTN_CANCEL') }}
+                  </button>
+                  <input
+                    class="submit"
+                    type="submit"
+                    value="{{ t('EDIT_PROMO') }}"
+                    ng-disabled="frmEditPromotion.$invalid || savingEdit"
+                  />
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <!-- delete promotion -->
+          <div
+            class="form-delete"
+            ng-class="{open:showDelete}"
+            ng-click="closeDeleteOnOverlay($event)"
+          >
+            <div
+              class="form-delete__content"
+              ng-click="$event.stopPropagation()"
+            >
+              <h3 class="title">{{ t('FORM_DELETE_PROMO_TITLE') }}</h3>
+              <p class="desc">
+                {{ t('FORM_DELETE_PROMO_DESC1') }} "{{deleting.promotionName ||
+                deleting.PromotionName}}"? {{ t('FORM_DELETE_PROMO_DESC2') }}
+              </p>
+              <div class="dialog-footer">
+                <button class="cancel" ng-click="cancelDelete($event)">
+                  {{ t('BTN_CANCEL') }}
+                </button>
+                <button class="submit danger" ng-click="confirmDelete()">
+                  {{ t('BTN_DELETE_PROMO') }}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <script src="../Shared/js/promotions.js"></script>
-
-</body>
-
+  </body>
 </html>
