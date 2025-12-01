@@ -16,6 +16,7 @@
     <script src="../Shared/angular/angular.min.js"></script>
     <script src="../Shared/angular/global.js"></script>
     <script src="../Shared/angular/categories.js"></script>
+    <script src="../Shared/angular/translation.js"></script>
     <title>Categories</title>
   </head>
   <body ng-app="AppRetailPos" ng-controller="categoriesCtrl">
@@ -33,7 +34,7 @@
           </div>
         </div>
         <div class="slide-bar__Content">
-          <p class="slide-bar__label">Navigation</p>
+          <p class="slide-bar__label">{{ t('NAVIGATION') }}</p>
           <!-- menu button Dashboard -->
           <a href="../AdminFE/dashboard.html" ng-if="canShow('dashboard')">
             <div class="slide-bar__MenuButton">
@@ -45,7 +46,7 @@
                 />
               </div>
               <div class="MenuButton-right">
-                <p class="name-menu">Dashboard</p>
+                <p class="name-menu">{{ t('NAV_DASHBOARD') }}</p>
               </div>
             </div>
           </a>
@@ -56,7 +57,7 @@
                 <img src="../Shared/img/common/pos.svg" alt="" class="icon" />
               </div>
               <div class="MenuButton-right">
-                <p class="name-menu">POS</p>
+                <p class="name-menu">{{ t('NAV_POS') }}</p>
               </div>
             </div>
           </a>
@@ -71,7 +72,7 @@
                 />
               </div>
               <div class="MenuButton-right">
-                <p class="name-menu">Products</p>
+                <p class="name-menu">{{ t('NAV_PRODUCTS') }}</p>
               </div>
             </div>
           </a>
@@ -86,7 +87,7 @@
                 />
               </div>
               <div class="MenuButton-right">
-                <p class="name-menu-active">Categories</p>
+                <p class="name-menu-active">{{ t('NAV_CATEGORIES') }}</p>
               </div>
             </div>
           </a>
@@ -101,7 +102,7 @@
                 />
               </div>
               <div class="MenuButton-right">
-                <p class="name-menu">Promotions</p>
+                <p class="name-menu">{{ t('NAV_PROMOTIONS') }}</p>
               </div>
             </div>
           </a>
@@ -116,7 +117,7 @@
                 />
               </div>
               <div class="MenuButton-right">
-                <p class="name-menu">Customers</p>
+                <p class="name-menu">{{ t('NAV_CUSTOMERS') }}</p>
               </div>
             </div>
           </a>
@@ -131,7 +132,7 @@
                 />
               </div>
               <div class="MenuButton-right">
-                <p class="name-menu">Suppliers</p>
+                <p class="name-menu">{{ t('NAV_SUPPLIERS') }}</p>
               </div>
             </div>
           </a>
@@ -149,7 +150,7 @@
                 />
               </div>
               <div class="MenuButton-right">
-                <p class="name-menu">Purchase Orders</p>
+                <p class="name-menu">{{ t('NAV_PURCHASE_ORDERS') }}</p>
               </div>
             </div>
           </a>
@@ -160,7 +161,7 @@
                 <img src="../Shared/img/common/stock.svg" alt="" class="icon" />
               </div>
               <div class="MenuButton-right">
-                <p class="name-menu">Stock Management</p>
+                <p class="name-menu">{{ t('NAV_STOCK') }}</p>
               </div>
             </div>
           </a>
@@ -175,7 +176,7 @@
                 />
               </div>
               <div class="MenuButton-right">
-                <p class="name-menu">Goods Receipts</p>
+                <p class="name-menu">{{ t('GOODS_RECEIPTS') }}</p>
               </div>
             </div>
           </a>
@@ -190,7 +191,7 @@
                 />
               </div>
               <div class="MenuButton-right">
-                <p class="name-menu">Goods Issues</p>
+                <p class="name-menu">{{ t('GOODS_ISSUES') }}</p>
               </div>
             </div>
           </a>
@@ -201,7 +202,7 @@
                 <img src="../Shared/img/common/sales.svg" alt="" class="icon" />
               </div>
               <div class="MenuButton-right">
-                <p class="name-menu">Sales</p>
+                <p class="name-menu">{{ t('NAV_SALES') }}</p>
               </div>
             </div>
           </a>
@@ -216,7 +217,7 @@
                 />
               </div>
               <div class="MenuButton-right">
-                <p class="name-menu">Returns</p>
+                <p class="name-menu">{{ t('NAV_RETURNS') }}</p>
               </div>
             </div>
           </a>
@@ -231,7 +232,7 @@
                 />
               </div>
               <div class="MenuButton-right">
-                <p class="name-menu">Payments & Debts</p>
+                <p class="name-menu">{{ t('NAV_PAYMENTS') }}</p>
               </div>
             </div>
           </a>
@@ -246,7 +247,7 @@
                 />
               </div>
               <div class="MenuButton-right">
-                <p class="name-menu">Reports</p>
+                <p class="name-menu">{{ t('NAV_REPORTS') }}</p>
               </div>
             </div>
           </a>
@@ -261,7 +262,7 @@
                 />
               </div>
               <div class="MenuButton-right">
-                <p class="name-menu">Audit Log</p>
+                <p class="name-menu">{{ t('NAV_AUDIT_LOG') }}</p>
               </div>
             </div>
           </a>
@@ -272,7 +273,7 @@
                 <img src="../Shared/img/common/user.svg" alt="" class="icon" />
               </div>
               <div class="MenuButton-right">
-                <p class="name-menu">Users</p>
+                <p class="name-menu">{{ t('NAV_USERS') }}</p>
               </div>
             </div>
           </a>
@@ -287,7 +288,7 @@
                 />
               </div>
               <div class="MenuButton-right">
-                <p class="name-menu">Settings</p>
+                <p class="name-menu">{{ t('NAV_SETTINGS') }}</p>
               </div>
             </div>
           </a>
@@ -332,7 +333,7 @@
               <p class="email">{{currentUser.email}}</p>
             </div>
             <div class="info-mid">
-              <a href="#!"><p class="set">Profile Settings</p></a>
+              <a href="#!"><p class="set">{{ t('PROFILE_SETTINGS') }}</p></a>
             </div>
             <div class="info-bottom">
               <img
@@ -340,27 +341,26 @@
                 alt=""
                 class="icon"
               />
-              <a href="../AuthFE/login.html"><p class="logout">Logout</p></a>
+              <a href="../AuthFE/login.html"><p class="logout">{{ t('LOGOUT') }}</p></a>
             </div>
           </div>
         </div>
         <div class="app-layout-content">
-          <h1 class="name-menu">Product Categories</h1>
+          <h1 class="name-menu">{{ t('CAT_TITLE') }}</h1>
           <p class="desc">
-            Manage and organize product categories with descriptions and VAT
-            rates
+            {{ t('CAT_DESC') }}
           </p>
           <div class="display-container">
             <div class="total farme">
-              <p class="name-display">Total Categories</p>
+              <p class="name-display">{{ t('CAT_TOTAL') }}</p>
               <p class="data">{{stats.total}}</p>
             </div>
             <div class="avg farme">
-              <p class="name-display">Average VAT</p>
+              <p class="name-display">{{ t('CAT_AVG_VAT') }}</p>
               <p class="data">{{stats.avgVat|number:2}}%</p>
             </div>
             <div class="most-common farme">
-              <p class="name-display">Most Common Category</p>
+              <p class="name-display">{{ t('CAT_MOST_COMMON') }}</p>
               <p class="data">{{stats.mostCommon}}</p>
             </div>
           </div>
@@ -370,20 +370,20 @@
               <input
                 class="search"
                 type="text"
-                placeholder="Search by VAT..."
+                placeholder="{{ t('SEARCH_VAT') }}"
                 ng-model="searchVAT"
               />
             </div>
             <!-- phân trang -->
             <div class="pager" ng-if="pager.total>0">
               <div class="pager-info">
-                Showing
+                {{ t('SHOWING') }}
                 {{((pager.page-1)*pager.size)+1}}-{{Math.min(pager.page*pager.size,pager.total)}}
-                of {{pager.total}} items
+                {{ t('OF') }} {{pager.total}} {{ t('PAGING_ITEMS') }}
               </div>
               <div class="page-nav">
                 <label>
-                  Page size:
+                  {{ t('PAGE_SIZE') }}:
                   <select ng-model="pager.size" ng-change="changeSize()">
                     <option value="10">10</option>
                     <option value="20">20</option>
@@ -402,7 +402,7 @@
                   ng-disable="pager.page === 1"
                   ng-click="go(pager.page-1)"
                 >
-                  Prev
+                  {{ t('PAGING_PREV') }}
                 </button>
                 <span class="page-no"></span>
                 <button
@@ -410,7 +410,7 @@
                   ng-disable="pager.page >= pager.pages"
                   ng-click="go(pager.page+1)"
                 >
-                  Next
+                  {{ t('PAGING_NEXT') }}
                 </button>
                 <button
                   class="btn ghost"
@@ -438,7 +438,7 @@
               </div>
               <div class="add" id="btnOpenAdd">
                 <img src="../Shared/img/common/plus.svg" alt="" class="plus" />
-                <p class="add-cate">Add Category</p>
+                <p class="add-cate">{{ t('ADD_CATEGORY') }}</p>
               </div>
               <input
                 type="file"
@@ -455,11 +455,11 @@
               <table class="table">
                 <thead>
                   <tr>
-                    <th class="id">Category ID</th>
-                    <th class="name">Category Name</th>
-                    <th class="descript">Description</th>
-                    <th class="vat">VAT Rate (%)</th>
-                    <th class="action txt-right">Actions</th>
+                    <th class="id">{{ t('CAT_ID') }}</th>
+                    <th class="name">{{ t('CAT_NAME') }}</th>
+                    <th class="descript">{{ t('CAT_DESCRIPTION') }}</th>
+                    <th class="vat">{{ t('CAT_VAT') }}</th>
+                    <th class="action txt-right">{{ t('ACTIONS') }}</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -469,16 +469,16 @@
                     <td>{{c.description}}</td>
                     <td>{{c.vatRate}}%</td>
                     <td class="txt-right">
-                      <button class="link" ng-click="edit(c)">✎ Edit</button>
+                      <button class="link" ng-click="edit(c)">✎ {{ t('EDIT_RETURN5') }}</button>
                       <button class="link danger" ng-click="remove(c)">
-                        🗑 Delete
+                        🗑 {{ t('DELETE_TITLE5') }}
                       </button>
                     </td>
                   </tr>
                   <tr
                     ng-if="(categories | filter:searchCategories | filter:searchVAT).length == 0"
                   >
-                    <td colspan="5" class="empty">No Data</td>
+                    <td colspan="5" class="empty">{{ t('NO_DATA') }}</td>
                   </tr>
                 </tbody>
               </table>
@@ -499,10 +499,10 @@
             <!-- add -->
             <div class="form-add">
               <div class="form-add__content">
-                <h3 class="title">Add Category</h3>
-                <p class="desc">Create a new product category</p>
+                <h3 class="title">{{ t('FORM_ADD_TITLE') }}</h3>
+                <p class="desc">{{ t('FORM_ADD_DESC') }}</p>
                 <form name="frmAdd" ng-submit="add()">
-                  <label for="name-add">Category Name *</label>
+                  <label for="name-add">{{ t('LABEL_CAT_NAME') }}</label>
                   <br />
                   <input
                     type="text"
@@ -512,7 +512,7 @@
                     ng-model="newCategory.CategoryName"
                   />
                   <br />
-                  <label for="desc-add">Description *</label>
+                  <label for="desc-add">{{ t('LABEL_DESCRIPTION') }}</label>
                   <br />
                   <textarea
                     rows="3"
@@ -522,7 +522,7 @@
                     ng-model="newCategory.Description"
                   ></textarea>
                   <br />
-                  <label for="vat-add">VAT Rate (%) *</label>
+                  <label for="vat-add">{{ t('LABEL_VAT') }}</label>
                   <br />
                   <input
                     type="text"
@@ -531,13 +531,11 @@
                     ng-model="newCategory.VATRate"
                   />
                   <br />
-                  <label class="standard"
-                    >Standard VAT rates: 10% (most products), 9% (special
-                    items)</label
+                  <label class="standard">{{ t('LABEL_STANDARD') }}</label
                   >
                   <div class="dialog-footer">
                     <!-- để type button tránh submit -->
-                    <button type="button" class="cancel">Cancel</button>
+                    <button type="button" class="cancel">{{ t('BTN_CANCEL') }}</button>
                     <input
                       class="submit"
                       type="submit"
@@ -551,10 +549,10 @@
             <!-- edit -->
             <div class="form-edit">
               <div class="form-edit__content">
-                <h3 class="title">Edit Category</h3>
-                <p class="desc">Update category information</p>
+                <h3 class="title">{{ t('FORM_EDIT_TITLE') }}</h3>
+                <p class="desc">{{ t('FORM_EDIT_DESC') }}</p>
                 <form name="frmEdit" ng-submit="updateCategory()">
-                  <label for="name-edit">Category Name *</label>
+                  <label for="name-edit">{{ t('LABEL_CAT_NAME') }}</label>
                   <br />
                   <input
                     type="text"
@@ -563,7 +561,7 @@
                     required
                   />
                   <br />
-                  <label for="desc-edit">Description *</label>
+                  <label for="desc-edit">{{ t('LABEL_DESCRIPTION') }}</label>
                   <br />
                   <textarea
                     rows="3"
@@ -572,7 +570,7 @@
                     required
                   ></textarea>
                   <br />
-                  <label for="vat-edit">VAT Rate (%) *</label>
+                  <label for="vat-edit">{{ t('LABEL_VAT') }}</label>
                   <br />
                   <input
                     type="number"
@@ -583,16 +581,14 @@
                     step="1"
                   />
                   <br />
-                  <label class="standard"
-                    >Standard VAT rates: 10% (most products), 9% (special
-                    items)</label
+                  <label class="standard">{{ t('LABEL_STANDARD') }}</label
                   >
                   <div class="dialog-footer">
-                    <button type="button" class="cancel">Cancel</button>
+                    <button type="button" class="cancel">{{ t('BTN_CANCEL') }}</button>
                     <input
                       class="submit"
                       type="submit"
-                      value="Update Category"
+                      value="{{ t('BTN_UPDATE_CAT') }}"
                       ng-disable="frmEdit.$invalid||savingEdit"
                     />
                   </div>
@@ -606,17 +602,17 @@
               ng-click="closeDeleteOnOverlay($event)"
             >
               <div class="form-delete__content">
-                <h3 class="title">Delete Category</h3>
+                <h3 class="title">{{ t('FORM_DELETE_TITLE') }}</h3>
                 <p class="desc">
-                  Are you sure you want to delete the category
-                  "{{deleting.categoryName}}"? This action cannot be undone.
+                  {{ t('FORM_DELETE_DESC1') }}
+                  "{{deleting.categoryName}}"? {{ t('FORM_DELETE_DESC2') }}
                 </p>
                 <div class="dialog-footer">
                   <button class="cancel" ng-click="cancelDelete($event)">
-                    Cancel
+                    {{ t('BTN_CANCEL') }}
                   </button>
                   <button class="submit danger" ng-click="confirmDelete()">
-                    Delete Category
+                    {{ t('BTN_DELETE_CAT') }}
                   </button>
                 </div>
               </div>

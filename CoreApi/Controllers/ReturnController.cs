@@ -98,7 +98,7 @@ namespace CoreApi.Controllers
                     req.ReturnID,
                     req.ReturnType,
                     req.SaleID,
-                    req.ReceiptID,
+                    req.POID,
                     req.CustomerID,
                     req.SupplierID,
                     req.PartnerName,

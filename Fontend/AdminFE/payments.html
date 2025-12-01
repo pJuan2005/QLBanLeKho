@@ -16,6 +16,7 @@
     <script src="../Shared/angular/angular.min.js"></script>
     <script src="../Shared/angular/global.js"></script>
     <script src="../Shared/angular/paymentDebt.js"></script>
+    <script src="../Shared/angular/translation.js"></script>
     <title>Payments and Debt</title>
   </head>
   <body ng-app="AppRetailPos" ng-controller="paymentCtrl">
@@ -32,7 +33,7 @@
         </div>
       </div>
       <div class="slide-bar__Content">
-        <p class="slide-bar__label">Navigation</p>
+        <p class="slide-bar__label">{{ t('NAVIGATION') }}</p>
         <!-- menu button Dashboard -->
         <a href="../AdminFE/dashboard.html" ng-if="canShow('dashboard')">
           <div class="slide-bar__MenuButton">
@@ -44,7 +45,7 @@
               />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Dashboard</p>
+              <p class="name-menu">{{ t('NAV_DASHBOARD') }}</p>
             </div>
           </div>
         </a>
@@ -55,7 +56,7 @@
               <img src="../Shared/img/common/pos.svg" alt="" class="icon" />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">POS</p>
+              <p class="name-menu">{{ t('NAV_POS') }}</p>
             </div>
           </div>
         </a>
@@ -66,7 +67,7 @@
               <img src="../Shared/img/common/product.svg" alt="" class="icon" />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Products</p>
+              <p class="name-menu">{{ t('NAV_PRODUCTS') }}</p>
             </div>
           </div>
         </a>
@@ -81,7 +82,7 @@
               />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Categories</p>
+              <p class="name-menu">{{ t('NAV_CATEGORIES') }}</p>
             </div>
           </div>
         </a>
@@ -96,7 +97,7 @@
               />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Promotions</p>
+              <p class="name-menu">{{ t('NAV_PROMOTIONS') }}</p>
             </div>
           </div>
         </a>
@@ -111,7 +112,7 @@
               />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Customers</p>
+              <p class="name-menu">{{ t('NAV_CUSTOMERS') }}</p>
             </div>
           </div>
         </a>
@@ -126,7 +127,7 @@
               />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Suppliers</p>
+              <p class="name-menu">{{ t('NAV_SUPPLIERS') }}</p>
             </div>
           </div>
         </a>
@@ -144,7 +145,7 @@
               />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Purchase Orders</p>
+              <p class="name-menu">{{ t('NAV_PURCHASE_ORDERS') }}</p>
             </div>
           </div>
         </a>
@@ -155,7 +156,7 @@
               <img src="../Shared/img/common/stock.svg" alt="" class="icon" />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Stock Management</p>
+              <p class="name-menu">{{ t('NAV_STOCK') }}</p>
             </div>
           </div>
         </a>
@@ -170,7 +171,7 @@
               />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Goods Receipts</p>
+              <p class="name-menu">{{ t('GOODS_RECEIPTS') }}</p>
             </div>
           </div>
         </a>
@@ -185,7 +186,7 @@
               />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Goods Issues</p>
+              <p class="name-menu">{{ t('GOODS_ISSUES') }}</p>
             </div>
           </div>
         </a>
@@ -196,7 +197,7 @@
               <img src="../Shared/img/common/sales.svg" alt="" class="icon" />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Sales</p>
+              <p class="name-menu">{{ t('NAV_SALES') }}</p>
             </div>
           </div>
         </a>
@@ -207,7 +208,7 @@
               <img src="../Shared/img/common/return.svg" alt="" class="icon" />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Returns</p>
+              <p class="name-menu">{{ t('NAV_RETURNS') }}</p>
             </div>
           </div>
         </a>
@@ -222,7 +223,7 @@
               />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu-active">Payments & Debts</p>
+              <p class="name-menu-active">{{ t('NAV_PAYMENTS') }}</p>
             </div>
           </div>
         </a>
@@ -233,7 +234,7 @@
               <img src="../Shared/img/common/report.svg" alt="" class="icon" />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Reports</p>
+              <p class="name-menu">{{ t('NAV_REPORTS') }}</p>
             </div>
           </div>
         </a>
@@ -248,7 +249,7 @@
               />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Audit Log</p>
+              <p class="name-menu">{{ t('NAV_AUDIT_LOG') }}</p>
             </div>
           </div>
         </a>
@@ -259,7 +260,7 @@
               <img src="../Shared/img/common/user.svg" alt="" class="icon" />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Users</p>
+              <p class="name-menu">{{ t('NAV_USERS') }}</p>
             </div>
           </div>
         </a>
@@ -270,7 +271,7 @@
               <img src="../Shared/img/common/setting.svg" alt="" class="icon" />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Settings</p>
+              <p class="name-menu">{{ t('NAV_SETTINGS') }}</p>
             </div>
           </div>
         </a>
@@ -315,7 +316,7 @@
             <p class="email">{{currentUser.email}}</p>
           </div>
           <div class="info-mid">
-            <a href="#!"><p class="set">Profile Settings</p></a>
+            <a href="#!"><p class="set">{{ t('PROFILE_SETTINGS') }}</p></a>
           </div>
           <div class="info-bottom">
             <img
@@ -323,7 +324,7 @@
               alt=""
               class="icon"
             />
-            <a href="../AuthFE/login.html"><p class="logout">Logout</p></a>
+            <a href="../AuthFE/login.html"><p class="logout">{{ t('LOGOUT') }}</p></a>
           </div>
         </div>
       </div>
@@ -335,7 +336,7 @@
               alt=""
               class="icon-payment"
             />
-            <h1 class="name">Payments & Debts</h1>
+            <h1 class="name">{{ t('PAY_PAGE_TITLE') }}</h1>
           </div>
           <div class="select-payment">
             <p
@@ -343,7 +344,7 @@
               ng-class="{ active: mode === 'customer' }"
               ng-click="setMode('customer')"
             >
-              Customer Debts (AR)
+              {{ t('PAY_TAB_CUSTOMER') }}
             </p>
 
             <p
@@ -351,7 +352,7 @@
               ng-class="{ active: mode === 'supplier' }"
               ng-click="setMode('supplier')"
             >
-              Supplier Payables (AP)
+              {{ t('PAY_TAB_SUPPLIER') }}
             </p>
           </div>
         </div>
@@ -366,12 +367,12 @@
                 />
               </div>
               <div class="total-debt__right">
-                <div class="title-total-debt">Total Debts</div>
+                <div class="title-total-debt">{{ t('PAY_TOTAL_DEBT') }}</div>
                 <div class="data-total-debt">
                   {{formatVnd(totalCustomerDebt)}}
                 </div>
                 <div class="desc-total-debt">
-                  Based on current open balances
+                  {{ t('PAY_BASED_ON_BALANCE') }}
                 </div>
               </div>
             </div>
@@ -384,12 +385,12 @@
                 />
               </div>
               <div class="card-settled__right">
-                <div class="title-settled">Settled This Month</div>
+                <div class="title-settled">{{ t('PAY_SETTLED_THIS_MONTH') }}</div>
                 <div class="data-settled">
                   {{ formatVnd(settledThisMonthCustomer) }}
                 </div>
                 <div class="desc-settled">
-                  Payments recorded in current month
+                  {{ t('PAY_RECORDED_THIS_MONTH') }}
                 </div>
               </div>
             </div>
@@ -403,7 +404,7 @@
               />
               <input
                 type="text"
-                placeholder="Search invoices by customer / phone / invoice no..."
+                placeholder="{{ t('PAY_SEARCH_CUSTOMER_PLACEHOLDER') }}"
                 ng-model="searchCustomerText"
                 ng-keypress="$event.which === 13 && searchCustomers()"
               />
@@ -414,9 +415,9 @@
                 ng-model="filter.status"
                 ng-change="onStatusChange()"
               >
-                <option value="">All</option>
-                <option value="unpaid">Unpaid</option>
-                <option value="partial">Partial</option>
+                <option value="">{{ t('PAY_FILTER_ALL') }}</option>
+                <option value="unpaid">{{ t('PAY_FILTER_UNPAID') }}</option>
+                <option value="partial">{{ t('PAY_FILTER_PARTIAL') }}</option>
                 <!-- nếu sau này có thêm Paid thì thêm:
     <option value="paid">Paid</option> -->
               </select>
@@ -437,20 +438,20 @@
             </div>
           </div>
           <div class="layout-customer__list">
-            <p class="desc-table">Customer Open Invoices</p>
+            <p class="desc-table">{{ t('PAY_CUSTOMER_OPEN_INVOICES') }}</p>
 
             <div class="table-wrapper">
               <table class="debt-table">
                 <thead>
                   <tr>
-                    <th>Invoice #</th>
-                    <th>Date</th>
-                    <th>Customer</th>
-                    <th>Phone</th>
-                    <th class="txt-right">Total</th>
-                    <th class="txt-right">Paid</th>
-                    <th class="txt-right">Remaining</th>
-                    <th class="txt-right">Actions</th>
+                    <th>{{ t('PAY_COL_INVOICE_NO') }}#</th>
+                    <th>{{ t('PAY_COL_DATE') }}</th>
+                    <th>{{ t('PAY_COL_CUSTOMER') }}</th>
+                    <th>{{ t('PAY_COL_PHONE') }}</th>
+                    <th class="txt-right">{{ t('PAY_COL_TOTAL') }}</th>
+                    <th class="txt-right">{{ t('PAY_COL_PAID') }}</th>
+                    <th class="txt-right">{{ t('PAY_COL_REMAINING') }}</th>
+                    <th class="txt-right">{{ t('PAY_COL_ACTIONS') }}</th>
                   </tr>
                 </thead>
 
@@ -476,14 +477,14 @@
                           src="../Shared/img/payment/view.svg"
                           class="icon"
                         />
-                        View
+                        {{ t('PAY_BTN_VIEW') }}
                       </button>
                       <button class="btn-pay" ng-click="openCustomerPay(inv)">
                         <img
                           src="../Shared/img/payment/plus.svg"
                           class="icon"
                         />
-                        Collect Payment
+                        {{ t('PAY_BTN_COLLECT') }}
                       </button>
                     </td>
                   </tr>
@@ -503,7 +504,7 @@
                 />
               </div>
               <div class="total-payable__right">
-                <div class="title-total-payable">Total Payables</div>
+                <div class="title-total-payable">{{ t('PAY_SUPPLIER_OPEN_BILLS') }}</div>
                 <div class="data-total-payable">
                   {{formatVnd(totalSupplierPayable)}}
                 </div>
@@ -521,12 +522,12 @@
                 />
               </div>
               <div class="card-settled__right">
-                <div class="title-settled">Settled This Month</div>
+                <div class="title-settled">{{ t('PAY_SETTLED_THIS_MONTH This Month') }}</div>
                 <div class="data-settled">
                   {{ formatVnd(settledThisMonthSupplier) }}
                 </div>
                 <div class="desc-settled">
-                  Payments recorded in current month
+                  {{ t('PAY_RECORDED_THIS_MONTH') }}
                 </div>
               </div>
             </div>
@@ -540,7 +541,7 @@
               />
               <input
                 type="text"
-                placeholder="Search bills by supplier / receipt no..."
+                placeholder="{{ t('PAY_SEARCH_SUPPLIER_PLACEHOLDER') }}"
                 ng-model="searchSupplierText"
                 ng-keypress="$event.which === 13 && searchSuppliers()"
               />
@@ -551,9 +552,9 @@
                 ng-model="filter.status"
                 ng-change="onStatusChange()"
               >
-                <option value="">All</option>
-                <option value="unpaid">Unpaid</option>
-                <option value="partial">Partial</option>
+                <option value="">{{ t('PAY_FILTER_ALL') }}</option>
+                <option value="unpaid">{{ t('PAY_FILTER_UNPAID') }}</option>
+                <option value="partial">{{ t('PAY_FILTER_PARTIAL') }}</option>
               </select>
             </div>
             <div class="search-by__date">
@@ -572,18 +573,18 @@
             </div>
           </div>
           <div class="layout-supplier__list">
-            <p class="desc-table">Supplier Open Bills</p>
+            <p class="desc-table">{{ t('PAY_CUSTOMER_OPEN_INVOICES') }}</p>
             <div class="table-debt">
               <table>
                 <thead>
                   <tr>
-                    <th class="invoice-no">Bill #</th>
-                    <th class="date-col">Date</th>
-                    <th class="name-customer">Supplier</th>
-                    <th class="money-col txt-right">Total</th>
-                    <th class="money-col txt-right">Paid</th>
-                    <th class="money-col txt-right">Remaining</th>
-                    <th class="action txt-right">Actions</th>
+                    <th class="invoice-no">{{ t('PAY_COL_INVOICE_NO') }}#</th>
+                    <th class="date-col">{{ t('PAY_COL_DATE') }}</th>
+                    <th class="name-customer">{{ t('PAY_COL_CUSTOMER') }}</th>
+                    <th class="money-col txt-right">{{ t('PAY_COL_TOTAL') }}</th>
+                    <th class="money-col txt-right">{{ t('PAY_COL_PAID') }}</th>
+                    <th class="money-col txt-right">{{ t('PAY_COL_REMAINING') }}</th>
+                    <th class="action txt-right">{{ t('PAY_COL_ACTIONS') }}</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -603,7 +604,7 @@
                           alt=""
                           class="icon-view"
                         />
-                        <p class="view-desc">View details</p>
+                        <p class="view-desc">{{ t('PAY_BTN_VIEW') }}</p>
                       </button>
                       <button class="collect-pay" ng-click="openSupplierPay(b)">
                         <img
@@ -611,7 +612,7 @@
                           alt=""
                           class="icon-plus"
                         />
-                        <p class="pay-desc">Pay</p>
+                        <p class="pay-desc">{{ t('PAY_BTN_COLLECT') }}</p>
                       </button>
                     </td>
                   </tr>
@@ -623,13 +624,13 @@
         <!-- PAGER -->
         <div class="pager" ng-if="pager.total > 0">
           <div class="pager-info">
-            Showing {{ ((pager.page-1)*pager.size)+1 }}-{{
-            Math.min(pager.page*pager.size,pager.total) }} of {{ pager.total }}
-            items
+            {{ t('PAGING_SHOWING') }} {{ ((pager.page-1)*pager.size)+1 }}-{{
+            Math.min(pager.page*pager.size,pager.total) }} {{ t('PAGING_OF') }} {{ pager.total }}
+            {{ t('PAGING_ITEMS') }}
           </div>
           <div class="page-nav">
             <label>
-              Page size:
+              {{ t('PAGING_PAGE_SIZE') }}:
               <select ng-model="pager.size" ng-change="changeSize()">
                 <option value="10">10</option>
                 <option value="20">20</option>
@@ -648,17 +649,17 @@
               ng-disabled="pager.page === 1"
               ng-click="go(pager.page-1)"
             >
-              Prev
+              {{ t('PAGING_PREV') }}
             </button>
             <span class="page-no">
-              Page {{ pager.page }} / {{ pager.pages }}
+              {{ t('PAGING_PAGE') }} {{ pager.page }} / {{ pager.pages }}
             </span>
             <button
               class="btn ghost"
               ng-disabled="pager.page >= pager.pages"
               ng-click="go(pager.page+1)"
             >
-              Next
+              {{ t('PAGING_NEXT') }}
             </button>
             <button
               class="btn ghost"
@@ -683,20 +684,20 @@
               alt=""
               class="icon-cus-form"
             />
-            <p class="name-form__customer">Customer AR Details</p>
+            <p class="name-form__customer">{{ t('PAY_CUSTOMER_DETAIL_TITLE') }}</p>
           </div>
           <p class="desc-form">
-            View sales and payment history for this customer
+            {{ t('PAY_CUSTOMER_DETAIL_DESC') }}
           </p>
           <div class="information-customer__detail" ng-if="selectedInvoice">
             <div class="detail-left">
-              <p class="customer-name-title">Customer Name</p>
+              <p class="customer-name-title">{{ t('PAY_CUSTOMER_NAME') }}</p>
               <p class="customer-name-data">
                 {{ selectedInvoice.customerName }}
               </p>
             </div>
             <div class="detail-right">
-              <p class="customer-debt-title">Debt Limit</p>
+              <p class="customer-debt-title">{{ t('PAY_DEBT_LIMIT') }}</p>
               <!-- nếu BE có trường debtLimit thì xài, không thì tạm dùng remaining -->
               <p class="customer-debt-data">
                 {{ formatVnd(selectedInvoice.debtLimit ||
@@ -707,19 +708,19 @@
 
           <div class="statistic" ng-if="selectedInvoice">
             <div class="total-sales">
-              <div class="total-sales__top">Total Sales</div>
+              <div class="total-sales__top">{{ t('PAY_TOTAL_SALES') }}</div>
               <div class="total-sales__bottom">
                 {{ formatVnd(selectedInvoice.totalAmount) }}
               </div>
             </div>
             <div class="total-payments">
-              <div class="total-payments__top">Total Payments</div>
+              <div class="total-payments__top">{{ t('PAY_TOTAL_PAYMENTS') }}</div>
               <div class="total-payments__bottom">
                 {{ formatVnd(selectedInvoice.paidAmount) }}
               </div>
             </div>
             <div class="current-debts">
-              <div class="current-debts__top">Current Debt</div>
+              <div class="current-debts__top">{{ t('PAY_CURRENT_DEBT') }}</div>
               <div class="current-debts__bottom">
                 {{ formatVnd(selectedInvoice.remaining) }}
               </div>
@@ -727,15 +728,15 @@
           </div>
         </div>
         <div class="form-customer__pay">
-          <p class="name-form__pay">Record Payment (Customer)</p>
-          <p class="desc-name__form">Record a payment received from customer</p>
+          <p class="name-form__pay">{{ t('PAY_RECORD_PAYMENT_CUSTOMER') }}</p>
+          <p class="desc-name__form">{{ t('PAY_RECORD_PAYMENT_DESC') }}</p>
           <div class="information-customer__pay" ng-if="selectedInvoice">
-            <p class="customer-pay__title">Customer</p>
+            <p class="customer-pay__title">{{ t('TB_CUSTOMER') }}</p>
             <p class="customer-pay__name">{{ selectedInvoice.customerName }}</p>
             <p class="customer-pay__phone">{{ selectedInvoice.phone }}</p>
           </div>
           <form class="input-pay__customer" ng-submit="saveCustomerPayment()">
-            <label for="amount">Amount *</label><br />
+            <label for="amount">{{ t('PAY_FIELD_AMOUNT') }}</label><br />
             <input
               type="number"
               id="amount"
@@ -745,7 +746,7 @@
             />
             <br />
 
-            <label for="date-pay">Payment Date *</label><br />
+            <label for="date-pay">{{ t('PAY_FIELD_DATE') }}</label><br />
             <input
               type="date"
               id="date-pay"
@@ -754,25 +755,25 @@
             />
             <br />
 
-            <label for="method">Payment Method *</label><br />
+            <label for="method">{{ t('PAY_FIELD_METHOD') }}</label><br />
             <select id="method" ng-model="customerPayment.method" required>
-              <option value="Cash">Cash</option>
-              <option value="Bank">Bank</option>
+              <option value="Cash">{{ t('PAY_METHOD_CASH') }}</option>
+              <option value="Bank">{{ t('PAY_METHOD_BANK') }}</option>
             </select>
             <br />
 
-            <label for="desc">Description</label><br />
+            <label for="desc">{{ t('PAY_FIELD_DESC') }}</label><br />
             <textarea
               id="desc"
-              placeholder="Add payment notes..."
+              placeholder="{{ t('PAYMENT_NOTE') }}"
               ng-model="customerPayment.description"
             ></textarea>
             <br />
 
             <div class="action-pay">
-              <div class="cancel" ng-click="closeOverlay()">Cancel</div>
+              <div class="cancel" ng-click="closeOverlay()">{{ t('PAY_BTN_CANCEL') }}</div>
               <!-- type="submit" để form gọi ng-submit -->
-              <button class="accpet" type="submit">Save payment</button>
+              <button class="accpet" type="submit">{{ t('PAY_BTN_SAVE_PAYMENT') }}</button>
             </div>
           </form>
         </div>
@@ -788,18 +789,18 @@
               alt=""
               class="icon-sup-form"
             />
-            <p class="name-form__supplier">Supplier AP Details</p>
+            <p class="name-form__supplier">{{ t('PAY_SUPPLIER_DETAIL_TITLE') }}</p>
           </div>
           <p class="desc-form">
-            View receipts and payment history for this supplier
+            {{ t('PAY_SUPPLIER_DETAIL_DESC') }}
           </p>
           <div class="information-supplier__detail" ng-if="selectedBill">
             <div class="detail-left">
-              <p class="supplier-name-title">Supplier Name</p>
+              <p class="supplier-name-title">{{ t('PAY_SUPPLIER_NAME') }}</p>
               <p class="supplier-name-data">{{ selectedBill.supplierName }}</p>
             </div>
             <div class="detail-right">
-              <p class="supplier-id-title">Supplier ID</p>
+              <p class="supplier-id-title">{{ t('PAY_SUPPLIER_ID') }}</p>
               <!-- tuỳ SP trả về, đổi thành supplierCode / supplierID cho đúng -->
               <p class="supplier-id-data">
                 {{ selectedBill.supplierCode || selectedBill.supplierID }}
@@ -809,19 +810,19 @@
 
           <div class="statistic" ng-if="selectedBill">
             <div class="total-received">
-              <div class="total-received__top">Received Total</div>
+              <div class="total-received__top">{{ t('PAY_RECEIVED_TOTAL') }}</div>
               <div class="total-received__bottom">
                 {{ formatVnd(selectedBill.totalAmount) }}
               </div>
             </div>
             <div class="total-payments">
-              <div class="total-payments__top">Payments Total</div>
+              <div class="total-payments__top">{{ t('PAY_PAYMENTS_TOTAL') }}</div>
               <div class="total-payments__bottom">
                 {{ formatVnd(selectedBill.paidAmount) }}
               </div>
             </div>
             <div class="current-payable">
-              <div class="current-payable__top">Current Payable</div>
+              <div class="current-payable__top">{{ t('PAY_CURRENT_PAYABLE') }}</div>
               <div class="current-payable__bottom">
                 {{ formatVnd(selectedBill.remaining) }}
               </div>
@@ -829,14 +830,14 @@
           </div>
         </div>
         <div class="form-supplier__pay">
-          <p class="name-form__pay">Record Payment (supplier)</p>
-          <p class="desc-name__form">Record a payment made to supplier</p>
+          <p class="name-form__pay">{{ t('PAY_RECORD_PAYMENT_SUPPLIER') }}</p>
+          <p class="desc-name__form">{{ t('PAY_RECORD_PAYMENT_SUPPLIER_DESC') }}</p>
           <div class="information-supplier__pay" ng-if="selectedBill">
-            <p class="supplier-pay__title">Supplier</p>
+            <p class="supplier-pay__title">{{ t('PAY_SUPPLIER') }}</p>
             <p class="supplier-pay__name">{{ selectedBill.supplierName }}</p>
           </div>
           <form class="input-pay__supplier" ng-submit="saveSupplierPayment()">
-            <label for="amount">Amount *</label><br />
+            <label for="amount">{{ t('PAY_FIELD_AMOUNT') }}</label><br />
             <input
               type="number"
               id="amount"
@@ -846,7 +847,7 @@
             />
             <br />
 
-            <label for="date-pay">Payment Date *</label><br />
+            <label for="date-pay">{{ t('PAY_FIELD_DATE') }}</label><br />
             <input
               type="date"
               id="date-pay"
@@ -855,14 +856,14 @@
             />
             <br />
 
-            <label for="method">Payment Method *</label><br />
+            <label for="method">{{ t('PAY_FIELD_METHOD') }}</label><br />
             <select id="method" ng-model="supplierPayment.method" required>
-              <option value="Cash">Cash</option>
-              <option value="Bank">Bank</option>
+              <option value="Cash">{{ t('PAY_METHOD_CASH') }}</option>
+              <option value="Bank">{{ t('PAY_METHOD_BANK') }}</option>
             </select>
             <br />
 
-            <label for="desc">Description</label><br />
+            <label for="desc">{{ t('PAY_FIELD_DESC') }}</label><br />
             <textarea
               id="desc"
               placeholder="Add payment notes..."
@@ -871,8 +872,8 @@
             <br />
 
             <div class="action-pay">
-              <div class="cancel" ng-click="closeOverlay()">Cancel</div>
-              <button class="accpet" type="submit">Save payment</button>
+              <div class="cancel" ng-click="closeOverlay()">{{ t('PAY_BTN_CANCEL') }}</div>
+              <button class="accpet" type="submit">{{ t('PAY_BTN_SAVE_PAYMENT_SUPPLIER') }}</button>
             </div>
           </form>
         </div>

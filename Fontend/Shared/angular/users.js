@@ -1,6 +1,15 @@
 var app = angular.module("AppRetailPos");
 
-app.controller("userCtrl", function ($scope, $http, $timeout, AuthService, PermissionService, $window) {
+app.controller("userCtrl", function ($scope, $http, $timeout, AuthService, PermissionService, $window, TranslateService) {
+  function applyLanguage(lang) {
+    TranslateService.loadLanguage(lang).then(() => {
+      $scope.t = TranslateService.t;
+    });
+  }
+  applyLanguage(localStorage.getItem("appLang") || "EN");
+  $scope.$on("languageChanged", function () {
+    applyLanguage(localStorage.getItem("appLang") || "EN");
+  });
 
   // ------Kiểm tra đăng nhập, logout và chia màn hình theo quyền---------
   $scope.currentUser = AuthService.getCurrentUser();
@@ -327,7 +336,7 @@ app.controller("userCtrl", function ($scope, $http, $timeout, AuthService, Permi
     $scope.savingDelete = true;
 
     $http({
-      method: "POST", 
+      method: "POST",
       url: current_url + "/api-admin/user/delete-user",
       data: id
     }).then(

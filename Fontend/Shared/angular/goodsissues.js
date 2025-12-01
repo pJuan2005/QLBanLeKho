@@ -1,7 +1,16 @@
 var app = angular.module("AppRetailPos");
 app.controller(
     "goodsissuesCtrl",
-    function ($scope, $http, $timeout, AuthService, PermissionService, $window) {
+    function ($scope, $http, $timeout, AuthService, PermissionService, $window, TranslateService) {
+        function applyLanguage(lang) {
+            TranslateService.loadLanguage(lang).then(() => {
+                $scope.t = TranslateService.t;
+            });
+        }
+        applyLanguage(localStorage.getItem("appLang") || "EN");
+        $scope.$on("languageChanged", function () {
+            applyLanguage(localStorage.getItem("appLang") || "EN");
+        });
 
         // ========== KIỂM TRA ĐĂNG NHẬP ==========
         $scope.currentUser = AuthService.getCurrentUser();
@@ -304,7 +313,7 @@ app.controller(
                             ProductID: item.ProductID || item.productID,
                             ProductName: item.ProductName || item.productName || '—',
                             Quantity: item.Quantity || item.quantity || 0
-                            
+
                         };
                     });
                 })

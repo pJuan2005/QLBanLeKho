@@ -1,7 +1,17 @@
 var app = angular.module("AppRetailPos");
 app.controller(
   "categoriesCtrl",
-  function ($scope, $http, $timeout, AuthService, PermissionService, $window) {
+  function ($scope, $http, $timeout, AuthService, PermissionService, $window, TranslateService) {
+    function applyLanguage(lang) {
+      TranslateService.loadLanguage(lang).then(() => {
+        $scope.t = TranslateService.t;
+      });
+    }
+    applyLanguage(localStorage.getItem("appLang") || "EN");
+    $scope.$on("languageChanged", function () {
+      applyLanguage(localStorage.getItem("appLang") || "EN");
+    });
+
     $scope.currentUser = AuthService.getCurrentUser(); // lấy user hiện tại
     $scope.categories = [];
     $scope.pager = { page: 1, size: 10, total: 0, pages: 1 };

@@ -1,12 +1,13 @@
 ﻿using DAL.Helper;
+using DAL.Interfaces;
 using Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using static System.Runtime.InteropServices.JavaScript.JSType;
-using DAL.Interfaces;
 
 namespace DAL
 {
@@ -40,9 +41,8 @@ namespace DAL
                 var result = _dbHelper.ExecuteScalarSProcedureWithTransaction2(
                     out msgError, "sp_return_create",
                     "@ReturnType", model.ReturnType,
-                    "@PartnerPhone", model.PartnerPhone,
                     "@SaleID", model.SaleID,
-                    "@ReceiptID", model.ReceiptID,
+                    "@POID", model.POID,
                     "@ProductID", model.ProductID,
                     "@Quantity", model.Quantity,
                     "@ReturnDate", model.ReturnDate,
@@ -72,8 +72,7 @@ namespace DAL
                 "@ReturnID", model.ReturnID,
                 "@ReturnType", model.ReturnType,
                 "@SaleID", model.SaleID,
-                "@ReceiptID", model.ReceiptID,
-                "@PartnerPhone", model.PartnerPhone,
+                "@POID", model.POID,
                 "@ProductID", model.ProductID,
                 "@Quantity", model.Quantity,
                 "@ReturnDate", model.ReturnDate,
@@ -108,7 +107,7 @@ namespace DAL
 
         public List<ReturnModel> Search(int pageIndex, int pageSize, out long total,
                                             int? ReturnID, byte? ReturnType,
-                                            int? SaleID, int? ReceiptID,
+                                            int? SaleID, int? POID,
                                             int? CustomerID, int? SupplierID,
                                             string? PartnerName, string? PartnerPhone,
                                             int? ProductID,
@@ -125,7 +124,7 @@ namespace DAL
             "@ReturnID", ReturnID,
             "@ReturnType", ReturnType,
             "@SaleID", SaleID,
-            "@ReceiptID", ReceiptID,
+            "@POID", POID,
             "@CustomerID", CustomerID,
             "@SupplierID", SupplierID,
             "@PartnerName", PartnerName,

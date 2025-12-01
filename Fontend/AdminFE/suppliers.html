@@ -16,6 +16,7 @@
   <script src="../Shared/angular/angular.min.js"></script>
   <script src="../Shared/angular/global.js"></script>
   <script src="../Shared/angular/suppliers.js"></script>
+  <script src="../Shared/angular/translation.js"></script>
   <title>Suppliers</title>
 </head>
 
@@ -33,7 +34,7 @@
       </div>
     </div>
     <div class="slide-bar__Content">
-      <p class="slide-bar__label">Navigation</p>
+      <p class="slide-bar__label">{{ t('NAVIGATION') }}</p>
       <!-- menu button Dashboard -->
       <a href="../AdminFE/dashboard.html" ng-if="canShow('dashboard')">
         <div class="slide-bar__MenuButton">
@@ -41,7 +42,7 @@
             <img src="../Shared/img/common/dashboard.svg" alt="" class="icon" />
           </div>
           <div class="MenuButton-right">
-            <p class="name-menu">Dashboard</p>
+            <p class="name-menu">{{ t('NAV_DASHBOARD') }}</p>
           </div>
         </div>
       </a>
@@ -52,7 +53,7 @@
             <img src="../Shared/img/common/pos.svg" alt="" class="icon" />
           </div>
           <div class="MenuButton-right">
-            <p class="name-menu">POS</p>
+            <p class="name-menu">{{ t('NAV_POS') }}</p>
           </div>
         </div>
       </a>
@@ -63,7 +64,7 @@
             <img src="../Shared/img/common/product.svg" alt="" class="icon" />
           </div>
           <div class="MenuButton-right">
-            <p class="name-menu">Products</p>
+            <p class="name-menu">{{ t('NAV_PRODUCTS') }}</p>
           </div>
         </div>
       </a>
@@ -74,7 +75,7 @@
             <img src="../Shared/img/common/category.svg" alt="" class="icon" />
           </div>
           <div class="MenuButton-right">
-            <p class="name-menu">Categories</p>
+            <p class="name-menu">{{ t('NAV_CATEGORIES') }}</p>
           </div>
         </div>
       </a>
@@ -85,7 +86,7 @@
             <img src="../Shared/img/common/promotion.svg" alt="" class="icon" />
           </div>
           <div class="MenuButton-right">
-            <p class="name-menu">Promotions</p>
+            <p class="name-menu">{{ t('NAV_PROMOTIONS') }}</p>
           </div>
         </div>
       </a>
@@ -96,7 +97,7 @@
             <img src="../Shared/img/common/customer.svg" alt="" class="icon" />
           </div>
           <div class="MenuButton-right">
-            <p class="name-menu">Customers</p>
+            <p class="name-menu">{{ t('NAV_CUSTOMERS') }}</p>
           </div>
         </div>
       </a>
@@ -107,7 +108,7 @@
             <img src="../Shared/img/common/supplier.svg" alt="" class="icon" />
           </div>
           <div class="MenuButton-right">
-            <p class="name-menu-active">Suppliers</p>
+            <p class="name-menu-active">{{ t('NAV_SUPPLIERS') }}</p>
           </div>
         </div>
       </a>
@@ -118,7 +119,7 @@
             <img src="../Shared/img/common/purchaseorder.svg" alt="" class="icon" />
           </div>
           <div class="MenuButton-right">
-            <p class="name-menu">Purchase Orders</p>
+            <p class="name-menu">{{ t('NAV_PURCHASE_ORDERS') }}</p>
           </div>
         </div>
       </a>
@@ -129,7 +130,7 @@
             <img src="../Shared/img/common/stock.svg" alt="" class="icon" />
           </div>
           <div class="MenuButton-right">
-            <p class="name-menu">Stock Management</p>
+            <p class="name-menu">{{ t('NAV_STOCK') }}</p>
           </div>
         </div>
       </a>
@@ -140,7 +141,7 @@
             <img src="../Shared/img/common/goodReceipt.svg" alt="" class="icon" />
           </div>
           <div class="MenuButton-right">
-            <p class="name-menu">Goods Receipts</p>
+            <p class="name-menu">{{ t('GOODS_RECEIPTS') }}</p>
           </div>
         </div>
       </a>
@@ -151,7 +152,7 @@
             <img src="../Shared/img/common/goodIssues.svg" alt="" class="icon" />
           </div>
           <div class="MenuButton-right">
-            <p class="name-menu">Goods Issues</p>
+            <p class="name-menu">{{ t('GOODS_ISSUES') }}</p>
           </div>
         </div>
       </a>
@@ -162,7 +163,7 @@
             <img src="../Shared/img/common/sales.svg" alt="" class="icon" />
           </div>
           <div class="MenuButton-right">
-            <p class="name-menu">Sales</p>
+            <p class="name-menu">{{ t('NAV_SALES') }}</p>
           </div>
         </div>
       </a>
@@ -173,7 +174,7 @@
             <img src="../Shared/img/common/return.svg" alt="" class="icon" />
           </div>
           <div class="MenuButton-right">
-            <p class="name-menu">Returns</p>
+            <p class="name-menu">{{ t('NAV_RETURNS') }}</p>
           </div>
         </div>
       </a>
@@ -184,7 +185,7 @@
             <img src="../Shared/img/common/payments.svg" alt="" class="icon" />
           </div>
           <div class="MenuButton-right">
-            <p class="name-menu">Payments & Debts</p>
+            <p class="name-menu">{{ t('NAV_PAYMENTS') }}</p>
           </div>
         </div>
       </a>
@@ -195,7 +196,7 @@
             <img src="../Shared/img/common/report.svg" alt="" class="icon" />
           </div>
           <div class="MenuButton-right">
-            <p class="name-menu">Reports</p>
+            <p class="name-menu">{{ t('NAV_REPORTS') }}</p>
           </div>
         </div>
       </a>
@@ -206,7 +207,7 @@
             <img src="../Shared/img/common/auditlog.svg" alt="" class="icon" />
           </div>
           <div class="MenuButton-right">
-            <p class="name-menu">Audit Log</p>
+            <p class="name-menu">{{ t('NAV_AUDIT_LOG') }}</p>
           </div>
         </div>
       </a>
@@ -217,7 +218,7 @@
             <img src="../Shared/img/common/user.svg" alt="" class="icon" />
           </div>
           <div class="MenuButton-right">
-            <p class="name-menu">Users</p>
+            <p class="name-menu">{{ t('NAV_USERS') }}</p>
           </div>
         </div>
       </a>
@@ -228,7 +229,7 @@
             <img src="../Shared/img/common/setting.svg" alt="" class="icon" />
           </div>
           <div class="MenuButton-right">
-            <p class="name-menu">Settings</p>
+            <p class="name-menu">{{ t('NAV_SETTINGS') }}</p>
           </div>
         </div>
       </a>
@@ -267,13 +268,13 @@
         </div>
         <div class="info-mid">
           <a href="#!">
-            <p class="set">Profile Settings</p>
+            <p class="set">{{ t('PROFILE_SETTINGS') }}</p>
           </a>
         </div>
         <div class="info-bottom">
           <img src="../Shared/img/categories/logout.svg" alt="" class="icon" />
           <a href="../AuthFE/login.html">
-            <p class="logout">Logout</p>
+            <p class="logout">{{ t('LOGOUT') }}</p>
           </a>
         </div>
       </div>
@@ -281,49 +282,49 @@
     <div class="app-layout-content">
       <div class="container-top">
         <div class="container-top--left">
-          <h1 class="name-system">Suppliers</h1>
+          <h1 class="name-system">{{ t('SUPPLIER_TITLE') }}</h1>
           <p class="desc-system">
-            Manage supplier information and partnerships
+            {{ t('SUPPLIER_DESC') }}
           </p>
         </div>
         <div class="container-top--right">
           <div class="control" ng-click="openImportDialog()">
             <img src="../Shared/img/common/import.svg" alt="" class="icon-control" />
-            <p class="name-control">Import Excel</p>
+            <p class="name-control">{{ t('IMPORT_EXCEL') }}</p>
           </div>
           <input type="file" id="fileImport" accept=".xlsx,.xls" style="display: none"
             onchange="angular.element(this).scope().onImportFileChange(this)" />
           <div class="control" ng-click="exportExcel()">
             <img src="../Shared/img/common/export.svg" alt="" class="icon-control" />
-            <p class="name-control">Export Excel</p>
+            <p class="name-control">{{ t('EXPORT_EXCEL') }}</p>
           </div>
           <div class="control add-Supplier" ng-click="openAdd()">
             <img src="../Shared/img/common/plus.svg" alt="" class="icon-control" />
-            <p class="name-control">Add Supplier</p>
+            <p class="name-control">{{ t('ADD_SUPPLIER') }}</p>
           </div>
         </div>
       </div>
       <div class="container-card">
         <div class="card">
-          <p class="name-card">Total Supplier</p>
+          <p class="name-card">{{ t('TOTAL_SUPPLIER') }}</p>
           <p class="data-card">{{stats.totalSupplier}}</p>
         </div>
       </div>
       <div class="search-phone-suppliers">
         <img src="../Shared/img/common/search.svg" alt="" class="icon" />
-        <input class="search" type="text" placeholder="Search by phone Supplier" ng-model="searchPhone" />
+        <input class="search" type="text" placeholder="{{ t('SEARCH_PHONE_SUPPLIER') }}" ng-model="searchPhone" />
       </div>
 
       <!-- phân trang -->
       <div class="pager" ng-if="pager.total>0">
         <div class="pager-info">
-          Showing
+          {{ t('PAGING_SHOWING') }}
           {{((pager.page-1)*pager.size)+1}}-{{Math.min(pager.page*pager.size,pager.total)}}
-          of {{pager.total}} items
+          {{ t('PAGING_OF') }} {{pager.total}} {{ t('PAGING_ITEMS') }}
         </div>
         <div class="page-nav">
           <label>
-            Page size:
+            {{ t('PAGING_PAGE_SIZE') }}:
             <select ng-model="pager.size" ng-change="changeSize()">
               <option value="10">10</option>
               <option value="20">20</option>
@@ -334,11 +335,11 @@
             «
           </button>
           <button class="btn ghost" ng-disabled="pager.page === 1" ng-click="go(pager.page-1)">
-            Prev
+            {{ t('PAGING_PREV') }}
           </button>
           <span class="page-no"></span>
           <button class="btn ghost" ng-disabled="pager.page >= pager.pages" ng-click="go(pager.page+1)">
-            Next
+            {{ t('PAGING_NEXT') }}
           </button>
           <button class="btn ghost" ng-disabled="pager.page >= pager.pages" ng-click="go(pager.pages)">
             »
@@ -350,12 +351,12 @@
           <table class="table">
             <thead>
               <tr>
-                <th class="id">Supplier ID</th>
-                <th class="name">Supplier Name</th>
-                <th class="phone">Phone</th>
-                <th class="email">Email</th>
-                <th class="address">Address</th>
-                <th class="action txt-right">Actions</th>
+                <th class="id">{{ t('SUP_ID') }}</th>
+                <th class="name">{{ t('SUP_NAME') }}</th>
+                <th class="phone">{{ t('SUP_PHONE') }}</th>
+                <th class="email">{{ t('SUP_EMAIL') }}</th>
+                <th class="address">{{ t('SUP_ADDRESS') }}</th>
+                <th class="action txt-right">{{ t('ACTIONS') }}</th>
               </tr>
             </thead>
             <tbody>
@@ -366,14 +367,14 @@
                 <td>{{s.email || s.Email}}</td>
                 <td>{{s.address || s.Address}}</td>
                 <td class="txt-right">
-                  <button class="link" ng-click="edit(s)">✎ Edit</button>
+                  <button class="link" ng-click="edit(s)">✎ {{ t('EDIT_RETURN5') }}</button>
                   <button class="link danger" ng-click="remove(s)">
-                    🗑 Delete
+                    🗑 {{ t('DELETE_TITLE5') }}
                   </button>
                 </td>
               </tr>
               <tr ng-if="(suppliers | filter:searchPhone).length == 0">
-                <td colspan="6" class="empty">No Data</td>
+                <td colspan="6" class="empty">{{ t('NO_DATA') }}</td>
               </tr>
             </tbody>
           </table>
@@ -384,34 +385,34 @@
         <!-- add -->
         <div class="form-add" ng-class="{open: showAdd}" ng-click="closeAddOnOverlay($event)">
           <div class="form-add__content" ng-click="$event.stopPropagation()">
-            <h3 class="title">Add New Supplier</h3>
-            <p class="desc">Enter supplier details</p>
+            <h3 class="title">{{ t('FORM_ADD_SUPPLIER_TITLE') }}</h3>
+            <p class="desc">{{ t('FORM_ADD_SUPPLIER_DESC') }}</p>
             <form name="frmAddSupplier" ng-submit="addSupplier()">
-              <label for="name-add">Supplier Name</label>
-              <input type="text" id="name-add" required placeholder="Enter supplier name"
+              <label for="name-add">{{ t('LABEL_SUP_NAME') }}</label>
+              <input type="text" id="name-add" required placeholder="{{ t('PLACEHOLDER_SUP_NAME') }}"
                 ng-model="newSupplier.SupplierName" />
 
               <div class="both">
                 <div class="both-left">
-                  <label for="phone-add">Phone</label>
+                  <label for="phone-add">{{ t('LABEL_SUP_PHONE') }}</label>
                   <input type="text" id="phone-add" required placeholder="+84 123 456 789"
                     ng-model="newSupplier.Phone" />
                 </div>
                 <div class="both-right">
-                  <label for="mail-add">Email</label>
+                  <label for="mail-add">{{ t('LABEL_SUP_EMAIL') }}</label>
                   <input type="email" id="mail-add" placeholder="supplier@email.com" ng-model="newSupplier.Email" />
                 </div>
               </div>
 
 
-              <label for="address-add">Address</label>
+              <label for="address-add">{{ t('LABEL_SUP_ADDRESS') }}</label>
               <input type="text" id="address-add" placeholder="123 Main Street, City" ng-model="newSupplier.Address" />
 
               <div class="dialog-footer">
                 <button type="button" class="cancel" ng-click="cancelAdd()">
-                  Cancel
+                  {{ t('BTN_CANCEL') }}
                 </button>
-                <input class="submit" type="submit" value="Add New Supplier"
+                <input class="submit" type="submit" value="{{ t('BTN_ADD_SUPPLIER') }}"
                   ng-disabled="frmAddSupplier.$invalid || savingAdd" />
               </div>
             </form>
@@ -421,35 +422,35 @@
         <!-- Modal Edit Supplier -->
         <div class="form-add" ng-class="{open: showEdit}" ng-click="closeEditOnOverlay($event)">
           <div class="form-add__content" ng-click="$event.stopPropagation()">
-            <h3 class="title">Edit Supplier</h3>
-            <p class="desc">Update supplier details</p>
+            <h3 class="title">{{ t('FORM_EDIT_SUPPLIER_TITLE') }}</h3>
+            <p class="desc">{{ t('FORM_EDIT_SUPPLIER_DESC') }}</p>
             <form name="frmEditSupplier" ng-submit="updateSupplier()">
-              <label for="name-edit">Supplier Name</label>
-              <input type="text" id="name-edit" required placeholder="Enter supplier name"
+              <label for="name-edit">{{ t('LABEL_SUP_NAME') }}</label>
+              <input type="text" id="name-edit" required placeholder="{{ t('PLACEHOLDER_SUP_NAME') }}"
                 ng-model="editSupplier.SupplierName" />
 
               <div class="both">
                 <div class="both-left">
-                  <label for="phone-edit">Phone</label>
+                  <label for="phone-edit">{{ t('LABEL_SUP_PHONE') }}</label>
                   <input type="text" id="phone-edit" required placeholder="+84 123 456 789"
                     ng-model="editSupplier.Phone" />
                 </div>
                 <div class="both-right">
-                  <label for="mail-edit">Email</label>
+                  <label for="mail-edit">{{ t('LABEL_SUP_EMAIL') }}</label>
                   <input type="email" id="mail-edit" placeholder="supplier@email.com" ng-model="editSupplier.Email" />
                 </div>
               </div>
 
 
-              <label for="address-edit">Address</label>
-<input type="text" id="address-edit" placeholder="123 Main Street, City"
+              <label for="address-edit">{{ t('LABEL_SUP_ADDRESS') }}</label>
+                <input type="text" id="address-edit" placeholder="123 Main Street, City"
                 ng-model="editSupplier.Address" />
 
               <div class="dialog-footer">
                 <button type="button" class="cancel" ng-click="cancelEdit()">
-                  Cancel
+                  {{ t('BTN_CANCEL') }}
                 </button>
-                <input class="submit" type="submit" value="Save Changes"
+                <input class="submit" type="submit" value="{{ t('BTN_SAVE_CHANGES') }}"
                   ng-disabled="frmEditSupplier.$invalid || savingEdit" />
               </div>
             </form>
@@ -458,18 +459,18 @@
         <!-- Modal Delete Supplier -->
         <div class="form-delete" ng-class="{open: showDelete}" ng-click="closeDeleteOnOverlay($event)">
           <div class="form-delete__content" ng-click="$event.stopPropagation()">
-            <h3 class="title">Delete Supplier</h3>
+            <h3 class="title">{{ t('FORM_DELETE_SUPPLIER_TITLE') }}</h3>
             <p class="desc">
-              Bạn có chắc chắn muốn xóa nhà cung cấp
-              <strong>{{deleting.SupplierName}}</strong> không?
+              {{ t('FORM_DELETE_SUPPLIER_DESC') }}
+              <strong>{{deleting.SupplierName}}</strong> ?
             </p>
 
             <div class="dialog-footer">
               <button type="button" class="cancel" ng-click="cancelDelete()">
-                Cancel
+                {{ t('BTN_CANCEL') }}
               </button>
               <button type="button" class="submit danger" ng-click="confirmDelete()" ng-disabled="savingDelete">
-                Delete
+                {{ t('BTN_DELETE_SUPPLIER') }}
               </button>
             </div>
           </div>

@@ -135,7 +135,7 @@
   "LABEL_RETURN_DATE": "Ngày trả",
   "LABEL_REASON": "Lý do",
   "LABEL_SALE_ID": "Mã bán hàng",
-  "LABEL_RECEIPT_ID": "Mã phiếu nhập",
+  "LABEL_PO_ID": "Mã phiếu mua",
   "LABEL_CUSTOMER_ID": "Mã khách hàng",
   "LABEL_SUPPLIER_ID": "Mã nhà cung cấp",
   "LABEL_PRODUCT_ID": "Mã sản phẩm",
@@ -321,8 +321,777 @@
   "TB_AGE_DAYS": "Số ngày tồn",
   "TB_MIN_STOCK": "Tồn tối thiểu",
   "TB_EXPIRY_DATE": "Ngày hết hạn",
-  "TB_DAYS_LEFT": "Số ngày còn lại"
-}
+  "TB_DAYS_LEFT": "Số ngày còn lại",
 
+
+
+
+
+  "POS_TITLE": "Điểm bán hàng",
+  "POS_DESC": "Tạo đơn hàng, xử lý hạn mức nợ và thanh toán",
+
+  "POS_CUSTOMER": "Khách hàng",
+  "POS_PHONE": "Số điện thoại",
+  "POS_NEW_CUSTOMER": "Khách hàng mới",
+  "POS_NOT_FOUND": "Không tìm thấy khách hàng với số:",
+  "POS_ADD_NEW_CUSTOMER": "Thêm khách hàng mới",
+  "POS_CUSTOMER_DETAILS": "Thông tin khách hàng",
+  "POS_LOYAL_CREDIT": "Khách thân thiết – có hạn mức nợ",
+  "POS_REGULAR_NO_DEBT": "Khách thường – không được nợ",
+
+  "POS_PRODUCTS": "Sản phẩm",
+  "POS_SEARCH_PRODUCT": "Tìm hoặc quét sản phẩm (tên / SKU / mã vạch)",
+  "POS_CART_ITEMS": "Giỏ hàng",
+  "POS_CART_ITEMS1": "Chưa có sản phẩm nào trong giỏ.",
+  "POS_SUBTOTAL": "Tổng phụ",
+  "POS_VAT": "Thuế VAT",
+  "POS_ORDER_TOTAL": "Tổng đơn hàng",
+
+  "POS_PAYMENT": "Thanh toán",
+  "POS_CUSTOMER_PAYS": "Khách trả",
+  "POS_PAYMENT_METHOD": "Phương thức thanh toán",
+  "POS_REMAINING_DEBT": "Nợ còn lại",
+  "POS_COMPLETE_PAYMENT": "Hoàn tất thanh toán",
+
+  "POS_ADD_CUSTOMER": "Thêm khách hàng mới",
+  "POS_ENTER_CUSTOMER_DETAILS": "Nhập thông tin khách hàng",
+  "POS_FULL_NAME": "Họ và tên",
+  "POS_EMAIL": "Email",
+  "POS_ADDRESS": "Địa chỉ",
+
+  "POS_PAYMENT_SUCCESS": "Thanh toán thành công",
+  "POS_PAYMENT_SUCCESS_DESC": "Đơn hàng đã được xử lý thành công.",
+  "POS_ORDER_SUMMARY": "Tổng quan đơn hàng",
+  "POS_ORDER_ID": "Mã đơn hàng",
+  "POS_DATE_TIME": "Ngày & Giờ",
+  "POS_CASHIER": "Thu ngân",
+  "POS_CUSTOMER_INFO": "Thông tin khách hàng",
+  "POS_BEFORE_DEBT": "Nợ trước",
+  "POS_PREPAY": "Trả trước",
+  "POS_NEW_REMAINING_DEBT": "Nợ còn lại mới",
+
+  "POS_ITEMS_PURCHASED": "Sản phẩm đã mua",
+  "POS_VAT_RATE": "VAT",
+  "POS_PAYMENT_DETAILS": "Chi tiết thanh toán",
+
+  "POS_NEW_SALE": "Bán đơn mới",
+  "POS_PRINT_INVOICE": "In hoá đơn",
+
+
+
+
+
+  "CAT_TITLE": "Danh mục sản phẩm",
+  "CAT_DESC": "Quản lý và tổ chức danh mục sản phẩm với mô tả và thuế VAT",
+
+  "CAT_TOTAL": "Tổng số danh mục",
+  "CAT_AVG_VAT": "VAT trung bình",
+  "CAT_MOST_COMMON": "Danh mục phổ biến nhất",
+
+  "SEARCH_CATEGORY": "Tìm theo tên danh mục",
+  "SEARCH_VAT": "Tìm theo VAT...",
+
+  "SHOWING": "Hiển thị",
+  "PAGE_SIZE": "Số lượng/trang:",
+  "PREV": "Trước",
+  "NEXT": "Sau",
+
+  "IMPORT": "Nhập Excel",
+  "EXPORT": "Xuất Excel",
+  "ADD_CATEGORY": "Thêm danh mục",
+
+  "CAT_ID": "Mã danh mục",
+  "CAT_NAME": "Tên danh mục",
+  "CAT_DESCRIPTION": "Mô tả",
+  "CAT_VAT": "VAT (%)",
+  "ACTIONS": "Hành động",
+  "NO_DATA": "Không có dữ liệu",
+
+  "FORM_ADD_TITLE": "Thêm danh mục",
+  "FORM_ADD_DESC": "Tạo danh mục sản phẩm mới",
+  "FORM_EDIT_TITLE": "Chỉnh sửa danh mục",
+  "FORM_EDIT_DESC": "Cập nhật thông tin danh mục",
+  "FORM_DELETE_TITLE": "Xóa danh mục",
+  "FORM_DELETE_DESC1": "Bạn có chắc chắn muốn xóa danh mục này",
+  "FORM_DELETE_DESC2": "Hành động này không thể hoàn tác.",
+
+  "LABEL_CAT_NAME": "Tên danh mục *",
+  "LABEL_DESCRIPTION": "Mô tả *",
+  "LABEL_VAT": "Tỷ lệ VAT (%) *",
+  "LABEL_STANDARD": "VAT chuẩn: 10% (đa số sản phẩm), 9% (mặt hàng đặc biệt)",
+
+  "BTN_CANCEL": "Hủy",
+  "BTN_ADD_CAT": "Thêm danh mục",
+  "BTN_UPDATE_CAT": "Cập nhật danh mục",
+  "BTN_DELETE_CAT": "Xóa danh mục",
+  "EDIT_RETURN5": "Sửa ",
+  "DELETE_TITLE5": "Xóa ",
+
+
+
+
+
+
+"PROMO_TITLE": "Khuyến mãi",
+  "PROMO_DESC": "Quản lý giảm giá và ưu đãi đặc biệt",
+
+  "PROMO_ADD": "Thêm khuyến mãi",
+  "PROMO_TOTAL": "Tổng số khuyến mãi",
+  "PROMO_TOTAL_ACTIVE": "Tổng đang hoạt động",
+  "PROMO_TOTAL_EXPIRED": "Tổng đã hết hạn",
+
+  "SEARCH_START_DATE": "Ngày bắt đầu",
+  "SEARCH_END_DATE": "Ngày kết thúc",
+  "SEARCH_STATUS": "Trạng thái",
+  "STATUS_ALL": "-- Tất cả --",
+  "STATUS_ACTIVE": "Đang hoạt động",
+  "STATUS_EXPIRED": "Đã hết hạn",
+
+  "PROMO_ID": "Mã khuyến mãi",
+  "PROMO_NAME": "Tên khuyến mãi",
+  "PROMO_TYPE": "Loại",
+  "PROMO_VALUE": "Giá trị",
+  "PROMO_START": "Ngày bắt đầu",
+  "PROMO_END": "Ngày kết thúc",
+  "PROMO_CATEGORY": "Danh mục",
+  "PROMO_STATUS": "Trạng thái",
+  "PROMO_ACTIONS": "Thao tác",
+  "PROMO_NO_DATA": "Không có dữ liệu",
+
+  "FORM_ADD_PROMO_TITLE": "Thêm khuyến mãi mới",
+  "FORM_ADD_PROMO_DESC": "Nhập thông tin khuyến mãi",
+
+  "LABEL_PROMO_NAME": "Tên khuyến mãi",
+  "LABEL_PROMO_TYPE": "Loại",
+  "TYPE_PERCENT": "Phần trăm",
+  "TYPE_AMOUNT": "Số tiền",
+
+  "LABEL_PROMO_VALUE": "Giá trị",
+  "LABEL_PROMO_START": "Ngày bắt đầu",
+  "LABEL_PROMO_END": "Ngày kết thúc",
+  "LABEL_PROMO_CATEGORY_ID": "Mã danh mục",
+
+  "BTN_CANCEL": "Hủy",
+  "BTN_ADD_PROMO": "Thêm khuyến mãi",
+  "BTN_UPDATE_PROMO": "Cập nhật khuyến mãi",
+  "BTN_DELETE_PROMO": "Xóa khuyến mãi",
+
+  "FORM_EDIT_PROMO_TITLE": "Chỉnh sửa khuyến mãi",
+
+  "FORM_DELETE_PROMO_TITLE": "Xóa khuyến mãi",
+  "FORM_DELETE_PROMO_DESC1": "Bạn có chắc chắn muốn xóa khuyến mãi này",
+  "FORM_DELETE_PROMO_DESC2": "Hành động này không thể hoàn tác.",
+  "EXPIRED": "Đã hết hạn",
+  "ACTION": "Đang hoạt động",
+  "ENTER1": "Nhập tên mã giảm giá",
+  "ENTER2": "Nhập giá trị giảm giá",
+  "ENTER3": "Nhập mã danh mục",
+  "ADD_PROMO": "Thêm mã giảm giá",
+  "EDIT_PROMO": "Sửa mã giảm giá",
+
+
+
+
+
+
+
+
+  "CUSTOMER_TITLE": "Khách hàng",
+  "CUSTOMER_DESC": "Quản lý thông tin và mối quan hệ khách hàng",
+
+  "IMPORT_EXCEL": "Nhập Excel",
+  "EXPORT_EXCEL": "Xuất Excel",
+  "ADD_CUSTOMER": "Thêm khách hàng",
+
+  "CUSTOMER_TOTAL": "Tổng số khách hàng",
+  "CUSTOMER_WITH_DEBT": "Khách hàng có hạn mức nợ",
+
+
+  "SEARCH_PHONE_CUSTOMER": "Tìm theo số điện thoại khách hàng",
+
+
+  "CUS_ID": "Mã KH",
+  "CUS_NAME": "Tên khách hàng",
+  "CUS_PHONE": "Số điện thoại",
+  "CUS_EMAIL": "Email",
+  "CUS_ADDRESS": "Địa chỉ",
+  "CUS_DEBT": "Hạn mức nợ",
+  "ACTIONS": "Hành động",
+  "NO_DATA": "Không có dữ liệu",
+
+  "FORM_ADD_TITLE": "Thêm khách hàng mới",
+  "FORM_ADD_DESC": "Nhập thông tin khách hàng",
+
+  "LABEL_FULL_NAME": "Họ và tên",
+  "LABEL_PHONE": "Số điện thoại",
+  "LABEL_EMAIL": "Email",
+  "LABEL_ADDRESS": "Địa chỉ",
+  "LABEL_DEBT": "Hạn mức nợ",
+
+  "PLACEHOLDER_FULL_NAME": "Nhập tên khách hàng",
+  "PLACEHOLDER_PHONE": "+84 123 456 7890",
+  "PLACEHOLDER_EMAIL": "example@email.com",
+  "PLACEHOLDER_ADDRESS": "123 Thành phố, Main Street",
+  "PLACEHOLDER_DEBT": "Nhập hạn mức nợ cho khách hàng",
+
+  "BTN_CANCEL": "Hủy",
+  "BTN_ADD_CUSTOMER": "Thêm khách hàng",
+
+  "FORM_EDIT_TITLE": "Chỉnh sửa khách hàng",
+  "BTN_UPDATE_CUSTOMER": "Cập nhật khách hàng",
+
+
+  "FORM_DELETE_TITLE": "Xóa khách hàng",
+  "FORM_DELETE_DESC": "Bạn có chắc muốn xóa khách hàng này? Hành động này không thể hoàn tác.",
+  "BTN_DELETE_CUSTOMER": "Xóa khách hàng",
+  "PLACEHOLDER_FULL_NAME": "Nhập tên khách hàng",
+"PLACEHOLDER_DEBT": "Nhập hạn mức công nợ cho khách",
+
+
+
+
+
+
+
+
+"SUPPLIER_TITLE": "Nhà cung cấp",
+  "SUPPLIER_DESC": "Quản lý thông tin và hợp tác với nhà cung cấp",
+
+  "IMPORT_EXCEL": "Nhập Excel",
+  "EXPORT_EXCEL": "Xuất Excel",
+  "ADD_SUPPLIER": "Thêm nhà cung cấp",
+
+  "TOTAL_SUPPLIER": "Tổng số nhà cung cấp",
+
+  "SEARCH_PHONE_SUPPLIER": "Tìm theo số điện thoại nhà cung cấp",
+
+  "SUP_ID": "Mã nhà cung cấp",
+  "SUP_NAME": "Tên nhà cung cấp",
+  "SUP_PHONE": "Số điện thoại",
+  "SUP_EMAIL": "Email",
+  "SUP_ADDRESS": "Địa chỉ",
+  "ACTIONS": "Hành động",
+  "NO_DATA": "Không có dữ liệu",
+
+  "FORM_ADD_SUPPLIER_TITLE": "Thêm nhà cung cấp mới",
+  "FORM_ADD_SUPPLIER_DESC": "Nhập thông tin nhà cung cấp",
+
+  "LABEL_SUP_NAME": "Tên nhà cung cấp",
+  "LABEL_SUP_PHONE": "Số điện thoại",
+  "LABEL_SUP_EMAIL": "Email",
+  "LABEL_SUP_ADDRESS": "Địa chỉ",
+
+  "PLACEHOLDER_SUP_NAME": "Nhập tên nhà cung cấp",
+  "PLACEHOLDER_SUP_PHONE": "+84 123 456 789",
+  "PLACEHOLDER_SUP_EMAIL": "supplier@email.com",
+  "PLACEHOLDER_SUP_ADDRESS": "123 Đường Chính, Thành phố",
+
+  "BTN_CANCEL": "Hủy",
+  "BTN_ADD_SUPPLIER": "Thêm nhà cung cấp",
+
+  "FORM_EDIT_SUPPLIER_TITLE": "Chỉnh sửa nhà cung cấp",
+  "FORM_EDIT_SUPPLIER_DESC": "Cập nhật thông tin nhà cung cấp",
+  "BTN_SAVE_CHANGES": "Lưu thay đổi",
+
+  "FORM_DELETE_SUPPLIER_TITLE": "Xóa nhà cung cấp",
+  "FORM_DELETE_SUPPLIER_DESC": "Bạn có chắc muốn xóa nhà cung cấp này?",
+  "BTN_DELETE_SUPPLIER": "Xóa",
+  "BTN_ADD_SUPPLIER": "Thêm nhà cung cấp mới",
+
+
+
+
+
+
+
+  "PO_TITLE": "Đơn mua hàng",
+  "PO_DESC": "Quản lý và tổ chức đơn mua hàng",
+
+  "PO_TOTAL": "Tổng số PO",
+  "PO_AMOUNT_APPROVED": "Số PO đã duyệt",
+  "PO_AMOUNT_PENDING": "Số PO chờ duyệt",
+  "PO_AMOUNT_PROCESSING": "Số PO đang xử lý",
+
+  "PO_FROM_DATE": "Từ ngày",
+  "PO_TO_DATE": "Đến ngày",
+  "PO_MIN_AMOUNT": "Số tiền nhỏ nhất",
+  "PO_MAX_AMOUNT": "Số tiền lớn nhất",
+
+  "PO_STATUS_ALL": "Tất cả trạng thái",
+  "PO_STATUS_PENDING": "Chờ duyệt",
+  "PO_STATUS_PROCESSING": "Đang xử lý",
+  "PO_STATUS_APPROVED": "Đã duyệt",
+
+  "PAGING_SHOWING": "Hiển thị",
+  "PAGING_OF": "trên",
+  "PAGING_ITEMS": "mục",
+  "PAGING_PAGE_SIZE": "Kích thước trang",
+  "PAGING_PREV": "Trước",
+  "PAGING_NEXT": "Sau",
+  "PAGING_PAGE": "Trang",
+  "PAGING_OF2": "trên",
+
+  "BTN_ADD_PO": "Thêm đơn mua hàng",
+  "BTN_VIEW_DETAIL": "Chi tiết",
+  "BTN_EDIT": "Sửa",
+  "BTN_DELETE": "Xóa",
+  "BTN_EXPORT": "Xuất",
+  "BTN_CANCEL": "Hủy",
+  "BTN_CLOSE": "Đóng",
+
+  "PO_ID": "Mã PO",
+  "PO_SUPPLIER_ID": "Mã NCC",
+  "PO_ORDER_DATE": "Ngày đặt",
+  "PO_TOTAL_AMOUNT": "Tổng tiền",
+  "PO_STATUS": "Trạng thái",
+  "ACTIONS": "Hành động",
+
+  "PO_NO_DATA": "Không có đơn mua hàng nào",
+
+  "FORM_ADD_PO_TITLE": "Thêm đơn mua hàng",
+  "FORM_ADD_PO_DESC": "Tạo đơn mua hàng mới",
+  "LABEL_SUPPLIER_ID": "Mã nhà cung cấp *",
+  "BTN_SUBMIT_ADD_PO": "Thêm đơn mua hàng",
+
+  "FORM_EDIT_PO_TITLE": "Chỉnh sửa đơn mua hàng",
+  "FORM_EDIT_PO_DESC": "Cập nhật nhà cung cấp và trạng thái",
+  "LABEL_STATUS": "Trạng thái *",
+  "BTN_UPDATE_PO": "Cập nhật PO",
+
+  "FORM_DELETE_PO_TITLE": "Xóa đơn mua hàng",
+  "FORM_DELETE_PO_DESC1": "Bạn có chắc chắn muốn xóa đơn mua hàng có POID",
+  "FORM_DELETE_PO_DESC2": "Không thể hoàn tác hành động này..",
+  "BTN_DELETE_PO": "Xóa đơn mua hàng",
+
+  "FORM_PO_DETAILS_TITLE": "Chi tiết đơn mua hàng",
+  "FORM_PO_DETAILS_DESC": "Chi tiết đơn hàng cho POID",
+
+  "PO_DETAIL_PRODUCT_ID": "Mã sản phẩm",
+  "PO_DETAIL_NAME_PRODUCT": "Tên sản phẩm",
+  "PO_DETAIL_QTY": "Số lượng",
+  "PO_DETAIL_UNIT_PRICE": "Đơn giá",
+  "PO_DETAIL_NO_DATA": "Không có chi tiết",
+
+  "FORM_ADD_DETAIL_TITLE": "Thêm chi tiết đơn mua",
+  "LABEL_PRODUCT_ID": "Mã sản phẩm *",
+  "LABEL_QTY": "Số lượng *",
+  "LABEL_UNIT_PRICE": "Đơn giá *",
+  "BTN_ADD_DETAIL": "Thêm chi tiết",
+  "BTN_RESET_DETAIL": "Làm mới",
+  "BTN_DELETE_DETAIL": "Xóa chi tiết",
+
+
+
+
+
+
+
+
+  "GR_TITLE": "Phiếu Nhập Hàng",
+  "GR_DESC": "Quản lý phiếu nhập và cập nhật tồn kho",
+
+  "ADD_GR": "Thêm Phiếu Nhập",
+  "BTN_ADD_RECEIPT": "Thêm Phiếu",
+  "BTN_CANCEL": "Hủy",
+  "BTN_CLOSE": "Đóng",
+  "BTN_REMOVE": "Xóa",
+  "BTN_ADD_PRODUCT": "Thêm Sản Phẩm",
+  "BTN_EDIT_GR": "Chỉnh Sửa Phiếu Nhập",
+  "BTN_DELETE_GR": "Xóa Phiếu Nhập",
+  "BTN_PAYMENT": "Thanh Toán",
+
+  "GR_TOTAL": "Tổng Phiếu Nhập",
+  "GR_COMPLETED": "Đã Hoàn Thành",
+  "GR_PENDING": "Đang Chờ",
+  "GR_PROCESSING": "Đang Xử Lý",
+
+  "GR_FROM_DATE": "Từ Ngày",
+  "GR_TO_DATE": "Đến Ngày",
+  "GR_MIN_AMOUNT": "Số Tiền Tối Thiểu",
+  "GR_MAX_AMOUNT": "Số Tiền Tối Đa",
+  "GR_POID": "Mã PO",
+  "PLACEHOLDER_POID": "Nhập mã PO",
+
+  "PAGING_SHOWING": "Hiển thị",
+  "PAGING_OF": "trên",
+  "PAGING_ITEMS": "dòng",
+  "PAGING_PAGE_SIZE": "Số dòng / trang",
+  "PAGING_PREV": "Trước",
+  "PAGING_NEXT": "Tiếp",
+  "NO_DATA": "Không có dữ liệu",
+
+  "GR_RECEIPT_ID": "Mã Phiếu Nhập",
+  "GR_PO_ID": "Mã PO",
+  "GR_RECEIPT_DATE": "Ngày Nhập",
+  "GR_TOTAL_AMOUNT": "Tổng Tiền",
+  "GR_USER_ID": "Mã Người Dùng",
+  "GR_BATCH_NO": "Số Lô",
+  "GR_STATUS": "Trạng Thái",
+  "ACTIONS": "Thao Tác",
+
+  "ACTION_EDIT": "Chỉnh Sửa",
+  "ACTION_DELETE": "Xóa",
+  "ACTION_DETAIL": "Chi Tiết",
+  "ACTION_EXPORT": "Xuất File",
+  "ACTION_PAYMENT": "Thanh Toán",
+
+  "FORM_ADD_GR_TITLE": "Thêm Phiếu Nhập Mới",
+  "FORM_ADD_GR_DESC": "Nhập thông tin phiếu và sản phẩm",
+  "LABEL_POID": "Mã PO",
+  "LABEL_USERID": "Mã Người Dùng",
+  "LABEL_RECEIPT_DETAILS": "Chi Tiết Phiếu Nhập",
+
+  "LABEL_PRODUCT_ID": "Mã Sản Phẩm",
+  "LABEL_EXPIRY_DATE": "Hạn Sử Dụng",
+
+  "FORM_EDIT_GR_TITLE": "Chỉnh Sửa Phiếu Nhập",
+  "LABEL_RECEIPT_DATE": "Ngày Nhập",
+
+  "FORM_DELETE_GR_TITLE": "Xóa Phiếu Nhập",
+  "FORM_DELETE_GR_DESC": "Bạn có chắc muốn xóa phiếu nhập",
+
+  "FORM_GR_DETAIL_TITLE": "Chi Tiết Phiếu Nhập",
+  "FORM_GR_DETAIL_DESC": "Thông tin chi tiết của phiếu nhập",
+
+  "GRD_PRODUCT_ID": "Mã SP",
+  "GRD_PRODUCT_NAME": "Tên Sản Phẩm",
+  "GRD_QTY": "Số Lượng",
+  "GRD_UNIT_PRICE": "Đơn Giá",
+  "GRD_EXPIRY_DATE": "Hạn Sử Dụng",
+  "GRD_ACTIONS": "Thao Tác",
+  "BTN_DELETE_DETAIL": "Xóa",
+
+  "PAY_TITLE": "Thanh Toán Phiếu Nhập",
+  "PAY_SUPPLIER": "Nhà Cung Cấp",
+  "PAY_POID": "Mã PO",
+  "PAY_TOTAL": "Tổng Tiền",
+
+  "PAY_HISTORY_TITLE": "Lịch Sử Thanh Toán",
+  "PAY_HISTORY_ID": "Mã Thanh Toán",
+  "PAY_HISTORY_AMOUNT": "Số Tiền",
+  "PAY_HISTORY_DATE": "Ngày Thanh Toán",
+  "PAY_HISTORY_METHOD": "Hình Thức",
+  "PAY_HISTORY_DESC": "Mô Tả",
+  "PAY_NO_HISTORY": "Chưa có thanh toán nào",
+
+  "PAY_ADD_TITLE": "Thêm Thanh Toán Mới",
+  "PAY_AMOUNT": "Số Tiền thanh toán",
+  "PAY_METHOD": "Hình Thức Thanh Toán",
+  "PAY_NOTE": "Ghi Chú",
+  "PAY_METHOD_CASH": "Tiền mặt",
+  "PAY_METHOD_BANK": "Chuyển khoản",
+  "PAY_METHOD_CARD": "Thẻ",
+  "PAY_METHOD_DEBT": "Ghi nợ",
+  "BTN_PAY": "Thanh Toán",
+  "BTN_PAYING": "Đang xử lý...",
+  "EXAMP":"Ví dụ: Thanh toán lần 1, CK Vietcombank...",
+
+
+
+
+
+  "GI_TITLE": "Phiếu Xuất Kho",
+  "GI_DESC": "Quản lý các giao dịch xuất kho và luân chuyển hàng hóa",
+
+  "ADD_GI": "Thêm Phiếu Xuất",
+  "BTN_ADD_ISSUE": "Thêm Phiếu",
+  "BTN_CANCEL": "Hủy",
+  "BTN_CLOSE": "Đóng",
+  "BTN_REMOVE": "Xóa",
+  "BTN_ADD_PRODUCT": "Thêm Sản Phẩm",
+  "BTN_DELETE_GI": "Xóa Phiếu Xuất",
+
+  "GI_TOTAL": "Tổng Phiếu Xuất",
+
+  "GI_FROM_DATE": "Từ Ngày",
+  "GI_TO_DATE": "Đến Ngày",
+  "GI_USER_ID": "Mã Người Dùng",
+  "PLACEHOLDER_USER_ID": "Nhập User ID",
+
+  "PAGING_SHOWING": "Hiển thị",
+  "PAGING_OF": "trên",
+  "PAGING_ITEMS": "mục",
+  "PAGING_PAGE_SIZE": "Số dòng/trang",
+  "PAGING_PREV": "Trước",
+  "PAGING_NEXT": "Sau",
+  "NO_DATA": "Không có dữ liệu",
+
+  "GI_ID": "Mã Phiếu Xuất",
+  "GI_DATE": "Ngày Xuất",
+  "GI_USER": "Mã Người Dùng",
+  "ACTIONS": "Hành động",
+
+  "ACTION_DETAIL": "Chi tiết",
+  "ACTION_DELETE": "Xóa",
+
+  "FORM_ADD_GI_TITLE": "Thêm Phiếu Xuất Kho",
+  "FORM_ADD_GI_DESC": "Nhập thông tin phiếu xuất và sản phẩm xuất kho",
+
+  "LABEL_USER_ID": "Mã Người Dùng",
+  "LABEL_ISSUE_DETAILS": "Chi Tiết Phiếu Xuất",
+  "LABEL_PRODUCT_ID": "Mã Sản Phẩm",
+  "LABEL_QUANTITY": "Số Lượng",
+
+  "FORM_DELETE_GI_TITLE": "Xóa Phiếu Xuất",
+  "FORM_DELETE_GI_DESC": "Bạn có chắc chắn muốn xóa phiếu xuất kho",
+
+  "FORM_GI_DETAIL_TITLE": "Chi Tiết Phiếu Xuất",
+
+  "GI_DETAIL_SUB_USER": "Mã Người Dùng",
+  "GI_DETAIL_SUB_TOTAL": "Tổng Tiền",
+
+  "GID_PRODUCT_ID": "Mã Sản Phẩm",
+  "GID_PRODUCT_NAME": "Tên Sản Phẩm",
+  "GID_QTY": "Số Lượng",
+  "GID_ACTIONS": "Hành động",
+  "BTN_DELETE_DETAIL": "Xóa",
+
+  "DETAIL_ADD_TITLE": "Thêm Sản Phẩm Xuất Kho",
+  "DETAIL_ADD_PRODUCT_ID": "Mã Sản Phẩm",
+  "DETAIL_ADD_QTY": "Số Lượng",
+  "BTN_ADD_DETAIL": "Thêm Sản Phẩm",
+  "BTN_ADDING_DETAIL": "Đang thêm...",
+  "BTN_DELETE_DETAIL1": "Đang xóa...",
+
+  "NO_DETAIL_ITEMS": "Chưa có sản phẩm nào được xuất",
+
+
+
+
+
+  "SALES_TITLE": "Quản lý bán hàng",
+  "SALES_DESC": "Theo dõi đơn hàng, thanh toán và doanh thu",
+
+  "SALES_TOTAL": "Tổng số đơn hàng",
+  "SALES_REVENUE": "Tổng doanh thu",
+  "SALES_AVG_ORDER": "Giá trị đơn trung bình",
+  "SALES_PAID": "Đơn đã thanh toán",
+  "SALES_UNPAID": "Đơn chưa thanh toán",
+
+  "FILTER_FROM_DATE": "Từ ngày",
+  "FILTER_TO_DATE": "Đến ngày",
+  "FILTER_STATUS": "Trạng thái",
+  "FILTER_KEYWORD": "Tìm hóa đơn / khách hàng",
+
+  "STATUS_ALL": "Tất cả",
+  "STATUS_PAID": "Đã thanh toán",
+  "STATUS_UNPAID": "Chưa thanh toán",
+  "STATUS_PARTIAL": "Thanh toán một phần",
+
+  "SALES_INVOICE_NO": "Mã hóa đơn",
+  "SALES_DATE": "Ngày bán",
+  "SALES_CUSTOMER": "Tên khách hàng",
+  "SALES_AMOUNT": "Tổng tiền",
+  "SALES_PAYMENT_STATUS": "Trạng thái thanh toán",
+  "SALES_METHOD": "Phương thức",
+  "ACTIONS": "Hành động",
+
+  "ACTION_VIEW_DETAIL": "Xem chi tiết",
+  "ACTION_VIEW_INVOICE": "Hóa đơn",
+  "ACTION_PRINT": "In",
+
+  "DETAIL_TITLE": "Chi tiết đơn hàng",
+  "DETAIL_INFO": "Thông tin đơn hàng",
+  "DETAIL_ITEMS": "Sản phẩm trong đơn",
+
+  "DETAIL_INVOICE_NO": "Mã hóa đơn",
+  "DETAIL_SALE_DATE": "Ngày bán",
+  "DETAIL_CUSTOMER": "Khách hàng",
+  "DETAIL_METHOD": "Phương thức thanh toán",
+  "DETAIL_STATUS": "Trạng thái thanh toán",
+
+  "DETAIL_PRODUCT": "Sản phẩm",
+  "DETAIL_QTY": "Số lượng",
+  "DETAIL_PRICE": "Đơn giá",
+  "DETAIL_TOTAL": "Thành tiền",
+
+  "DETAIL_SUBTOTAL": "Tạm tính",
+  "DETAIL_DISCOUNT": "Giảm giá",
+  "DETAIL_GRAND_TOTAL": "Tổng cộng",
+
+  "BTN_CLOSE": "Đóng",
+
+  "INVOICE_TITLE": "Xem trước hóa đơn",
+  "INVOICE_INFO": "Thông tin hóa đơn",
+  "INVOICE_PRINT": "In hóa đơn",
+  "SEARCH_BY_INVOICE": "Tìm kiếm theo hóa đơn hoặc tên khách hàng...",
+
+
+
+
+
+
+
+  "PAY_PAGE_TITLE": "Thanh toán & Công nợ",
+  "PAY_TAB_CUSTOMER": "Công nợ khách hàng (AR)",
+  "PAY_TAB_SUPPLIER": "Công nợ nhà cung cấp (AP)",
+
+  "PAY_TOTAL_DEBT": "Tổng công nợ",
+  "PAY_BASED_ON_BALANCE": "Dựa trên các công nợ chưa thanh toán",
+  "PAY_SETTLED_THIS_MONTH": "Đã thu trong tháng",
+  "PAY_RECORDED_THIS_MONTH": "Các khoản thanh toán được ghi nhận trong tháng",
+
+  "PAY_SEARCH_CUSTOMER_PLACEHOLDER": "Tìm hoá đơn theo khách hàng / số điện thoại / mã hoá đơn...",
+  "PAY_FILTER_ALL": "Tất cả",
+  "PAY_FILTER_UNPAID": "Chưa thanh toán",
+  "PAY_FILTER_PARTIAL": "Thanh toán một phần",
+  "PAY_FROM_DATE": "Từ ngày",
+  "PAY_TO_DATE": "Đến ngày",
+
+  "PAY_CUSTOMER_OPEN_INVOICES": "Danh sách hoá đơn công nợ khách hàng",
+  "PAY_COL_INVOICE_NO": "Mã hoá đơn",
+  "PAY_COL_DATE": "Ngày",
+  "PAY_COL_CUSTOMER": "Khách hàng",
+  "PAY_COL_PHONE": "Số điện thoại",
+  "PAY_COL_TOTAL": "Tổng tiền",
+  "PAY_COL_PAID": "Đã thanh toán",
+  "PAY_COL_REMAINING": "Còn lại",
+  "PAY_COL_ACTIONS": "Thao tác",
+
+  "PAY_BTN_VIEW": "Xem",
+  "PAY_BTN_COLLECT": "Thu tiền",
+
+  "PAY_SUPPLIER_OPEN_BILLS": "Danh sách công nợ nhà cung cấp",
+  "PAY_SEARCH_SUPPLIER_PLACEHOLDER": "Tìm phiếu nhập theo nhà cung cấp / mã phiếu...",
+  "PAY_COL_BILL_NO": "Mã phiếu",
+  "PAY_COL_SUPPLIER": "Nhà cung cấp",
+  "PAY_BTN_VIEW_DETAILS": "Xem chi tiết",
+  "PAY_BTN_PAY": "Thanh toán",
+
+  "PAGING_SHOWING": "Hiển thị",
+  "PAGING_OF": "trên",
+  "PAGING_ITEMS": "mục",
+  "PAGING_PAGE_SIZE": "Số mục/trang",
+  "PAGING_PREV": "Trước",
+  "PAGING_NEXT": "Tiếp",
+
+  "PAY_CUSTOMER_DETAIL_TITLE": "Chi tiết công nợ khách hàng",
+  "PAY_CUSTOMER_DETAIL_DESC": "Xem lịch sử bán hàng và thanh toán của khách hàng",
+  "PAY_CUSTOMER_NAME": "Tên khách hàng",
+  "PAY_DEBT_LIMIT": "Hạn mức công nợ",
+  "PAY_TOTAL_SALES": "Tổng bán hàng",
+  "PAY_TOTAL_PAYMENTS": "Tổng thanh toán",
+  "PAY_CURRENT_DEBT": "Công nợ hiện tại",
+
+  "PAY_RECORD_PAYMENT_CUSTOMER": "Ghi nhận thanh toán (Khách hàng)",
+  "PAY_RECORD_PAYMENT_DESC": "Ghi nhận khoản khách hàng thanh toán",
+  "PAY_FIELD_AMOUNT": "Số tiền *",
+  "PAY_FIELD_DATE": "Ngày thanh toán *",
+  "PAY_FIELD_METHOD": "Hình thức thanh toán *",
+  "PAY_FIELD_DESC": "Ghi chú",
+  "PAY_METHOD_CASH": "Tiền mặt",
+  "PAY_METHOD_BANK": "Chuyển khoản",
+
+  "PAY_BTN_SAVE_PAYMENT": "Lưu thanh toán",
+  "PAY_BTN_CANCEL": "Hủy",
+
+  "PAY_SUPPLIER_DETAIL_TITLE": "Chi tiết công nợ nhà cung cấp",
+  "PAY_SUPPLIER_DETAIL_DESC": "Xem lịch sử phiếu nhập và thanh toán với nhà cung cấp",
+  "PAY_SUPPLIER_NAME": "Tên nhà cung cấp",
+  "PAY_SUPPLIER_ID": "Mã nhà cung cấp",
+  "PAY_RECEIVED_TOTAL": "Tổng tiền nhập",
+  "PAY_PAYMENTS_TOTAL": "Tổng thanh toán",
+  "PAY_CURRENT_PAYABLE": "Công nợ hiện tại",
+
+  "PAY_RECORD_PAYMENT_SUPPLIER": "Ghi nhận thanh toán (Nhà cung cấp)",
+  "PAY_RECORD_PAYMENT_SUPPLIER_DESC": "Ghi nhận khoản thanh toán cho nhà cung cấp",
+  "PAY_BTN_SAVE_PAYMENT_SUPPLIER": "Lưu thanh toán",
+  "PAYMENT_NOTE":"Thêm ghi chú thanh toán...",
+
+
+
+
+
+
+
+  "AUDIT_TITLE": "Nhật ký hệ thống",
+  "AUDIT_DESC": "Ghi lại mọi hoạt động trong hệ thống",
+
+  "AUDIT_FROM_DATE": "Từ ngày",
+  "AUDIT_TO_DATE": "Đến ngày",
+  "AUDIT_USER_ID": "User ID",
+  "AUDIT_OPERATION": "Thao tác",
+  "AUDIT_OPERATION_ALL": "-- Tất cả thao tác --",
+  "AUDIT_OP_CREATE": "CREATE - Tạo mới",
+  "AUDIT_OP_UPDATE": "UPDATE - Cập nhật",
+  "AUDIT_OP_DELETE": "DELETE - Xóa",
+  "AUDIT_OP_LOGIN": "LOGIN - Đăng nhập",
+
+  "AUDIT_COL_ID": "Mã Audit",
+  "AUDIT_COL_USERID": "UserID",
+  "AUDIT_COL_USERNAME": "Tên đăng nhập",
+  "AUDIT_COL_FULLNAME": "Họ và tên",
+  "AUDIT_COL_ENTITY": "Thực thể",
+  "AUDIT_COL_ENTITY_ID": "Mã thực thể",
+  "AUDIT_COL_OPERATION": "Thao tác",
+  "AUDIT_COL_DETAILS": "Chi tiết",
+  "AUDIT_COL_CREATED_AT": "Ngày tạo",
+
+
+
+
+"USERS_TITLE": "Người dùng",
+  "USERS_DESC": "Quản lý tài khoản và phân quyền người dùng",
+
+  "USERS_SEARCH_PLACEHOLDER": "Tìm theo Username hoặc Họ tên",
+
+  "BTN_ADD_USER": "Thêm Người dùng",
+  "BTN_EDIT": "Chỉnh sửa",
+  "BTN_DELETE": "Xóa",
+  "BTN_DETAIL": "Chi tiết",
+  "BTN_CANCEL": "Hủy",
+  "BTN_CLOSE": "Đóng",
+  "BTN_SUBMIT_ADD": "Thêm",
+  "BTN_SUBMIT_EDIT": "Cập nhật",
+  "BTN_DELETE_CONFIRM": "Xóa",
+
+  "USERS_COL_ID": "Mã người dùng",
+  "USERS_COL_FULLNAME": "Họ tên",
+  "USERS_COL_ROLE": "Vai trò",
+  "USERS_COL_EMAIL": "Email",
+  "USERS_COL_PHONE": "Số điện thoại",
+  "USERS_COL_ACTIONS": "Thao tác",
+
+  "NO_DATA": "Không có dữ liệu",
+
+  "ADD_USER_TITLE": "Thêm Người dùng",
+  "ADD_USER_DESC": "Nhập thông tin tài khoản người dùng",
+
+  "LABEL_USERNAME": "Tên đăng nhập",
+  "LABEL_PASSWORD": "Mật khẩu",
+  "LABEL_FULLNAME": "Họ tên",
+  "LABEL_ROLE": "Vai trò",
+  "LABEL_PHONE": "Số điện thoại",
+  "LABEL_EMAIL": "Email",
+
+  "PLACEHOLDER_USERNAME": "Nhập tên đăng nhập",
+  "PLACEHOLDER_PASSWORD": "Nhập mật khẩu",
+  "PLACEHOLDER_FULLNAME": "Nhập họ tên",
+  "PLACEHOLDER_PHONE": "+84 123 456 789",
+  "PLACEHOLDER_EMAIL": "user@email.com",
+
+
+  "ROLE_ADMIN": "Quản trị viên",
+  "ROLE_CASHIER": "Thu ngân",
+  "ROLE_STOCK": "Thủ kho",
+  "ROLE_ACCOUNTANT": "Kế toán",
+
+  "DETAIL_USER_TITLE": "Chi tiết người dùng",
+
+  "EDIT_USER_TITLE": "Chỉnh sửa người dùng",
+  "EDIT_USER_DESC": "Cập nhật thông tin người dùng",
+
+  "DELETE_USER_TITLE": "Xóa người dùng",
+  "DELETE_USER_CONFIRM": "Bạn có chắc chắn muốn xóa người dùng",
+
+  "PAGING_SHOWING": "Hiển thị",
+  "PAGING_OF": "trong",
+  "PAGING_ITEMS": "dòng",
+  "PAGING_PAGE_SIZE": "Số dòng:",
+  "PAGING_PREV": "Trước",
+  "PAGING_NEXT": "Sau",
+  "SELECT_ROLE":"chọn vai trò"
+
+}
 
 
