@@ -31,7 +31,7 @@ namespace BLL
             _cache.Set(key, data,
                 new MemoryCacheEntryOptions
                 {
-                    AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(25)
+                    AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(1)
                 });
 
             return data;
@@ -50,7 +50,7 @@ namespace BLL
             _cache.Set(key, data,
                 new MemoryCacheEntryOptions
                 {
-                    AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(25)
+                    AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(1)
                 });
 
             return data;
@@ -69,7 +69,7 @@ namespace BLL
             _cache.Set(key, data,
                 new MemoryCacheEntryOptions
                 {
-                    AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(30)
+                    AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(1)
                 });
 
             return data;
@@ -88,7 +88,7 @@ namespace BLL
             _cache.Set(key, data,
                 new MemoryCacheEntryOptions
                 {
-                    AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(25)
+                    AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(1)
                 });
 
             return data;

@@ -321,6 +321,7 @@ input:focus {
 /* ========================app-layout-content=================== */
 .app-layout-content {
   padding: 32px;
+  margin-top: 60px;
 }
 
 .app-layout-content .name-menu {

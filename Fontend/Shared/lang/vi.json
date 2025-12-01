@@ -38,6 +38,7 @@
   "PAGING_PAGE_SIZE": "Số dòng/trang",
   "PAGING_PREV": "Trước",
   "PAGING_NEXT": "Sau",
+  "PAGING_PAGE": "Trang",
 
 
   "PRODUCT": "Sản phẩm",
@@ -193,5 +194,135 @@
   "DELETE_STOCKCARD_CONFIRM": "Bạn có chắc muốn xóa phiếu kho này không? Hành động này không thể hoàn tác.",
   "BTN_DELETE_STOCKCARD": "Xóa phiếu kho",
 
-  "NO_STOCK_DATA": "Không có dữ liệu kho"
+  "NO_STOCK_DATA": "Không có dữ liệu kho",
+
+
+
+
+
+  
+
+  
+  "DASHBOARD": "Bảng điều khiển",
+  "DASHBOARD_TITLE": "Bảng điều khiển",
+  "DASHBOARD_SUBTITLE": "Tổng quan hoạt động kinh doanh",
+
+  "KPI_TOTAL_REVENUE": "Tổng doanh thu hôm nay",
+  "KPI_TOTAL_PROFIT": "Tổng lợi nhuận gộp hôm nay",
+  "KPI_BEST_CATEGORY": "Danh mục tốt nhất hôm nay",
+  "KPI_TOP_PRODUCT": "Sản phẩm bán chạy nhất hôm nay",
+  "KPI_VS_YESTERDAY": "so với hôm qua",
+
+  "CHART_DAILY_SALES_PROFIT": "Doanh thu & Lợi nhuận gộp 7 ngày vừa qua",
+  "CHART_TOP_PRODUCTS": "Top 5 sản phẩm bán nhiều nhất 7 ngày vừa qua",
+  "CHART_RECENT_TRANSACTIONS": "Giao dịch gần đây",
+
+  "TB_INVOICE_ID": "Mã hóa đơn",
+  "TB_DATE": "Ngày",
+  "TB_CUSTOMER": "Khách hàng",
+  "TB_TOTAL": "Tổng tiền",
+  "TB_PAYMENT_METHOD": "Phương thức thanh toán",
+  "TB_STATUS": "Trạng thái",
+  "TB_ACTION": "Thao tác",
+  "NO_SALES_FOUND": "Không có giao dịch nào.",
+
+  "SALE_DETAIL_TITLE": "Chi tiết giao dịch",
+  "SALE_DETAIL_SUB": "Xem toàn bộ thông tin của giao dịch này",
+
+  "LABEL_INVOICE_NO": "Số hóa đơn",
+  "LABEL_DATETIME": "Ngày & Giờ",
+  "LABEL_CUSTOMER": "Khách hàng",
+  "LABEL_CASHIER": "Thu ngân",
+  "LABEL_PAYMENT_METHOD": "Phương thức thanh toán",
+  "LABEL_STATUS": "Trạng thái",
+
+  "SECTION_ITEMS_PURCHASED": "Danh sách sản phẩm",
+
+  "TH_PRODUCT": "Sản phẩm",
+  "TH_SKU": "SKU",
+  "TH_QTY": "SL",
+  "TH_PRICE": "Đơn giá",
+  "TH_DISCOUNT": "Giảm giá",
+  "TH_VAT": "VAT %",
+  "TH_SUBTOTAL": "Tạm tính",
+
+  "TOTAL_SUBTOTAL": "Tạm tính",
+  "TOTAL_VAT_AMOUNT": "Tiền VAT",
+  "TOTAL_FINAL": "Tổng cộng",
+  "TOTAL_CUSTOMER_PAID": "Khách thanh toán",
+
+  "INVOICE_TITLE": "HÓA ĐƠN BÁN HÀNG",
+  "INVOICE_STORE_NAME": "Cửa hàng RetailPro",
+  "INVOICE_ADDRESS": "99 Đức Minh, Thanh Bình, Hải Dương",
+
+  "LABEL_INVOICE": "Hóa đơn",
+  "LABEL_PAYMENT_STATUS": "Trạng thái thanh toán",
+
+  "INVOICE_TH_ITEM": "Sản phẩm",
+  "INVOICE_TH_QTY": "Số lượng",
+  "INVOICE_TH_PRICE": "Giá",
+  "INVOICE_TH_TOTAL": "Tổng",
+
+  "INVOICE_FOOTER1": "Xin cảm ơn quý khách!",
+  "INVOICE_FOOTER2": "Vui lòng giữ hóa đơn để bảo hành.",
+  "BTN_PRINT_PDF": "In PDF (A5)",
+  "BTN_VIEW_DETAILS": "Xem chi tiết",
+  "BTN_PRINT_INVOICE": "In hóa đơn",
+  "Sun":"Chủ nhật", 
+  "Mon":"Thứ hai", 
+  "Tue":"Thứ ba", 
+  "Wed":"Thứ tư", 
+  "Thu":"Thứ năm", 
+  "Fri":"Thứ sáu", 
+  "Sat":"Thứ bảy",
+
+
+
+
+  "REPORT_TITLE": "Báo cáo kinh doanh",
+
+  "TAB_SALES_SUMMARY": "Tổng quan doanh số",
+  "TAB_IMPORT_EXPORT": "Nhập - Bán",
+  "TAB_STOCK_REPORT": "Báo cáo tồn kho",
+
+  "TOTAL_REVENUE": "Tổng doanh thu",
+  "TOTAL_PROFIT": "Tổng lợi nhuận gộp",
+  "BEST_CATEGORY": "Danh mục bán chạy",
+  "MOST_SOLD_PRODUCT": "Sản phẩm bán nhiều nhất",
+  "VS_LAST_MONTH": "so với tháng trước",
+
+  "DAILY_REVENUE_BY_MONTH": "Doanh thu các ngày (theo tháng)",
+
+  "TOTAL_IMPORT": "Tổng nhập",
+  "TOTAL_EXPORT": "Tổng bán",
+  "LEAST": "Ít nhất",
+
+  "MOST_IMPORTED_PRODUCT": "Sản phẩm nhập nhiều nhất",
+  "MOST_EXPORTED_PRODUCT": "Sản phẩm bán nhiều nhất",
+
+  "IMPORT_EXPORT_TITLE": "Nhập / Bán",
+
+  "TOTAL_QUANTITY": "Tổng số lượng tồn trong kho",
+  "BELOW_MIN_STOCK": "Dưới mức tồn tối thiểu",
+  "TOTAL_STOCK_VALUE": "Tổng giá trị tồn kho",
+  "EXPIRING_SOON": "Số sản phẩm sắp hết hạn (≤ 30 ngày)",
+
+  "STOCK_BY_BATCH": "Top 5 sản phẩm tồn lâu nhất",
+  "MIN_DAYS_EXPIRE": "Top 5 sản phẩm hết hạn gần nhất",
+  "PRODUCT_BELOW_MIN": "Sản phẩm dưới mức tồn tối thiểu",
+
+  "TB_PRODUCT": "Sản phẩm",
+  "TB_SKU": "SKU",
+  "TB_BATCH_NO": "Số lô",
+  "TB_FIRST_RECEIPT": "Ngày nhập đầu tiên",
+  "TB_QTY_IN": "SL nhập",
+  "TB_QTY_REMAIN": "SL còn lại",
+  "TB_BALANCE": "Tồn kho",
+  "TB_AGE_DAYS": "Số ngày tồn",
+  "TB_MIN_STOCK": "Tồn tối thiểu",
+  "TB_EXPIRY_DATE": "Ngày hết hạn",
+  "TB_DAYS_LEFT": "Số ngày còn lại"
 }
+
+
+
