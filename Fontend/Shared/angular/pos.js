@@ -1,8 +1,15 @@
 var app = angular.module("AppRetailPos");
 
-app.controller(
-  "posCtrl",
-  function ($scope, $http, AuthService, PermissionService, $window) {
+app.controller("posCtrl",function ($scope, $http, AuthService, PermissionService, $window, TranslateService) {
+  function applyLanguage(lang) {
+      TranslateService.loadLanguage(lang).then(() => {
+        $scope.t = TranslateService.t;
+      });
+    }
+  applyLanguage(localStorage.getItem("appLang") || "EN");
+  $scope.$on("languageChanged", function () {
+      applyLanguage(localStorage.getItem("appLang") || "EN");
+  });
     // ==========================================================
     // 0. AUTH & MENU
     // ==========================================================
@@ -146,26 +153,20 @@ app.controller(
       $http
         .post(current_url + "/api-core/customer/create-customer", payload)
         .then(function (res) {
-          var c = res.data || payload;
-
-          $scope.selectedCustomer = {
-            CustomerID: c.customerID || c.CustomerID,
-            CustomerName: c.customerName || c.CustomerName,
-            CustomerPhone: c.phone || c.Phone || payload.Phone,
-            DebtLimit: c.debtLimit || c.DebtLimit || 0,
-            CurrentDebt: 0,
-            IsOverLimit: false,
-          };
-
-          $scope.phoneInput = $scope.selectedCustomer.CustomerPhone;
-          $scope.hasSearched = true;
+          // ✅ 1. đóng form
           $scope.showAdd = false;
+          $scope.savingAdd = false;
+
+          // ✅ 2. set lại phoneInput = số vừa nhập
+          $scope.phoneInput = payload.Phone;
+          $scope.hasSearched = false;
+
+          // ✅ 3. Gọi lại searchCustomer để lấy đúng CustomerID từ API search
+          $scope.searchCustomer();
         })
         .catch(function (err) {
           console.error("Error create customer", err);
           alert("Tạo khách hàng thất bại, vui lòng thử lại.");
-        })
-        .finally(function () {
           $scope.savingAdd = false;
         });
     };

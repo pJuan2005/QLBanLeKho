@@ -74,25 +74,12 @@ namespace CoreApi.Controllers
                 var pageSize = int.Parse(formData["pageSize"].ToString());
 
                 // --- FILTERS ---
-                decimal? minTotalAmount = null;
-                decimal? maxTotalAmount = null;
+               
                 int? userId = null;
                 DateTime? fromDate = null;
                 DateTime? toDate = null;
 
-                if (formData.Keys.Contains("minTotalAmount") &&
-                    !string.IsNullOrEmpty(Convert.ToString(formData["minTotalAmount"])) &&
-                    decimal.TryParse(Convert.ToString(formData["minTotalAmount"]), out var minAmt))
-                {
-                    minTotalAmount = minAmt;
-                }
-
-                if (formData.Keys.Contains("maxTotalAmount") &&
-                    !string.IsNullOrEmpty(Convert.ToString(formData["maxTotalAmount"])) &&
-                    decimal.TryParse(Convert.ToString(formData["maxTotalAmount"]), out var maxAmt))
-                {
-                    maxTotalAmount = maxAmt;
-                }
+               
 
                 if (formData.Keys.Contains("userId") &&
                     !string.IsNullOrEmpty(Convert.ToString(formData["userId"])) &&
@@ -116,7 +103,7 @@ namespace CoreApi.Controllers
                 // --- CALL BLL ---
                 var data = _goodsIssuesBusiness.Search(
                     pageIndex, pageSize, out long total,
-                    minTotalAmount, maxTotalAmount, userId, fromDate, toDate);
+                     userId, fromDate, toDate);
 
                 response.TotalItems = total;
                 response.Data = data;

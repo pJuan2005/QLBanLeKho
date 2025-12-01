@@ -2,7 +2,16 @@ var app = angular.module("AppRetailPos");
 
 app.controller(
   "salesCtrl",
-  function ($scope, $http, AuthService, PermissionService, $window, $document) {
+  function ($scope, $http, AuthService, PermissionService, $window, $document, TranslateService) {
+    function applyLanguage(lang) {
+      TranslateService.loadLanguage(lang).then(() => {
+        $scope.t = TranslateService.t;
+      });
+    }
+    applyLanguage(localStorage.getItem("appLang") || "EN");
+    $scope.$on("languageChanged", function () {
+      applyLanguage(localStorage.getItem("appLang") || "EN");
+    });
     // ==========================================================
     // 0. AUTH & MENU
     // ==========================================================

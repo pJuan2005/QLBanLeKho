@@ -17,6 +17,7 @@
   <script src="../Shared/angular/angular.min.js"></script>
   <script src="../Shared/angular/global.js"></script>
   <script src="../Shared/angular/goodsreceipts.js"></script>
+  <script src="../Shared/angular/translation.js"></script>
   <title>GoodsReceipts</title>
 </head>
 
@@ -34,7 +35,7 @@
       </div>
     </div>
     <div class="slide-bar__Content">
-      <p class="slide-bar__label">Navigation</p>
+      <p class="slide-bar__label">{{ t('NAVIGATION') }}</p>
       <!-- menu button Dashboard -->
       <a href="../AdminFE/dashboard.html" ng-if="canShow('dashboard')">
         <div class="slide-bar__MenuButton">
@@ -42,7 +43,7 @@
             <img src="../Shared/img/common/dashboard.svg" alt="" class="icon" />
           </div>
           <div class="MenuButton-right">
-            <p class="name-menu">Dashboard</p>
+            <p class="name-menu">{{ t('NAV_DASHBOARD') }}</p>
           </div>
         </div>
       </a>
@@ -53,7 +54,7 @@
             <img src="../Shared/img/common/pos.svg" alt="" class="icon" />
           </div>
           <div class="MenuButton-right">
-            <p class="name-menu">POS</p>
+            <p class="name-menu">{{ t('NAV_POS') }}</p>
           </div>
         </div>
       </a>
@@ -64,7 +65,7 @@
             <img src="../Shared/img/common/product.svg" alt="" class="icon" />
           </div>
           <div class="MenuButton-right">
-            <p class="name-menu">Products</p>
+            <p class="name-menu">{{ t('NAV_PRODUCTS') }}</p>
           </div>
         </div>
       </a>
@@ -75,7 +76,7 @@
             <img src="../Shared/img/common/category.svg" alt="" class="icon" />
           </div>
           <div class="MenuButton-right">
-            <p class="name-menu">Categories</p>
+            <p class="name-menu">{{ t('NAV_CATEGORIES') }}</p>
           </div>
         </div>
       </a>
@@ -87,7 +88,7 @@
             <img src="../Shared/img/common/promotion.svg" alt="" class="icon" />
           </div>
           <div class="MenuButton-right">
-            <p class="name-menu">Promotions</p>
+            <p class="name-menu">{{ t('NAV_PROMOTIONS') }}</p>
           </div>
         </div>
       </a>
@@ -98,7 +99,7 @@
             <img src="../Shared/img/common/customer.svg" alt="" class="icon" />
           </div>
           <div class="MenuButton-right">
-            <p class="name-menu">Customers</p>
+            <p class="name-menu">{{ t('NAV_CUSTOMERS') }}</p>
           </div>
         </div>
       </a>
@@ -109,7 +110,7 @@
             <img src="../Shared/img/common/supplier.svg" alt="" class="icon" />
           </div>
           <div class="MenuButton-right">
-            <p class="name-menu">Suppliers</p>
+            <p class="name-menu">{{ t('NAV_SUPPLIERS') }}</p>
           </div>
         </div>
       </a>
@@ -120,7 +121,7 @@
             <img src="../Shared/img/common/purchaseorder.svg" alt="" class="icon" />
           </div>
           <div class="MenuButton-right">
-            <p class="name-menu">Purchase Orders</p>
+            <p class="name-menu">{{ t('NAV_PURCHASE_ORDERS') }}</p>
           </div>
         </div>
       </a>
@@ -131,7 +132,7 @@
             <img src="../Shared/img/common/stock.svg" alt="" class="icon" />
           </div>
           <div class="MenuButton-right">
-            <p class="name-menu">Stock Management</p>
+            <p class="name-menu">{{ t('NAV_STOCK') }}</p>
           </div>
         </div>
       </a>
@@ -143,7 +144,7 @@
             <img src="../Shared/img/common/goodReceipt.svg" alt="" class="icon" />
           </div>
           <div class="MenuButton-right">
-            <p class="name-menu-active">Goods Receipts</p>
+            <p class="name-menu-active">{{ t('GOODS_RECEIPTS') }}</p>
           </div>
         </div>
       </a>
@@ -155,7 +156,7 @@
             <img src="../Shared/img/common/goodIssues.svg" alt="" class="icon" />
           </div>
           <div class="MenuButton-right">
-            <p class="name-menu">Goods Issues</p>
+            <p class="name-menu">{{ t('GOODS_ISSUES') }}</p>
           </div>
         </div>
       </a>
@@ -167,7 +168,7 @@
             <img src="../Shared/img/common/sales.svg" alt="" class="icon" />
           </div>
           <div class="MenuButton-right">
-            <p class="name-menu">Sales</p>
+            <p class="name-menu">{{ t('NAV_SALES') }}</p>
           </div>
         </div>
       </a>
@@ -178,7 +179,7 @@
             <img src="../Shared/img/common/return.svg" alt="" class="icon" />
           </div>
           <div class="MenuButton-right">
-            <p class="name-menu">Returns</p>
+            <p class="name-menu">{{ t('NAV_RETURNS') }}</p>
           </div>
         </div>
       </a>
@@ -189,7 +190,7 @@
             <img src="../Shared/img/common/payments.svg" alt="" class="icon" />
           </div>
           <div class="MenuButton-right">
-            <p class="name-menu">Payments & Debts</p>
+            <p class="name-menu">{{ t('NAV_PAYMENTS') }}</p>
           </div>
         </div>
       </a>
@@ -200,7 +201,7 @@
             <img src="../Shared/img/common/report.svg" alt="" class="icon" />
           </div>
           <div class="MenuButton-right">
-            <p class="name-menu">Reports</p>
+            <p class="name-menu">{{ t('NAV_REPORTS') }}</p>
           </div>
         </div>
       </a>
@@ -211,7 +212,7 @@
             <img src="../Shared/img/common/auditlog.svg" alt="" class="icon" />
           </div>
           <div class="MenuButton-right">
-            <p class="name-menu">Audit Log</p>
+            <p class="name-menu">{{ t('NAV_AUDIT_LOG') }}</p>
           </div>
         </div>
       </a>
@@ -222,7 +223,7 @@
             <img src="../Shared/img/common/user.svg" alt="" class="icon" />
           </div>
           <div class="MenuButton-right">
-            <p class="name-menu">Users</p>
+            <p class="name-menu">{{ t('NAV_USERS') }}</p>
           </div>
         </div>
       </a>
@@ -233,7 +234,7 @@
             <img src="../Shared/img/common/setting.svg" alt="" class="icon" />
           </div>
           <div class="MenuButton-right">
-            <p class="name-menu">Settings</p>
+            <p class="name-menu">{{ t('NAV_SETTINGS') }}</p>
           </div>
         </div>
       </a>
@@ -255,7 +256,7 @@
       <div class="top-bar__content">
         <div class="top-bar__left" style="visibility: hidden">
           <img src="../Shared/img/common/search.svg" alt="" class="icon" />
-          <input class="search" type="text" placeholder="Search by categories name" ng-model="searchCategories" />
+          <input class="search" type="text" placeholder="{{ t('SEARCH_CATEGORY') }}" ng-model="searchCategories" />
         </div>
         <div class="top-bar__right">
           <p class="role">{{currentUser.role}}</p>
@@ -269,13 +270,13 @@
         </div>
         <div class="info-mid">
           <a href="#!">
-            <p class="set">Profile Settings</p>
+            <p class="set">{{ t('PROFILE_SETTINGS') }}</p>
           </a>
         </div>
         <div class="info-bottom">
           <img src="../Shared/img/categories/logout.svg" alt="" class="icon" />
           <a href="../AuthFE/login.html">
-            <p class="logout">Logout</p>
+            <p class="logout">{{ t('LOGOUT') }}</p>
           </a>
         </div>
       </div>
@@ -283,32 +284,32 @@
     <div class="app-layout-content">
       <div class="container-top">
         <div class="container-top--left">
-          <h1 class="name-system">GoodsReceipts</h1>
+          <h1 class="name-system">{{ t('GR_TITLE') }}</h1>
           <p class="desc-system">
-            Manage goods receipt records and inventory updates
+            {{ t('GR_DESC') }}
           </p>
         </div>
         <div class="control add-goodsreceipts" ng-click="openAddReceipt()">
           <img src="../Shared/img/common/plus.svg" alt="" class="icon-control" />
-          <p class="name-control">Add GoodsReceipts</p>
+          <p class="name-control">{{ t('ADD_GR') }}</p>
         </div>
       </div>
       <div class="container-card">
         <div class="card">
-          <p class="name-card">Total GoodReceipts</p>
+          <p class="name-card">{{ t('ADD_GR') }}</p>
           <p class="data-card">{{stats.totalReceipts}}</p>
         </div>
 
         <div class="card">
-          <p class="name-card">Total Completed</p>
+          <p class="name-card">{{ t('GR_TOTAL') }}</p>
           <p class="data-card">{{stats.totalCompleted}}</p>
         </div>
         <div class="card">
-          <p class="name-card">Total Pending</p>
+          <p class="name-card">{{ t('GR_PENDING') }}</p>
           <p class="data-card">{{stats.totalPending}}</p>
         </div>
         <div class="card">
-          <p class="name-card">Total Processing</p>
+          <p class="name-card">{{ t('GR_PROCESSING') }}</p>
           <p class="data-card">{{stats.totalProcessing}}</p>
         </div>
       </div>
@@ -316,40 +317,40 @@
       <div class="search-goodreceipts">
         <!-- tìm theo khoảng thời gian -->
         <div class="search-field">
-          <label>From Date:</label>
+          <label>{{ t('GR_FROM_DATE') }}:</label>
           <input type="date" ng-model="searchFromDate" class="search" />
         </div>
         <div class="search-field">
-          <label>To Date:</label>
+          <label>{{ t('GR_TO_DATE') }}:</label>
           <input type="date" ng-model="searchToDate" class="search" />
         </div>
 
         <!-- tìm theo khoảng tiền -->
         <div class="search-field">
-          <label>Min Amount:</label>
+          <label>{{ t('GR_MIN_AMOUNT') }}:</label>
           <input type="number" ng-model="searchMinAmount" class="search" placeholder="0" />
         </div>
         <div class="search-field">
-          <label>Max Amount:</label>
+          <label>{{ t('GR_MAX_AMOUNT') }}:</label>
           <input type="number" ng-model="searchMaxAmount" class="search" placeholder="1000000" />
         </div>
 
         <!-- tìm theo POID -->
         <div class="search-field">
-          <label>POID:</label>
-          <input type="text" ng-model="searchPOID" class="search" placeholder="Enter POID" />
+          <label>{{ t('GR_POID') }}:</label>
+          <input type="text" ng-model="searchPOID" class="search" placeholder="{{ t('PLACEHOLDER_POID') }}" />
         </div>
       </div>
       <!-- phân trang -->
       <div class="pager" ng-if="pager.total>0">
         <div class="pager-info">
-          Showing
+          {{ t('PAGING_SHOWING') }}
           {{((pager.page-1)*pager.size)+1}}-{{Math.min(pager.page*pager.size,pager.total)}}
-          of {{pager.total}} items
+          {{ t('PAGING_OF') }} {{pager.total}} {{ t('PAGING_ITEMS') }}
         </div>
         <div class="page-nav">
           <label>
-            Page size:
+            {{ t('PAGING_PAGE_SIZE') }}:
             <select ng-model="pager.size" ng-change="changeSize()">
               <option value="10">10</option>
               <option value="20">20</option>
@@ -360,11 +361,11 @@
             «
           </button>
           <button class="btn ghost" ng-disabled="pager.page === 1" ng-click="go(pager.page-1)">
-            Prev
+            {{ t('PAGING_PREV') }}
           </button>
           <span class="page-no"></span>
           <button class="btn ghost" ng-disabled="pager.page >= pager.pages" ng-click="go(pager.page+1)">
-            Next
+            {{ t('PAGING_NEXT') }}
           </button>
           <button class="btn ghost" ng-disabled="pager.page >= pager.pages" ng-click="go(pager.pages)">
             »
@@ -376,14 +377,14 @@
           <table class="table">
             <thead>
               <tr>
-                <th class="id">Receipt ID</th>
-                <th class="poid">POID</th>
-                <th class="date">Receipt Date</th>
-                <th class="amount">Total Amount</th>
-                <th class="user">User ID</th>
-                <th class="batch">Batch No</th>
-                <th class="status">Status</th>
-                <th class="action txt-right">Actions</th>
+                <th class="id">{{ t('GR_RECEIPT_ID') }}</th>
+                <th class="poid">{{ t('GR_PO_ID') }}</th>
+                <th class="date">{{ t('GR_RECEIPT_DATE') }}</th>
+                <th class="amount">{{ t('GR_TOTAL_AMOUNT') }}</th>
+                <th class="user">{{ t('GR_USER_ID') }}</th>
+                <th class="batch">{{ t('GR_BATCH_NO') }}</th>
+                <th class="status">{{ t('GR_STATUS') }}</th>
+                <th class="action txt-right">{{ t('ACTIONS') }}</th>
               </tr>
             </thead>
             <tbody>
@@ -401,17 +402,17 @@
                       ⚙
                     </button>
                     <ul class="menu-list" ng-show="gr.showMenu">
-                      <li ng-click="edit(gr)">✎ Edit</li>
-                      <li ng-click="remove(gr)">🗑 Delete</li>
-                      <li ng-click="detail(gr)">🔍 Detail</li>
-                      <li ng-click="exportExcel(gr)">⬇ Export</li>
-                      <li ng-click="payment(gr)">💰 Payment</li>
+                      <li ng-click="edit(gr)">✎ {{ t('ACTION_EDIT') }}</li>
+                      <li ng-click="remove(gr)">🗑 {{ t('ACTION_DELETE') }}</li>
+                      <li ng-click="detail(gr)">🔍 {{ t('ACTION_DETAIL') }}</li>
+                      <li ng-click="exportExcel(gr)">⬇ {{ t('ACTION_EXPORT') }}</li>
+                      <li ng-click="payment(gr)">💰 {{ t('ACTION_PAYMENT') }}</li>
                     </ul>
                   </div>
                 </td>
               </tr>
               <tr ng-if="goodsReceipts.length == 0">
-                <td colspan="8" class="empty">No Data</td>
+                <td colspan="8" class="empty">{{ t('NO_DATA') }}</td>
               </tr>
             </tbody>
           </table>
@@ -422,45 +423,41 @@
         <!-- Add Goods Receipt -->
         <div class="form-add" ng-class="{open: showAddReceipt}" ng-click="closeAddReceiptOnOverlay($event)">
           <div class="form-add__content" ng-click="$event.stopPropagation()">
-            <h3 class="title">Add New Goods Receipt</h3>
-            <p class="desc">Enter receipt and product details</p>
+            <h3 class="title">{{ t('FORM_ADD_GR_TITLE') }}</h3>
+            <p class="desc">{{ t('FORM_ADD_GR_DESC') }}</p>
 
             <form name="frmAddGR" ng-submit="addGoodsReceipt()">
               <!-- Phiếu nhập -->
-              <label for="poid">POID</label>
-              <input type="number" id="poid" required placeholder="Enter POID" ng-model="newReceipt.POID" />
+              <label for="poid">{{ t('LABEL_POID') }}</label>
+              <input type="number" id="poid" required placeholder="" ng-model="newReceipt.POID" />
 
-              <label for="userid">User ID</label>
-              <input type="number" id="userid" required placeholder="Enter User ID" ng-model="newReceipt.UserID" />
+              <label for="userid">{{ t('LABEL_USERID') }}</label>
+              <input type="number" id="userid" required placeholder="" ng-model="newReceipt.UserID" />
 
               <!-- Chi tiết phiếu nhập -->
-              <h4 class="subtitle">Receipt Details</h4>
+              <h4 class="subtitle">{{ t('LABEL_RECEIPT_DETAILS') }}</h4>
               <div ng-repeat="item in newReceiptDetails" class="detail-row">
-                <label>Product ID</label>
-                <input type="number" ng-model="item.ProductID" required placeholder="Product ID" />
+                <label>{{ t('LABEL_PRODUCT_ID') }}</label>
+                <input type="number" ng-model="item.ProductID" required placeholder="" />
 
-                <label>Quantity</label>
-                <input type="number" ng-model="item.Quantity" required placeholder="Quantity" />
+                
 
-                <label>Unit Price</label>
-                <input type="number" ng-model="item.UnitPrice" required placeholder="Unit Price" />
-
-                <label>Expiry Date</label>
+                <label>{{ t('LABEL_EXPIRY_DATE') }}</label>
                 <input type="date" ng-model="item.ExpiryDate" />
 
                 <button type="button" class="remove" ng-click="removeDetailRowForNewReceipt($index)">
-                  Remove
+                  {{ t('BTN_REMOVE') }}
                 </button>
               </div>
 
               <button type="button" class="add-detail" ng-click="addDetailRowForNewReceipt()">
-                + Add Product
+                + {{ t('BTN_ADD_PRODUCT') }}
               </button>
 
               <!-- Footer -->
               <div class="dialog-footer">
                 <button type="button" class="cancel" ng-click="cancelAddReceipt()">
-                  Cancel
+                  {{ t('BTN_CANCEL') }}
                 </button>
                 <input class="submit" type="submit" value="Add Receipt"
                   ng-disabled="frmAddGR.$invalid || savingAddReceipt" />
@@ -471,15 +468,15 @@
 
         <div class="form-edit" ng-class="{open: showEdit}" ng-click="closeEditOnOverlay($event)">
           <div class="form-edit__content" ng-click="$event.stopPropagation()">
-            <h3 class="title">Edit Goods Receipt</h3>
+            <h3 class="title">{{ t('FORM_EDIT_GR_TITLE') }}</h3>
             <form name="frmEditGR" ng-submit="updateGoodsReceipt()">
               <!-- ReceiptDate -->
-              <label for="date-edit">Receipt Date</label>
+              <label for="date-edit">{{ t('LABEL_RECEIPT_DATE') }}</label>
               <input type="date" id="date-edit" required ng-model="editingReceipt.ReceiptDate" />
 
               <!-- UserID -->
-              <label for="userid-edit">User ID</label>
-              <input type="number" id="userid-edit" required placeholder="Enter User ID"
+              <label for="userid-edit">{{ t('LABEL_USERID') }}</label>
+              <input type="number" id="userid-edit" required placeholder="{{ t('BTN_EDIT_GR') }}"
                 ng-model="editingReceipt.UserID" />
 
               <!-- Footer -->
@@ -495,17 +492,17 @@
         </div>
         <div class="form-delete" ng-class="{open: showDelete}" ng-click="closeDeleteOnOverlay($event)">
           <div class="form-delete__content" ng-click="$event.stopPropagation()">
-            <h3 class="title">Xác nhận xóa phiếu nhập</h3>
+            <h3 class="title">{{ t('FORM_DELETE_GR_TITLE') }}</h3>
             <p>
-              Bạn có chắc muốn xóa phiếu nhập
-              <strong>{{deleting.BatchNo}}</strong> không?
+              {{ t('FORM_DELETE_GR_DESC') }}
+              <strong>{{deleting.BatchNo}}</strong>?
             </p>
             <div class="dialog-footer">
               <button type="button" class="cancel" ng-click="cancelDelete()">
-                Hủy
+                {{ t('BTN_CANCEL') }}
               </button>
               <button type="button" class="submit" ng-click="confirmDelete()">
-                Xóa
+                {{ t('BTN_DELETE_GR') }}
               </button>
             </div>
           </div>
@@ -516,32 +513,25 @@
       <div class="form-detail" ng-class="{open: showDetail}" ng-click="closeDetailOnOverlay($event)">
         <div class="form-detail__content" ng-click="$event.stopPropagation()">
           <h3 class="title">
-            Goods Receipt Details - {{detailReceipt.BatchNo}}
+            {{ t('FORM_GR_DETAIL_TITLE') }} - {{detailReceipt.BatchNo}}
           </h3>
 
           <!-- Form nhập chi tiết mới -->
           <div class="detail-add-form">
-            <h4>Thêm chi tiết mới</h4>
+            <h4>{{ t('BTN_ADD_PRODUCT') }}</h4>
             <div class="form-row">
-              <label>Product ID:</label>
+              <label>{{ t('GRD_PRODUCT_ID') }}:</label>
               <input type="number" ng-model="newDetail.ProductID" required />
             </div>
-            <div class="form-row">
-              <label>Quantity:</label>
-              <input type="number" ng-model="newDetail.Quantity" required />
-            </div>
-            <div class="form-row">
-              <label>Unit Price:</label>
-              <input type="number" ng-model="newDetail.UnitPrice" required />
-            </div>
+            
             <div class="form-row">
               <label>Expiry Date:</label>
               <input type="date" ng-model="newDetail.ExpiryDate" />
             </div>
             <button class="add-btn" ng-click="addGoodsReceiptDetail()"
-              ng-disabled="savingAddDetail || !newDetail.ProductID || !newDetail.Quantity || !newDetail.UnitPrice">
-              <span ng-if="savingAddDetail">Adding...</span>
-              <span ng-if="!savingAddDetail">Add Product</span>
+              ng-disabled="savingAddDetail || !newDetail.ProductID">
+              <span ng-if="savingAddDetail">{{ t('BTN_PAYING') }}</span>
+              <span ng-if="!savingAddDetail">{{ t('BTN_ADD_PRODUCT') }}</span>
             </button>
           </div>
 
@@ -549,12 +539,12 @@
           <table class="detail-table">
             <thead>
               <tr>
-                <th>Product ID</th>
-                <th>Product Name</th>
-                <th>Quantity</th>
-                <th>Unit Price</th>
-                <th>Expiry Date</th>
-                <th>Actions</th>
+                <th>{{ t('GRD_PRODUCT_ID') }}</th>
+                <th>{{ t('GRD_PRODUCT_NAME') }}</th>
+                <th>{{ t('GRD_QTY') }}</th>
+                <th>{{ t('GRD_UNIT_PRICE') }}</th>
+                <th>{{ t('GRD_EXPIRY_DATE') }}</th>
+                <th>{{ t('GRD_ACTIONS') }}</th>
               </tr>
             </thead>
             <tbody>
@@ -568,7 +558,7 @@
                 </td>
                 <td>
                   <button class="remove-btn" ng-click="deleteGoodsReceiptDetail(d)">
-                    🗑 Delete
+                    🗑 {{ t('BTN_DELETE_DETAIL') }}
                   </button>
                 </td>
               </tr>
@@ -577,7 +567,7 @@
 
           <div class="dialog-footer">
             <button type="button" class="cancel" ng-click="closeDetail()">
-              Close
+              {{ t('BTN_CLOSE') }}
             </button>
           </div>
         </div>
@@ -587,26 +577,26 @@
       <div class="form-payment" ng-class="{open: showPaymentModal}" ng-click="closePaymentModal()">
         <div class="form-payment__content" ng-click="$event.stopPropagation()">
           <h3 class="title">
-            Thanh toán cho phiếu nhập #{{paymentReceipt.ReceiptID}}
+            {{ t('PAY_TITLE') }} #{{paymentReceipt.ReceiptID}}
           </h3>
           <p class="subtitle">
-            Nhà cung cấp:
-            <strong>#{{paymentReceipt.SupplierID || '—'}}</strong> | POID:
-            <strong>{{paymentReceipt.POID}}</strong> | Tổng tiền:
+            {{ t('PAY_SUPPLIER') }}:
+            <strong>#{{paymentReceipt.SupplierID || '—'}}</strong> | {{ t('PAY_POID') }}:
+            <strong>{{paymentReceipt.POID}}</strong> | {{ t('PAY_TOTAL') }}:
             <strong>{{paymentReceipt.TotalAmount | number:0}}đ</strong>
           </p>
 
           <!-- BẢNG LỊCH SỬ THANH TOÁN -->
           <div class="payment-history">
-            <h4>Lịch sử thanh toán</h4>
+            <h4>{{ t('PAY_HISTORY_TITLE') }}</h4>
             <table class="detail-table">
               <thead>
                 <tr>
-                  <th>PaymentID</th>
-                  <th>Amount</th>
-                  <th>PaymentDate</th>
-                  <th>Method</th>
-                  <th>Description</th>
+                  <th>{{ t('PAY_HISTORY_ID') }}</th>
+                  <th>{{ t('PAY_HISTORY_AMOUNT') }}</th>
+                  <th>{{ t('PAY_HISTORY_DATE') }}</th>
+                  <th>{{ t('PAY_HISTORY_METHOD') }}</th>
+                  <th>{{ t('PAY_HISTORY_DESC') }}</th>
                 </tr>
               </thead>
               <tbody>
@@ -618,7 +608,7 @@
                   <td>{{p.description || '—'}}</td>
                 </tr>
                 <tr ng-if="!paymentHistory || paymentHistory.length === 0">
-                  <td colspan="5" class="empty">Chưa có thanh toán nào</td>
+                  <td colspan="5" class="empty">{{ t('PAY_NO_HISTORY') }}</td>
                 </tr>
               </tbody>
             </table>
@@ -626,35 +616,35 @@
 
           <!-- FORM THÊM THANH TOÁN MỚI -->
           <div class="add-payment-form">
-            <h4>Thêm thanh toán mới</h4>
+            <h4>{{ t('PAY_ADD_TITLE') }}</h4>
             <div class="form-row">
-              <label>Số tiền thanh toán <span class="req">*</span></label>
-              <input type="number" ng-model="newPayment.Amount" min="1" placeholder="Nhập số tiền" required />
+              <label>{{ t('PAY_AMOUNT') }} <span class="req">*</span></label>
+              <input type="number" ng-model="newPayment.Amount" min="1" placeholder="" required />
             </div>
             <div class="form-row">
-              <label>Hình thức thanh toán <span class="req">*</span></label>
+              <label>{{ t('PAY_METHOD') }} <span class="req">*</span></label>
               <select ng-model="newPayment.Method" required>
-                <option value="">-- Chọn hình thức --</option>
-                <option value="Tiền mặt">Tiền mặt</option>
-                <option value="Chuyển khoản">Chuyển khoản</option>
-                <option value="Thẻ">Thẻ</option>
-                <option value="Nợ">Ghi nợ</option>
+                <option value="">-- {{ t('PAY_METHOD') }} --</option>
+                <option value="Tiền mặt">{{ t('PAY_METHOD_CASH') }}</option>
+                <option value="Chuyển khoản">{{ t('PAY_METHOD_BANK') }}</option>
+                <option value="Thẻ">{{ t('PAY_METHOD_CARD') }}</option>
+                <option value="Nợ">{{ t('PAY_METHOD_DEBT') }}</option>
               </select>
             </div>
             <div class="form-row">
-              <label>Ghi chú</label>
+              <label>{{ t('PAY_NOTE') }}</label>
               <input type="text" ng-model="newPayment.Description"
-                placeholder="Ví dụ: Thanh toán lần 1, CK Vietcombank..." />
+                placeholder="{{ t('EXAMP') }}" />
             </div>
 
             <div class="dialog-footer">
               <button type="button" class="cancel" ng-click="closePaymentModal()">
-                Đóng
+                {{ t('BTN_CANCEL') }}
               </button>
               <button type="button" class="submit" ng-click="addPayment()"
                 ng-disabled="!newPayment.Amount || !newPayment.Method || savingPayment">
-                <span ng-if="!savingPayment">Thanh toán</span>
-                <span ng-if="savingPayment">Đang xử lý...</span>
+                <span ng-if="!savingPayment">{{ t('Pay') }}</span>
+                <span ng-if="savingPayment">{{ t('Processing...') }}</span>
               </button>
             </div>
           </div>

@@ -17,6 +17,7 @@
     <script src="../Shared/angular/angular.min.js"></script>
     <script src="../Shared/angular/global.js"></script>
     <script src="../Shared/angular/users.js"></script>
+    <script src="../Shared/angular/translation.js"></script>
     <title>User</title>
   </head>
 
@@ -34,7 +35,7 @@
         </div>
       </div>
       <div class="slide-bar__Content">
-        <p class="slide-bar__label">Navigation</p>
+        <p class="slide-bar__label">{{ t('NAVIGATION') }}</p>
         <!-- menu button Dashboard -->
         <a href="../AdminFE/dashboard.html" ng-if="canShow('dashboard')">
           <div class="slide-bar__MenuButton">
@@ -46,7 +47,7 @@
               />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Dashboard</p>
+              <p class="name-menu">{{ t('NAV_DASHBOARD') }}</p>
             </div>
           </div>
         </a>
@@ -57,7 +58,7 @@
               <img src="../Shared/img/common/pos.svg" alt="" class="icon" />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">POS</p>
+              <p class="name-menu">{{ t('NAV_POS') }}</p>
             </div>
           </div>
         </a>
@@ -68,7 +69,7 @@
               <img src="../Shared/img/common/product.svg" alt="" class="icon" />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Products</p>
+              <p class="name-menu">{{ t('NAV_PRODUCTS') }}</p>
             </div>
           </div>
         </a>
@@ -83,7 +84,7 @@
               />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Categories</p>
+              <p class="name-menu">{{ t('NAV_CATEGORIES') }}</p>
             </div>
           </div>
         </a>
@@ -98,7 +99,7 @@
               />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Promotions</p>
+              <p class="name-menu">{{ t('NAV_PROMOTIONS') }}</p>
             </div>
           </div>
         </a>
@@ -113,7 +114,7 @@
               />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Customers</p>
+              <p class="name-menu">{{ t('NAV_CUSTOMERS') }}</p>
             </div>
           </div>
         </a>
@@ -128,7 +129,7 @@
               />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Suppliers</p>
+              <p class="name-menu">{{ t('NAV_SUPPLIERS') }}</p>
             </div>
           </div>
         </a>
@@ -146,7 +147,7 @@
               />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Purchase Orders</p>
+              <p class="name-menu">{{ t('NAV_PURCHASE_ORDERS') }}</p>
             </div>
           </div>
         </a>
@@ -157,7 +158,7 @@
               <img src="../Shared/img/common/stock.svg" alt="" class="icon" />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Stock Management</p>
+              <p class="name-menu">{{ t('NAV_STOCK') }}</p>
             </div>
           </div>
         </a>
@@ -172,7 +173,7 @@
               />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Goods Receipts</p>
+              <p class="name-menu">{{ t('GOODS_RECEIPTS') }}</p>
             </div>
           </div>
         </a>
@@ -187,7 +188,7 @@
               />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Goods Issues</p>
+              <p class="name-menu">{{ t('GOODS_ISSUES') }}</p>
             </div>
           </div>
         </a>
@@ -198,7 +199,7 @@
               <img src="../Shared/img/common/sales.svg" alt="" class="icon" />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Sales</p>
+              <p class="name-menu">{{ t('NAV_SALES') }}</p>
             </div>
           </div>
         </a>
@@ -209,7 +210,7 @@
               <img src="../Shared/img/common/return.svg" alt="" class="icon" />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Returns</p>
+              <p class="name-menu">{{ t('NAV_RETURNS') }}</p>
             </div>
           </div>
         </a>
@@ -224,7 +225,7 @@
               />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Payments & Debts</p>
+              <p class="name-menu">{{ t('NAV_PAYMENTS') }}</p>
             </div>
           </div>
         </a>
@@ -235,7 +236,7 @@
               <img src="../Shared/img/common/report.svg" alt="" class="icon" />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Reports</p>
+              <p class="name-menu">{{ t('NAV_REPORTS') }}</p>
             </div>
           </div>
         </a>
@@ -250,7 +251,7 @@
               />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Audit Log</p>
+              <p class="name-menu">{{ t('NAV_AUDIT_LOG') }}</p>
             </div>
           </div>
         </a>
@@ -261,7 +262,7 @@
               <img src="../Shared/img/common/user.svg" alt="" class="icon" />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu-active">Users</p>
+              <p class="name-menu-active">{{ t('NAV_USERS') }}</p>
             </div>
           </div>
         </a>
@@ -272,7 +273,7 @@
               <img src="../Shared/img/common/setting.svg" alt="" class="icon" />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Settings</p>
+              <p class="name-menu">{{ t('NAV_SETTINGS') }}</p>
             </div>
           </div>
         </a>
@@ -317,7 +318,7 @@
             <p class="email">{{currentUser.email}}</p>
           </div>
           <div class="info-mid">
-            <a href="#!"><p class="set">Profile Settings</p></a>
+            <a href="#!"><p class="set">{{ t('PROFILE_SETTINGS') }}</p></a>
           </div>
           <div class="info-bottom">
             <img
@@ -325,15 +326,15 @@
               alt=""
               class="icon"
             />
-            <a href="../AuthFE/login.html"><p class="logout">Logout</p></a>
+            <a href="../AuthFE/login.html"><p class="logout">{{ t('LOGOUT') }}</p></a>
           </div>
         </div>
       </div>
       <div class="app-layout-content">
         <div class="container-top">
           <div class="container-top--left">
-            <h1 class="name-system">Users</h1>
-            <p class="desc-system">Manage user accounts and permissions</p>
+            <h1 class="name-system">{{ t('USERS_TITLE') }}</h1>
+            <p class="desc-system">{{ t('USERS_DESC') }}</p>
           </div>
           <div class="container-top--right">
             <div class="control add-User" ng-click="openAdd()">
@@ -342,7 +343,7 @@
                 alt=""
                 class="icon-control"
               />
-              <p class="name-control">Add User</p>
+              <p class="name-control">{{ t('BTN_ADD_USER') }}</p>
             </div>
           </div>
         </div>
@@ -351,7 +352,7 @@
           <input
             class="search"
             type="text"
-            placeholder="Search by Username or Full Name"
+            placeholder="{{ t('USERS_SEARCH_PLACEHOLDER') }}"
             ng-model="searchUserText"
           />
         </div>
@@ -359,13 +360,13 @@
         <!-- phân trang -->
         <div class="pager" ng-if="pager.total>0">
           <div class="pager-info">
-            Showing
+            {{ t('PAGING_SHOWING') }}
             {{((pager.page-1)*pager.size)+1}}-{{Math.min(pager.page*pager.size,pager.total)}}
-            of {{pager.total}} items
+            {{ t('PAGING_OF') }} {{pager.total}} {{ t('PAGING_ITEMS') }}
           </div>
           <div class="page-nav">
             <label>
-              Page size:
+              {{ t('PAGING_PAGE_SIZE') }}:
               <select ng-model="pager.size" ng-change="changeSize()">
                 <option value="10">10</option>
                 <option value="20">20</option>
@@ -384,7 +385,7 @@
               ng-disabled="pager.page === 1"
               ng-click="go(pager.page-1)"
             >
-              Prev
+              {{ t('PAGING_PREV') }}
             </button>
             <span class="page-no"></span>
             <button
@@ -392,7 +393,7 @@
               ng-disabled="pager.page >= pager.pages"
               ng-click="go(pager.page+1)"
             >
-              Next
+              {{ t('PAGING_NEXT') }}
             </button>
             <button
               class="btn ghost"
@@ -408,12 +409,12 @@
             <table class="table">
               <thead>
                 <tr>
-                  <th class="id">User ID</th>
-                  <th class="fullname">Full Name</th>
-                  <th class="role">Role</th>
-                  <th class="email">Email</th>
-                  <th class="phone">Phone</th>
-                  <th class="action txt-right">Actions</th>
+                  <th class="id">{{ t('USERS_COL_ID') }}</th>
+                  <th class="fullname">{{ t('USERS_COL_FULLNAME') }}</th>
+                  <th class="role">{{ t('USERS_COL_ROLE') }}</th>
+                  <th class="email">{{ t('USERS_COL_EMAIL') }}</th>
+                  <th class="phone">{{ t('USERS_COL_PHONE') }}</th>
+                  <th class="action txt-right">{{ t('USERS_COL_ACTIONS') }}</th>
                 </tr>
               </thead>
               <tbody>
@@ -424,16 +425,16 @@
                   <td>{{u.email || u.Email}}</td>
                   <td>{{u.phone || u.Phone}}</td>
                   <td class="txt-right">
-                    <button class="link" ng-click="edit(u)">✎ Edit</button>
+                    <button class="link" ng-click="edit(u)">✎ {{ t('BTN_EDIT') }}</button>
                     <button class="link danger" ng-click="remove(u)">
-                      🗑 Delete
+                      🗑 {{ t('BTN_DELETE') }}
                     </button>
-                    <button class="link" ng-click="detail(u)">🔍 Detail</button>
+                    <button class="link" ng-click="detail(u)">🔍 {{ t('BTN_DETAIL') }}</button>
                   </td>
                 </tr>
 
                 <tr ng-if="(users | filter:searchUserText).length == 0">
-                  <td colspan="6" class="empty">No Data</td>
+                  <td colspan="6" class="empty">{{ t('NO_DATA') }}</td>
                 </tr>
               </tbody>
             </table>
@@ -449,52 +450,52 @@
             ng-click="closeAddOnOverlay($event)"
           >
             <div class="form-add__content" ng-click="$event.stopPropagation()">
-              <h3 class="title">Add New User</h3>
-              <p class="desc">Enter user account information</p>
+              <h3 class="title">{{ t('ADD_USER_TITLE') }}</h3>
+              <p class="desc">{{ t('ADD_USER_DESC') }}</p>
 
               <form name="frmAddUser" ng-submit="addUser()">
                 <!-- Username -->
-                <label for="username-add">Username</label>
+                <label for="username-add">{{ t('LABEL_USERNAME') }}</label>
                 <input
                   type="text"
                   id="username-add"
                   required
-                  placeholder="Enter username"
+                  placeholder="{{ t('PLACEHOLDER_USERNAME') }}"
                   ng-model="newUser.Username"
                 />
 
                 <!-- Password -->
-                <label for="password-add">Password</label>
+                <label for="password-add">{{ t('LABEL_PASSWORD') }}</label>
                 <input
                   type="text"
                   id="password-add"
                   required
-                  placeholder="Enter password"
+                  placeholder="{{ t('PLACEHOLDER_PASSWORD') }}"
                   ng-model="newUser.PasswordHash"
                 />
 
                 <div class="both">
                   <!-- Full Name -->
                   <div class="both-left">
-                    <label for="fullname-add">Full Name</label>
+                    <label for="fullname-add">{{ t('LABEL_FULLNAME') }}</label>
                     <input
                       type="text"
                       id="fullname-add"
                       required
-                      placeholder="Nguyen Van A"
+                      placeholder="{{ t('PLACEHOLDER_FULLNAME') }}"
                       ng-model="newUser.FullName"
                     />
                   </div>
 
                   <!-- Role -->
                   <div class="both-right">
-                    <label for="role-add">Role</label>
+                    <label for="role-add">{{ t('LABEL_ROLE') }}</label>
                     <select id="role-add" required ng-model="newUser.Role">
-                      <option value="" disabled selected>Select role</option>
-                      <option value="Admin">Admin</option>
-                      <option value="ThuNgan">Thu Ngân</option>
-                      <option value="ThuKho">Thủ Kho</option>
-                      <option value="KeToan">Kế Toán</option>
+                      <option value="" disabled selected>{{ t('SELECT_ROLE') }}</option>
+                      <option value="Admin">{{ t('ROLE_ADMIN') }}</option>
+                      <option value="ThuNgan">{{ t('ROLE_CASHIER') }}</option>
+                      <option value="ThuKho">{{ t('ROLE_STOCK') }}</option>
+                      <option value="KeToan">{{ t('ROLE_ACCOUNTANT') }}</option>
                     </select>
                   </div>
                 </div>
@@ -502,7 +503,7 @@
                 <div class="both">
                   <!-- Phone -->
                   <div class="both-left">
-                    <label for="phone-add">Phone</label>
+                    <label for="phone-add">{{ t('LABEL_PHONE') }}</label>
                     <input
                       type="text"
                       id="phone-add"
@@ -513,7 +514,7 @@
 
                   <!-- Email -->
                   <div class="both-right">
-                    <label for="email-add">Email</label>
+                    <label for="email-add">{{ t('LABEL_EMAIL') }}</label>
                     <input
                       type="email"
                       id="email-add"
@@ -525,12 +526,12 @@
 
                 <div class="dialog-footer">
                   <button type="button" class="cancel" ng-click="cancelAdd()">
-                    Cancel
+                    {{ t('BTN_CANCEL') }}
                   </button>
                   <input
                     class="submit"
                     type="submit"
-                    value="Add User"
+                    value="{{ t('BTN_SUBMIT_ADD') }}"
                     ng-disabled="frmAddUser.$invalid || savingAdd"
                   />
                 </div>
@@ -548,12 +549,12 @@
               class="form-detail__content"
               ng-click="$event.stopPropagation()"
             >
-              <h3 class="title">User Details</h3>
-              <p><strong>Username:</strong> {{detailUser.Username}}</p>
-              <p><strong>PasswordHash:</strong> {{detailUser.PasswordHash}}</p>
+              <h3 class="title">{{ t('DETAIL_USER_TITLE') }}</h3>
+              <p><strong>{{ t('LABEL_USERNAME') }}:</strong> {{detailUser.Username}}</p>
+              <p><strong>{{ t('LABEL_PASSWORD') }}:</strong> {{detailUser.PasswordHash}}</p>
               <div class="dialog-footer">
                 <button type="button" class="cancel" ng-click="cancelDetail()">
-                  Close
+                  {{ t('BTN_CLOSE') }}
                 </button>
               </div>
             </div>
@@ -566,47 +567,47 @@
             ng-click="closeEditOnOverlay($event)"
           >
             <div class="form-edit__content" ng-click="$event.stopPropagation()">
-              <h3 class="title">Edit User</h3>
-              <p class="desc">Update user details</p>
+              <h3 class="title">{{ t('EDIT_USER_TITLE') }}</h3>
+              <p class="desc">{{ t('EDIT_USER_DESC') }}</p>
               <form name="frmEditUser" ng-submit="updateUser()">
-                <label for="username-edit">Username</label>
+                <label for="username-edit">{{ t('LABEL_USERNAME') }}</label>
                 <input
                   type="text"
                   id="username-edit"
                   required
-                  placeholder="Enter username"
+                  placeholder="{{ t('PLACEHOLDER_USERNAME') }}"
                   ng-model="editUser.Username"
                 />
 
-                <label for="password-edit">Password</label>
+                <label for="password-edit">{{ t('LABEL_PASSWORD') }}</label>
                 <input
                   type="password"
                   id="password-edit"
-                  placeholder="Enter new password"
+                  placeholder="{{ t('PLACEHOLDER_PASSWORD') }}"
                   ng-model="editUser.PasswordHash"
                 />
 
-                <label for="role-edit">Role</label>
+                <label for="role-edit">{{ t('LABEL_ROLE') }}</label>
                 <select id="role-edit" required ng-model="editUser.Role">
                   <option value="">Select role</option>
-                  <option value="Admin">Admin</option>
-                  <option value="ThuNgan">ThuNgan</option>
-                  <option value="ThuKho">ThuKho</option>
-                  <option value="KeToan">KeToan</option>
+                  <option value="Admin">{{ t('ROLE_ADMIN') }}</option>
+                  <option value="ThuNgan">{{ t('ROLE_CASHIER') }}</option>
+                  <option value="ThuKho">{{ t('ROLE_STOCK') }}</option>
+                  <option value="KeToan">{{ t('ROLE_ACCOUNTANT') }}</option>
                 </select>
 
-                <label for="fullname-edit">Full Name</label>
+                <label for="fullname-edit">{{ t('LABEL_FULLNAME') }}</label>
                 <input
                   type="text"
                   id="fullname-edit"
                   required
-                  placeholder="Enter full name"
+                  placeholder="{{ t('PLACEHOLDER_FULLNAME') }}"
                   ng-model="editUser.FullName"
                 />
 
                 <div class="both">
                   <div class="both-left">
-                    <label for="phone-edit">Phone</label>
+                    <label for="phone-edit">{{ t('LABEL_PHONE') }}</label>
                     <input
                       type="text"
                       id="phone-edit"
@@ -616,7 +617,7 @@
                     />
                   </div>
                   <div class="both-right">
-                    <label for="email-edit">Email</label>
+                    <label for="email-edit">{{ t('LABEL_EMAIL') }}</label>
                     <input
                       type="email"
                       id="email-edit"
@@ -628,12 +629,12 @@
 
                 <div class="dialog-footer">
                   <button type="button" class="cancel" ng-click="cancelEdit()">
-                    Cancel
+                    {{ t('BTN_CANCEL') }}
                   </button>
                   <input
                     class="submit"
                     type="submit"
-                    value="Update User"
+                    value="{{ t('BTN_SUBMIT_ADD') }}"
                     ng-disabled="frmEditUser.$invalid || savingEdit"
                   />
                 </div>
@@ -650,18 +651,18 @@
               class="form-delete__content"
               ng-click="$event.stopPropagation()"
             >
-              <h3 class="title">Delete User</h3>
+              <h3 class="title">{{ t('DELETE_USER_TITLE') }}</h3>
               <p class="desc">
-                Bạn có chắc chắn muốn xóa người dùng
+                {{ t('DELETE_USER_CONFIRM') }}
                 <strong
                   >{{deletingUser.FullName || deletingUser.Username}}</strong
                 >
-                không?
+                ?
               </p>
 
               <div class="dialog-footer">
                 <button type="button" class="cancel" ng-click="cancelDelete()">
-                  Cancel
+                  {{ t('BTN_CANCEL') }}
                 </button>
                 <button
                   type="button"
@@ -669,7 +670,7 @@
                   ng-click="confirmDelete()"
                   ng-disabled="savingDelete"
                 >
-                  Delete
+                  {{ t('BTN_DELETE_CONFIRM') }}
                 </button>
               </div>
             </div>

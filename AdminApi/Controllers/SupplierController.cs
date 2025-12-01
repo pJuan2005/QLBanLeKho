@@ -76,8 +76,11 @@ namespace AdminApi.Controllers
                 var pageIndex= int.Parse(formdata["pageIndex"].ToString());
                 var pageSize = int.Parse(formdata["pageSize"].ToString());
                 string Phone = "";
-                if (formdata.Keys.Contains("Phone") && !string.IsNullOrEmpty(Convert.ToString(formdata["Phone"])))
-                { Phone = Convert.ToString(formdata["Phone"]); }
+                if ((formdata.Keys.Contains("Phone") || formdata.Keys.Contains("phone")) &&
+                    !string.IsNullOrEmpty(Convert.ToString(formdata.ContainsKey("Phone") ? formdata["Phone"] : formdata["phone"])))
+                {
+                    Phone = Convert.ToString(formdata.ContainsKey("Phone") ? formdata["Phone"] : formdata["phone"]);
+                }
                 var data = _supplierbusiness.Search(pageIndex, pageSize,out long total, Phone);
                 response.TotalItems = total;
                 response.Data = data;

@@ -16,6 +16,7 @@
     <script src="../Shared/angular/angular.min.js"></script>
     <script src="../Shared/angular/global.js"></script>
     <script src="../Shared/angular/sales.js"></script>
+    <script src="../Shared/angular/translation.js"></script>
     <title>Sales</title>
   </head>
   <body ng-app="AppRetailPos" ng-controller="salesCtrl">
@@ -32,7 +33,7 @@
         </div>
       </div>
       <div class="slide-bar__Content">
-        <p class="slide-bar__label">Navigation</p>
+        <p class="slide-bar__label">{{ t('NAVIGATION') }}</p>
         <!-- menu button Dashboard -->
         <a href="../AdminFE/dashboard.html" ng-if="canShow('dashboard')">
           <div class="slide-bar__MenuButton">
@@ -44,7 +45,7 @@
               />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Dashboard</p>
+              <p class="name-menu">{{ t('NAV_DASHBOARD') }}</p>
             </div>
           </div>
         </a>
@@ -55,7 +56,7 @@
               <img src="../Shared/img/common/pos.svg" alt="" class="icon" />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">POS</p>
+              <p class="name-menu">{{ t('NAV_POS') }}</p>
             </div>
           </div>
         </a>
@@ -66,7 +67,7 @@
               <img src="../Shared/img/common/product.svg" alt="" class="icon" />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Products</p>
+              <p class="name-menu">{{ t('NAV_PRODUCTS') }}</p>
             </div>
           </div>
         </a>
@@ -81,7 +82,7 @@
               />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Categories</p>
+              <p class="name-menu">{{ t('NAV_CATEGORIES') }}</p>
             </div>
           </div>
         </a>
@@ -96,7 +97,7 @@
               />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Promotions</p>
+              <p class="name-menu">{{ t('NAV_PROMOTIONS') }}</p>
             </div>
           </div>
         </a>
@@ -111,7 +112,7 @@
               />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Customers</p>
+              <p class="name-menu">{{ t('NAV_CUSTOMERS') }}</p>
             </div>
           </div>
         </a>
@@ -126,7 +127,7 @@
               />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Suppliers</p>
+              <p class="name-menu">{{ t('NAV_SUPPLIERS') }}</p>
             </div>
           </div>
         </a>
@@ -144,7 +145,7 @@
               />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Purchase Orders</p>
+              <p class="name-menu">{{ t('NAV_PURCHASE_ORDERS') }}</p>
             </div>
           </div>
         </a>
@@ -155,7 +156,7 @@
               <img src="../Shared/img/common/stock.svg" alt="" class="icon" />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Stock Management</p>
+              <p class="name-menu">{{ t('NAV_STOCK') }}</p>
             </div>
           </div>
         </a>
@@ -170,7 +171,7 @@
               />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Goods Receipts</p>
+              <p class="name-menu">{{ t('GOODS_RECEIPTS') }}</p>
             </div>
           </div>
         </a>
@@ -185,7 +186,7 @@
               />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Goods Issues</p>
+              <p class="name-menu">{{ t('GOODS_ISSUES') }}</p>
             </div>
           </div>
         </a>
@@ -196,7 +197,7 @@
               <img src="../Shared/img/common/sales.svg" alt="" class="icon" />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu-active">Sales</p>
+              <p class="name-menu-active">{{ t('NAV_SALES') }}</p>
             </div>
           </div>
         </a>
@@ -207,7 +208,7 @@
               <img src="../Shared/img/common/return.svg" alt="" class="icon" />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Returns</p>
+              <p class="name-menu">{{ t('NAV_RETURNS') }}</p>
             </div>
           </div>
         </a>
@@ -222,7 +223,7 @@
               />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Payments & Debts</p>
+              <p class="name-menu">{{ t('NAV_PAYMENTS') }}</p>
             </div>
           </div>
         </a>
@@ -233,7 +234,7 @@
               <img src="../Shared/img/common/report.svg" alt="" class="icon" />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Reports</p>
+              <p class="name-menu">{{ t('NAV_REPORTS') }}</p>
             </div>
           </div>
         </a>
@@ -248,7 +249,7 @@
               />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Audit Log</p>
+              <p class="name-menu">{{ t('NAV_AUDIT_LOG') }}</p>
             </div>
           </div>
         </a>
@@ -259,7 +260,7 @@
               <img src="../Shared/img/common/user.svg" alt="" class="icon" />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Users</p>
+              <p class="name-menu">{{ t('NAV_USERS') }}</p>
             </div>
           </div>
         </a>
@@ -270,7 +271,7 @@
               <img src="../Shared/img/common/setting.svg" alt="" class="icon" />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Settings</p>
+              <p class="name-menu">{{ t('NAV_SETTINGS') }}</p>
             </div>
           </div>
         </a>
@@ -316,7 +317,7 @@
             <p class="email">{{currentUser.email}}</p>
           </div>
           <div class="info-mid">
-            <a href="#!"><p class="set">Profile Settings</p></a>
+            <a href="#!"><p class="set">{{ t('PROFILE_SETTINGS') }}</p></a>
           </div>
           <div class="info-bottom">
             <img
@@ -324,7 +325,7 @@
               alt=""
               class="icon"
             />
-            <a href="../AuthFE/login.html"><p class="logout">Logout</p></a>
+            <a href="../AuthFE/login.html"><p class="logout">{{ t('LOGOUT') }}</p></a>
           </div>
         </div>
       </div>
@@ -337,12 +338,12 @@
                 alt=""
                 class="icon"
               />
-              <h1 class="name-page">Sales Management</h1>
+              <h1 class="name-page"> {{ t('SALES_TITLE') }}</h1>
             </div>
             <div class="container-card">
               <!-- Total Sales -->
               <div class="card-block card-total__sales">
-                <div class="title">Total Sales</div>
+                <div class="title">{{ t('SALES_TOTAL') }}</div>
                 <div class="decor">
                   <img
                     src="../Shared/img/common/money-sale.svg"
@@ -355,7 +356,7 @@
 
               <!-- Total Revenue -->
               <div class="card-block card-total__revenue">
-                <div class="title">Total Revenue</div>
+                <div class="title">{{ t('SALES_REVENUE') }}</div>
                 <div class="decor">
                   <img
                     src="../Shared/img/common/revenue.svg"
@@ -368,7 +369,7 @@
 
               <!-- Avg Order Value -->
               <div class="card-block card-avg__oder">
-                <div class="title">Avg Order Value</div>
+                <div class="title">{{ t('SALES_AVG_ORDER') }}</div>
                 <div class="decor">
                   <img
                     src="../Shared/img/common/avg.svg"
@@ -383,7 +384,7 @@
 
               <!-- Paid / Unpaid -->
               <div class="card-block card-status__sale">
-                <div class="title">Paid / Unpaid</div>
+                <div class="title">{{ t('STATUS_PAID') }} / {{ t('STATUS_UNPAID') }}</div>
                 <div class="decor">
                   <img
                     src="../Shared/img/common/status.svg"
@@ -401,13 +402,13 @@
 
           <div class="sales-content">
             <div class="list-sales">
-              <p class="desc">All Sales</p>
+              <p class="desc">{{ t('STATUS_ALL') }}</p>
 
               <!-- FILTERS -->
               <div class="filters">
                 <!-- From date -->
                 <div class="filters-block start-date">
-                  <label for="from-date">From date</label>
+                  <label for="from-date">{{ t('FILTER_FROM_DATE') }}</label>
                   <input
                     id="from-date"
                     type="date"
@@ -419,7 +420,7 @@
 
                 <!-- To date -->
                 <div class="filters-block end-date">
-                  <label for="to-date">To date</label>
+                  <label for="to-date">{{ t('FILTER_TO_DATE') }}</label>
                   <input
                     id="to-date"
                     type="date"
@@ -436,10 +437,10 @@
                     ng-model="filters.status"
                     ng-change="onFilterChanged()"
                   >
-                    <option value="">All Status</option>
-                    <option value="Paid">Paid</option>
-                    <option value="Unpaid">Unpaid</option>
-                    <option value="Partial">Partial</option>
+                    <option value="">{{ t('STATUS_ALL') }}</option>
+                    <option value="Paid">{{ t('STATUS_PAID') }}</option>
+                    <option value="Unpaid">{{ t('STATUS_UNPAID') }}</option>
+                    <option value="Partial">{{ t('STATUS_PARTIAL') }}</option>
                   </select>
                 </div>
 
@@ -453,7 +454,7 @@
                   <input
                     type="text"
                     class="searchByInvoiceOrCustomerName"
-                    placeholder="Search by invoice or customer name..."
+                    placeholder="{{ t('SEARCH_BY_INVOICE') }}"
                     ng-model="filters.keyword"
                     ng-model-options="{ debounce: 500 }"
                     ng-change="onFilterChanged()"
@@ -466,13 +467,13 @@
                 <table>
                   <thead>
                     <tr>
-                      <td class="invoice-id">Invoice #</td>
-                      <td class="date-invoice">Date</td>
-                      <td class="customer-name">Customer</td>
-                      <td class="total-order">Total</td>
-                      <td class="payment-method">Payment Method</td>
-                      <td class="status-sale">Status</td>
-                      <td class="action">Action</td>
+                      <td class="invoice-id">{{ t('SALES_INVOICE_NO') }}#</td>
+                      <td class="date-invoice">{{ t('SALES_DATE') }}</td>
+                      <td class="customer-name"> {{ t('SALES_CUSTOMER') }}</td>
+                      <td class="total-order">{{ t('SALES_AMOUNT') }}</td>
+                      <td class="payment-method">{{ t('SALES_METHOD') }}</td>
+                      <td class="status-sale">{{ t('SALES_PAYMENT_STATUS') }}</td>
+                      <td class="action">{{ t('SALES_PAYMENT_STATUS') }}</td>
                     </tr>
                   </thead>
                   <tbody>
@@ -521,7 +522,7 @@
                               src="../Shared/img/common/view.svg"
                               class="icon-view"
                             />
-                            <p class="name-action">View Sale Details</p>
+                            <p class="name-action">{{ t('ACTION_VIEW_DETAIL') }}</p>
                           </div>
 
                           <div
@@ -532,7 +533,7 @@
                               src="../Shared/img/common/printer.svg"
                               class="printer-icon"
                             />
-                            <p class="printer-action">Print Invoice</p>
+                            <p class="printer-action">{{ t('ACTION_PRINT') }}</p>
                           </div>
                         </div>
                       </td>
@@ -540,7 +541,7 @@
 
                     <!-- không có dữ liệu -->
                     <tr ng-if="sales.length === 0">
-                      <td colspan="7" class="no-data">No sales found.</td>
+                      <td colspan="7" class="no-data">{{ t('NO_SALES_FOUND') }}.</td>
                     </tr>
                   </tbody>
                 </table>
@@ -549,13 +550,13 @@
               <!-- PAGER -->
               <div class="pager" ng-if="pager.total > 0">
                 <div class="pager-info">
-                  Showing {{ ((pager.page-1)*pager.size)+1 }}-{{
-                  Math.min(pager.page*pager.size,pager.total) }} of {{
-                  pager.total }} items
+                  {{ t('PAGING_SHOWING') }} {{ ((pager.page-1)*pager.size)+1 }}-{{
+                  Math.min(pager.page*pager.size,pager.total) }} {{ t('PAGING_OF') }} {{
+                  pager.total }} {{ t('PAGING_ITEMS') }}
                 </div>
                 <div class="page-nav">
                   <label>
-                    Page size:
+                    {{ t('PAGING_PAGE_SIZE') }}:
                     <select ng-model="pager.size" ng-change="changeSize()">
                       <option value="10">10</option>
                       <option value="20">20</option>
@@ -574,17 +575,17 @@
                     ng-disabled="pager.page === 1"
                     ng-click="go(pager.page-1)"
                   >
-                    Prev
+                    {{ t('PAGING_PREV') }}
                   </button>
                   <span class="page-no">
-                    Page {{ pager.page }} / {{ pager.pages }}
+                    {{ t('PAGING_PAGE') }} {{ pager.page }} / {{ pager.pages }}
                   </span>
                   <button
                     class="btn ghost"
                     ng-disabled="pager.page >= pager.pages"
                     ng-click="go(pager.page+1)"
                   >
-                    Next
+                    {{ t('PAGING_NEXT') }}
                   </button>
                   <button
                     class="btn ghost"
@@ -617,10 +618,10 @@
                       class="icon"
                     />
                     <div>
-                      <p class="title-top">Sale Details -</p>
+                      <p class="title-top">{{ t('DETAIL_TITLE') }} -</p>
                       <p class="title-main">{{ selectedSale.invoiceNo }}</p>
                       <p class="title-sub">
-                        View complete information about this sale transaction
+                        {{ t('SALE_DETAIL_SUB') }}
                       </p>
                     </div>
                   </div>
@@ -632,7 +633,7 @@
                 <!-- info 2 cột -->
                 <div class="modal-section modal-info-grid">
                   <div class="info-block">
-                    <p class="info-label">Invoice Number</p>
+                    <p class="info-label">LABEL_INVOICE_NO</p>
                     <p class="info-value link">{{ selectedSale.invoiceNo }}</p>
                   </div>
                   <div class="info-block">
@@ -642,7 +643,7 @@
                     </p>
                   </div>
                   <div class="info-block">
-                    <p class="info-label">Customer</p>
+                    <p class="info-label">{{ t('DETAIL_TITLE') }}</p>
                     <p class="info-value">
                       {{ saleDetail.customerName }}<br />
                       <span class="info-sub"
@@ -651,15 +652,15 @@
                     </p>
                   </div>
                   <div class="info-block">
-                    <p class="info-label">Cashier</p>
+                    <p class="info-label">{{ t('LABEL_CASHIER') }}</p>
                     <p class="info-value">{{ saleDetail.cashierName }}</p>
                   </div>
                   <div class="info-block">
-                    <p class="info-label">Payment Method</p>
+                    <p class="info-label">{{ t('LABEL_PAYMENT_METHOD') }}</p>
                     <p class="info-value">{{ selectedSale.paymentMethod }}</p>
                   </div>
                   <div class="info-block">
-                    <p class="info-label">Status</p>
+                    <p class="info-label">{{ t('LABEL_STATUS') }}</p>
                     <div class="color" ng-class="getStatusClass(selectedSale)">
                       {{ selectedSale.paymentStatus }}
                     </div>
@@ -668,18 +669,18 @@
 
                 <!-- items purchased -->
                 <div class="modal-section">
-                  <p class="section-title">Items Purchased</p>
+                  <p class="section-title">{{ t('LABEL_STATUS') }}</p>
                   <div class="detail-table-wrapper">
                     <table class="detail-table">
                       <thead>
                         <tr>
-                          <th>Product</th>
-                          <th>SKU</th>
-                          <th>Qty</th>
-                          <th>Price</th>
-                          <th>Discount</th>
-                          <th>VAT %</th>
-                          <th>Subtotal</th>
+                          <th>{{ t('TH_PRODUCT') }}</th>
+                          <th>{{ t('TH_SKU') }}</th>
+                          <th>{{ t('TH_QTY') }}</th>
+                          <th>{{ t('TH_PRICE') }}</th>
+                          <th>{{ t('TH_DISCOUNT') }}</th>
+                          <th>{{ t('TH_VAT') }}</th>
+                          <th>{{ t('TH_SUBTOTAL') }}</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -700,19 +701,19 @@
                 <!-- totals -->
                 <div class="modal-section modal-totals">
                   <div class="totals-row">
-                    <span>Subtotal</span>
+                    <span>{{ t('TOTAL_SUBTOTAL') }}</span>
                     <span>{{ formatVnd(saleTotals.subtotal) }}</span>
                   </div>
                   <div class="totals-row">
-                    <span>VAT Amount</span>
+                    <span>{{ t('TOTAL_VAT_AMOUNT') }}</span>
                     <span>{{ formatVnd(saleTotals.vatAmount) }}</span>
                   </div>
                   <div class="totals-row totals-row--bold">
-                    <span>Total</span>
+                    <span>{{ t('TOTAL_FINAL') }}</span>
                     <span>{{ formatVnd(saleTotals.total) }}</span>
                   </div>
                   <div class="totals-row totals-row--highlight">
-                    <span>Customer Paid</span>
+                    <span>{{ t('TOTAL_CUSTOMER_PAID') }}</span>
                     <span>{{ formatVnd(saleTotals.customerPaid) }}</span>
                   </div>
                 </div>
@@ -730,12 +731,12 @@
                 ng-click="$event.stopPropagation()"
               >
                 <div class="invoice-header">
-                  <h2 class="store-name">RetailPro Store</h2>
-                  <p class="store-sub">99 Đức Minh Thanh Bình Hải Dương</p>
+                  <h2 class="store-name">{{ t('INVOICE_STORE_NAME') }}</h2>
+                  <p class="store-sub">{{ t('INVOICE_ADDRESS') }}</p>
                 </div>
 
                 <div class="invoice-title">
-                  <p class="invoice-caption">SALES INVOICE</p>
+                  <p class="invoice-caption">{{ t('INVOICE_TITLE') }}</p>
                   <a href="" class="invoice-link"
                     >{{ selectedSale.invoiceNo }}</a
                   >
@@ -749,11 +750,11 @@
                     </p>
                   </div>
                   <div>
-                    <p class="info-label">Cashier:</p>
+                    <p class="info-label">{{ t('LABEL_CASHIER') }}:</p>
                     <p class="info-value">{{ saleDetail.cashierName }}</p>
                   </div>
                   <div>
-                    <p class="info-label">Customer:</p>
+                    <p class="info-label">{{ t('LABEL_CUSTOMER') }}:</p>
                     <p class="info-value">
                       {{ saleDetail.customerName }}<br />
                       <span class="info-sub"
@@ -768,10 +769,10 @@
                   <table class="detail-table">
                     <thead>
                       <tr>
-                        <th class="col-item">Item</th>
-                        <th>Qty</th>
-                        <th>Price</th>
-                        <th>Total</th>
+                        <th class="col-item">{{ t('INVOICE_TH_ITEM') }}</th>
+                        <th>{{ t('INVOICE_TH_QTY') }}</th>
+                        <th>{{ t('INVOICE_TH_PRICE') }}</th>
+                        <th>{{ t('INVOICE_TH_TOTAL') }}</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -796,30 +797,29 @@
                 <!-- totals -->
                 <div class="modal-section modal-totals invoice-totals">
                   <div class="totals-row">
-                    <span>Subtotal:</span>
+                    <span>{{ t('TOTAL_SUBTOTAL') }}:</span>
                     <span>{{ formatVnd(saleTotals.subtotal) }}</span>
                   </div>
                   <div class="totals-row">
-                    <span>VAT ({{ saleTotals.vatPercent || 0 }}%):</span>
+                    <span>{{ t('TOTAL_VAT_AMOUNT') }} ({{ saleTotals.vatPercent || 0 }}%):</span>
                     <span>{{ formatVnd(saleTotals.vatAmount) }}</span>
                   </div>
                   <div class="totals-row totals-row--bold">
-                    <span>Total:</span>
+                    <span>{{ t('TOTAL_FINAL') }}:</span>
                     <span>{{ formatVnd(saleTotals.total) }}</span>
                   </div>
                   <div class="totals-row">
-                    <span>Payment Method:</span>
+                    <span>{{ t('LABEL_PAYMENT_METHOD') }}:</span>
                     <span>{{ selectedSale.paymentMethod }}</span>
                   </div>
                   <div class="totals-row totals-row--highlight">
-                    <span>Customer Paid:</span>
+                    <span>{{ t('TOTAL_CUSTOMER_PAID') }}:</span>
                     <span>{{ formatVnd(saleTotals.customerPaid) }}</span>
                   </div>
                 </div>
 
                 <p class="invoice-footnote">
-                  Thank you for your purchase!<br />
-                  Please keep this invoice for warranty purposes.
+                  {{ t('INVOICE_FOOTER1') }}<br />{{ t('INVOICE_FOOTER2') }}
                 </p>
 
                 <button class="btn-print" ng-click="printInvoicePdf()">
@@ -827,7 +827,7 @@
                     src="../Shared/img/common/printer.svg"
                     class="printer-icon"
                   />
-                  <span>Print PDF (A5)</span>
+                  <span>{{ t('BTN_PRINT_PDF') }}</span>
                 </button>
               </div>
             </div>

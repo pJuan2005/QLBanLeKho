@@ -177,7 +177,7 @@ input:focus {
   margin-left: 255px;
   height: 100vh;
   width: calc(100vw - 255px);
-  /* overflow: auto; */
+  overflow: auto;
   min-width: 0;
 }
 
@@ -493,6 +493,11 @@ input:focus {
 
 .red-text {
   color: #ef4444;
+  font-weight: 600;
+}
+
+.green-text {
+  color: green;
   font-weight: 600;
 }
 

@@ -43,7 +43,7 @@ namespace BLL
 
         public List<ReturnModel> Search(int pageIndex, int pageSize, out long total,
         int? ReturnID, byte? ReturnType,
-        int? SaleID, int? ReceiptID,
+        int? SaleID, int? POID,
         int? CustomerID, int? SupplierID,
         string? PartnerName, string? PartnerPhone,
         int? ProductID,
@@ -51,7 +51,7 @@ namespace BLL
         {
             return _res.Search(pageIndex, pageSize, out total,
             ReturnID, ReturnType,
-            SaleID, ReceiptID,
+            SaleID, POID,
             CustomerID, SupplierID,
             PartnerName, PartnerPhone,
             ProductID,

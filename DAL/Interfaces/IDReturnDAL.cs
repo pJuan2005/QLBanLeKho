@@ -15,7 +15,7 @@ namespace DAL.Interfaces
         bool Delete(int id);
         List<ReturnModel> Search(int pageIndex, int pageSize, out long total,
                                     int? ReturnID, byte? ReturnType,
-                                    int? SaleID, int? ReceiptID,
+                                    int? SaleID, int? POID,
                                     int? CustomerID, int? SupplierID,
                                     string? PartnerName, string? PartnerPhone,
                                     int? ProductID,

@@ -16,6 +16,7 @@
     <script src="../Shared/angular/angular.min.js"></script>
     <script src="../Shared/angular/global.js"></script>
     <script src="../Shared/angular/customer.js"></script>
+    <script src="../Shared/angular/translation.js"></script>
     <title>Customer</title>
   </head>
   <body ng-app="AppRetailPos" ng-controller="customerCtrl">
@@ -32,7 +33,7 @@
         </div>
       </div>
       <div class="slide-bar__Content">
-        <p class="slide-bar__label">Navigation</p>
+        <p class="slide-bar__label">{{ t('NAVIGATION') }}</p>
         <!-- menu button Dashboard -->
         <a href="../AdminFE/dashboard.html" ng-if="canShow('dashboard')">
           <div class="slide-bar__MenuButton">
@@ -44,7 +45,7 @@
               />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Dashboard</p>
+              <p class="name-menu">{{ t('NAV_DASHBOARD') }}</p>
             </div>
           </div>
         </a>
@@ -55,7 +56,7 @@
               <img src="../Shared/img/common/pos.svg" alt="" class="icon" />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">POS</p>
+              <p class="name-menu">{{ t('NAV_POS') }}</p>
             </div>
           </div>
         </a>
@@ -66,7 +67,7 @@
               <img src="../Shared/img/common/product.svg" alt="" class="icon" />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Products</p>
+              <p class="name-menu">{{ t('NAV_PRODUCTS') }}</p>
             </div>
           </div>
         </a>
@@ -81,7 +82,7 @@
               />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Categories</p>
+              <p class="name-menu">{{ t('NAV_CATEGORIES') }}</p>
             </div>
           </div>
         </a>
@@ -96,7 +97,7 @@
               />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Promotions</p>
+              <p class="name-menu">{{ t('NAV_PROMOTIONS') }}</p>
             </div>
           </div>
         </a>
@@ -111,7 +112,7 @@
               />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu-active">Customers</p>
+              <p class="name-menu-active">{{ t('NAV_CUSTOMERS') }}</p>
             </div>
           </div>
         </a>
@@ -126,7 +127,7 @@
               />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Suppliers</p>
+              <p class="name-menu">{{ t('NAV_SUPPLIERS') }}</p>
             </div>
           </div>
         </a>
@@ -144,7 +145,7 @@
               />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Purchase Orders</p>
+              <p class="name-menu">{{ t('NAV_PURCHASE_ORDERS') }}</p>
             </div>
           </div>
         </a>
@@ -155,7 +156,7 @@
               <img src="../Shared/img/common/stock.svg" alt="" class="icon" />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Stock Management</p>
+              <p class="name-menu">{{ t('NAV_STOCK') }}</p>
             </div>
           </div>
         </a>
@@ -170,7 +171,7 @@
               />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Goods Receipts</p>
+              <p class="name-menu">{{ t('GOODS_RECEIPTS') }}</p>
             </div>
           </div>
         </a>
@@ -185,7 +186,7 @@
               />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Goods Issues</p>
+              <p class="name-menu">{{ t('GOODS_ISSUES') }}</p>
             </div>
           </div>
         </a>
@@ -196,7 +197,7 @@
               <img src="../Shared/img/common/sales.svg" alt="" class="icon" />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Sales</p>
+              <p class="name-menu">{{ t('NAV_SALES') }}</p>
             </div>
           </div>
         </a>
@@ -207,7 +208,7 @@
               <img src="../Shared/img/common/return.svg" alt="" class="icon" />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Returns</p>
+              <p class="name-menu">{{ t('NAV_RETURNS') }}</p>
             </div>
           </div>
         </a>
@@ -222,7 +223,7 @@
               />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Payments & Debts</p>
+              <p class="name-menu">{{ t('NAV_PAYMENTS') }}</p>
             </div>
           </div>
         </a>
@@ -233,7 +234,7 @@
               <img src="../Shared/img/common/report.svg" alt="" class="icon" />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Reports</p>
+              <p class="name-menu">{{ t('NAV_REPORTS') }}</p>
             </div>
           </div>
         </a>
@@ -248,7 +249,7 @@
               />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Audit Log</p>
+              <p class="name-menu">{{ t('NAV_AUDIT_LOG') }}</p>
             </div>
           </div>
         </a>
@@ -259,7 +260,7 @@
               <img src="../Shared/img/common/user.svg" alt="" class="icon" />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Users</p>
+              <p class="name-menu">{{ t('NAV_USERS') }}</p>
             </div>
           </div>
         </a>
@@ -270,7 +271,7 @@
               <img src="../Shared/img/common/setting.svg" alt="" class="icon" />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Settings</p>
+              <p class="name-menu">{{ t('NAV_SETTINGS') }}</p>
             </div>
           </div>
         </a>
@@ -315,7 +316,7 @@
             <p class="email">{{currentUser.email}}</p>
           </div>
           <div class="info-mid">
-            <a href="#!"><p class="set">Profile Settings</p></a>
+            <a href="#!"><p class="set">{{ t('PROFILE_SETTINGS') }}</p></a>
           </div>
           <div class="info-bottom">
             <img
@@ -323,17 +324,17 @@
               alt=""
               class="icon"
             />
-            <a href="../AuthFE/login.html"><p class="logout">Logout</p></a>
+            <a href="../AuthFE/login.html"
+              ><p class="logout">{{ t('LOGOUT') }}</p></a
+            >
           </div>
         </div>
       </div>
       <div class="app-layout-content">
         <div class="container-top">
           <div class="container-top--left">
-            <h1 class="name-system">Customers</h1>
-            <p class="desc-system">
-              Manage customer information and relationships
-            </p>
+            <h1 class="name-system">{{ t('CUSTOMER_TITLE') }}</h1>
+            <p class="desc-system">{{ t('CUSTOMER_DESC') }}</p>
           </div>
           <div class="container-top--right">
             <div class="control" ng-click="openImportDialog()">
@@ -342,7 +343,7 @@
                 alt=""
                 class="icon-control"
               />
-              <p class="name-control">Import Excel</p>
+              <p class="name-control">{{ t('IMPORT_EXCEL') }}</p>
             </div>
             <input
               type="file"
@@ -357,7 +358,7 @@
                 alt=""
                 class="icon-control"
               />
-              <p class="name-control">Export Excel</p>
+              <p class="name-control">{{ t('EXPORT_EXCEL') }}</p>
             </div>
             <div class="control add-customer" ng-click="openAdd()">
               <img
@@ -365,17 +366,17 @@
                 alt=""
                 class="icon-control"
               />
-              <p class="name-control">Add Customer</p>
+              <p class="name-control">{{ t('ADD_CUSTOMER') }}</p>
             </div>
           </div>
         </div>
         <div class="container-card">
           <div class="card">
-            <p class="name-card">Total Customers</p>
+            <p class="name-card">{{ t('CUSTOMER_TOTAL') }}</p>
             <p class="data-card">{{stats.totalCustomer}}</p>
           </div>
           <div class="card">
-            <p class="name-card">Customers with Debt Limit</p>
+            <p class="name-card">{{ t('CUSTOMER_WITH_DEBT') }}</p>
             <p class="data-card">{{stats.withDebt}}</p>
           </div>
         </div>
@@ -391,9 +392,9 @@
         <!-- phân trang -->
         <div class="pager" ng-if="pager.total>0">
           <div class="pager-info">
-            Showing
+            {{ t('PAGING_SHOWING') }}
             {{((pager.page-1)*pager.size)+1}}-{{Math.min(pager.page*pager.size,pager.total)}}
-            of {{pager.total}} items
+            {{ t('PAGING_OF') }} {{pager.total}} {{ t('PAGING_ITEMS') }}
           </div>
           <div class="page-nav">
             <label>
@@ -416,7 +417,7 @@
               ng-disabled="pager.page === 1"
               ng-click="go(pager.page-1)"
             >
-              Prev
+              {{ t('PAGING_PREV') }}
             </button>
             <span class="page-no"></span>
             <button
@@ -424,7 +425,7 @@
               ng-disabled="pager.page >= pager.pages"
               ng-click="go(pager.page+1)"
             >
-              Next
+              {{ t('PAGING_NEXT') }}
             </button>
             <button
               class="btn ghost"
@@ -440,13 +441,13 @@
             <table class="table">
               <thead>
                 <tr>
-                  <th class="id">Customer ID</th>
-                  <th class="name">Customer Name</th>
-                  <th class="phone">Phone</th>
-                  <th class="email">Email</th>
-                  <th class="address">Address</th>
-                  <th class="debt">Debt Limit</th>
-                  <th class="action txt-right">Actions</th>
+                  <th class="id">{{ t('CUS_ID') }}</th>
+                  <th class="name">{{ t('CUS_NAME') }}</th>
+                  <th class="phone">{{ t('CUS_PHONE') }}</th>
+                  <th class="email">{{ t('CUS_EMAIL') }}</th>
+                  <th class="address">{{ t('CUS_ADDRESS') }}</th>
+                  <th class="debt">{{ t('CUS_DEBT') }}</th>
+                  <th class="action txt-right">{{ t('ACTIONS') }}</th>
                 </tr>
               </thead>
               <tbody>
@@ -461,16 +462,18 @@
                     ? c.DebtLimit : 0) ) | number:0 }}đ
                   </td>
                   <td class="txt-right">
-                    <button class="link" ng-click="edit(c)">✎ Edit</button>
+                    <button class="link" ng-click="edit(c)">
+                      ✎ {{ t('EDIT_RETURN5') }}
+                    </button>
                     <button class="link danger" ng-click="remove(c)">
-                      🗑 Delete
+                      🗑 {{ t('DELETE_TITLE5') }}
                     </button>
                   </td>
                 </tr>
                 <tr
                   ng-if="(customers | filter:searchAddress | filter:searchPhone).length == 0"
                 >
-                  <td colspan="7" class="empty">No Data</td>
+                  <td colspan="7" class="empty">{{ t('NO_DATA') }}</td>
                 </tr>
               </tbody>
             </table>
@@ -485,20 +488,20 @@
             ng-click="closeAddOnOverlay($event)"
           >
             <div class="form-add__content" ng-click="$event.stopPropagation()">
-              <h3 class="title">Add New Customer</h3>
-              <p class="desc">Enter customer details</p>
+              <h3 class="title">{{ t('FORM_ADD_TITLE') }}</h3>
+              <p class="desc">{{ t('FORM_ADD_DESC') }}</p>
               <form name="frmAdd" ng-submit="add()">
-                <label for="name-add">Full Name</label>
+                <label for="name-add">{{ t('LABEL_FULL_NAME') }}</label>
                 <input
                   type="text"
                   id="name-add"
                   required
-                  placeholder="Enter customer name"
+                  placeholder="{{ t('PLACEHOLDER_FULL_NAME') }}"
                   ng-model="newCustomer.CustomerName"
                 />
                 <div class="both">
                   <div class="both-left">
-                    <label for="phone-add">Phone</label>
+                    <label for="phone-add">{{ t('LABEL_PHONE') }}</label>
                     <input
                       type="text"
                       id="phone-add"
@@ -508,7 +511,7 @@
                     />
                   </div>
                   <div class="both-right">
-                    <label for="mail-add">Email</label>
+                    <label for="mail-add">{{ t('LABEL_EMAIL') }}</label>
                     <input
                       type="text"
                       id="mail-add"
@@ -517,7 +520,7 @@
                     />
                   </div>
                 </div>
-                <label for="address-add">Address</label>
+                <label for="address-add">{{ t('LABEL_ADDRESS') }}</label>
                 <input
                   type="text"
                   id="address-add"
@@ -525,23 +528,23 @@
                   placeholder="123 Main City, Main Street"
                   ng-model="newCustomer.CustomerAddress"
                 />
-                <label for="debt-add">Debt Limit</label>
+                <label for="debt-add">{{ t('LABEL_DEBT') }}</label>
                 <input
                   type="number"
                   id="debt-add"
                   required
-                  placeholder="Enter debt limit for customer"
+                  placeholder="{{ t('PLACEHOLDER_DEBT') }}"
                   ng-model="newCustomer.CustomerDebt"
                 />
                 <div class="dialog-footer">
                   <!-- để type button tránh submit -->
                   <button type="button" class="cancel" ng-click="cancelAdd()">
-                    Cancel
+                    {{ t('BTN_CANCEL') }}
                   </button>
                   <input
                     class="submit"
                     type="submit"
-                    value="Add New Customer"
+                    value="{{ t('BTN_ADD_CUSTOMER') }}"
                     ng-disabled="frmAdd.$invalid||savingAdd"
                   />
                 </div>
@@ -555,19 +558,19 @@
             ng-click="closeEditOnOverlay($event)"
           >
             <div class="form-edit__content" ng-click="$event.stopPropagation()">
-              <h3>class="title">Edit Customer</h3>
+              <h3 class="title">{{ t('FORM_EDIT_TITLE') }}</h3>
               <form name="frmEdit" ng-submit="updateCustomer()">
-                <label for="name-edit">Full Name</label>
+                <label for="name-edit">{{ t('LABEL_FULL_NAME') }}</label>
                 <input
                   type="text"
                   id="name-edit"
                   required
-                  placeholder="Enter customer name"
+                  placeholder="{{ t('PLACEHOLDER_FULL_NAME') }}"
                   ng-model="editingCustomer.CustomerName"
                 />
                 <div class="both">
                   <div class="both-left">
-                    <label for="phone-edit">Phone</label>
+                    <label for="phone-edit">{{ t('LABEL_PHONE') }}</label>
                     <input
                       type="text"
                       id="phone-edit"
@@ -577,7 +580,7 @@
                     />
                   </div>
                   <div class="both-right">
-                    <label for="mail-edit">Email</label>
+                    <label for="mail-edit">{{ t('LABEL_EMAIL') }}</label>
                     <input
                       type="text"
                       id="mail-edit"
@@ -586,7 +589,7 @@
                     />
                   </div>
                 </div>
-                <label for="address-edit">Address</label>
+                <label for="address-edit">{{ t('LABEL_ADDRESS') }}</label>
                 <input
                   type="text"
                   id="address-edit"
@@ -594,23 +597,23 @@
                   placeholder="123 Main City, Main Street"
                   ng-model="editingCustomer.CustomerAddress"
                 />
-                <label for="debt-edit">Debt Limit</label>
+                <label for="debt-edit">{{ t('LABEL_DEBT') }}</label>
                 <input
                   type="number"
                   id="debt-edit"
                   required
-                  placeholder="Enter debt limit for customer"
+                  placeholder="{{ t('PLACEHOLDER_DEBT') }}"
                   ng-model="editingCustomer.CustomerDebt"
                 />
                 <div class="dialog-footer">
                   <!-- để type button tránh submit -->
                   <button type="button" class="cancel" ng-click="cancelEdit()">
-                    Cancel
+                    {{ t('BTN_CANCEL') }}
                   </button>
                   <input
                     class="submit"
                     type="submit"
-                    value="Edit Customer"
+                    value="{{ t('BTN_UPDATE_CUSTOMER') }}"
                     ng-disabled="frmEdit.$invalid||savingEdit"
                   />
                 </div>
@@ -624,17 +627,17 @@
             ng-click="closeDeleteOnOverlay($event)"
           >
             <div class="form-delete__content">
-              <h3 class="title">Delete Customer</h3>
+              <h3 class="title">{{ t('FORM_DELETE_TITLE') }}</h3>
               <p class="desc">
-                Are you sure you want to delete the customer
-                "{{deleting.customerName}}"? This action cannot be undone.
+                {{ t('FORM_DELETE_DESC1') }} "{{deleting.customerName}}"? {{
+                t('FORM_DELETE_DESC2') }}
               </p>
               <div class="dialog-footer">
                 <button class="cancel" ng-click="cancelDelete($event)">
-                  Cancel
+                  {{ t('BTN_CANCEL') }}
                 </button>
                 <button class="submit danger" ng-click="confirmDelete()">
-                  Delete Customer
+                  {{ t('BTN_DELETE_CUSTOMER') }}
                 </button>
               </div>
             </div>
