@@ -120,7 +120,7 @@
   "FILTER_TO_DATE": "To date",
 
   "ADD_RETURN": "Add Return",
-  "EDIT_RETURN": "Edit Return",
+  "EDIT_RETURN": "Edit ",
   "DELETE_RETURN": "Delete Return",
 
   "TB_RETURN_ID": "Return ID",
@@ -141,7 +141,7 @@
   "LABEL_RETURN_DATE": "Return Date",
   "LABEL_REASON": "Reason",
   "LABEL_SALE_ID": "Sale ID",
-  "LABEL_RECEIPT_ID": "Receipt ID",
+  "LABEL_PO_ID": "POID",
   "LABEL_CUSTOMER_ID": "Customer ID",
   "LABEL_SUPPLIER_ID": "Supplier ID",
   "LABEL_PRODUCT_ID": "Product ID",
@@ -245,7 +245,7 @@
   "LABEL_PAYMENT_METHOD": "Payment Method",
   "LABEL_STATUS": "Status",
 
-  "SECTION_ITEMS_PURCHASED": "Items Purchased",
+  "{{ t('LABEL_STATUS') }}": "Items Purchased",
 
   "TH_PRODUCT": "Product",
   "TH_SKU": "SKU",
@@ -333,8 +333,790 @@
   "TB_AGE_DAYS": "Age (Days)",
   "TB_MIN_STOCK": "Min Stock",
   "TB_EXPIRY_DATE": "Expiry Date",
-  "TB_DAYS_LEFT": "Days Left"
+  "TB_DAYS_LEFT": "Days Left",
+
+
+
+
+
+
+
+  "POS_TITLE": "Point of Sale",
+  "POS_DESC": "Create orders, handle credit limit and payments",
+
+  "POS_CUSTOMER": "Customer",
+  "POS_PHONE": "Phone",
+  "POS_NEW_CUSTOMER": "New Customer",
+  "POS_NOT_FOUND": "Customer not found with phone:",
+  "POS_ADD_NEW_CUSTOMER": "Add New Customer",
+  "POS_CUSTOMER_DETAILS": "Customer Details",
+  "POS_LOYAL_CREDIT": "Loyal customer – credit available",
+  "POS_REGULAR_NO_DEBT": "Regular customer – no credit allowed",
+
+  "POS_PRODUCTS": "Products",
+  "POS_SEARCH_PRODUCT": "Search or scan product (name / SKU / barcode)",
+  "POS_CART_ITEMS": "Cart Items",
+  "POS_CART_ITEMS1": "Cart Items",
+  "POS_SUBTOTAL": "Subtotal",
+  "POS_VAT": "VAT",
+  "POS_ORDER_TOTAL": "Order Total",
+
+  "POS_PAYMENT": "Payment",
+  "POS_CUSTOMER_PAYS": "Customer Pays",
+  "POS_PAYMENT_METHOD": "Payment Method",
+  "POS_REMAINING_DEBT": "Remaining Debt",
+  "POS_COMPLETE_PAYMENT": "Complete Payment",
+
+  "POS_ADD_CUSTOMER": "Add New Customer",
+  "POS_ENTER_CUSTOMER_DETAILS": "Enter customer details",
+  "POS_FULL_NAME": "Full Name",
+  "POS_EMAIL": "Email",
+  "POS_ADDRESS": "Address",
+
+  "POS_PAYMENT_SUCCESS": "Payment Successful",
+  "POS_PAYMENT_SUCCESS_DESC": "The order has been completed successfully.",
+  "POS_ORDER_SUMMARY": "Order Summary",
+  "POS_ORDER_ID": "Order ID",
+  "POS_DATE_TIME": "Date & Time",
+  "POS_CASHIER": "Cashier",
+  "POS_CUSTOMER_INFO": "Customer Information",
+  "POS_BEFORE_DEBT": "Before Debt",
+  "POS_PREPAY": "Prepay",
+  "POS_NEW_REMAINING_DEBT": "New Remaining Debt",
+
+  "POS_ITEMS_PURCHASED": "Items Purchased",
+  "POS_VAT_RATE": "VAT",
+  "POS_PAYMENT_DETAILS": "Payment Details",
+
+  "POS_NEW_SALE": "New Sale",
+  "POS_PRINT_INVOICE": "Print Invoice",
+
+
+
+
+
+
+  "CAT_TITLE": "Product Categories",
+  "CAT_DESC": "Manage and organize product categories with descriptions and VAT rates",
+
+  "CAT_TOTAL": "Total Categories",
+  "CAT_AVG_VAT": "Average VAT",
+  "CAT_MOST_COMMON": "Most Common Category",
+
+  "SEARCH_CATEGORY": "Search by categories name",
+  "SEARCH_VAT": "Search by VAT...",
+
+  "SHOWING": "Showing",
+  "PAGE_SIZE": "Page size:",
+  "PREV": "Prev",
+  "NEXT": "Next",
+
+  "IMPORT": "Import",
+  "EXPORT": "Export",
+  "ADD_CATEGORY": "Add Category",
+
+  "CAT_ID": "Category ID",
+  "CAT_NAME": "Category Name",
+  "CAT_DESCRIPTION": "Description",
+  "CAT_VAT": "VAT Rate (%)",
+  "ACTIONS": "Actions",
+  "NO_DATA": "No Data",
+
+  "FORM_ADD_TITLE": "Add Category",
+  "FORM_ADD_DESC": "Create a new product category",
+  "FORM_EDIT_TITLE": "Edit Category",
+  "FORM_EDIT_DESC": "Update category information",
+  "FORM_DELETE_TITLE": "Delete Category",
+  "FORM_DELETE_DESC1": "Are you sure you want to delete this category",
+  "FORM_DELETE_DESC2": "This action cannot be undone.",
+
+  "LABEL_CAT_NAME": "Category Name *",
+  "LABEL_DESCRIPTION": "Description *",
+  "LABEL_VAT": "VAT Rate (%) *",
+  "LABEL_STANDARD": "Standard VAT rates: 10% (most products), 9% (special items)",
+
+  "BTN_CANCEL": "Cancel",
+  "BTN_ADD_CAT": "Add Category",
+  "BTN_UPDATE_CAT": "Update Category",
+  "BTN_DELETE_CAT": "Delete Category",
+  "EDIT_RETURN5": "Edit ",
+  "DELETE_TITLE5": "Delete ",
+
+
+
+
+
+
+
+  "PROMO_TITLE": "Promotions",
+  "PROMO_DESC": "Manage discounts and special offers",
+
+  "PROMO_ADD": "Add Promotion",
+  "PROMO_TOTAL": "Total Promotions",
+  "PROMO_TOTAL_ACTIVE": "Total Active",
+  "PROMO_TOTAL_EXPIRED": "Total Expired",
+
+  "SEARCH_START_DATE": "Start Date",
+  "SEARCH_END_DATE": "End Date",
+  "SEARCH_STATUS": "Status",
+  "STATUS_ALL": "-- All --",
+  "STATUS_ACTIVE": "Active",
+  "STATUS_EXPIRED": "Expired",
+
+  "PROMO_ID": "Promotion ID",
+  "PROMO_NAME": "Promotion Name",
+  "PROMO_TYPE": "Type",
+  "PROMO_VALUE": "Value",
+  "PROMO_START": "Start Date",
+  "PROMO_END": "End Date",
+  "PROMO_CATEGORY": "Category",
+  "PROMO_STATUS": "Status",
+  "PROMO_ACTIONS": "Actions",
+  "PROMO_NO_DATA": "No Data",
+
+  "FORM_ADD_PROMO_TITLE": "Add New Promotion",
+  "FORM_ADD_PROMO_DESC": "Enter promotion details",
+
+  "LABEL_PROMO_NAME": "Promotion Name",
+  "LABEL_PROMO_TYPE": "Type",
+  "TYPE_PERCENT": "Percent",
+  "TYPE_AMOUNT": "Amount",
+
+  "LABEL_PROMO_VALUE": "Value",
+  "LABEL_PROMO_START": "Start Date",
+  "LABEL_PROMO_END": "End Date",
+  "LABEL_PROMO_CATEGORY_ID": "Category ID",
+
+  "BTN_CANCEL": "Cancel",
+  "BTN_ADD_PROMO": "Add New Promotion",
+  "BTN_UPDATE_PROMO": "Edit Promotion",
+  "BTN_DELETE_PROMO": "Delete Promotion",
+
+  "FORM_EDIT_PROMO_TITLE": "Edit Promotion",
+
+  "FORM_DELETE_PROMO_TITLE": "Delete Promotion",
+  "FORM_DELETE_PROMO_DESC1": "Are you sure you want to delete this promotion",
+  "FORM_DELETE_PROMO_DESC2": "This action cannot be undone.",
+  "EXPIRED": "Expired",
+  "ACTION": "Action",
+  "ENTER1": "Enter promotion name",
+  "ENTER2": "Enter promotion value",
+  "ENTER3": "Enter category ID",
+  "ADD_PROMO": "Add New Promotion",
+  "EDIT_PROMO": "Edit Promotion",
+
+
+
+
+
+
+
+
+  "CUSTOMER_TITLE": "Customers",
+  "CUSTOMER_DESC": "Manage customer information and relationships",
+
+  "IMPORT_EXCEL": "Import Excel",
+  "EXPORT_EXCEL": "Export Excel",
+  "ADD_CUSTOMER": "Add Customer",
+
+
+  "CUSTOMER_TOTAL": "Total Customers",
+  "CUSTOMER_WITH_DEBT": "Customers with Debt Limit",
+
+  "SEARCH_PHONE_CUSTOMER": "Search by phone customer",
+
+
+  "CUS_ID": "Customer ID",
+  "CUS_NAME": "Customer Name",
+  "CUS_PHONE": "Phone",
+  "CUS_EMAIL": "Email",
+  "CUS_ADDRESS": "Address",
+  "CUS_DEBT": "Debt Limit",
+  "ACTIONS": "Actions",
+  "NO_DATA": "No Data",
+
+  "FORM_ADD_TITLE": "Add New Customer",
+  "FORM_ADD_DESC": "Enter customer details",
+
+  "LABEL_FULL_NAME": "Full Name",
+  "LABEL_PHONE": "Phone",
+  "LABEL_EMAIL": "Email",
+  "LABEL_ADDRESS": "Address",
+  "LABEL_DEBT": "Debt Limit",
+
+  "PLACEHOLDER_FULL_NAME": "Enter customer name",
+  "PLACEHOLDER_PHONE": "+84 123 456 7890",
+  "PLACEHOLDER_EMAIL": "example@email.com",
+  "PLACEHOLDER_ADDRESS": "123 Main City, Main Street",
+  "PLACEHOLDER_DEBT": "Enter debt limit for customer",
+
+  "BTN_CANCEL": "Cancel",
+  "BTN_ADD_CUSTOMER": "Add New Customer",
+
+  "FORM_EDIT_TITLE": "Edit Customer",
+
+  "BTN_UPDATE_CUSTOMER": "Update Customer",
+
+  "FORM_DELETE_TITLE": "Delete Customer",
+  "FORM_DELETE_DESC1": "Are you sure you want to delete this customer",
+  "FORM_DELETE_DESC2": "This action cannot be undone.",
+  "BTN_DELETE_CUSTOMER": "Delete Customer",
+  "PLACEHOLDER_FULL_NAME": "Enter customer name",
+"PLACEHOLDER_DEBT": "Enter debt limit for customer",
+
+
+
+
+
+
+
+
+"SUPPLIER_TITLE": "Suppliers",
+  "SUPPLIER_DESC": "Manage supplier information and partnerships",
+
+
+  "IMPORT_EXCEL": "Import Excel",
+  "EXPORT_EXCEL": "Export Excel",
+  "ADD_SUPPLIER": "Add Supplier",
+
+  "TOTAL_SUPPLIER": "Total Suppliers",
+
+  "SEARCH_PHONE_SUPPLIER": "Search by phone supplier",
+
+  "SUP_ID": "Supplier ID",
+  "SUP_NAME": "Supplier Name",
+  "SUP_PHONE": "Phone",
+  "SUP_EMAIL": "Email",
+  "SUP_ADDRESS": "Address",
+  "ACTIONS": "Actions",
+  "NO_DATA": "No Data",
+
+  "FORM_ADD_SUPPLIER_TITLE": "Add New Supplier",
+  "FORM_ADD_SUPPLIER_DESC": "Enter supplier details",
+
+  "LABEL_SUP_NAME": "Supplier Name",
+  "LABEL_SUP_PHONE": "Phone",
+  "LABEL_SUP_EMAIL": "Email",
+  "LABEL_SUP_ADDRESS": "Address",
+
+  "PLACEHOLDER_SUP_NAME": "Enter supplier name",
+  "PLACEHOLDER_SUP_PHONE": "+84 123 456 789",
+  "PLACEHOLDER_SUP_EMAIL": "supplier@email.com",
+  "PLACEHOLDER_SUP_ADDRESS": "123 Main Street, City",
+
+  "BTN_CANCEL": "Cancel",
+  "BTN_ADD_SUPPLIER": "Add New Supplier",
+
+  "FORM_EDIT_SUPPLIER_TITLE": "Edit Supplier",
+  "FORM_EDIT_SUPPLIER_DESC": "Update supplier details",
+  "BTN_SAVE_CHANGES": "Save Changes",
+
+  "FORM_DELETE_SUPPLIER_TITLE": "Delete Supplier",
+  "FORM_DELETE_SUPPLIER_DESC": "Are you sure you want to delete this supplier?",
+  "BTN_DELETE_SUPPLIER": "Delete",
+  "BTN_ADD_SUPPLIER": "Add New Supplier",
+
+
+
+
+
+
+
+
+  "PO_TITLE": "Purchase Orders",
+  "PO_DESC": "Manage and organize Purchase Orders",
+
+  "PO_TOTAL": "Total PO",
+  "PO_AMOUNT_APPROVED": "Amount Approved",
+  "PO_AMOUNT_PENDING": "Amount Pending",
+  "PO_AMOUNT_PROCESSING": "Amount Processing",
+
+  "PO_FROM_DATE": "From Date",
+  "PO_TO_DATE": "To Date",
+  "PO_MIN_AMOUNT": "Min Amount",
+  "PO_MAX_AMOUNT": "Max Amount",
+
+  "PO_STATUS_ALL": "All Status",
+  "PO_STATUS_PENDING": "Pending",
+  "PO_STATUS_PROCESSING": "Processing",
+  "PO_STATUS_APPROVED": "Approved",
+
+  "PAGING_SHOWING": "Showing",
+  "PAGING_OF": "of",
+  "PAGING_ITEMS": "items",
+  "PAGING_PAGE_SIZE": "Page size",
+  "PAGING_PREV": "Prev",
+  "PAGING_NEXT": "Next",
+  "PAGING_PAGE": "Page",
+  "PAGING_OF2": "of",
+
+  "BTN_ADD_PO": "Add Purchase Order",
+  "BTN_VIEW_DETAIL": "Detail",
+  "BTN_EDIT": "Edit",
+  "BTN_DELETE": "Delete",
+  "BTN_EXPORT": "Export",
+  "BTN_CANCEL": "Cancel",
+  "BTN_CLOSE": "Close",
+
+  "PO_ID": "POID",
+  "PO_SUPPLIER_ID": "SupplierID",
+  "PO_ORDER_DATE": "OrderDate",
+  "PO_TOTAL_AMOUNT": "TotalAmount",
+  "PO_STATUS": "Status",
+  "ACTIONS": "Actions",
+
+  "PO_NO_DATA": "No Purchase Orders Found",
+
+  "FORM_ADD_PO_TITLE": "Add Purchase Order",
+  "FORM_ADD_PO_DESC": "Create a new purchase order",
+  "LABEL_SUPPLIER_ID": "Supplier ID *",
+  "BTN_SUBMIT_ADD_PO": "Add Purchase Order",
+
+  "FORM_EDIT_PO_TITLE": "Edit Purchase Order",
+  "FORM_EDIT_PO_DESC": "Update supplier and status",
+  "LABEL_STATUS": "Status *",
+  "BTN_UPDATE_PO": "Update Purchase Order",
+
+  "FORM_DELETE_PO_TITLE": "Delete Purchase Order",
+  "FORM_DELETE_PO_DESC1": "Are you sure you want to delete the purchase order with POID",
+  "FORM_DELETE_PO_DESC2": "This action cannot be undone.",
+  
+  "BTN_DELETE_PO": "Delete Purchase Order",
+
+  "FORM_PO_DETAILS_TITLE": "Purchase Order Details",
+  "FORM_PO_DETAILS_DESC": "Order details for POID",
+
+  "PO_DETAIL_PRODUCT_ID": "ProductID",
+  "PO_DETAIL_NAME_PRODUCT": "NameProduct",
+  "PO_DETAIL_QTY": "Quantity",
+  "PO_DETAIL_UNIT_PRICE": "Unit Price",
+  "PO_DETAIL_NO_DATA": "No details found",
+
+  "FORM_ADD_DETAIL_TITLE": "Add Purchase Order Detail",
+  "LABEL_PRODUCT_ID": "ProductID *",
+  "LABEL_QTY": "Quantity *",
+  "LABEL_UNIT_PRICE": "Unit Price *",
+  "BTN_ADD_DETAIL": "Add Detail",
+  "BTN_RESET_DETAIL": "Reset",
+  "BTN_DELETE_DETAIL": "Delete Detail",
+
+
+
+
+
+
+  "GR_TITLE": "Goods Receipts",
+  "GR_DESC": "Manage goods receipt records and inventory updates",
+
+  "ADD_GR": "Add Goods Receipt",
+  "BTN_ADD_RECEIPT": "Add Receipt",
+  "BTN_CANCEL": "Cancel",
+  "BTN_CLOSE": "Close",
+  "BTN_REMOVE": "Remove",
+  "BTN_ADD_PRODUCT": "Add Product",
+  "BTN_EDIT_GR": "Edit Goods Receipt",
+  "BTN_DELETE_GR": "Delete Goods Receipt",
+  "BTN_PAYMENT": "Payment",
+
+  "GR_TOTAL": "Total Goods Receipts",
+  "GR_COMPLETED": "Total Completed",
+  "GR_PENDING": "Total Pending",
+  "GR_PROCESSING": "Total Processing",
+
+  "GR_FROM_DATE": "From Date",
+  "GR_TO_DATE": "To Date",
+  "GR_MIN_AMOUNT": "Min Amount",
+  "GR_MAX_AMOUNT": "Max Amount",
+  "GR_POID": "POID",
+  "PLACEHOLDER_POID": "Enter POID",
+
+  "PAGING_SHOWING": "Showing",
+  "PAGING_OF": "of",
+  "PAGING_ITEMS": "items",
+  "PAGING_PAGE_SIZE": "Page size",
+  "PAGING_PREV": "Prev",
+  "PAGING_NEXT": "Next",
+  "NO_DATA": "No Data",
+
+  "GR_RECEIPT_ID": "Receipt ID",
+  "GR_PO_ID": "POID",
+  "GR_RECEIPT_DATE": "Receipt Date",
+  "GR_TOTAL_AMOUNT": "Total Amount",
+  "GR_USER_ID": "User ID",
+  "GR_BATCH_NO": "Batch No",
+  "GR_STATUS": "Status",
+  "ACTIONS": "Actions",
+
+  "ACTION_EDIT": "Edit",
+  "ACTION_DELETE": "Delete",
+  "ACTION_DETAIL": "Detail",
+  "ACTION_EXPORT": "Export",
+  "ACTION_PAYMENT": "Payment",
+
+  "FORM_ADD_GR_TITLE": "Add New Goods Receipt",
+  "FORM_ADD_GR_DESC": "Enter receipt and product details",
+  "LABEL_POID": "POID",
+  "LABEL_USERID": "User ID",
+  "LABEL_RECEIPT_DETAILS": "Receipt Details",
+
+  "LABEL_PRODUCT_ID": "Product ID",
+  "LABEL_EXPIRY_DATE": "Expiry Date",
+
+  "FORM_EDIT_GR_TITLE": "Edit Goods Receipt",
+  "LABEL_RECEIPT_DATE": "Receipt Date",
+
+  "FORM_DELETE_GR_TITLE": "Delete Goods Receipt",
+  "FORM_DELETE_GR_DESC": "Are you sure you want to delete goods receipt",
+
+  "FORM_GR_DETAIL_TITLE": "Goods Receipt Details",
+  "FORM_GR_DETAIL_DESC": "Details for the goods receipt",
+
+  "GRD_PRODUCT_ID": "Product ID",
+  "GRD_PRODUCT_NAME": "Product Name",
+  "GRD_QTY": "Quantity",
+  "GRD_UNIT_PRICE": "Unit Price",
+  "GRD_EXPIRY_DATE": "Expiry Date",
+  "GRD_ACTIONS": "Actions",
+  "BTN_DELETE_DETAIL": "Delete",
+
+  "PAY_TITLE": "Payment for Goods Receipt",
+  "PAY_SUPPLIER": "Supplier",
+  "PAY_POID": "POID",
+  "PAY_TOTAL": "Total Amount",
+
+  "PAY_HISTORY_TITLE": "Payment History",
+  "PAY_HISTORY_ID": "PaymentID",
+  "PAY_HISTORY_AMOUNT": "Amount",
+  "PAY_HISTORY_DATE": "PaymentDate",
+  "PAY_HISTORY_METHOD": "Method",
+  "PAY_HISTORY_DESC": "Description",
+  "PAY_NO_HISTORY": "No payments found",
+
+  "PAY_ADD_TITLE": "Add New Payment",
+  "PAY_AMOUNT": "Payment Amount",
+  "PAY_METHOD": "Payment Method",
+  "PAY_NOTE": "Note",
+  "PAY_METHOD_CASH": "Cash",
+  "PAY_METHOD_BANK": "Bank Transfer",
+  "PAY_METHOD_CARD": "Card",
+  "PAY_METHOD_DEBT": "Debt",
+  "BTN_PAY": "Pay",
+  "BTN_PAYING": "Processing...",
+  "EXAMP":"For example: 1st payment, Vietcombank transfer...",
+
+
+
+
+
+
+
+  "GI_TITLE": "Goods Issues",
+  "GI_DESC": "Manage warehouse outbound transactions and inventory issues",
+
+  "ADD_GI": "Add Goods Issue",
+  "BTN_ADD_ISSUE": "Add Issue",
+  "BTN_CANCEL": "Cancel",
+  "BTN_CLOSE": "Close",
+  "BTN_REMOVE": "Remove",
+  "BTN_ADD_PRODUCT": "Add Product",
+  "BTN_DELETE_GI": "Delete Goods Issue",
+
+  "GI_TOTAL": "Total Goods Issues",
+
+  "GI_FROM_DATE": "From Date",
+  "GI_TO_DATE": "To Date",
+  "GI_USER_ID": "User ID",
+  "PLACEHOLDER_USER_ID": "Enter User ID",
+
+  "PAGING_SHOWING": "Showing",
+  "PAGING_OF": "of",
+  "PAGING_ITEMS": "items",
+  "PAGING_PAGE_SIZE": "Page size",
+  "PAGING_PREV": "Prev",
+  "PAGING_NEXT": "Next",
+  "NO_DATA": "No Data",
+
+  "GI_ID": "Issue ID",
+  "GI_DATE": "Issue Date",
+  "GI_USER": "User ID",
+  "ACTIONS": "Actions",
+
+  "ACTION_DETAIL": "Detail",
+  "ACTION_DELETE": "Delete",
+
+  "FORM_ADD_GI_TITLE": "Add New Goods Issue",
+  "FORM_ADD_GI_DESC": "Enter issue details and products to issue",
+
+  "LABEL_USER_ID": "User ID",
+  "LABEL_ISSUE_DETAILS": "Issue Details",
+  "LABEL_PRODUCT_ID": "Product ID",
+  "LABEL_QUANTITY": "Quantity",
+
+  "FORM_DELETE_GI_TITLE": "Delete Goods Issue",
+  "FORM_DELETE_GI_DESC": "Are you sure you want to delete goods issue",
+
+  "FORM_GI_DETAIL_TITLE": "Goods Issue Details",
+
+  "GI_DETAIL_SUB_USER": "User ID",
+  "GI_DETAIL_SUB_TOTAL": "Total Amount",
+
+  "GID_PRODUCT_ID": "Product ID",
+  "GID_PRODUCT_NAME": "Product Name",
+  "GID_QTY": "Quantity",
+  "GID_ACTIONS": "Actions",
+  "BTN_DELETE_DETAIL": "Delete",
+
+  "DETAIL_ADD_TITLE": "Add Product to Issue",
+  "DETAIL_ADD_PRODUCT_ID": "Product ID",
+  "DETAIL_ADD_QTY": "Quantity",
+  "BTN_ADD_DETAIL": "Add Product",
+  "BTN_ADDING_DETAIL": "Adding...",
+  "BTN_DELETE_DETAIL1": "Deleting...",
+
+  "NO_DETAIL_ITEMS": "No issued products found",
+
+
+
+
+
+  "SALES_TITLE": "Sales Management",
+  "SALES_DESC": "Track orders, payments, and revenue statistics",
+
+  "SALES_TOTAL": "Total Sales",
+  "SALES_REVENUE": "Total Revenue",
+  "SALES_AVG_ORDER": "Avg Order Value",
+  "SALES_PAID": "Paid Invoices",
+  "SALES_UNPAID": "Unpaid Invoices",
+
+  "FILTER_FROM_DATE": "From Date",
+  "FILTER_TO_DATE": "To Date",
+  "FILTER_STATUS": "Status",
+  "FILTER_KEYWORD": "Search Invoice / Customer",
+
+  "STATUS_ALL": "All",
+  "STATUS_PAID": "Paid",
+  "STATUS_UNPAID": "Unpaid",
+  "STATUS_PARTIAL": "Partial",
+
+  "SALES_INVOICE_NO": "Invoice",
+  "SALES_DATE": "Sale Date",
+  "SALES_CUSTOMER": "Customer Name",
+  "SALES_AMOUNT": "Total Amount",
+  "SALES_PAYMENT_STATUS": "Payment Status",
+  "SALES_METHOD": "Payment Method",
+  "ACTIONS": "Actions",
+
+  "ACTION_VIEW_DETAIL": "View Detail",
+  "ACTION_VIEW_INVOICE": "Invoice",
+  "ACTION_PRINT": "Print",
+
+  "DETAIL_TITLE": "Sale Details",
+  "DETAIL_INFO": "Sale Information",
+  "DETAIL_ITEMS": "Order Items",
+
+  "DETAIL_INVOICE_NO": "Invoice No",
+  "DETAIL_SALE_DATE": "Sale Date",
+  "DETAIL_CUSTOMER": "Customer",
+  "DETAIL_METHOD": "Payment Method",
+  "DETAIL_STATUS": "Payment Status",
+
+  "DETAIL_PRODUCT": "Product",
+  "DETAIL_QTY": "Quantity",
+  "DETAIL_PRICE": "Unit Price",
+  "DETAIL_TOTAL": "Total",
+
+  "DETAIL_SUBTOTAL": "Subtotal",
+  "DETAIL_DISCOUNT": "Discount",
+  "DETAIL_GRAND_TOTAL": "Grand Total",
+
+  "BTN_CLOSE": "Close",
+
+  "INVOICE_TITLE": "Invoice Preview",
+  "INVOICE_INFO": "Invoice Information",
+  "INVOICE_PRINT": "Print Invoice",
+  "SEARCH_BY_INVOICE": "Search by invoice or customer name...",
+
+
+
+
+
+
+
+  "PAY_PAGE_TITLE": "Payments & Debts",
+  "PAY_TAB_CUSTOMER": "Customer Debts (AR)",
+  "PAY_TAB_SUPPLIER": "Supplier Payables (AP)",
+
+  "PAY_TOTAL_DEBT": "Total Debts",
+  "PAY_BASED_ON_BALANCE": "Based on current open balances",
+  "PAY_SETTLED_THIS_MONTH": "Settled This Month",
+  "PAY_RECORDED_THIS_MONTH": "Payments recorded in current month",
+
+  "PAY_SEARCH_CUSTOMER_PLACEHOLDER": "Search invoices by customer / phone / invoice no...",
+  "PAY_FILTER_ALL": "All",
+  "PAY_FILTER_UNPAID": "Unpaid",
+  "PAY_FILTER_PARTIAL": "Partial",
+  "PAY_FROM_DATE": "From Date",
+  "PAY_TO_DATE": "To Date",
+
+  "PAY_CUSTOMER_OPEN_INVOICES": "Customer Open Invoices",
+  "PAY_COL_INVOICE_NO": "Invoice #",
+  "PAY_COL_DATE": "Date",
+  "PAY_COL_CUSTOMER": "Customer",
+  "PAY_COL_PHONE": "Phone",
+  "PAY_COL_TOTAL": "Total",
+  "PAY_COL_PAID": "Paid",
+  "PAY_COL_REMAINING": "Remaining",
+  "PAY_COL_ACTIONS": "Actions",
+
+  "PAY_BTN_VIEW": "View",
+  "PAY_BTN_COLLECT": "Collect Payment",
+
+  "PAY_SUPPLIER_OPEN_BILLS": "Supplier Open Bills",
+  "PAY_SEARCH_SUPPLIER_PLACEHOLDER": "Search bills by supplier / receipt no...",
+  "PAY_COL_BILL_NO": "Bill #",
+  "PAY_COL_SUPPLIER": "Supplier",
+  "PAY_BTN_VIEW_DETAILS": "View details",
+  "PAY_BTN_PAY": "Pay",
+
+  "PAGING_SHOWING": "Showing",
+  "PAGING_OF": "of",
+  "PAGING_ITEMS": "items",
+  "PAGING_PAGE_SIZE": "Page size",
+  "PAGING_PREV": "Prev",
+  "PAGING_NEXT": "Next",
+
+  "PAY_CUSTOMER_DETAIL_TITLE": "Customer AR Details",
+  "PAY_CUSTOMER_DETAIL_DESC": "View sales and payment history for this customer",
+  "PAY_CUSTOMER_NAME": "Customer Name",
+  "PAY_DEBT_LIMIT": "Debt Limit",
+  "PAY_TOTAL_SALES": "Total Sales",
+  "PAY_TOTAL_PAYMENTS": "Total Payments",
+  "PAY_CURRENT_DEBT": "Current Debt",
+
+  "PAY_RECORD_PAYMENT_CUSTOMER": "Record Payment (Customer)",
+  "PAY_RECORD_PAYMENT_DESC": "Record a payment received from customer",
+  "PAY_FIELD_AMOUNT": "Amount *",
+  "PAY_FIELD_DATE": "Payment Date *",
+  "PAY_FIELD_METHOD": "Payment Method *",
+  "PAY_FIELD_DESC": "Description",
+  "PAY_METHOD_CASH": "Cash",
+  "PAY_METHOD_BANK": "Bank",
+
+  "PAY_BTN_SAVE_PAYMENT": "Save payment",
+  "PAY_BTN_CANCEL": "Cancel",
+
+  "PAY_SUPPLIER_DETAIL_TITLE": "Supplier AP Details",
+  "PAY_SUPPLIER_DETAIL_DESC": "View receipts and payment history for this supplier",
+  "PAY_SUPPLIER_NAME": "Supplier Name",
+  "PAY_SUPPLIER_ID": "Supplier ID",
+  "PAY_RECEIVED_TOTAL": "Received Total",
+  "PAY_PAYMENTS_TOTAL": "Payments Total",
+  "PAY_CURRENT_PAYABLE": "Current Payable",
+
+  "PAY_RECORD_PAYMENT_SUPPLIER": "Record Payment (Supplier)",
+  "PAY_RECORD_PAYMENT_SUPPLIER_DESC": "Record a payment made to supplier",
+  "PAY_BTN_SAVE_PAYMENT_SUPPLIER": "Save payment",
+  "PAYMENT_NOTE":"Add payment notes...",
+
+
+
+
+
+  
+
+
+  "AUDIT_TITLE": "Audit Logs",
+  "AUDIT_DESC": "General system-wide logs",
+
+  "AUDIT_FROM_DATE": "From Date",
+  "AUDIT_TO_DATE": "To Date",
+  "AUDIT_USER_ID": "User ID",
+  "AUDIT_OPERATION": "Operation",
+  "AUDIT_OPERATION_ALL": "-- All operations --",
+  "AUDIT_OP_CREATE": "CREATE - Create",
+  "AUDIT_OP_UPDATE": "UPDATE - Update",
+  "AUDIT_OP_DELETE": "DELETE - Delete",
+  "AUDIT_OP_LOGIN": "LOGIN - Login",
+
+  "AUDIT_COL_ID": "AuditID",
+  "AUDIT_COL_USERID": "UserID",
+  "AUDIT_COL_USERNAME": "Username",
+  "AUDIT_COL_FULLNAME": "Full Name",
+  "AUDIT_COL_ENTITY": "Entity Name",
+  "AUDIT_COL_ENTITY_ID": "Entity ID",
+  "AUDIT_COL_OPERATION": "Operation",
+  "AUDIT_COL_DETAILS": "Details",
+  "AUDIT_COL_CREATED_AT": "Created At",
+
+
+
+
+
+
+
+
+  "USERS_TITLE": "Users",
+  "USERS_DESC": "Manage user accounts and permissions",
+
+  "USERS_SEARCH_PLACEHOLDER": "Search by Username or Full Name",
+
+  "BTN_ADD_USER": "Add User",
+  "BTN_EDIT": "Edit",
+  "BTN_DELETE": "Delete",
+  "BTN_DETAIL": "Detail",
+  "BTN_CANCEL": "Cancel",
+  "BTN_CLOSE": "Close",
+  "BTN_SUBMIT_ADD": "Add User",
+  "BTN_SUBMIT_EDIT": "Update User",
+  "BTN_DELETE_CONFIRM": "Delete",
+
+  "USERS_COL_ID": "User ID",
+  "USERS_COL_FULLNAME": "Full Name",
+  "USERS_COL_ROLE": "Role",
+  "USERS_COL_EMAIL": "Email",
+  "USERS_COL_PHONE": "Phone",
+  "USERS_COL_ACTIONS": "Actions",
+
+  "NO_DATA": "No Data",
+
+  "ADD_USER_TITLE": "Add New User",
+  "ADD_USER_DESC": "Enter user account information",
+
+  "LABEL_USERNAME": "Username",
+  "LABEL_PASSWORD": "Password",
+  "LABEL_FULLNAME": "Full Name",
+  "LABEL_ROLE": "Role",
+  "LABEL_PHONE": "Phone",
+  "LABEL_EMAIL": "Email",
+
+  "PLACEHOLDER_USERNAME": "Enter username",
+  "PLACEHOLDER_PASSWORD": "Enter password",
+  "PLACEHOLDER_FULLNAME": "Enter full name",
+  "PLACEHOLDER_PHONE": "+84 123 456 789",
+  "PLACEHOLDER_EMAIL": "user@email.com",
+
+  "ROLE_ADMIN": "Admin",
+  "ROLE_CASHIER": "Cashier",
+  "ROLE_STOCK": "Warehouse Staff",
+  "ROLE_ACCOUNTANT": "Accountant",
+
+  "DETAIL_USER_TITLE": "User Details",
+
+  "EDIT_USER_TITLE": "Edit User",
+  "EDIT_USER_DESC": "Update user details",
+
+  "DELETE_USER_TITLE": "Delete User",
+  "DELETE_USER_CONFIRM": "Are you sure you want to delete user",
+
+  "PAGING_SHOWING": "Showing",
+  "PAGING_OF": "of",
+  "PAGING_ITEMS": "items",
+  "PAGING_PAGE_SIZE": "Page size",
+  "PAGING_PREV": "Prev",
+  "PAGING_NEXT": "Next",
+  "SELECT_ROLE":"Select role"
+
+
+
+
 }
-
-
-

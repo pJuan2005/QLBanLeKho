@@ -11,7 +11,7 @@ namespace Model
         public int ReturnID { get; set; }
         public byte? ReturnType { get; set; } // 1 = customer, 2 = supplier
         public int? SaleID { get; set; }
-        public int? ReceiptID { get; set; }
+        public int? POID { get; set; }
         public int? CustomerID { get; set; }
         public int? SupplierID { get; set; }
         public string? PartnerName { get; set; }
@@ -32,8 +32,7 @@ namespace Model
         public int ReturnID { get; set; }
         public byte? ReturnType { get; set; }
         public int? SaleID { get; set; }
-        public int? ReceiptID { get; set; }
-        public string? PartnerPhone { get; set; }
+        public int? POID { get; set; }
         public int? ProductID { get; set; }
         public int? Quantity { get; set; }
         public DateTime? ReturnDate { get; set; }
@@ -45,9 +44,8 @@ namespace Model
     public class ReturnCreateRequest
     {
         public byte ReturnType { get; set; }
-        public string PartnerPhone { get; set; }
         public int? SaleID { get; set; }
-        public int? ReceiptID { get; set; }
+        public int? POID { get; set; }
         public int? ProductID { get; set; }
         public int? Quantity { get; set; }
         public DateTime ReturnDate { get; set; }
@@ -62,7 +60,7 @@ namespace Model
         public int? ReturnID { get; set; }
         public byte? ReturnType { get; set; }
         public int? SaleID { get; set; }
-        public int? ReceiptID { get; set; }
+        public int? POID { get; set; }
         public int? CustomerID { get; set; }
         public int? SupplierID { get; set; }
         public string? PartnerName { get; set; }

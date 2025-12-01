@@ -17,6 +17,7 @@
     <script src="../Shared/angular/angular.min.js"></script>
     <script src="../Shared/angular/global.js"></script>
     <script src="../Shared/angular/goodsissues.js"></script>
+    <script src="../Shared/angular/translation.js"></script>
     <title>GoodsIssues</title>
 </head>
 
@@ -34,7 +35,7 @@
             </div>
         </div>
         <div class="slide-bar__Content">
-            <p class="slide-bar__label">Navigation</p>
+            <p class="slide-bar__label">{{ t('NAVIGATION') }}</p>
             <!-- menu button Dashboard -->
             <a href="../AdminFE/dashboard.html" ng-if="canShow('dashboard')">
                 <div class="slide-bar__MenuButton">
@@ -42,7 +43,7 @@
                         <img src="../Shared/img/common/dashboard.svg" alt="" class="icon" />
                     </div>
                     <div class="MenuButton-right">
-                        <p class="name-menu">Dashboard</p>
+                        <p class="name-menu">{{ t('NAV_DASHBOARD') }}</p>
                     </div>
                 </div>
             </a>
@@ -53,7 +54,7 @@
                         <img src="../Shared/img/common/pos.svg" alt="" class="icon" />
                     </div>
                     <div class="MenuButton-right">
-                        <p class="name-menu">POS</p>
+                        <p class="name-menu">{{ t('NAV_POS') }}</p>
                     </div>
                 </div>
             </a>
@@ -64,7 +65,7 @@
                         <img src="../Shared/img/common/product.svg" alt="" class="icon" />
                     </div>
                     <div class="MenuButton-right">
-                        <p class="name-menu">Products</p>
+                        <p class="name-menu">{{ t('NAV_PRODUCTS') }}</p>
                     </div>
                 </div>
             </a>
@@ -75,7 +76,7 @@
                         <img src="../Shared/img/common/category.svg" alt="" class="icon" />
                     </div>
                     <div class="MenuButton-right">
-                        <p class="name-menu">Categories</p>
+                        <p class="name-menu">{{ t('NAV_CATEGORIES') }}</p>
                     </div>
                 </div>
             </a>
@@ -87,7 +88,7 @@
                         <img src="../Shared/img/common/promotion.svg" alt="" class="icon" />
                     </div>
                     <div class="MenuButton-right">
-                        <p class="name-menu">Promotions</p>
+                        <p class="name-menu">{{ t('NAV_PROMOTIONS') }}</p>
                     </div>
                 </div>
             </a>
@@ -98,7 +99,7 @@
                         <img src="../Shared/img/common/customer.svg" alt="" class="icon" />
                     </div>
                     <div class="MenuButton-right">
-                        <p class="name-menu">Customers</p>
+                        <p class="name-menu">{{ t('NAV_CUSTOMERS') }}</p>
                     </div>
                 </div>
             </a>
@@ -109,7 +110,7 @@
                         <img src="../Shared/img/common/supplier.svg" alt="" class="icon" />
                     </div>
                     <div class="MenuButton-right">
-                        <p class="name-menu">Suppliers</p>
+                        <p class="name-menu">{{ t('NAV_SUPPLIERS') }}</p>
                     </div>
                 </div>
             </a>
@@ -120,7 +121,7 @@
                         <img src="../Shared/img/common/purchaseorder.svg" alt="" class="icon" />
                     </div>
                     <div class="MenuButton-right">
-                        <p class="name-menu">Purchase Orders</p>
+                        <p class="name-menu">{{ t('NAV_PURCHASE_ORDERS') }}</p>
                     </div>
                 </div>
             </a>
@@ -131,7 +132,7 @@
                         <img src="../Shared/img/common/stock.svg" alt="" class="icon" />
                     </div>
                     <div class="MenuButton-right">
-                        <p class="name-menu">Stock Management</p>
+                        <p class="name-menu">{{ t('NAV_STOCK') }}</p>
                     </div>
                 </div>
             </a>
@@ -143,7 +144,7 @@
                         <img src="../Shared/img/common/goodReceipt.svg" alt="" class="icon" />
                     </div>
                     <div class="MenuButton-right">
-                        <p class="name-menu">Goods Receipts</p>
+                        <p class="name-menu">{{ t('GOODS_RECEIPTS') }}</p>
                     </div>
                 </div>
             </a>
@@ -155,7 +156,7 @@
                         <img src="../Shared/img/common/goodIssues.svg" alt="" class="icon" />
                     </div>
                     <div class="MenuButton-right">
-                        <p class="name-menu-active">Goods Issues</p>
+                        <p class="name-menu-active">{{ t('GOODS_ISSUES') }}</p>
                     </div>
                 </div>
             </a>
@@ -167,7 +168,7 @@
                         <img src="../Shared/img/common/sales.svg" alt="" class="icon" />
                     </div>
                     <div class="MenuButton-right">
-                        <p class="name-menu">Sales</p>
+                        <p class="name-menu">{{ t('NAV_SALES') }}</p>
                     </div>
                 </div>
             </a>
@@ -178,7 +179,7 @@
                         <img src="../Shared/img/common/return.svg" alt="" class="icon" />
                     </div>
                     <div class="MenuButton-right">
-                        <p class="name-menu">Returns</p>
+                        <p class="name-menu">{{ t('NAV_RETURNS') }}</p>
                     </div>
                 </div>
             </a>
@@ -189,7 +190,7 @@
                         <img src="../Shared/img/common/payments.svg" alt="" class="icon" />
                     </div>
                     <div class="MenuButton-right">
-                        <p class="name-menu">Payments & Debts</p>
+                        <p class="name-menu">{{ t('NAV_PAYMENTS') }}</p>
                     </div>
                 </div>
             </a>
@@ -200,7 +201,7 @@
                         <img src="../Shared/img/common/report.svg" alt="" class="icon" />
                     </div>
                     <div class="MenuButton-right">
-                        <p class="name-menu">Reports</p>
+                        <p class="name-menu">{{ t('NAV_REPORTS') }}</p>
                     </div>
                 </div>
             </a>
@@ -211,7 +212,7 @@
                         <img src="../Shared/img/common/auditlog.svg" alt="" class="icon" />
                     </div>
                     <div class="MenuButton-right">
-                        <p class="name-menu">Audit Log</p>
+                        <p class="name-menu">{{ t('NAV_AUDIT_LOG') }}</p>
                     </div>
                 </div>
             </a>
@@ -222,7 +223,7 @@
                         <img src="../Shared/img/common/user.svg" alt="" class="icon" />
                     </div>
                     <div class="MenuButton-right">
-                        <p class="name-menu">Users</p>
+                        <p class="name-menu">{{ t('NAV_USERS') }}</p>
                     </div>
                 </div>
             </a>
@@ -233,7 +234,7 @@
                         <img src="../Shared/img/common/setting.svg" alt="" class="icon" />
                     </div>
                     <div class="MenuButton-right">
-                        <p class="name-menu">Settings</p>
+                        <p class="name-menu">{{ t('NAV_SETTINGS') }}</p>
                     </div>
                 </div>
             </a>
@@ -270,13 +271,13 @@
                 </div>
                 <div class="info-mid">
                     <a href="#!">
-                        <p class="set">Profile Settings</p>
+                        <p class="set">{{ t('PROFILE_SETTINGS') }}</p>
                     </a>
                 </div>
                 <div class="info-bottom">
                     <img src="../Shared/img/categories/logout.svg" alt="" class="icon" />
                     <a href="../AuthFE/login.html">
-                        <p class="logout">Logout</p>
+                        <p class="logout">{{ t('LOGOUT') }}</p>
                     </a>
                 </div>
             </div>
@@ -284,15 +285,15 @@
         <div class="app-layout-content">
             <div class="container-top">
                 <div class="container-top--left">
-                    <h1 class="name-system">GoodsIssues</h1>
+                    <h1 class="name-system">{{ t('GI_TITLE') }}</h1>
                     <p class="desc-system">
-                        Manage warehouse outbound transactions and inventory issues
+                        {{ t('GI_DESC') }}
                     </p>
                 </div>
 
                 <div class="control add-goodsissues" ng-click="openAddIssue()">
                     <img src="../Shared/img/common/plus.svg" alt="" class="icon-control" />
-                    <p class="name-control">Add GoodsIssues </p>
+                    <p class="name-control">{{ t('ADD_GI') }}</p>
                 </div>
 
 
@@ -301,7 +302,7 @@
             <!-- ===== THỐNG KÊ (chỉ 1 ô) ===== -->
             <div class="container-card">
                 <div class="card card--total-issues">
-                    <p class="name-card">Total Goods Issues</p>
+                    <p class="name-card">{{ t('GI_TOTAL') }}</p>
                     <p class="data-card">{{stats.totalIssues}}</p>
                 </div>
             </div>
@@ -309,19 +310,19 @@
             <div class="search-goodissues">
                 <!-- Từ ngày -->
                 <div class="search-field">
-                    <label>From Date:</label>
+                    <label>{{ t('GI_FROM_DATE') }}:</label>
                     <input type="date" ng-model="searchFromDate" class="search" />
                 </div>
 
                 <!-- Đến ngày -->
                 <div class="search-field">
-                    <label>To Date:</label>
+                    <label>{{ t('GI_TO_DATE') }}:</label>
                     <input type="date" ng-model="searchToDate" class="search" />
                 </div>
 
                 <!-- UserID (thay cho POID) -->
                 <div class="search-field">
-                    <label>User ID:</label>
+                    <label>{{ t('GI_USER_ID') }}:</label>
                     <input type="text" ng-model="searchUserID" class="search" placeholder="Enter User ID" />
                 </div>
             </div>
@@ -329,13 +330,13 @@
             <!-- phân trang -->
             <div class="pager" ng-if="pager.total>0">
                 <div class="pager-info">
-                    Showing
+                    {{ t('PAGING_SHOWING') }}
                     {{((pager.page-1)*pager.size)+1}}-{{Math.min(pager.page*pager.size,pager.total)}}
-                    of {{pager.total}} items
+                    {{ t('PAGING_OF') }} {{pager.total}} {{ t('PAGING_OF') }}
                 </div>
                 <div class="page-nav">
                     <label>
-                        Page size:
+                        {{ t('PAGING_PAGE_SIZE') }}:
                         <select ng-model="pager.size" ng-change="changeSize()">
                             <option value="10">10</option>
                             <option value="20">20</option>
@@ -346,11 +347,11 @@
                         «
                     </button>
                     <button class="btn ghost" ng-disabled="pager.page === 1" ng-click="go(pager.page-1)">
-                        Prev
+                        {{ t('PAGING_PREV') }}
                     </button>
                     <span class="page-no"></span>
                     <button class="btn ghost" ng-disabled="pager.page >= pager.pages" ng-click="go(pager.page+1)">
-                        Next
+                        {{ t('PAGING_NEXT') }}
                     </button>
                     <button class="btn ghost" ng-disabled="pager.page >= pager.pages" ng-click="go(pager.pages)">
                         »
@@ -363,10 +364,10 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th class="id">Issue ID</th>
-                                <th class="date">Issue Date</th>
-                                <th class="user">User ID</th>
-                                <th class="action txt-right">Actions</th>
+                                <th class="id">{{ t('GI_ID') }}</th>
+                                <th class="date">{{ t('GI_DATE') }}</th>
+                                <th class="user">{{ t('GI_USER') }}</th>
+                                <th class="action txt-right">{{ t('ACTIONS') }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -378,14 +379,14 @@
                                     <div class="action-menu">
                                         <button class="menu-toggle" ng-click="toggleActionMenu(gi)">⚙</button>
                                         <ul class="menu-list" ng-show="gi.showMenu">
-                                            <li ng-click="detail(gi)">🔍 Detail</li>
-                                            <li ng-click="remove(gi)">🗑 Delete</li>
+                                            <li ng-click="detail(gi)">🔍 {{ t('ACTION_DETAIL') }}</li>
+                                            <li ng-click="remove(gi)">🗑 {{ t('ACTION_DELETE') }}</li>
                                         </ul>
                                     </div>
                                 </td>
                             </tr>
                             <tr ng-if="goodsIssues.length == 0">
-                                <td colspan="5" class="empty">No Data</td>
+                                <td colspan="5" class="empty">{{ t('NO_DATA') }}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -395,35 +396,34 @@
                 <!-- Add Goods Issue -->
                 <div class="form-add" ng-class="{open: showAddIssue}" ng-click="closeAddIssueOnOverlay($event)">
                     <div class="form-add__content" ng-click="$event.stopPropagation()">
-                        <h3 class="title">Add New Goods Issue</h3>
-                        <p class="desc">Enter issue details and products to issue</p>
+                        <h3 class="title">{{ t('FORM_ADD_GI_TITLE') }}</h3>
+                        <p class="desc">{{ t('FORM_ADD_GI_DESC') }}</p>
 
                         <form name="frmAddGI" ng-submit="addGoodsIssue()">
                             <!-- Phiếu xuất -->
-                            <label for="userid">User ID</label>
-                            <input type="number" id="userid" required placeholder="Enter User ID"
+                            <label for="userid">{{ t('LABEL_USER_ID') }}</label>
+                            <input type="number" id="userid" required placeholder="{{ t('PLACEHOLDER_USER_ID') }}"
                                 ng-model="newIssue.UserID" />
 
                             <!-- Chi tiết phiếu xuất -->
-                            <h4 class="subtitle">Issue Details</h4>
+                            <h4 class="subtitle">{{ t('LABEL_ISSUE_DETAILS') }}</h4>
                             <div ng-repeat="item in newIssueDetails" class="detail-row">
-                                <label>Product ID</label>
-                                <input type="number" ng-model="item.ProductID" required placeholder="Product ID" />
+                                <label>{{ t('LABEL_PRODUCT_ID') }}</label>
+                                <input type="number" ng-model="item.ProductID" required placeholder="{{ t('LABEL_PRODUCT_ID') }}" />
 
-                                <label>Quantity</label>
-                                <input type="number" ng-model="item.Quantity" required placeholder="Quantity" min="1" />
+                                <label>{{ t('LABEL_QUANTITY') }}</label>
+                                <input type="number" ng-model="item.Quantity" required placeholder="{{ t('LABEL_QUANTITY') }}" min="1" />
 
                                 <button type="button" class="remove"
-                                    ng-click="removeDetailRowForNewIssue($index)">Remove</button>
+                                    ng-click="removeDetailRowForNewIssue($index)">{{ t('BTN_REMOVE') }}</button>
                             </div>
 
-                            <button type="button" class="add-detail" ng-click="addDetailRowForNewIssue()">+ Add
-                                Product</button>
+                            <button type="button" class="add-detail" ng-click="addDetailRowForNewIssue()">+ {{ t('BTN_ADD_PRODUCT') }}</button>
 
                             <!-- Footer -->
                             <div class="dialog-footer">
-                                <button type="button" class="cancel" ng-click="cancelAddIssue()">Cancel</button>
-                                <input class="submit" type="submit" value="Add Issue"
+                                <button type="button" class="cancel" ng-click="cancelAddIssue()"> {{ t('BTN_CANCEL') }}</button>
+                                <input class="submit" type="submit" value="{{ t('BTN_ADD_ISSUE') }}"
                                     ng-disabled="frmAddGI.$invalid || savingAddIssue || newIssueDetails.length === 0" />
                             </div>
                         </form>
@@ -432,19 +432,19 @@
                 <!-- Modal Delete Goods Issue -->
                 <div class="form-delete" ng-class="{open: showDeleteGI}" ng-click="closeDeleteGIOnOverlay($event)">
                     <div class="form-delete__content" ng-click="$event.stopPropagation()">
-                        <h3 class="title">Delete Goods Issue</h3>
+                        <h3 class="title">{{ t('FORM_DELETE_GI_TITLE') }}</h3>
 
                         <p class="desc">
-                            Bạn có chắc chắn muốn xóa chứng từ xuất kho
+                             {{ t('FORM_DELETE_GI_DESC') }}
                             <strong>{{ deletingGI.GoodsIssueID }}</strong>
-                            ngày <strong>{{ deletingGI.Date | date:'dd/MM/yyyy' }}</strong> không?
+                            ngày <strong>{{ deletingGI.Date | date:'dd/MM/yyyy' }}</strong>?
                         </p>
 
                         <div class="dialog-footer">
-                            <button type="button" class="cancel" ng-click="cancelDeleteGI()">Cancel</button>
+                            <button type="button" class="cancel" ng-click="cancelDeleteGI()">{{ t('BTN_CANCEL') }}</button>
                             <button type="button" class="submit danger" ng-click="confirmDeleteGI()"
                                 ng-disabled="savingDeleteGI">
-                                Delete
+                                 {{ t('BTN_DELETE_GI') }}
                             </button>
                         </div>
                     </div>
@@ -457,29 +457,29 @@
             <!-- ==================== FORM DETAIL GOODS ISSUES ==================== -->
             <div class="form-detail" ng-class="{open: showDetailIssue}" ng-click="closeDetailIssueOnOverlay($event)">
                 <div class="form-detail__content" ng-click="$event.stopPropagation()">
-                    <h3 class="title">Goods Issue Details - ID: {{detailIssue.IssueID}} ({{detailIssue.IssueDate |
+                    <h3 class="title"> {{ t('FORM_GI_DETAIL_TITLE') }}  - ID: {{detailIssue.IssueID}} ({{detailIssue.IssueDate |
                         date:'dd/MM/yyyy'}})</h3>
-                    <p class="subtitle">User ID: {{detailIssue.UserID}} | Total Amount: {{detailIssue.TotalAmount |
+                    <p class="subtitle"> {{ t('GI_DETAIL_SUB_USER') }}: {{detailIssue.UserID}} | Total Amount: {{detailIssue.TotalAmount |
                         number:0}}đ</p>
 
                     <!-- Form thêm chi tiết mới -->
                     <!-- Form thêm sản phẩm trong Detail -->
                     <div class="detail-add-form">
-                        <h4>Thêm sản phẩm xuất kho</h4>
+                        <h4>{{ t('DETAIL_ADD_TITLE') }}</h4>
                         <div class="form-row">
-                            <label>Product ID:</label>
-                            <input type="number" ng-model="newDetail.ProductID" placeholder="Nhập mã sản phẩm"
+                            <label>{{ t('DETAIL_ADD_PRODUCT_ID') }}:</label>
+                            <input type="number" ng-model="newDetail.ProductID" placeholder="{{ t('DETAIL_ADD_PRODUCT_ID') }}"
                                 required />
                         </div>
                         <div class="form-row">
-                            <label>Quantity:</label>
-                            <input type="number" min="1" ng-model="newDetail.Quantity" placeholder="Số lượng"
+                            <label>{{ t('DETAIL_ADD_QTY') }}:</label>
+                            <input type="number" min="1" ng-model="newDetail.Quantity" placeholder="{{ t('DETAIL_ADD_QTY') }}"
                                 required />
                         </div>
                         <button class="add-btn" ng-click="addGoodsIssueDetail()"
                             ng-disabled="savingAddDetail || !newDetail.ProductID || !newDetail.Quantity || !newDetail.UnitPrice">
-                            <span ng-if="savingAddDetail">Adding...</span>
-                            <span ng-if="!savingAddDetail">Add Product</span>
+                            <span ng-if="savingAddDetail">{{ t('BTN_ADDING_DETAIL') }}</span>
+                            <span ng-if="!savingAddDetail">{{ t('BTN_ADD_DETAIL') }}</span>
                         </button>
                     </div>
 
@@ -487,10 +487,10 @@
                     <table class="detail-table">
                         <thead>
                             <tr>
-                                <th>Product ID</th>
-                                <th>Product Name</th>
-                                <th>Quantity</th>
-                                <th class="action-col">Actions</th>
+                                <th>{{ t('GID_PRODUCT_ID') }}</th>
+                                <th>{{ t('GID_PRODUCT_NAME') }}</th>
+                                <th>{{ t('GID_QTY') }}</th>
+                                <th class="action-col">{{ t('GID_ACTIONS') }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -501,14 +501,14 @@
                                 <td class="action-col">
                                     <button class="remove-btn" ng-click="deleteGoodsIssueDetail(d)"
                                         ng-disabled="deletingDetail" title="Xóa sản phẩm này khỏi phiếu xuất">
-                                        <span ng-if="!deletingDetail">Delete</span>
-                                        <span ng-if="deletingDetail">Deleting...</span>
+                                        <span ng-if="!deletingDetail">  {{ t('BTN_DELETE_DETAIL') }}</span>
+                                        <span ng-if="deletingDetail">  {{ t('BTN_DELETE_DETAIL1') }}</span>
                                     </button>
                                 </td>
                             </tr>
                             <tr ng-if="!issueDetails || issueDetails.length === 0">
                                 <td colspan="5" style="text-align:center; color:#999; padding:20px; font-style:italic;">
-                                    Chưa có sản phẩm nào được xuất
+                                    {{ t('NO_DETAIL_ITEMS') }}
                                 </td>
                             </tr>
                         </tbody>
@@ -517,7 +517,7 @@
 
 
                     <div class="dialog-footer">
-                        <button type="button" class="cancel" ng-click="closeDetailIssue()">Close</button>
+                        <button type="button" class="cancel" ng-click="closeDetailIssue()">{{ t('BTN_CLOSE') }}</button>
                     </div>
                 </div>
             </div>

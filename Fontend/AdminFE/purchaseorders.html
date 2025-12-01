@@ -16,6 +16,7 @@
     <script src="../Shared/angular/angular.min.js"></script>
     <script src="../Shared/angular/global.js"></script>
     <script src="../Shared/angular/purchaseorder.js"></script>
+    <script src="../Shared/angular/translation.js"></script>
     <title>Purchase Orders</title>
   </head>
 
@@ -34,7 +35,7 @@
           </div>
         </div>
         <div class="slide-bar__Content">
-          <p class="slide-bar__label">Navigation</p>
+          <p class="slide-bar__label">{{ t('NAVIGATION') }}</p>
           <!-- menu button Dashboard -->
           <a href="../AdminFE/dashboard.html" ng-if="canShow('dashboard')">
             <div class="slide-bar__MenuButton">
@@ -46,7 +47,7 @@
                 />
               </div>
               <div class="MenuButton-right">
-                <p class="name-menu">Dashboard</p>
+                <p class="name-menu">{{ t('NAV_DASHBOARD') }}</p>
               </div>
             </div>
           </a>
@@ -57,7 +58,7 @@
                 <img src="../Shared/img/common/pos.svg" alt="" class="icon" />
               </div>
               <div class="MenuButton-right">
-                <p class="name-menu">POS</p>
+                <p class="name-menu">{{ t('NAV_POS') }}</p>
               </div>
             </div>
           </a>
@@ -72,7 +73,7 @@
                 />
               </div>
               <div class="MenuButton-right">
-                <p class="name-menu">Products</p>
+                <p class="name-menu">{{ t('NAV_PRODUCTS') }}</p>
               </div>
             </div>
           </a>
@@ -87,7 +88,7 @@
                 />
               </div>
               <div class="MenuButton-right">
-                <p class="name-menu">Categories</p>
+                <p class="name-menu">{{ t('NAV_CATEGORIES') }}</p>
               </div>
             </div>
           </a>
@@ -102,7 +103,7 @@
                 />
               </div>
               <div class="MenuButton-right">
-                <p class="name-menu">Promotions</p>
+                <p class="name-menu">{{ t('NAV_PROMOTIONS') }}</p>
               </div>
             </div>
           </a>
@@ -117,7 +118,7 @@
                 />
               </div>
               <div class="MenuButton-right">
-                <p class="name-menu">Customers</p>
+                <p class="name-menu">{{ t('NAV_CUSTOMERS') }}</p>
               </div>
             </div>
           </a>
@@ -132,7 +133,7 @@
                 />
               </div>
               <div class="MenuButton-right">
-                <p class="name-menu">Suppliers</p>
+                <p class="name-menu">{{ t('NAV_SUPPLIERS') }}</p>
               </div>
             </div>
           </a>
@@ -150,7 +151,7 @@
                 />
               </div>
               <div class="MenuButton-right">
-                <p class="name-menu-active">Purchase Orders</p>
+                <p class="name-menu-active">{{ t('NAV_PURCHASE_ORDERS') }}</p>
               </div>
             </div>
           </a>
@@ -161,7 +162,7 @@
                 <img src="../Shared/img/common/stock.svg" alt="" class="icon" />
               </div>
               <div class="MenuButton-right">
-                <p class="name-menu">Stock Management</p>
+                <p class="name-menu">{{ t('NAV_STOCK') }}</p>
               </div>
             </div>
           </a>
@@ -176,7 +177,7 @@
                 />
               </div>
               <div class="MenuButton-right">
-                <p class="name-menu">Goods Receipts</p>
+                <p class="name-menu">{{ t('GOODS_RECEIPTS') }}</p>
               </div>
             </div>
           </a>
@@ -191,7 +192,7 @@
                 />
               </div>
               <div class="MenuButton-right">
-                <p class="name-menu">Goods Issues</p>
+                <p class="name-menu">{{ t('GOODS_ISSUES') }}</p>
               </div>
             </div>
           </a>
@@ -202,7 +203,7 @@
                 <img src="../Shared/img/common/sales.svg" alt="" class="icon" />
               </div>
               <div class="MenuButton-right">
-                <p class="name-menu">Sales</p>
+                <p class="name-menu">{{ t('NAV_SALES') }}</p>
               </div>
             </div>
           </a>
@@ -217,7 +218,7 @@
                 />
               </div>
               <div class="MenuButton-right">
-                <p class="name-menu">Returns</p>
+                <p class="name-menu">{{ t('NAV_RETURNS') }}</p>
               </div>
             </div>
           </a>
@@ -232,7 +233,7 @@
                 />
               </div>
               <div class="MenuButton-right">
-                <p class="name-menu">Payments & Debts</p>
+                <p class="name-menu">{{ t('NAV_PAYMENTS') }}</p>
               </div>
             </div>
           </a>
@@ -247,7 +248,7 @@
                 />
               </div>
               <div class="MenuButton-right">
-                <p class="name-menu">Reports</p>
+                <p class="name-menu">{{ t('NAV_REPORTS') }}</p>
               </div>
             </div>
           </a>
@@ -262,7 +263,7 @@
                 />
               </div>
               <div class="MenuButton-right">
-                <p class="name-menu">Audit Log</p>
+                <p class="name-menu">{{ t('NAV_AUDIT_LOG') }}</p>
               </div>
             </div>
           </a>
@@ -273,7 +274,7 @@
                 <img src="../Shared/img/common/user.svg" alt="" class="icon" />
               </div>
               <div class="MenuButton-right">
-                <p class="name-menu">Users</p>
+                <p class="name-menu">{{ t('NAV_USERS') }}</p>
               </div>
             </div>
           </a>
@@ -288,7 +289,7 @@
                 />
               </div>
               <div class="MenuButton-right">
-                <p class="name-menu">Settings</p>
+                <p class="name-menu">{{ t('NAV_SETTINGS') }}</p>
               </div>
             </div>
           </a>
@@ -334,7 +335,7 @@
             </div>
             <div class="info-mid">
               <a href="#!">
-                <p class="set">Profile Settings</p>
+                <p class="set">{{ t('PROFILE_SETTINGS') }}</p>
               </a>
             </div>
             <div class="info-bottom">
@@ -344,29 +345,29 @@
                 class="icon"
               />
               <a href="../AuthFE/login.html">
-                <p class="logout">Logout</p>
+                <p class="logout">{{ t('LOGOUT') }}</p>
               </a>
             </div>
           </div>
         </div>
         <div class="app-layout-content">
-          <h1 class="name-menu">Purchase Orders</h1>
-          <p class="desc">Manage and organize Purchase Orders</p>
+          <h1 class="name-menu">{{ t('PO_TITLE') }}</h1>
+          <p class="desc">{{ t('PO_DESC') }}</p>
           <div class="display-container">
             <div class="total farme">
-              <p class="name-display">Total PO</p>
+              <p class="name-display">{{ t('PO_TOTAL') }}</p>
               <p class="data">{{stats.total}}</p>
             </div>
             <div class="Amount-Approved farme">
-              <p class="name-display">Amount Approved</p>
+              <p class="name-display">{{ t('PO_AMOUNT_APPROVED') }}</p>
               <p class="data">{{stats.countApproved}}</p>
             </div>
             <div class="Amount-Pending farme">
-              <p class="name-display">Amount Pending</p>
+              <p class="name-display">{{ t('PO_AMOUNT_PENDING') }}</p>
               <p class="data">{{stats.countPending}}</p>
             </div>
             <div class="Amount-Processing farme">
-              <p class="name-display">Amount Processing</p>
+              <p class="name-display">{{ t('PO_AMOUNT_PROCESSING') }}</p>
               <p class="data">{{stats.countProcessing}}</p>
             </div>
           </div>
@@ -381,7 +382,7 @@
                 ng-model="searchFromDate"
                 id="fromDate"
               />
-              <label for="fromDate" class="placeholder-label">From Date</label>
+              <label for="fromDate" class="placeholder-label">{{ t('PO_FROM_DATE') }}</label>
             </div>
 
             <div class="control-left">
@@ -392,7 +393,7 @@
                 ng-model="searchToDate"
                 id="toDate"
               />
-              <label for="toDate" class="placeholder-label">To Date</label>
+              <label for="toDate" class="placeholder-label">{{ t('PO_TO_DATE') }}</label>
             </div>
 
             <div class="control-left">
@@ -400,7 +401,7 @@
               <input
                 type="number"
                 class="search money-input"
-                placeholder="Min Amount"
+                placeholder="{{ t('PO_MIN_AMOUNT') }}"
                 ng-model="searchMinAmount"
               />
             </div>
@@ -410,7 +411,7 @@
               <input
                 type="number"
                 class="search money-input"
-                placeholder="Max Amount"
+                placeholder="{{ t('PO_MAX_AMOUNT') }}"
                 ng-model="searchMaxAmount"
               />
             </div>
@@ -418,10 +419,10 @@
             <div class="control-left">
               <img src="../Shared/img/common/search.svg" alt="" class="icon" />
               <select class="search status-select" ng-model="searchStatus">
-                <option value="">All Status</option>
-                <option value="Pending">Pending</option>
-                <option value="Processing">Processing</option>
-                <option value="Approved">Approved</option>
+                <option value="">{{ t('PO_STATUS_ALL') }}</option>
+                <option value="Pending">{{ t('PO_STATUS_PENDING') }}</option>
+                <option value="Processing">{{ t('PO_STATUS_PROCESSING') }}</option>
+                <option value="Approved">{{ t('PO_STATUS_APPROVED') }}</option>
               </select>
             </div>
           </div>
@@ -430,13 +431,13 @@
             <!-- Phân trang  -->
             <div class="pager" ng-if="pager.total > 0">
               <div class="pager-info">
-                Showing
+                {{ t('PAGING_SHOWING') }}
                 {{((pager.page-1)*pager.size)+1}}-{{Math.min(pager.page*pager.size,
-                pager.total)}} of {{pager.total}} items
+                pager.total)}} {{ t('PAGING_OF') }} {{pager.total}} {{ t('PAGING_ITEMS') }}
               </div>
               <div class="page-nav">
                 <label>
-                  Page size:
+                  {{ t('PAGING_PAGE_SIZE') }}:
                   <select ng-model="pager.size" ng-change="changeSize()">
                     <option value="10">10</option>
                     <option value="20">20</option>
@@ -456,17 +457,17 @@
                   ng-disabled="pager.page === 1"
                   ng-click="go(pager.page-1)"
                 >
-                  Prev
+                  {{ t('PAGING_PREV') }}
                 </button>
                 <span class="page-no">
-                  Page {{pager.page}} of {{pager.pages}}
+                  {{ t('PAGING_PAGE') }} {{pager.page}} of {{pager.pages}}
                 </span>
                 <button
                   class="btn ghost"
                   ng-disabled="pager.page >= pager.pages"
                   ng-click="go(pager.page+1)"
                 >
-                  Next
+                  {{ t('PAGING_NEXT') }}
                 </button>
                 <button
                   class="btn ghost"
@@ -488,7 +489,7 @@
                   alt="Add"
                   class="plus"
                 />
-                <p class="add-po">Add Purchase Order</p>
+                <p class="add-po">{{ t('BTN_ADD_PO') }}</p>
               </div>
             </div>
           </div>
@@ -498,12 +499,12 @@
               <table class="table">
                 <thead>
                   <tr>
-                    <th class="id">POID</th>
-                    <th class="id">SupplierID</th>
-                    <th class="Date">OrderDate</th>
-                    <th class="Total">TotalAmount</th>
-                    <th class="Status">Status</th>
-                    <th class="action txt-right">Actions</th>
+                    <th class="id">{{ t('PO_ID') }}</th>
+                    <th class="id">{{ t('PO_SUPPLIER_ID') }}</th>
+                    <th class="Date">{{ t('PO_ORDER_DATE') }}</th>
+                    <th class="Total">{{ t('PO_TOTAL_AMOUNT') }}</th>
+                    <th class="Status">{{ t('PO_STATUS') }}</th>
+                    <th class="action txt-right">{{ t('ACTIONS') }}</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -516,14 +517,14 @@
 
                     <td class="txt-right">
                       <button class="link" ng-click="viewDetail(po)">
-                        🔍 Detail
+                        🔍 {{ t('BTN_VIEW_DETAIL') }}
                       </button>
-                      <button class="link" ng-click="edit(po)">✎ Edit</button>
+                      <button class="link" ng-click="edit(po)">✎ {{ t('BTN_EDIT') }}</button>
                       <button class="link danger" ng-click="remove(po)">
-                        🗑 Delete
+                        🗑 {{ t('BTN_DELETE') }}
                       </button>
                       <button class="link" ng-click="exportPO(po)">
-                        🖨 Export
+                        🖨 {{ t('BTN_EXPORT') }}
                       </button>
                     </td>
                   </tr>
@@ -537,7 +538,7 @@
                                     | filter:searchMaxAmount 
                                     | filter:searchStatus).length == 0"
                   >
-                    <td colspan="6" class="empty">No Purchase Orders Found</td>
+                    <td colspan="6" class="empty">{{ t('PO_NO_DATA') }}</td>
                   </tr>
                 </tbody>
               </table>
@@ -548,10 +549,10 @@
             <!-- add -->
             <div class="form-add" ng-class="{open:showAdd}">
               <div class="form-add__content">
-                <h3 class="title">Add Purchase Order</h3>
-                <p class="desc">Create a new purchase order</p>
+                <h3 class="title">{{ t('FORM_ADD_PO_TITLE') }}</h3>
+                <p class="desc">{{ t('FORM_ADD_PO_DESC') }}</p>
                 <form name="frmAddPO" ng-submit="addPurchaseOrder()">
-                  <label for="supplier-add">Supplier ID *</label>
+                  <label for="supplier-add">{{ t('LABEL_SUPPLIER_ID') }}</label>
                   <input
                     type="number"
                     id="supplier-add"
@@ -567,12 +568,12 @@
                       class="cancel"
                       ng-click="closeAddModal()"
                     >
-                      Cancel
+                      {{ t('BTN_CANCEL') }}
                     </button>
                     <input
                       class="submit"
                       type="submit"
-                      value="Add Purchase Order"
+                      value="{{ t('BTN_SUBMIT_ADD_PO') }}"
                       ng-disabled="frmAddPO.$invalid||savingAdd"
                     />
                   </div>
@@ -583,11 +584,11 @@
             <!-- Edit -->
             <div class="form-edit-po">
               <div class="form-edit-po__content">
-                <h3 class="title">Edit Purchase Order</h3>
-                <p class="desc">Update supplier and status</p>
+                <h3 class="title">{{ t('FORM_EDIT_PO_TITLE') }}</h3>
+                <p class="desc">{{ t('FORM_EDIT_PO_DESC') }}</p>
                 <form name="frmEditPO" ng-submit="updatePurchaseOrder()">
                   <!-- SupplierID -->
-                  <label for="supplier-edit">Supplier ID *</label>
+                  <label for="supplier-edit">{{ t('PO_SUPPLIER_ID') }}</label>
                   <input
                     type="number"
                     id="supplier-edit"
@@ -598,20 +599,20 @@
 
                   <!-- Status -->
                   <!-- Status -->
-                  <label for="status-edit">Status *</label>
+                  <label for="status-edit">{{ t('LABEL_STATUS') }}</label>
                   <select id="status-edit" ng-model="editingPO.Status" required>
-                    <option value="Pending">Pending</option>
-                    <option value="Processing">Processing</option>
-                    <option value="Approved">Approved</option>
+                    <option value="Pending">{{ t('PO_STATUS_PENDING') }}</option>
+                    <option value="Processing">{{ t('PO_STATUS_PROCESSING') }}</option>
+                    <option value="Approved">{{ t('PO_STATUS_APPROVED') }}</option>
                   </select>
 
                   <!-- Footer -->
                   <div class="dialog-footer">
-                    <button type="button" class="cancel">Cancel</button>
+                    <button type="button" class="cancel">{{ t('BTN_CANCEL') }}</button>
                     <input
                       class="submit"
                       type="submit"
-                      value="Update Purchase Order"
+                      value="{{ t('BTN_UPDATE_PO') }}"
                       ng-disabled="frmEditPO.$invalid || savingEditPO"
                     />
                   </div>
@@ -626,17 +627,17 @@
               ng-click="closeDeleteOnOverlay($event)"
             >
               <div class="form-delete__content">
-                <h3 class="title">Delete Purchase Order</h3>
+                <h3 class="title">{{ t('FORM_DELETE_PO_TITLE') }}</h3>
                 <p class="desc">
-                  Are you sure you want to delete the purchase order with POID
-                  "{{deleting.POID}}"? This action cannot be undone.
+                  {{ t('FORM_DELETE_PO_DESC1') }}
+                  "{{deleting.POID}}"? {{ t('FORM_DELETE_PO_DESC2') }}
                 </p>
                 <div class="dialog-footer">
                   <button class="cancel" ng-click="cancelDelete($event)">
-                    Cancel
+                    {{ t('BTN_CANCEL') }}
                   </button>
                   <button class="submit danger" ng-click="confirmDelete()">
-                    Delete Purchase Order
+                    {{ t('BTN_DELETE_PO') }}
                   </button>
                 </div>
               </div>
@@ -649,8 +650,8 @@
     <!-- Detail (Purchase Order Details) -->
     <div class="form-detail-po" ng-class="{open:showDetail}">
       <div class="form-detail-po__content">
-        <h3 class="title">Purchase Order Details</h3>
-        <p class="desc">Chi tiết đơn hàng cho POID {{detailPO.POID}}</p>
+        <h3 class="title">{{ t('FORM_PO_DETAILS_TITLE') }}</h3>
+        <p class="desc">{{ t('FORM_PO_DETAILS_DESC') }} {{detailPO.POID}}</p>
 
         <!-- Bảng hiển thị chi tiết -->
         <div class="card">
@@ -658,11 +659,10 @@
             <table class="table">
               <thead>
                 <tr>
-                  <th>POID</th>
-                  <th>ProductID</th>
-                  <th>NameProduct</th>
-                  <th>Quantity</th>
-                  <th>Unit Price</th>
+                  <th>{{ t('PO_DETAIL_PRODUCT_ID') }}</th>
+                  <th>{{ t('PO_DETAIL_NAME_PRODUCT') }}</th>
+                  <th>{{ t('PO_DETAIL_QTY') }}</th>
+                  <th>{{ t('PO_DETAIL_UNIT_PRICE') }}</th>
                 </tr>
               </thead>
               <tbody>
@@ -677,7 +677,7 @@
                   <td>{{d.unitPrice | number:0}} ₫</td>
                 </tr>
                 <tr ng-if="purchaseOrderDetails.length === 0">
-                  <td colspan="5" class="empty">No details found</td>
+                  <td colspan="5" class="empty">{{ t('PO_DETAIL_NO_DATA') }}</td>
                 </tr>
               </tbody>
             </table>
@@ -686,10 +686,10 @@
 
         <!-- Form thêm chi tiết đơn hàng -->
         <div class="form-add-detail">
-          <h4 class="sub-title">Add Purchase Order Detail</h4>
+          <h4 class="sub-title">{{ t('FORM_ADD_DETAIL_TITLE') }}</h4>
           <form name="frmAddDetail" ng-submit="addDetail()">
             <div class="form-row">
-              <label for="product-id">ProductID *</label>
+              <label for="product-id">{{ t('LABEL_PRODUCT_ID') }}</label>
               <input
                 type="number"
                 id="product-id"
@@ -700,7 +700,7 @@
             </div>
 
             <div class="form-row">
-              <label for="quantity">Quantity *</label>
+              <label for="quantity">{{ t('LABEL_QTY') }}</label>
               <input
                 type="number"
                 id="quantity"
@@ -711,7 +711,7 @@
             </div>
 
             <div class="form-row">
-              <label for="unit-price">Unit Price *</label>
+              <label for="unit-price">{{ t('LABEL_UNIT_PRICE') }}</label>
               <input
                 type="number"
                 id="unit-price"
@@ -723,12 +723,12 @@
 
             <div class="dialog-footer">
               <button type="button" class="cancel" ng-click="resetAddDetail()">
-                Reset
+                {{ t('BTN_RESET_DETAIL') }}
               </button>
               <input
                 type="submit"
                 class="submit"
-                value="Add Detail"
+                value="{{ t('BTN_ADD_DETAIL') }}"
                 ng-disabled="frmAddDetail.$invalid || savingDetail"
               />
             </div>
@@ -736,14 +736,14 @@
         </div>
         <div class="dialog-footer">
           <button type="button" class="danger" ng-click="deleteDetail()">
-            Delete Detail
+             {{ t('BTN_DELETE_DETAIL') }}
           </button>
         </div>
 
         <!-- Footer -->
         <div class="dialog-footer">
           <button type="button" class="cancel" ng-click="closeDetailModal()">
-            Close
+             {{ t('BTN_CLOSE') }}
           </button>
         </div>
       </div>

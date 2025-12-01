@@ -16,6 +16,7 @@
     <script src="../Shared/angular/angular.min.js"></script>
     <script src="../Shared/angular/global.js"></script>
     <script src="../Shared/angular/pos.js"></script>
+    <script src="../Shared/angular/translation.js"></script>
     <title>Point of sale</title>
   </head>
   <body ng-app="AppRetailPos" ng-controller="posCtrl">
@@ -32,7 +33,7 @@
         </div>
       </div>
       <div class="slide-bar__Content">
-        <p class="slide-bar__label">Navigation</p>
+        <p class="slide-bar__label">{{ t('NAVIGATION') }}</p>
         <!-- menu button Dashboard -->
         <a href="../AdminFE/dashboard.html" ng-if="canShow('dashboard')">
           <div class="slide-bar__MenuButton">
@@ -44,7 +45,7 @@
               />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Dashboard</p>
+              <p class="name-menu">{{ t('NAV_DASHBOARD') }}</p>
             </div>
           </div>
         </a>
@@ -55,7 +56,7 @@
               <img src="../Shared/img/common/pos.svg" alt="" class="icon" />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu-active">POS</p>
+              <p class="name-menu-active">{{ t('NAV_POS') }}</p>
             </div>
           </div>
         </a>
@@ -66,7 +67,7 @@
               <img src="../Shared/img/common/product.svg" alt="" class="icon" />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Products</p>
+              <p class="name-menu">{{ t('NAV_PRODUCTS') }}</p>
             </div>
           </div>
         </a>
@@ -81,7 +82,7 @@
               />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Categories</p>
+              <p class="name-menu">{{ t('NAV_CATEGORIES') }}</p>
             </div>
           </div>
         </a>
@@ -96,7 +97,7 @@
               />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Promotions</p>
+              <p class="name-menu">{{ t('NAV_PROMOTIONS') }}</p>
             </div>
           </div>
         </a>
@@ -111,7 +112,7 @@
               />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Customers</p>
+              <p class="name-menu">{{ t('NAV_CUSTOMERS') }}</p>
             </div>
           </div>
         </a>
@@ -126,7 +127,7 @@
               />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Suppliers</p>
+              <p class="name-menu">{{ t('NAV_SUPPLIERS') }}</p>
             </div>
           </div>
         </a>
@@ -144,7 +145,7 @@
               />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Purchase Orders</p>
+              <p class="name-menu">{{ t('NAV_PURCHASE_ORDERS') }}</p>
             </div>
           </div>
         </a>
@@ -155,7 +156,7 @@
               <img src="../Shared/img/common/stock.svg" alt="" class="icon" />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Stock Management</p>
+              <p class="name-menu">{{ t('NAV_STOCK') }}</p>
             </div>
           </div>
         </a>
@@ -170,7 +171,7 @@
               />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Goods Receipts</p>
+              <p class="name-menu">{{ t('GOODS_RECEIPTS') }}</p>
             </div>
           </div>
         </a>
@@ -185,7 +186,7 @@
               />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Goods Issues</p>
+              <p class="name-menu">{{ t('GOODS_ISSUES') }}</p>
             </div>
           </div>
         </a>
@@ -196,7 +197,7 @@
               <img src="../Shared/img/common/sales.svg" alt="" class="icon" />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Sales</p>
+              <p class="name-menu">{{ t('NAV_SALES') }}</p>
             </div>
           </div>
         </a>
@@ -207,7 +208,7 @@
               <img src="../Shared/img/common/return.svg" alt="" class="icon" />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Returns</p>
+              <p class="name-menu">{{ t('NAV_RETURNS') }}</p>
             </div>
           </div>
         </a>
@@ -222,7 +223,7 @@
               />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Payments & Debts</p>
+              <p class="name-menu">{{ t('NAV_PAYMENTS') }}</p>
             </div>
           </div>
         </a>
@@ -233,7 +234,7 @@
               <img src="../Shared/img/common/report.svg" alt="" class="icon" />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Reports</p>
+              <p class="name-menu">{{ t('NAV_REPORTS') }}</p>
             </div>
           </div>
         </a>
@@ -248,7 +249,7 @@
               />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Audit Log</p>
+              <p class="name-menu">{{ t('NAV_AUDIT_LOG') }}</p>
             </div>
           </div>
         </a>
@@ -259,7 +260,7 @@
               <img src="../Shared/img/common/user.svg" alt="" class="icon" />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Users</p>
+              <p class="name-menu">{{ t('NAV_USERS') }}</p>
             </div>
           </div>
         </a>
@@ -270,7 +271,7 @@
               <img src="../Shared/img/common/setting.svg" alt="" class="icon" />
             </div>
             <div class="MenuButton-right">
-              <p class="name-menu">Settings</p>
+              <p class="name-menu">{{ t('NAV_SETTINGS') }}</p>
             </div>
           </div>
         </a>
@@ -316,7 +317,7 @@
             <p class="email">{{currentUser.email}}</p>
           </div>
           <div class="info-mid">
-            <a href="#!"><p class="set">Profile Settings</p></a>
+            <a href="#!"><p class="set">{{ t('PROFILE_SETTINGS') }}</p></a>
           </div>
           <div class="info-bottom">
             <img
@@ -324,7 +325,7 @@
               alt=""
               class="icon"
             />
-            <a href="../AuthFE/login.html"><p class="logout">Logout</p></a>
+            <a href="../AuthFE/login.html"><p class="logout">{{ t('LOGOUT') }}</p></a>
           </div>
         </div>
       </div>
@@ -335,9 +336,9 @@
             alt=""
             class="icon-app"
           />
-          <h1 class="name-app">Point of Sale</h1>
+          <h1 class="name-app">{{ t('POS_TITLE') }}</h1>
         </div>
-        <p class="app-desc">Create orders, handle credit limit and payments</p>
+        <p class="app-desc">{{ t('POS_DESC') }}</p>
         <div class="content-main">
           <div class="main-customer">
             <div class="main-customer__title">
@@ -346,11 +347,11 @@
                 alt=""
                 class="icon-customer"
               />
-              <p class="name-customer">Customer</p>
+              <p class="name-customer">{{ t('POS_CUSTOMER') }}</p>
             </div>
             <div class="info-customer">
               <form ng-submit="searchCustomer()">
-                <label for="phone">Phone *</label>
+                <label for="phone">{{ t('POS_PHONE') }}*</label>
                 <br />
                 <div class="search">
                   <input
@@ -376,8 +377,7 @@
                 <!-- trạng thái nợ -->
                 <div
                   class="loyal-customer"
-                  ng-class="{'loyal-customer--vip':selectedCustomer.DebtLimit>0}"
-                >
+                  ng-class="{'loyal-customer--vip':selectedCustomer.DebtLimit>0}">
                   {{getCustomerChipText()}}
                 </div>
               </div>
@@ -387,11 +387,11 @@
                 ng-if="hasSearched && !selectedCustomer"
               >
                 <p class="no-customer">
-                  Không tìm thấy khách hàng với số:
+                  {{ t('POS_NOT_FOUND') }}:
                   <strong>{{phoneInput}}</strong>
                 </p>
                 <p class="no-customer__hint">
-                  Thêm khách mới để gắn vào đơn này.
+                  {{ t('POS_ADD_NEW_CUSTOMER') }}.
                 </p>
               </div>
               <div class="add-new__customer" ng-click="openAddCustomer()">
@@ -400,12 +400,12 @@
                   alt=""
                   class="icon-add"
                 />
-                <p class="desc-add">New Customer</p>
+                <p class="desc-add">{{ t('POS_NEW_CUSTOMER') }}</p>
               </div>
             </div>
           </div>
           <div class="main-product">
-            <p class="name-card__product">Products</p>
+            <p class="name-card__product">{{ t('POS_PRODUCTS') }}</p>
 
             <!-- Ô search chung: name / SKU / barcode -->
             <div class="search-product">
@@ -416,7 +416,7 @@
               />
               <input
                 type="text"
-                placeholder="Search or scan product (name / SKU / barcode)"
+                placeholder="{{ t('POS_SEARCH_PRODUCT') }}"
                 ng-model="productSearch"
                 ng-change="loadProducts(1)"
               />
@@ -463,7 +463,7 @@
                   alt=""
                   class="icon-cart"
                 />
-                <p class="name-cart">Cart Items</p>
+                <p class="name-cart">{{ t('POS_CART_ITEMS') }}</p>
               </div>
 
               <div class="list-product">
@@ -497,23 +497,23 @@
                 </div>
 
                 <div class="empty-cart" ng-if="cartItems.length === 0">
-                  Chưa có sản phẩm nào trong giỏ.
+                  {{ t('POS_CART_ITEMS1') }}
                 </div>
               </div>
 
               <div class="detail-cart">
                 <div class="subtotal">
-                  <p class="name-subtotal">Subtotal:</p>
+                  <p class="name-subtotal">{{ t('POS_SUBTOTAL') }}:</p>
                   <p class="cost-subtotal">₫{{ subtotal | number:0 }}</p>
                 </div>
                 <div class="vat">
-                  <p class="name-vat">VAT:</p>
+                  <p class="name-vat">{{ t('POS_VAT') }}:</p>
                   <p class="cost-vat">₫{{ vatTotal | number:0 }}</p>
                 </div>
               </div>
 
               <div class="order-total">
-                <p class="order-total__name">Order Total:</p>
+                <p class="order-total__name">{{ t('POS_ORDER_TOTAL') }}:</p>
                 <p class="order-total__cost">₫{{ orderTotal | number:0 }}</p>
               </div>
             </div>
@@ -525,18 +525,18 @@
                 alt=""
                 class="icon-payment"
               />
-              <p class="main-payment__name">Payment</p>
+              <p class="main-payment__name">{{ t('POS_PAYMENT') }}</p>
             </div>
 
             <!-- Tổng tiền order -->
             <div class="total-payment">
-              <p class="title-payment">Order Total</p>
+              <p class="title-payment">{{ t('POS_ORDER_TOTAL') }}</p>
               <p class="total-payment__cost">{{ formatVnd(orderTotal) }}</p>
             </div>
 
             <!-- FORM THANH TOÁN -->
             <form ng-submit="completePayment()">
-              <label for="custom-pay">Customer pays</label>
+              <label for="custom-pay">{{ t('POS_CUSTOMER_PAYS') }}</label>
               <br />
               <input
                 id="custom-pay"
@@ -548,7 +548,7 @@
               />
               <br />
 
-              <label for="method-pay">Payment method</label>
+              <label for="method-pay">{{ t('POS_PAYMENT_METHOD') }}</label>
               <br />
               <select id="method-pay" ng-model="payment.method">
                 <option value="All">All method</option>
@@ -558,13 +558,13 @@
               <br />
 
               <div class="debt">
-                <p class="debt-name">Remaining debt:</p>
+                <p class="debt-name">{{ t('POS_REMAINING_DEBT') }}:</p>
                 <p class="cost-remaining">
                   {{ formatVnd(payment.remainingDebt) }}
                 </p>
               </div>
 
-              <input type="submit" value="Complete Payment" />
+              <input type="submit" value="{{ t('POS_COMPLETE_PAYMENT') }}" />
             </form>
           </div>
         </div>
@@ -576,13 +576,13 @@
             ng-click="closeAddOnOverlay($event)"
           >
             <div class="form-add__content" ng-click="$event.stopPropagation()">
-              <h3 class="title">Add New Customer</h3>
-              <p class="desc">Enter customer details</p>
+              <h3 class="title">{{ t('POS_ADD_CUSTOMER') }}</h3>
+              <p class="desc">{{ t('POS_ENTER_CUSTOMER_DETAILS') }}</p>
 
               <form name="frmAdd" ng-submit="add()">
                 <!-- Full Name (required) -->
                 <label for="name-add"
-                  >Full Name <span class="required">*</span></label
+                  >{{ t('POS_FULL_NAME') }} <span class="required">*</span></label
                 >
                 <input
                   type="text"
@@ -596,7 +596,7 @@
                   <!-- Phone (required) -->
                   <div class="both-left">
                     <label for="phone-add"
-                      >Phone <span class="required">*</span></label
+                      >{{ t('POS_PHONE') }} <span class="required">*</span></label
                     >
                     <input
                       type="text"
@@ -609,7 +609,7 @@
 
                   <!-- Email (optional) -->
                   <div class="both-right">
-                    <label for="mail-add">Email</label>
+                    <label for="mail-add">{{ t('POS_EMAIL') }}</label>
                     <input
                       type="text"
                       id="mail-add"
@@ -620,7 +620,7 @@
                 </div>
 
                 <!-- Address (optional) -->
-                <label for="address-add">Address</label>
+                <label for="address-add">{{ t('POS_ADDRESS') }}</label>
                 <input
                   type="text"
                   id="address-add"
@@ -632,12 +632,12 @@
 
                 <div class="dialog-footer">
                   <button type="button" class="cancel" ng-click="cancelAdd()">
-                    Cancel
+                    {{ t('BTN_CANCEL') }}
                   </button>
                   <input
                     class="submit"
                     type="submit"
-                    value="Add New Customer"
+                    value="{{ t('POS_ADD_NEW_CUSTOMER') }}"
                     ng-disabled="frmAdd.$invalid || savingAdd"
                   />
                 </div>
@@ -655,47 +655,47 @@
           alt=""
           class="icon-success"
         />
-        <h1 class="inform">Payment Successful</h1>
-        <p class="desc-inform">The order has been completed successfully.</p>
+        <h1 class="inform">{{ t('POS_PAYMENT_SUCCESS') }}</h1>
+        <p class="desc-inform">{{ t('POS_PAYMENT_SUCCESS_DESC') }}</p>
       </div>
 
       <div class="form-payment__content">
         <!-- BLOCK 1: ORDER SUMMARY -->
         <div class="payment-block payment-block__1">
-          <p class="title-block">Order Summary</p>
+          <p class="title-block">{{ t('POS_ORDER_SUMMARY') }}</p>
           <div class="order-id">
-            <p class="title-order">Order ID</p>
+            <p class="title-order">{{ t('POS_ORDER_ID') }}</p>
             <p class="data-order">{{successData.orderId}}</p>
           </div>
           <div class="date-order">
-            <p class="title-date">Date & Time</p>
+            <p class="title-date">{{ t('POS_DATE_TIME') }}</p>
             <p class="data-date">
               {{successData.dateTime | date:'yyyy-MM-dd HH:mm'}}
             </p>
           </div>
           <div class="cashier-order">
-            <p class="title-cashier">Cashier</p>
+            <p class="title-cashier">{{ t('POS_CASHIER') }}</p>
             <p class="data-cashier">{{successData.cashier}}</p>
           </div>
         </div>
 
         <!-- BLOCK 2: CUSTOMER INFO -->
         <div class="payment-block payment-block__2">
-          <p class="title-block">Customer Information</p>
+          <p class="title-block">{{ t('POS_CUSTOMER_INFO') }}</p>
           <div class="custom-information" ng-if="successData.customerName">
             <p class="info-name">{{successData.customerName}}</p>
             <p class="info-phone">{{successData.customerPhone}}</p>
           </div>
           <div class="before-debt">
-            <p class="title-before">Before Debt</p>
+            <p class="title-before">{{ t('POS_BEFORE_DEBT') }}</p>
             <p class="data-before">{{formatVnd(successData.beforeDebt)}}</p>
           </div>
           <div class="prepay">
-            <p class="title-prepay">Prepay</p>
+            <p class="title-prepay">{{ t('POS_PREPAY') }}</p>
             <p class="data-prepay">{{formatVnd(successData.prepay)}}</p>
           </div>
           <div class="remaining-debt">
-            <p class="title-remaining">Remaining Debt</p>
+            <p class="title-remaining">{{ t('POS_REMAINING_DEBT') }}</p>
             <p class="data-remaining">
               {{formatVnd(successData.remainingDebt)}}
             </p>
@@ -705,13 +705,13 @@
             class="loyal-customer"
             ng-if="successData.debtLimit && successData.debtLimit > 0"
           >
-            <p class="detail-loyal">Loyal customer – credit available</p>
+            <p class="detail-loyal">{{ t('POS_LOYAL_CREDIT') }}</p>
           </div>
         </div>
 
         <!-- BLOCK 3: ITEMS PURCHASED -->
         <div class="payment-block payment-block__3">
-          <p class="title-block">Items Purchased</p>
+          <p class="title-block">{{ t('POS_ITEMS_PURCHASED') }}</p>
           <div class="list-items">
             <div class="item-block" ng-repeat="it in successData.items">
               <div class="item-block__left">
@@ -720,7 +720,7 @@
                   <div class="quantity-cost-item">
                     {{it.Quantity}} x {{formatVnd(it.UnitPrice)}}
                   </div>
-                  <div class="vat-item">VAT: {{it.VATRate || 0}}%</div>
+                  <div class="vat-item">{{ t('POS_VAT_RATE') }}: {{it.VATRate || 0}}%</div>
                 </div>
               </div>
               <div class="item-block__right">
@@ -734,23 +734,23 @@
 
         <!-- BLOCK 4: PAYMENT DETAILS -->
         <div class="payment-block payment-block__4">
-          <p class="title-block">Payment Details</p>
+          <p class="title-block">{{ t('POS_PAYMENT_DETAILS') }}</p>
           <div class="order-total">
-            <p class="title-order__total">Order Total</p>
+            <p class="title-order__total">{{ t('POS_ORDER_TOTAL') }}</p>
             <p class="data-order__total">
               {{formatVnd(successData.orderTotal)}}
             </p>
           </div>
           <div class="customer-pays">
-            <p class="title-pays">Customer Pays</p>
+            <p class="title-pays">{{ t('POS_CUSTOMER_PAYS') }}</p>
             <p class="data-pays">{{formatVnd(successData.prepay)}}</p>
           </div>
           <div class="method-pays">
-            <p class="title-method">Payment Method</p>
+            <p class="title-method">{{ t('POS_PAYMENT_METHOD') }}</p>
             <p class="data-method">{{successData.method}}</p>
           </div>
           <div class="new-remaining__debt">
-            <p class="title-new-remaining">New Remaining Debt</p>
+            <p class="title-new-remaining">{{ t('POS_NEW_REMAINING_DEBT') }}</p>
             <p class="data-new-remaining">
               {{formatVnd(successData.remainingDebt)}}
             </p>
@@ -759,10 +759,10 @@
       </div>
 
       <div class="form-payment__footer">
-        <div class="new-sale" ng-click="startNewSale()">New Sale</div>
+        <div class="new-sale" ng-click="startNewSale()">{{ t('POS_NEW_SALE') }}</div>
         <a href="" class="print-invoice" ng-click="printInvoice($event)">
           <img src="../Shared/img/common/print.svg" alt="" class="icon-print" />
-          <p class="title-print">Print Invoice</p>
+          <p class="title-print">{{ t('POS_PRINT_INVOICE') }}</p>
         </a>
       </div>
     </div>

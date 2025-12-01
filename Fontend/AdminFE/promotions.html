@@ -17,6 +17,7 @@
     <script src="../Shared/angular/angular.min.js"></script>
     <script src="../Shared/angular/global.js"></script>
     <script src="../Shared/angular/promotions.js"></script>
+    <script src="../Shared/angular/translation.js"></script>
     <title>Promotion</title>
 
 </head>
@@ -35,7 +36,7 @@
             </div>
         </div>
         <div class="slide-bar__Content">
-            <p class="slide-bar__label">Navigation</p>
+            <p class="slide-bar__label">{{ t('NAVIGATION') }}</p>
             <!-- menu button Dashboard -->
             <a href="../AdminFE/dashboard.html" ng-if="canShow('dashboard')">
                 <div class="slide-bar__MenuButton">
@@ -43,7 +44,7 @@
                         <img src="../Shared/img/common/dashboard.svg" alt="" class="icon" />
                     </div>
                     <div class="MenuButton-right">
-                        <p class="name-menu">Dashboard</p>
+                        <p class="name-menu">{{ t('NAV_DASHBOARD') }}</p>
                     </div>
                 </div>
             </a>
@@ -54,7 +55,7 @@
                         <img src="../Shared/img/common/pos.svg" alt="" class="icon" />
                     </div>
                     <div class="MenuButton-right">
-                        <p class="name-menu">POS</p>
+                        <p class="name-menu">{{ t('NAV_POS') }}</p>
                     </div>
                 </div>
             </a>
@@ -65,7 +66,7 @@
                         <img src="../Shared/img/common/product.svg" alt="" class="icon" />
                     </div>
                     <div class="MenuButton-right">
-                        <p class="name-menu">Products</p>
+                        <p class="name-menu">P{{ t('NAV_PRODUCTS') }}</p>
                     </div>
                 </div>
             </a>
@@ -76,7 +77,7 @@
                         <img src="../Shared/img/common/category.svg" alt="" class="icon" />
                     </div>
                     <div class="MenuButton-right">
-                        <p class="name-menu">Categories</p>
+                        <p class="name-menu">{{ t('NAV_CATEGORIES') }}</p>
                     </div>
                 </div>
             </a>
@@ -88,7 +89,7 @@
                         <img src="../Shared/img/common/promotion.svg" alt="" class="icon" />
                     </div>
                     <div class="MenuButton-right">
-                        <p class="name-menu-active">Promotions</p>
+                        <p class="name-menu-active">{{ t('NAV_PROMOTIONS') }}</p>
                     </div>
                 </div>
             </a>
@@ -99,7 +100,7 @@
                         <img src="../Shared/img/common/customer.svg" alt="" class="icon" />
                     </div>
                     <div class="MenuButton-right">
-                        <p class="name-menu">Customers</p>
+                        <p class="name-menu">{{ t('NAV_CUSTOMERS') }}</p>
                     </div>
                 </div>
             </a>
@@ -110,7 +111,7 @@
                         <img src="../Shared/img/common/supplier.svg" alt="" class="icon" />
                     </div>
                     <div class="MenuButton-right">
-                        <p class="name-menu">Suppliers</p>
+                        <p class="name-menu">{{ t('NAV_SUPPLIERS') }}</p>
                     </div>
                 </div>
             </a>
@@ -121,7 +122,7 @@
                         <img src="../Shared/img/common/purchaseorder.svg" alt="" class="icon" />
                     </div>
                     <div class="MenuButton-right">
-                        <p class="name-menu">Purchase Orders</p>
+                        <p class="name-menu">{{ t('NAV_PURCHASE_ORDERS') }}</p>
                     </div>
                 </div>
             </a>
@@ -132,7 +133,7 @@
                         <img src="../Shared/img/common/stock.svg" alt="" class="icon" />
                     </div>
                     <div class="MenuButton-right">
-                        <p class="name-menu">Stock Management</p>
+                        <p class="name-menu">{{ t('NAV_STOCK') }}</p>
                     </div>
                 </div>
             </a>
@@ -144,7 +145,7 @@
                         <img src="../Shared/img/common/goodReceipt.svg" alt="" class="icon" />
                     </div>
                     <div class="MenuButton-right">
-                        <p class="name-menu">Goods Receipts</p>
+                        <p class="name-menu">{{ t('GOODS_RECEIPTS') }}</p>
                     </div>
                 </div>
             </a>
@@ -156,7 +157,7 @@
                         <img src="../Shared/img/common/goodIssues.svg" alt="" class="icon" />
                     </div>
                     <div class="MenuButton-right">
-                        <p class="name-menu">Goods Issues</p>
+                        <p class="name-menu">{{ t('GOODS_ISSUES') }}</p>
                     </div>
                 </div>
             </a>
@@ -168,7 +169,7 @@
                         <img src="../Shared/img/common/sales.svg" alt="" class="icon" />
                     </div>
                     <div class="MenuButton-right">
-                        <p class="name-menu">Sales</p>
+                        <p class="name-menu">{{ t('NAV_SALES') }}</p>
                     </div>
                 </div>
             </a>
@@ -179,7 +180,7 @@
                         <img src="../Shared/img/common/return.svg" alt="" class="icon" />
                     </div>
                     <div class="MenuButton-right">
-                        <p class="name-menu">Returns</p>
+                        <p class="name-menu">{{ t('NAV_RETURNS') }}</p>
                     </div>
                 </div>
             </a>
@@ -190,7 +191,7 @@
                         <img src="../Shared/img/common/payments.svg" alt="" class="icon" />
                     </div>
                     <div class="MenuButton-right">
-                        <p class="name-menu">Payments & Debts</p>
+                        <p class="name-menu">{{ t('NAV_PAYMENTS') }}</p>
                     </div>
                 </div>
             </a>
@@ -201,7 +202,7 @@
                         <img src="../Shared/img/common/report.svg" alt="" class="icon" />
                     </div>
                     <div class="MenuButton-right">
-                        <p class="name-menu">Reports</p>
+                        <p class="name-menu">{{ t('NAV_REPORTS') }}</p>
                     </div>
                 </div>
             </a>
@@ -212,7 +213,7 @@
                         <img src="../Shared/img/common/auditlog.svg" alt="" class="icon" />
                     </div>
                     <div class="MenuButton-right">
-                        <p class="name-menu">Audit Log</p>
+                        <p class="name-menu">{{ t('NAV_AUDIT_LOG') }}</p>
                     </div>
                 </div>
             </a>
@@ -223,7 +224,7 @@
                         <img src="../Shared/img/common/user.svg" alt="" class="icon" />
                     </div>
                     <div class="MenuButton-right">
-                        <p class="name-menu">Users</p>
+                        <p class="name-menu">{{ t('NAV_USERS') }}</p>
                     </div>
                 </div>
             </a>
@@ -234,7 +235,7 @@
                         <img src="../Shared/img/common/setting.svg" alt="" class="icon" />
                     </div>
                     <div class="MenuButton-right">
-                        <p class="name-menu">Settings</p>
+                        <p class="name-menu">{{ t('NAV_SETTINGS') }}</p>
                     </div>
                 </div>
             </a>
@@ -279,7 +280,7 @@
             <p class="email">{{currentUser.email}}</p>
           </div>
           <div class="info-mid">
-            <a href="#!"><p class="set">Profile Settings</p></a>
+            <a href="#!"><p class="set">{{ t('PROFILE_SETTINGS') }}</p></a>
           </div>
           <div class="info-bottom">
             <img
@@ -287,71 +288,71 @@
               alt=""
               class="icon"
             />
-            <a href="../AuthFE/login.html"><p class="logout">Logout</p></a>
+            <a href="../AuthFE/login.html"><p class="logout">{{ t('LOGOUT') }}</p></a>
           </div>
         </div>
       </div>
         <div class="app-layout-content">
             <div class="container-top">
                 <div class="container-top--left">
-                    <h1 class="name-system">Promotions</h1>
+                    <h1 class="name-system">{{ t('PROMO_TITLE') }}</h1>
                     <p class="desc-system">
-                        Manage discounts and special offers
+                        {{ t('PROMO_DESC') }}
                     </p>
                 </div>
                 <div class="container-top--right">
 
                     <div class="control add-promotion" ng-click="openAdd()">
                         <img src="../Shared/img/common/plus.svg" alt="" class="icon-control" />
-                        <p class="name-control">Add Promotion</p>
+                        <p class="name-control">{{ t('PROMO_ADD') }}</p>
                     </div>
                 </div>
             </div>
             <div class="container-card">
                 <div class="card">
-                    <p class="name-card">Total Promotion</p>
+                    <p class="name-card">{{ t('PROMO_TOTAL') }}</p>
                     <p class="data-card">{{stats.totalPromotion}}</p>
                 </div>
                 <div class="card">
-                    <p class="name-card">Total Status Active</p>
+                    <p class="name-card">{{ t('PROMO_TOTAL_ACTIVE') }}</p>
                     <p class="data-card">{{stats.totalActive}}</p>
                 </div>
                 <div class="card">
-                    <p class="name-card">Total Status Expired</p>
+                    <p class="name-card">{{ t('PROMO_TOTAL_EXPIRED') }}</p>
                     <p class="data-card">{{stats.totalExpired}}</p>
                 </div>
             </div>
 
             <div class="search-promotion">
                 <div class="search-group">
-                    <label for="startDate">Start Date</label>
+                    <label for="startDate">{{ t('SEARCH_START_DATE') }}</label>
                     <input type="date" id="startDate" ng-model="search.fromDate" class="search-input" />
                 </div>
 
                 <div class="search-group">
-                    <label for="endDate">End Date</label>
+                    <label for="endDate">{{ t('SEARCH_END_DATE') }}</label>
                     <input type="date" id="endDate" ng-model="search.toDate" class="search-input" />
                 </div>
 
                 <div class="search-group">
-                    <label for="status">Status</label>
+                    <label for="status">{{ t('SEARCH_STATUS') }}</label>
                     <select id="status" ng-model="search.status" class="search-input">
-                        <option value="">-- All --</option>
-                        <option value="Active">Active</option>
-                        <option value="Expired">Expired</option>
+                        <option value="">-- {{ t('STATUS_ALL') }} --</option>
+                        <option value="Active">{{ t('STATUS_ACTIVE') }}</option>
+                        <option value="Expired">{{ t('STATUS_EXPIRED') }}</option>
                     </select>
                 </div>
             </div>
             <!-- phân trang -->
             <div class="pager" ng-if="pager.total>0">
                 <div class="pager-info">
-                    Showing
+                    {{ t('SHOWING') }}
                     {{((pager.page-1)*pager.size)+1}}-{{Math.min(pager.page*pager.size,pager.total)}}
-                    of {{pager.total}} items
+                    {{ t('PAGING_OF') }} {{pager.total}} {{ t('PAGING_ITEMS') }}
                 </div>
                 <div class="page-nav">
                     <label>
-                        Page size:
+                        {{ t('PAGE_SIZE') }}:
                         <select ng-model="pager.size" ng-change="changeSize()">
                             <option value="10">10</option>
                             <option value="20">20</option>
@@ -362,11 +363,11 @@
                         «
                     </button>
                     <button class="btn ghost" ng-disabled="pager.page === 1" ng-click="go(pager.page-1)">
-                        Prev
+                        {{ t('PAGING_PREV') }}
                     </button>
                     <span class="page-no"></span>
                     <button class="btn ghost" ng-disabled="pager.page >= pager.pages" ng-click="go(pager.page+1)">
-                        Next
+                        {{ t('PAGING_NEXT') }}
                     </button>
                     <button class="btn ghost" ng-disabled="pager.page >= pager.pages" ng-click="go(pager.pages)">
                         »
@@ -379,15 +380,15 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th class="id">Promotion ID</th>
-                                <th class="name">Promotion Name</th>
-                                <th class="type">Type</th>
-                                <th class="value">Value</th>
-                                <th class="start">Start Date</th>
-                                <th class="end">End Date</th>
-                                <th class="category">Category</th>
-                                <th class="status">Status</th>
-                                <th class="action txt-right">Actions</th>
+                                <th class="id">{{ t('PROMO_ID') }}</th>
+                                <th class="name">{{ t('PROMO_NAME') }}</th>
+                                <th class="type">{{ t('PROMO_TYPE') }}</th>
+                                <th class="value">{{ t('PROMO_VALUE') }}</th>
+                                <th class="start">{{ t('PROMO_START') }}</th>
+                                <th class="end">{{ t('PROMO_END') }}</th>
+                                <th class="category">{{ t('PROMO_CATEGORY') }}</th>
+                                <th class="status">{{ t('PROMO_STATUS') }}</th>
+                                <th class="action txt-right">{{ t('PROMO_ACTIONS') }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -401,12 +402,12 @@
                                 <td>{{p.categoryID || p.CategoryID}}</td>
                                 <td>{{p.status || p.Status}}</td>
                                 <td class="txt-right">
-                                    <button class="link" ng-click="edit(p)">✎ Edit</button>
-                                    <button class="link danger" ng-click="remove(p)">🗑 Delete</button>
+                                    <button class="link" ng-click="edit(p)">✎ {{ t('EDIT_RETURN5') }}</button>
+                                    <button class="link danger" ng-click="remove(p)">🗑 {{ t('DELETE_TITLE5') }}</button>
                                 </td>
                             </tr>
                             <tr ng-if="promotions.length == 0">
-                                <td colspan="9" class="empty">No Data</td>
+                                <td colspan="9" class="empty">{{ t('PROMO_NO_DATA') }}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -417,46 +418,46 @@
                 <!-- Modal Add Promotion -->
                 <div class="form-add" ng-class="{open: showAdd}" ng-click="closeAddOnOverlay($event)">
                     <div class="form-add__content" ng-click="$event.stopPropagation()">
-                        <h3 class="title">Add New Promotion</h3>
-                        <p class="desc">Enter promotion details</p>
+                        <h3 class="title">{{ t('FORM_ADD_PROMO_TITLE') }}</h3>
+                        <p class="desc">{{ t('FORM_ADD_PROMO_DESC') }}</p>
                         <form name="frmAddPromotion" ng-submit="addPromotion()">
-                            <label for="name-add">Promotion Name</label>
-                            <input type="text" id="name-add" required placeholder="Enter promotion name"
+                            <label for="name-add">{{ t('LABEL_PROMO_NAME') }}</label>
+                            <input type="text" id="name-add" required placeholder="{{ t('ENTER1') }}"
                                 ng-model="newPromotion.promotionName" />
 
                             <div class="both">
                                 <div class="both-left">
-                                    <label for="type-add">Type</label>
+                                    <label for="type-add">{{ t('LABEL_PROMO_TYPE') }}</label>
                                     <select id="type-add" required ng-model="newPromotion.type">
-                                        <option value="percent">Percent</option>
-                                        <option value="amount">Amount</option>
+                                        <option value="percent">{{ t('TYPE_PERCENT') }}</option>
+                                        <option value="amount">{{ t('TYPE_AMOUNT') }}</option>
                                     </select>
                                 </div>
                                 <div class="both-right">
-                                    <label for="value-add">Value</label>
-                                    <input type="number" id="value-add" required placeholder="Enter promotion value"
+                                    <label for="value-add">{{ t('LABEL_PROMO_VALUE') }}</label>
+                                    <input type="number" id="value-add" required placeholder="{{ t('ENTER2') }}"
                                         ng-model="newPromotion.value" />
                                 </div>
                             </div>
 
                             <div class="both">
                                 <div class="both-left">
-                                    <label for="startDate-add">Start Date</label>
+                                    <label for="startDate-add">{{ t('LABEL_PROMO_START') }}</label>
                                     <input type="date" id="startDate-add" required ng-model="newPromotion.startDate" />
                                 </div>
                                 <div class="both-right">
-                                    <label for="endDate-add">End Date</label>
+                                    <label for="endDate-add">{{ t('LABEL_PROMO_END') }}</label>
                                     <input type="date" id="endDate-add" required ng-model="newPromotion.endDate" />
                                 </div>
                             </div>
 
-                            <label for="category-add">Category ID</label>
-                            <input type="number" id="category-add" required placeholder="Enter category ID"
+                            <label for="category-add">{{ t('LABEL_PROMO_CATEGORY_ID') }}</label>
+                            <input type="number" id="category-add" required placeholder="{{ t('ENTER3') }}"
                                 ng-model="newPromotion.categoryID" />
 
                             <div class="dialog-footer">
-                                <button type="button" class="cancel" ng-click="cancelAdd()">Cancel</button>
-                                <input class="submit" type="submit" value="Add New Promotion"
+                                <button type="button" class="cancel" ng-click="cancelAdd()">{{ t('BTN_CANCEL') }}</button>
+                                <input class="submit" type="submit" value="{{ t('ADD_PROMO') }}"
                                     ng-disabled="frmAddPromotion.$invalid || savingAdd" />
                             </div>
                         </form>
@@ -465,52 +466,52 @@
                 <!-- edit promotion -->
                 <div class="form-edit" ng-class="{open: showEdit}" ng-click="closeEditOnOverlay($event)">
                     <div class="form-edit__content" ng-click="$event.stopPropagation()">
-                        <h3 class="title">Edit Promotion</h3>
+                        <h3 class="title">{{ t('FORM_EDIT_PROMO_TITLE') }}</h3>
                         <form name="frmEditPromotion" ng-submit="updatePromotion()">
-                            <label for="name-edit">Promotion Name</label>
-                            <input type="text" id="name-edit" required placeholder="Enter promotion name"
+                            <label for="name-edit">{{ t('LABEL_PROMO_NAME') }}</label>
+                            <input type="text" id="name-edit" required placeholder="{{ t('ENTER1') }}"
                                 ng-model="editingPromotion.PromotionName" />
 
                             <div class="both">
                                 <div class="both-left">
-                                    <label for="type-edit">Type</label>
+                                    <label for="type-edit">{{ t('LABEL_PROMO_TYPE') }}</label>
                                     <select id="type-edit" required ng-model="editingPromotion.Type">
-                                        <option value="percent">Percent</option>
-                                        <option value="amount">Amount</option>
+                                        <option value="percent">{{ t('TYPE_PERCENT') }}</option>
+                                        <option value="amount">{{ t('TYPE_AMOUNT') }}</option>
                                     </select>
                                 </div>
                                 <div class="both-right">
-                                    <label for="value-edit">Value</label>
-                                    <input type="number" id="value-edit" required placeholder="Enter promotion value"
+                                    <label for="value-edit">{{ t('LABEL_PROMO_VALUE') }}</label>
+                                    <input type="number" id="value-edit" required placeholder="{{ t('ENTER2') }}"
                                         ng-model="editingPromotion.Value" />
                                 </div>
                             </div>
 
                             <div class="both">
                                 <div class="both-left">
-                                    <label for="startDate-edit">Start Date</label>
+                                    <label for="startDate-edit">{{ t('LABEL_PROMO_START') }}</label>
                                     <input type="date" id="startDate-edit" required
                                         ng-model="editingPromotion.StartDate" />
                                 </div>
                                 <div class="both-right">
-                                    <label for="endDate-edit">End Date</label>
+                                    <label for="endDate-edit">{{ t('LABEL_PROMO_END') }}</label>
                                     <input type="date" id="endDate-edit" required ng-model="editingPromotion.EndDate" />
                                 </div>
                             </div>
 
-                            <label for="category-edit">Category ID</label>
-                            <input type="number" id="category-edit" required placeholder="Enter category ID"
+                            <label for="category-edit">{{ t('LABEL_PROMO_CATEGORY_ID') }}</label>
+                            <input type="number" id="category-edit" required placeholder="{{ t('ENTER3') }}"
                                 ng-model="editingPromotion.CategoryID" />
 
-                            <label for="status-edit">Status</label>
+                            <label for="status-edit">{{ t('PROMO_STATUS') }}</label>
                             <select id="status-edit" required ng-model="editingPromotion.Status">
-                                <option value="Active">Active</option>
-                                <option value="Expired">Expired</option>
+                                <option value="Active">{{ t('ACTION') }}</option>
+                                <option value="Expired">{{ t('STATUS_EXPIRED') }}</option>
                             </select>
 
                             <div class="dialog-footer">
-                                <button type="button" class="cancel" ng-click="cancelEdit()">Cancel</button>
-                                <input class="submit" type="submit" value="Edit Promotion"
+                                <button type="button" class="cancel" ng-click="cancelEdit()">{{ t('BTN_CANCEL') }}</button>
+                                <input class="submit" type="submit" value="{{ t('EDIT_PROMO') }}"
                                     ng-disabled="frmEditPromotion.$invalid || savingEdit" />
                             </div>
                         </form>
@@ -520,17 +521,17 @@
                 <!-- delete promotion -->
                 <div class="form-delete" ng-class="{open:showDelete}" ng-click="closeDeleteOnOverlay($event)">
                     <div class="form-delete__content" ng-click="$event.stopPropagation()">
-                        <h3 class="title">Delete Promotion</h3>
+                        <h3 class="title">{{ t('FORM_DELETE_PROMO_TITLE') }}</h3>
                         <p class="desc">
-                            Are you sure you want to delete the promotion
-                            "{{deleting.promotionName || deleting.PromotionName}}"? This action cannot be undone.
+                            {{ t('FORM_DELETE_PROMO_DESC1') }}
+                            "{{deleting.promotionName || deleting.PromotionName}}"? {{ t('FORM_DELETE_PROMO_DESC2') }}
                         </p>
                         <div class="dialog-footer">
                             <button class="cancel" ng-click="cancelDelete($event)">
-                                Cancel
+                                {{ t('BTN_CANCEL') }}
                             </button>
                             <button class="submit danger" ng-click="confirmDelete()">
-                                Delete Promotion
+                                {{ t('BTN_DELETE_PROMO') }}
                             </button>
                         </div>
                     </div>

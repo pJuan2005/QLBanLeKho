@@ -44,12 +44,12 @@
       <p class="slide-bar__label">{{ t('NAVIGATION') }}</p>
       <!-- menu button Dashboard -->
       <a href="../AdminFE/dashboard.html" ng-if="canShow('dashboard')">
-        <div class="slide-bar__MenuButton">
+        <div class="slide-bar__MenuButton  slide-bar__MenuButton--active">
           <div class="MenuButton-left">
             <img src="../Shared/img/common/dashboard.svg" alt="" class="icon" />
           </div>
           <div class="MenuButton-right">
-            <p class="name-menu">{{ t('NAV_DASHBOARD') }}</p>
+            <p class="name-menu-active">{{ t('NAV_DASHBOARD') }}</p>
           </div>
         </div>
       </a>
@@ -66,12 +66,12 @@
       </a>
       <!-- menu button Products -->
       <a href="../AdminFE/products.html" ng-if="canShow('products')">
-        <div class="slide-bar__MenuButton slide-bar__MenuButton--active">
+        <div class="slide-bar__MenuButton ">
           <div class="MenuButton-left">
             <img src="../Shared/img/common/product.svg" alt="" class="icon" />
           </div>
           <div class="MenuButton-right">
-            <p class="name-menu-active">{{ t('NAV_PRODUCTS') }}</p>
+            <p class="name-menu">{{ t('NAV_PRODUCTS') }}</p>
           </div>
         </div>
       </a>
