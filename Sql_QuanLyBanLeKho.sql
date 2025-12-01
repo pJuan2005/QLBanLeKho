@@ -2753,11 +2753,10 @@ BEGIN
 END;
 GO
 
-
 USE [QLBanLeKho]
 GO
 
-/****** Object:  StoredProcedure [dbo].[sp_GoodsIssueDetails_create_multiple]    Script Date: 11/26/2025 2:10:19 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_GoodsIssueDetails_create_multiple]    Script Date: 11/28/2025 4:17:21 PM ******/
 SET ANSI_NULLS ON
 GO
 
@@ -2765,6 +2764,7 @@ SET QUOTED_IDENTIFIER ON
 GO
 
 
+------------------------------------------------------------------------------------------------
 CREATE PROCEDURE [dbo].[sp_GoodsIssueDetails_create_multiple]
     @JsonData NVARCHAR(MAX)
 AS
@@ -2805,7 +2805,10 @@ BEGIN
 
     SELECT '' AS message;
 END;
+
 GO
+
+
 
 
 
