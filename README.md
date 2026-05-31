@@ -1,178 +1,179 @@
 # 🏪 Retail POS & Inventory Management System
 
-A full-featured Retail POS (Point of Sale) and Inventory Management System developed using ASP.NET Core Web API, SQL Server, HTML, CSS and JavaScript.
+<p align="center">
+  <b>A Retail POS and Inventory Management System for managing sales, products, inventory, suppliers, customers, payments, reports and audit logs.</b>
+</p>
 
-This project was developed as a Software Development course project at Hung Yen University of Technology and Education.
+<p align="center">
+  <img src="https://img.shields.io/badge/ASP.NET%20Core-Web%20API-blue" />
+  <img src="https://img.shields.io/badge/Database-SQL%20Server-red" />
+  <img src="https://img.shields.io/badge/Architecture-Layered-green" />
+  <img src="https://img.shields.io/badge/Project-Academic-orange" />
+</p>
 
 ---
 
-# 📋 Project Overview
+## 📌 Overview
 
-The system helps retail stores manage daily business operations including:
+Retail POS & Inventory Management System is a web-based application developed as a Software Development course project at **Hung Yen University of Technology and Education**.
 
-* Point Of Sale (POS)
-* Product Management
-* Category Management
+The system supports daily retail operations such as selling products, managing inventory, handling purchase orders, tracking debts, generating reports and monitoring user activities through audit logs.
+
+---
+
+## 🚀 Tech Stack
+
+| Layer    | Technologies                                                      |
+| -------- | ----------------------------------------------------------------- |
+| Backend  | ASP.NET Core Web API, Entity Framework Core, RESTful API          |
+| Database | SQL Server                                                        |
+| Frontend | HTML5, CSS3, JavaScript                                           |
+| Tools    | Visual Studio, SQL Server Management Studio, Postman, Git, GitHub |
+
+---
+
+## ✨ Main Features
+
+* Point of Sale (POS)
+* Product & Category Management
 * Promotion Management
 * Customer Management
 * Supplier Management
-* Purchase Orders
+* Purchase Order Management
 * Stock Management
-* Goods Receipts
-* Goods Issues
+* Goods Receipt & Goods Issue
 * Sales Management
-* Returns Management
+* Return Management
 * Payments & Debts Tracking
-* Business Reports
+* Business Reports & Analytics
 * Audit Logging
 * User & Role Management
 
 ---
 
-# 🚀 Technology Stack
+## 📸 Screenshots
 
-## Backend
+<h3>📊 Dashboard</h3>
 
-* ASP.NET Core Web API
-* Entity Framework Core
-* SQL Server
-* RESTful API
-
-## Frontend
-
-* HTML5
-* CSS3
-* JavaScript
-
-## Tools
-
-* Visual Studio
-* SQL Server Management Studio
-* Git & GitHub
-* Postman
-
----
-
-# ✨ Key Features
-
-### POS System
-
-* Create sales orders
-* Product search
-* Customer lookup
-* Payment processing
-* Debt management
-
-### Inventory Management
-
-* Manage product stock
-* Track inventory movement
-* Goods receipts
-* Goods issues
-
-### Product Management
-
-* Product catalog
-* Categories
-* Promotions
-* Pricing management
-
-### Business Management
-
-* Customer management
-* Supplier management
-* Purchase orders
-* Returns management
-
-### Reporting & Security
-
-* Revenue reports
-* Profit reports
-* Inventory reports
-* Audit logs
-* User management
-
----
-
-# 📸 System Screenshots
-
-## Dashboard
-
+<p>
 Business overview including revenue, profit, top-selling products and recent transactions.
+</p>
 
-![Dashboard](images/dashboard.png)
+<p align="center">
+  <img src="images/dashboard.png" width="95%">
+</p>
 
----
-
-## Point Of Sale (POS)
-
-Sales screen for creating invoices and processing customer payments.
-
-![POS](images/pos.png)
+<br>
 
 ---
 
-## Product Management
+<h3>🛒 Point Of Sale</h3>
 
-Manage products, pricing, VAT, stock quantity and product information.
+<p>
+Sales screen for creating invoices, searching products, handling payments and managing customer purchases.
+</p>
 
-![Products](images/products.png)
+<p align="center">
+  <img src="images/pos.png" width="95%">
+</p>
 
----
-
-## Inventory Management
-
-Track inventory movement, stock in/out transactions and warehouse activities.
-
-![Inventory](images/inventory.png)
+<br>
 
 ---
 
-## Business Reports
+<h3>📦 Product Management</h3>
 
-Revenue analytics, profit statistics and inventory reports.
+<p>
+Manage product catalog, pricing, VAT rates, inventory quantity and product information.
+</p>
 
-![Reports](images/reports.png)
+<p align="center">
+  <img src="images/products.png" width="95%">
+</p>
+
+<br>
 
 ---
 
-## Audit Logging
+<h3>🏬 Inventory Management</h3>
 
-Track user activities and system operations for monitoring and security purposes.
+<p>
+Track stock movements, inventory transactions, warehouse inbound and outbound activities.
+</p>
 
-![Audit Log](images/auditlog.png)
+<p align="center">
+  <img src="images/inventory.png" width="95%">
+</p>
+
+<br>
+
 ---
 
-# 🏗 Architecture
+<h3>📈 Business Reports</h3>
+
+<p>
+Generate revenue analytics, profit reports and inventory statistics to support business decisions.
+</p>
+
+<p align="center">
+  <img src="images/reports.png" width="95%">
+</p>
+
+<br>
+
+---
+
+<h3>🔍 Audit Logging</h3>
+
+<p>
+Monitor user activities and system operations including login, update and delete actions for security and auditing purposes.
+</p>
+
+<p align="center">
+  <img src="images/auditlog.png" width="95%">
+</p>
+
+<br>
+
+---
+
+## 🏗 Architecture
 
 The project follows a layered architecture:
 
-* Frontend
-* Gateway API
-* Core API
-* User API
-* Admin API
-* Business Logic Layer (BLL)
-* Data Access Layer (DAL)
-* SQL Server Database
+```text
+Frontend
+   |
+Gateway API
+   |
+Core API / User API / Admin API
+   |
+Business Logic Layer (BLL)
+   |
+Data Access Layer (DAL)
+   |
+SQL Server Database
+```
 
 ---
 
-# 👨‍💻 My Responsibilities
+## 👨‍💻 My Role
 
-As Team Leader and Backend Developer, I participated in:
+**Team Leader & Backend Developer**
 
-* Database design
-* API development
-* Business logic implementation
-* Authentication & authorization
-* Inventory management modules
-* Audit logging implementation
-* Team coordination
+My main responsibilities included:
+
+* Designing database structure
+* Developing RESTful APIs
+* Implementing business logic
+* Building inventory management modules
+* Implementing audit logging
+* Supporting authentication and authorization
+* Coordinating team tasks and Git workflow
 
 ---
 
-# 📈 Project Highlights
+## 📈 Project Highlights
 
 * 200+ commits
 * Multi-module architecture
@@ -180,23 +181,29 @@ As Team Leader and Backend Developer, I participated in:
 * Inventory tracking workflow
 * Audit logging system
 * Reporting and analytics dashboard
+* Retail business workflow simulation
 
 ---
 
-# 🎓 Academic Information
+## 🎓 Academic Information
 
-Software Development Course Project
-
-Hung Yen University of Technology and Education
-
-Bachelor of Information Technology (Software Engineering)
+| Information  | Details                                         |
+| ------------ | ----------------------------------------------- |
+| Course       | Software Development Project                    |
+| University   | Hung Yen University of Technology and Education |
+| Major        | Information Technology - Software Engineering   |
+| Project Type | Team Project                                    |
 
 ---
 
-# 📬 Contact
+## 📬 Contact
 
 **Pham Xuan Chuan**
 
 * Email: [phamchuan2608@gmail.com](mailto:phamchuan2608@gmail.com)
-* LinkedIn: https://linkedin.com/in/phamxuanchuan
-* GitHub: https://github.com/pJuan2005
+* LinkedIn: [linkedin.com/in/phamxuanchuan](https://linkedin.com/in/phamxuanchuan)
+* GitHub: [github.com/pJuan2005](https://github.com/pJuan2005)
+
+---
+
+⭐ If you find this project useful, feel free to star this repository.
