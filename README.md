@@ -1,219 +1,202 @@
-# Retail POS & Inventory Management System
+# 🏪 Retail POS & Inventory Management System
 
-A Retail POS (Point of Sale) and Inventory Management System developed using ASP.NET Core Web API and SQL Server.
-
-## Overview
+A full-featured Retail POS (Point of Sale) and Inventory Management System developed using ASP.NET Core Web API, SQL Server, HTML, CSS and JavaScript.
 
 This project was developed as a Software Development course project at Hung Yen University of Technology and Education.
 
-The system helps retail stores manage:
+---
 
-- Product catalog
-- Inventory
-- Sales orders
-- Purchase orders
-- Goods receipts
-- Goods issues
-- Customers
-- Suppliers
-- Promotions
-- Payments & Debts
-- Reports & Dashboard
-- User management and authorization
+# 📋 Project Overview
+
+The system helps retail stores manage daily business operations including:
+
+* Point Of Sale (POS)
+* Product Management
+* Category Management
+* Promotion Management
+* Customer Management
+* Supplier Management
+* Purchase Orders
+* Stock Management
+* Goods Receipts
+* Goods Issues
+* Sales Management
+* Returns Management
+* Payments & Debts Tracking
+* Business Reports
+* Audit Logging
+* User & Role Management
 
 ---
 
-## Technologies
+# 🚀 Technology Stack
 
-### Backend
+## Backend
 
-- ASP.NET Core Web API
-- Entity Framework Core
-- SQL Server
-- JWT Authentication
+* ASP.NET Core Web API
+* Entity Framework Core
+* SQL Server
+* RESTful API
 
-### Frontend
+## Frontend
 
-- AngularJS
-- HTML
-- CSS
-- JavaScript
+* HTML5
+* CSS3
+* JavaScript
 
-### Other Tools
+## Tools
 
-- Swagger
-- Chart.js
-- Git & GitHub
-
----
-
-## System Architecture
-
-```text
-Client (AngularJS)
-        |
-        v
-ASP.NET Core Web API
-        |
-        v
-Business Logic Layer
-        |
-        v
-Data Access Layer
-        |
-        v
-SQL Server
-```
-
-## Main Features
-
-### Authentication & Authorization
-
-- Login
-- JWT Authentication
-- Role-based Authorization
-
-Roles:
-
-- Admin
-- Cashier
-- Warehouse Staff
-- Accountant
+* Visual Studio
+* SQL Server Management Studio
+* Git & GitHub
+* Postman
 
 ---
+
+# ✨ Key Features
+
+### POS System
+
+* Create sales orders
+* Product search
+* Customer lookup
+* Payment processing
+* Debt management
 
 ### Inventory Management
 
-- Goods Receipts
-- Goods Issues
-- Stock Cards
-- Inventory Tracking
-
----
-
-### Sales Management
-
-- POS System
-- Sales Orders
-- Invoice Management
-- Return Orders
-
----
+* Manage product stock
+* Track inventory movement
+* Goods receipts
+* Goods issues
 
 ### Product Management
 
-- Categories
-- Products
-- SKU / Barcode
-- Pricing
+* Product catalog
+* Categories
+* Promotions
+* Pricing management
+
+### Business Management
+
+* Customer management
+* Supplier management
+* Purchase orders
+* Returns management
+
+### Reporting & Security
+
+* Revenue reports
+* Profit reports
+* Inventory reports
+* Audit logs
+* User management
 
 ---
 
-### Customer & Supplier Management
+# 📸 System Screenshots
 
-- Customer Profiles
-- Supplier Profiles
-- Purchase History
+## Dashboard
 
----
+Business overview including revenue, profit, top-selling products and recent transactions.
 
-### Promotion Management
-
-- Percentage Discounts
-- Fixed Amount Discounts
-- Time-based Promotions
+![Dashboard](images/dashboard.png)
 
 ---
 
-### Reports & Dashboard
+## Point Of Sale (POS)
 
-- Revenue Reports
-- Profit Reports
-- Inventory Reports
-- Best-selling Products
-- KPI Dashboard
+Sales screen for creating invoices and processing customer payments.
+
+![POS](images/pos.png)
 
 ---
 
-## Database
+## Product Management
 
-SQL Server
+Manage products, pricing, VAT, stock quantity and product information.
 
-Main entities:
-
-- Users
-- Products
-- Categories
-- Customers
-- Suppliers
-- Sales
-- PurchaseOrders
-- GoodsReceipts
-- GoodsIssues
-- Payments
-- Promotions
-- AuditLogs
+![Products](images/products.png)
 
 ---
 
-## Screenshots
+## Inventory Management
 
-### Dashboard
+Track inventory movement, stock in/out transactions and warehouse activities.
 
-(Add screenshot here)
-
-### POS
-
-(Add screenshot here)
-
-### Inventory Management
-
-(Add screenshot here)
-
-### Reports
-
-(Add screenshot here)
+![Inventory](images/inventory.png)
 
 ---
 
-## Installation
+## Business Reports
 
-### Clone Repository
+Revenue analytics, profit statistics and inventory reports.
 
-```bash
-git clone https://github.com/pJuan2005/QLBanLe_API.git
-```
-
-### Configure Database
-
-Update:
-
-```json
-appsettings.json
-```
-
-```json
-ConnectionStrings
-```
-
-### Apply Migration
-
-```bash
-dotnet ef database update
-```
-
-### Run Project
-
-```bash
-dotnet run
-```
+![Reports](images/reports.png)
 
 ---
 
-## Author
+## Audit Logging
 
-Pham Xuan Chuan
+Track user activities and system operations for monitoring and security purposes.
 
-Software Engineering Student
+![Audit Log](images/auditlog.png)
+---
 
-ASP.NET Core | ReactJS | NextJS | NodeJS | TypeScript
+# 🏗 Architecture
+
+The project follows a layered architecture:
+
+* Frontend
+* Gateway API
+* Core API
+* User API
+* Admin API
+* Business Logic Layer (BLL)
+* Data Access Layer (DAL)
+* SQL Server Database
+
+---
+
+# 👨‍💻 My Responsibilities
+
+As Team Leader and Backend Developer, I participated in:
+
+* Database design
+* API development
+* Business logic implementation
+* Authentication & authorization
+* Inventory management modules
+* Audit logging implementation
+* Team coordination
+
+---
+
+# 📈 Project Highlights
+
+* 200+ commits
+* Multi-module architecture
+* RESTful API development
+* Inventory tracking workflow
+* Audit logging system
+* Reporting and analytics dashboard
+
+---
+
+# 🎓 Academic Information
+
+Software Development Course Project
+
+Hung Yen University of Technology and Education
+
+Bachelor of Information Technology (Software Engineering)
+
+---
+
+# 📬 Contact
+
+**Pham Xuan Chuan**
+
+* Email: [phamchuan2608@gmail.com](mailto:phamchuan2608@gmail.com)
+* LinkedIn: https://linkedin.com/in/phamxuanchuan
+* GitHub: https://github.com/pJuan2005
